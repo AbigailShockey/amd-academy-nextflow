@@ -1,81 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/01-introduction.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/01-getting-started-with-nextflow.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/404.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/CODE_OF_CONDUCT.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/02-workflow_parameters.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/LICENSE.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/03-channels.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/aio.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/04-processes-part1.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/citation.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/05-processes-part2.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/images.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/06-workflow.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/index.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/07-operators.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/01-introduction.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/08-reporting.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/404.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/09-configuration.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/CODE_OF_CONDUCT.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/10-workflow_checkpoint_caching.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/LICENSE.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/11-Simple_Rna-Seq_pipeline.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/aio.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/12-nfcore.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/citation.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/404.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/images.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/index.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/instructor-notes.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/aio.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/introduction.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/citation.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/key-points.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/images.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/profiles.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/index.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor/reference.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/01-getting-started-with-nextflow.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/instructor-notes.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/introduction.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/02-workflow_parameters.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/key-points.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/03-channels.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/profiles.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/04-processes-part1.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-md/reference.html</loc>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/05-processes-part2.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/06-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/07-operators.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/08-reporting.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/09-configuration.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/10-workflow_checkpoint_caching.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_Rna-Seq_pipeline.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/12-nfcore.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/404.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/aio.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/citation.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/images.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/index.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/key-points.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/profiles.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/key-points.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/profiles.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/reference.html</loc>
   </url>
 </urlset>
