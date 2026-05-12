@@ -18,10 +18,10 @@ carpentry: 'incubator'
 carpentry_description: 'Lesson Description'
 
 # Overall title for pages.
-title: 'Lesson Title' # FIXME
+title: 'Advanced AMD Academy Training 2026 - Introduction to Bioinformatics workflows with Nextflow and nf-core'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: ~ # FIXME
+created: 2026-05-12
 
 # Comma-separated list of keywords for the lesson
 keywords: 'software, data, lesson, The Carpentries' # FIXME
@@ -35,13 +35,13 @@ life_cycle: 'pre-alpha' # FIXME
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/carpentries/workbench-template-md' # FIXME
+source: 'https://github.com/AbigailShockey/amd-academy-nextflow' # FIXME
 
 # Default branch of your lesson
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'team@carpentries.org' # FIXME
+contact: 'abigail.shockey@slh.wisc.edu' # FIXME
 
 # Navigation ------------------------------------------------
 #
@@ -67,7 +67,18 @@ contact: 'team@carpentries.org' # FIXME
 
 # Order of episodes in your lesson
 episodes: 
-- introduction.md
+- 01-getting-started-with-nextflow.md
+- 02-workflow_parameters.md
+- 03-channels.md
+- 04-processes-part1.md
+- 05-processes-part2.md
+- 06-workflow.md
+- 07-operators.md
+- 08-reporting.md
+- 09-configuration.md
+- 10-workflow_checkpoint_caching.md
+- 11-Simple_Rna-Seq_pipeline.md
+- 12-nfcore.md
 
 # Information for Learners
 learners: 
@@ -82,5 +93,3 @@ profiles:
 #
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
-
-

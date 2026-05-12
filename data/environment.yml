@@ -1,0 +1,11 @@
+name: nf-training
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - nextflow
+  - salmon=1.5
+  - fastqc=0.11
+  - multiqc
+  - nf-core
+  - graphviz
