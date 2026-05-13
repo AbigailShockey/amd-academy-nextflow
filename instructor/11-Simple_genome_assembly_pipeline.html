@@ -451,9 +451,9 @@ the sequencing data.</li>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">$</span> fastqc <span class="at">-o</span> fastqc_<span class="op">&lt;</span>sample_id<span class="op">&gt;</span>_logs <span class="at">-f</span> fastq <span class="at">-q</span> <span class="op">&lt;</span>reads<span class="op">&gt;</span></span></code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal"><li>
-<strong>Read trimming with Seqtk</strong>: <a href="https://github.com/lh3/seqtk" class="external-link">Seqtk</a> Seqtk is a fast and
-lightweight tool for processing sequences in the FASTA or FASTQ format.
-It seamlessly parses both FASTA and FASTQ files which can also be
+<strong>Read trimming with Seqtk</strong>: <a href="https://github.com/lh3/seqtk" class="external-link">Seqtk</a> is a fast and lightweight
+tool for processing sequences in the FASTA or FASTQ format. It
+seamlessly parses both FASTA and FASTQ files which can also be
 optionally compressed by gzip.</li>
 </ol><div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -463,13 +463,10 @@ optionally compressed by gzip.</li>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="ex">$</span> gzip <span class="pp">*</span>.fastq</span></code></pre>
 </div>
 <ol start="3" style="list-style-type: decimal"><li>
-<strong>Genome Assembly with Shovill</strong>: After trimming,
-Shovill is used for genome assembly. Shovill is a pipeline which uses
-SPAdes at its core, but alters the steps before and after the primary
-assembly step to get similar results in less time. Shovill also supports
-other assemblers like SKESA, Velvet and Megahit, so you can take
-advantage of the pre- and post-processing the Shovill provides with
-those too.</li>
+<strong>Genome Assembly with Shovill</strong>: After trimming, <a href="https://github.com/tseemann/shovill" class="external-link">Shovill</a> is used for
+genome assembly. Shovill is a pipeline which uses SPAdes at its core,
+but alters the steps before and after the primary assembly step to get
+similar results in less time.</li>
 </ol><div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
