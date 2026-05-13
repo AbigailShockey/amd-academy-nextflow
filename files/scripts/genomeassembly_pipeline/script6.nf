@@ -14,7 +14,6 @@ println """\
          """
          .stripIndent()
 
-
 /*
  * define the `TRIM` process that trims raw reads and emits trimmed reads
  */
@@ -80,31 +79,30 @@ process FASTQC {
 }
 
 /*
- * Create a report using multiQC for the quantification
- * and fastqc processes
+ * Run QUAST to check quality of the assemblies
  */
-process MULTIQC {
-
-    publishDir "${params.outdir}/multiqc", mode:'copy'
+process QUAST {
+    tag "QUAST on $sample_id"
+    cpus 1
 
     input:
-    path('*')
+    tuple val(sample_id), path(contigs)
 
     output:
-    path('multiqc_report.html')
+    tuple val(sample_id), path("${sample_id}.quast.tsv")
 
     script:
     """
-    multiqc .
+    quast.py ${contigs} -o .
+    mv report.tsv ${prefix}.quast.tsv
     """
 }
-
 
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-    fastqc_ch = FASTQC( read_pairs_ch )
-    MULTIQC( quant_ch.mix( fastqc_ch ).collect() )
+  fastqc_ch=FASTQC(read_pairs_ch)
+  quast_ch=QUAST(assemblies_ch)
 }

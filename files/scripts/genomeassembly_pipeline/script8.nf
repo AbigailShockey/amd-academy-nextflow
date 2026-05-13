@@ -127,3 +127,8 @@ workflow {
   quast_ch=QUAST(assemblies_ch)
   MULTIQC(quast_ch.mix(fastqc_ch).collect())
 }
+
+
+workflow.onComplete {
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> $params.outdir/multiqc/multiqc_report.html\n" : "Oops .. something went wrong" )
+}

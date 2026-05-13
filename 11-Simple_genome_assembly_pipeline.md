@@ -57,7 +57,16 @@ $ shovill \
 $ mv <sample_id>_shovill_output/contigs.fa <sample_id>.fa
 ```
 
-4. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and outputs from FastQC, Seqtk, and Shovill. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
+
+4. **Genome Assembly QC with Quast**: After assembly, [QUAST](https://github.com/ablab/quast) is used to assess assembly quality. QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics.
+
+```bash
+$ quast.py <sample_id>.fa -o .
+$ mv report.tsv <sample_id>.quast.tsv
+```
+
+
+5. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and outputs from FastQC and QUAST. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
 
 
 ```bash
@@ -699,6 +708,54 @@ In this step you have learned:
 - How to use the add a `process` to the `workflow` scope.
 - Add a channel as input to a `process`.
 
+## Genome Assembly QC
+
+This step implements a quality control step for your assemblies. The input to the `QUAST` process is the `assemblies_ch` that is emmitted from `ASSEMBLE`.
+
+```groovy
+//scriptX.nf
+[..truncated..]
+
+/*
+ * Run QUAST to check quality of the assemblies
+ */
+process QUAST {
+    tag "QUAST on $sample_id"
+    cpus 1
+
+    input:
+    tuple val(sample_id), path(contigs)
+
+    output:
+    tuple val(sample_id), path("${sample_id}.quast.tsv")
+
+    script:
+    """
+    quast.py ${contigs} -o .
+    mv report.tsv ${prefix}.quast.tsv
+    """
+}
+
+[..truncated..]
+
+workflow {
+  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
+
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  fastqc_ch=FASTQC(read_pairs_ch)
+  quast_ch=QUAST(assemblies_ch)
+}
+```
+
+Run the script `scriptX.nf` by using the following command:
+
+```bash
+$ nextflow run scriptX.nf -resume
+```
+
+The `QUAST` process will not run as the process has not been declared in the workflow scope.
+
 ## MultiQC report
 
 This step collect the outputs from the quantification and fastqc steps to create a final report by using the [MultiQC](https://multiqc.info/) tool.
@@ -739,10 +796,10 @@ ch1.collect().view()
 
 Which is the correct way to combined `mix` and `collect` operators so that you have a single channel with one List item?
 
-1. `trim_ch.mix(fastqc_ch).collect()`
-2. `trim_ch.collect(fastqc_ch).mix()`
-3. `fastqc_ch.mix(trim_ch).collect()`
-4. `fastqc_ch.collect(trim_ch).mix()`
+1. `quast_ch.mix(fastqc_ch).collect()`
+2. `quast_ch.collect(fastqc_ch).mix()`
+3. `fastqc_ch.mix(quast_ch).collect()`
+4. `fastqc_ch.collect(quast_ch).mix()`
 
 :::::::::::::::  solution
 
@@ -787,7 +844,8 @@ workflow {
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
   fastqc_ch=FASTQC(read_pairs_ch)
-  MULTIQC(trim_ch.mix(fastqc_ch).collect())
+  quast_ch=QUAST(assemblies_ch)
+  MULTIQC(quast_ch.mix(fastqc_ch).collect())
 }
 ```
 
@@ -809,6 +867,7 @@ executor >  local (9)
 [02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
 [9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
 [1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
+[1f/b7b30a] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
 [2c/206fef] process > MULTIQC                            [100%] 1 of 1 ✔
 ```
 
@@ -830,7 +889,7 @@ This step shows how to execute an action when the pipeline completes the executi
 
 **Note:** that Nextflow processes define the execution of asynchronous tasks i.e. they are not executed one after another as they are written in the pipeline script as it would happen in a common imperative programming language.
 
-The script `script7..nf` uses the `workflow.onComplete` event handler to print a confirmation message when the script completes.
+The script `script7.nf` uses the `workflow.onComplete` event handler to print a confirmation message when the script completes.
 
 ```groovy
 workflow.onComplete {
