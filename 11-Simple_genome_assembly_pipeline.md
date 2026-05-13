@@ -1,12 +1,12 @@
 ---
-title: Simple RNA-Seq pipeline
+title: Simple genome assembly pipeline
 teaching: 20
 exercises: 40
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Create a simple RNA-Seq pipeline.
+- Create a simple genome assembly pipeline.
 - Use the `log.info` function to print all the pipeline parameters.
 - Print a confirmation message when the pipeline completes.
 - Use a conda `environment.yml` file to install the pipeline's software requirement.
@@ -25,9 +25,9 @@ exercises: 40
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-We're now set to develop a multi-step pipeline using Nextflow, for analyzing and performing quality control on our yeast RNA-Seq experiment.
+We're now set to develop a multi-step pipeline using Nextflow, for analyzing and performing genome assembly on our bacterial DNA sequences.
 
-In this RNA-Seq pipeline, we'll undertake the following steps to thoroughly analyze gene expression data:
+In this genome assembly pipeline, we'll undertake the following steps to thoroughly analyze gene expression data:
 
 1. **Quality Control with FastQC**: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) assesses the quality of the data by generating reports that highlight any potential issues, such as low-quality sequences or contamination. FastQC's output includes an HTML report and a directory containing detailed analyses, which are essential for evaluating the integrity of the sequencing data.
 
@@ -36,37 +36,44 @@ $ mkdir fastqc_<sample_id>_logs
 $ fastqc -o fastqc_<sample_id>_logs -f fastq -q <reads>
 ```
 
-2. **Transcriptome Indexing with Salmon**: [Salmon](https://salmon.readthedocs.io/en/latest/) is a tool to quantify transcript expression in RNA-seq data. The first step in the process is for Salmon to create an index of the transcriptome. This step involves processing a reference transcriptome,  which allows for efficient and accurate mapping and quantification of RNA-Seq reads.
+2. **Read trimming with Seqtk**: [Seqtk](https://github.com/lh3/seqtk) Seqtk is a fast and lightweight tool for processing sequences in the FASTA or FASTQ format. It seamlessly parses both FASTA and FASTQ files which can also be optionally compressed by gzip.
 
 ```bash
-$ salmon index --threads <cpus> -t <transcriptome file> -i index
+$ seqtk trimfq <read1> > <sample_id>_trimmed_R1.fastq
+$ seqtk trimfq <read2> > <sample_id>_trimmed_R2.fastq
+$ gzip *.fastq
 ```
 
-3. **Quantification with Salmon**: After indexing, Salmon is used for the quantification step. In this step, Salmon maps the reads to the transcriptome index and quantifies the transcript abundances. This process is crucial for determining the expression levels of genes in the sample.
+3. **Genome Assembly with Shovill**: After trimming, Shovill is used for genome assembly. Shovill is a pipeline which uses SPAdes at its core, but alters the steps before and after the primary assembly step to get similar results in less time. Shovill also supports other assemblers like SKESA, Velvet and Megahit, so you can take advantage of the pre- and post-processing the Shovill provides with those too.
 
 ```bash
-$ salmon quant --threads <cpus> --libType=U -i <index> -1 <read1> -2 <read2> -o <pair_id>
+$ shovill \
+    --R1 <read1> \
+    --R2 <read2> \
+    --cpus <cpus> \
+    --ram <memory> \
+    --outdir ./<sample_id>_shovill_output \
+    --force
+$ mv <sample_id>_shovill_output/contigs.fa <sample_id>.fa
 ```
 
-4. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and outputs from the  FastQC and Salmon. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
+4. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and outputs from FastQC, Seqtk, and Shovill. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
 
 
 ```bash
 $ multiqc .
 ```
 
-This pipeline  provides an overview of RNA-Seq data, from quality control to expression quantification, culminating in an aggregated report for easy interpretation of the results.
+This pipeline assembles bacterial genomes, starting with quality control and culminating in an aggregated report for easy interpretation of the results.
 
 
-To start move the episode's nextflow scripts in the `scripts/rnaseq_pipeline` folder to your home directory.
+To start move the episode's nextflow scripts in the `scripts/genomeassembly_pipeline` folder to your home directory.
 
 ```bash
 $ cp scripts/rnaseq_pipeline/* .
 ```
 
 This folder contains files we will be modifying in this episode.
-
-
 
 ## Define the pipeline parameters
 
@@ -75,9 +82,7 @@ The script `script1.nf` defines the pipeline input parameters.
 
 ```groovy 
 //script1.nf
-params.reads = "data/yeast/reads/*_{1,2}.fq.gz"
-params.transcriptome = "data/yeast/transcriptome/*.fa.gz"
-
+params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
 
 println "reads: $params.reads"
 ```
@@ -91,18 +96,18 @@ $ nextflow run script1.nf
 We can specify a different input parameter using the `--<params>` option, for example :
 
 ```groovy 
-$ nextflow run script1.nf --reads "data/yeast/reads/ref1*_{1,2}.fq.gz"
+$ nextflow run script1.nf --reads "data/bacteria/reads/ref1*_{1,2}.fq.gz"
 ```
 
 ```output 
-reads: data/yeast/reads/ref1*_{1,2}.fq.gz
+reads: data/bacteria/reads/ref1*_{1,2}.fq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Add a parameter
 
-Modify the `script1.nf` adding a third parameter named `outdir` and set it to `results`. This parameter will be used as the pipeline output directory.
+Modify the `script1.nf` adding a second parameter named `outdir` and set it to `results`. This parameter will be used as the pipeline output directory.
 
 :::::::::::::::  solution
 
@@ -120,7 +125,7 @@ It can be useful to print the pipeline parameters to the screen. This can be don
 
 ```groovy 
 log.info """\
-         transcriptome: ${params.transcriptome}
+         reads: ${params.reads}
          """
          .stripIndent()
 ```
@@ -148,7 +153,6 @@ Below is an example log.info command printing all the pipeline parameters.
 log.info """\
         R N A S E Q - N F   P I P E L I N E    
         ===================================
-        transcriptome: ${params.transcriptome}
         reads        : ${params.reads}
         outdir       : ${params.outdir}
         """
@@ -177,14 +181,144 @@ In this step you have learned:
 
 - How to use `log.info` to print information and save it in the log execution file.
 
-## Create a transcriptome index file
 
-Nextflow allows the execution of any command or user script by using a `process` definition.
+## Collect read files by pairs
+
+This step shows how to match **read** files into pairs, so they can be trimmed by Seqtk and their quality assessed by FastQC.
+
+The script `script2.nf` adds a line to create a channel, `read_pairs_ch`, containing fastq read pair files using the `fromFilePairs` channel factory.
+
+```groovy 
+//script2.nf
+nextflow.enable.dsl = 2
+
+/*
+ * pipeline input parameters
+ */
+params.reads = "data/bacteria/reads/ref1_{1,2}.fq.gz"
+params.outdir = "results"
+
+log.info """\
+         R N A S E Q - N F   P I P E L I N E
+         ===================================
+         reads        : ${params.reads}
+         outdir       : ${params.outdir}
+         """
+         .stripIndent()
+
+
+read_pairs_ch = Channel.fromFilePairs( params.reads )
+```
+
+We can view the contents  of the `read_pairs_ch` by adding the following statement as the last line:
+
+```groovy 
+read_pairs_ch.view()
+```
+
+Now if we execute it with the following command:
+
+```bash 
+$ nextflow run script2.nf
+```
+
+It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/ref1_{1,2}.fq.gz`, defined by the variable `params.reads` , and the second is a list representing the actual files.
+
+```output 
+[..truncated..]
+[ref1, [data/bacteria/reads/ref1_1.fq.gz,data/bacteria/reads/ref1_2.fq.gz]]
+```
+
+To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line. For example, the following command would read in add the ref samples:
+
+```bash 
+$ nextflow run script2.nf --reads 'data/bacteria/reads/ref*_{1,2}.fq.gz'
+```
+
+```output 
+[..truncated..]
+[ref2, [data/bacteria/reads/ref2_1.fq.gz, data/bacteria/reads/ref2_2.fq.gz]]
+[ref3, [data/bacteria/reads/ref3_1.fq.gz, data/bacteria/reads/ref3_2.fq.gz]]
+[ref1, [data/bacteria/reads/ref1_1.fq.gz, data/bacteria/reads/ref1_2.fq.gz]]
+```
+
+**Note** File paths including one or more wildcards ie. `*`, `?`, etc. MUST be wrapped in single-quoted characters to avoid Bash expanding the glob pattern on the command line.
+
+We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` channel factory to return an message if the file doesn't exist.
+
+```groovy 
+//script2.nf
+[..truncated..]
+read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists: true )
+```
+
+If we now run the script with the `--reads` parameter `data/bacteria/reads/*_1,2}.fq.gz`
+
+```bash 
+$ nextflow run script2.nf --reads 'data/bacteria/reads/*_1,2}.fq.gz'
+```
+
+it will return the message .
+
+```output 
+[..truncated..]
+No such file: data/bacteria/reads/*_1,2}.fq.gz
+```
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Read in all read pairs
+
+1. Add  the `checkIfExists: true` argument to the `fromFilePairs` channel factory in `script2.nf`.
+2. Using the command line parameter `--reads`, add a glob pattern to read in all the read pairs files from the `data/bacteria/reads` directory.
+
+:::::::::::::::  solution
+
+## Solution
+
+```groovy 
+read_pairs_ch =Channel.fromFilePairs(params.reads, checkIfExists: true)
+```
+
+```bash 
+nextflow run script2.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
+```
+
+```output 
+[..truncated..]
+[temp33_1, [data/bacteria/reads/temp33_1_1.fq.gz, data/bacteria/reads/temp33_1_2.fq.gz]]
+[ref2, [data/bacteria/reads/ref2_1.fq.gz, data/bacteria/reads/ref2_2.fq.gz]]
+[temp33_3, [data/bacteria/reads/temp33_3_1.fq.gz, data/bacteria/reads/temp33_3_2.fq.gz]]
+[ref3, [data/bacteria/reads/ref3_1.fq.gz, data/bacteria/reads/ref3_2.fq.gz]]
+[temp33_2, [data/bacteria/reads/temp33_2_1.fq.gz,data/bacteria/reads/temp33_2_2.fq.gz]]
+[etoh60_2, [data/bacteria/reads/etoh60_2_1.fq.gz,data/bacteria/reads/etoh60_2_2.fq.gz]]
+[ref1, [data/bacteria/reads/ref1_1.fq.gz, data/bacteria/reads/ref1_2.fq.gz]]
+[etoh60_3, [data/bacteria/reads/etoh60_3_1.fq.gz, data/bacteria/reads/etoh60_3_2.fq.gz]]
+[etoh60_1, [data/bacteria/reads/etoh60_1_1.fq.gz, data/bacteria/reads/etoh60_1_2.fq.gz]]
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Recap
+
+In this step you have learned:
+
+- How to use `fromFilePairs` to handle read pair files
+
+- How to use the `checkIfExists` option to check input file existence
+
+## Trim reads
+
+Remember, Nextflow allows the execution of any command or user script by using a `process` definition.
 
 For example,
 
 ```bash
-$ salmon index --threads $task.cpus -t $transcriptome -i index
+$ seqtk trimfq ${reads[0]} > ${sample_id}_trimmed_R1.fastq
+$ seqtk trimfq ${reads[1]} > ${sample_id}_trimmed_R2.fastq
+$ gzip *.fastq
 ```
 
 A process is defined by providing three main declarations:
@@ -193,27 +327,25 @@ A process is defined by providing three main declarations:
 2. The process [outputs](https://www.nextflow.io/docs/latest/process.html#outputs)
 3. Finally the command [script](https://www.nextflow.io/docs/latest/process.html#script).
 
-The second example, `script2.nf` adds,
+The third example, `script3.nf` adds,
 
-1. The  process `INDEX` which generate a directory with the index of the transcriptome. This process takes one input, a transcriptome file, and emits one output a salmon index directory.
-2. A queue Channel `transcriptome_ch` taking the  transcriptome file defined in params variable `params.transcriptome`.
-3. Finally the script adds a `workflow` definition block which calls the `INDEX` process.
+1. The  process `TRIM` which generate a directory with the trimmed reads. This process takes paired reads as the input and emits the trimmed reads.
+2. A queue Channel `reads_ch` taking the  transcriptome file defined in params variable `params.reads`.
+3. Finally the script adds a `workflow` definition block which calls the `TRIM` process.
 
 ```groovy 
-//script2.nf
+//script3.nf
 
 
 /*
  * pipeline input parameters
  */
-params.reads = "data/yeast/reads/*_{1,2}.fq.gz"
-params.transcriptome = "data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
 params.outdir = "results"
 
 println """\
          R N A S E Q - N F   P I P E L I N E
          ===================================
-         transcriptome: ${params.transcriptome}
          reads        : ${params.reads}
          outdir       : ${params.outdir}
          """
@@ -221,59 +353,61 @@ println """\
 
 
 /*
- * define the `INDEX` process that create a binary index
- * given the transcriptome file
+ * define the `TRIM` process that trims raw reads and emits trimmed reads
  */
-process INDEX {
+process TRIM {
 
     input:
-    path transcriptome
+    tuple val(sample_id), path(reads)
 
     output:
-    path 'index'
+    tuple val(sample_id), path('*trimmed*'), emit: trimmed_reads
 
     script:
     """
-    salmon index --threads $task.cpus -t $transcriptome -i index
+    seqtk trimfq ${reads[0]} > ${sample_id}_trimmed_R1.fastq
+    seqtk trimfq ${reads[1]} > ${sample_id}_trimmed_R2.fastq
+    gzip *.fastq
     """
 }
 
-transcriptome_ch = channel.fromPath(params.transcriptome)
-
 workflow {
-   INDEX()
+  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
+
+  TRIM()
 }
 ```
 
 Try to run it by using the command:
 
 ```bash 
-$ nextflow run script2.nf
+$ nextflow run script3.nf
 ```
 
 ```output
 N E X T F L O W  ~  version 22.04.0
-Launching `script2.nf` [happy_brown] DSL2 - revision: 90e932bb8d
+Launching `script3.nf` [happy_brown] DSL2 - revision: 90e932bb8d
 R N A S E Q - N F   P I P E L I N E
 ===================================
-transcriptome: data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-reads        : data/yeast/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
 
-Process `INDEX` declares 1 input channel but 0 were specified
+Process `TRIM` declares 1 input channel but 0 were specified
 
- -- Check script 'script2.nf' at line: 41 or see '.nextflow.log' file for more details
+ -- Check script 'script3.nf' at line: 41 or see '.nextflow.log' file for more details
 ```
 
-The execution will fail because the program the process, `INDEX` , has not been passed any input channel.
+The execution will fail because the program the process, `TRIM` , has not been passed any input channel.
 
-Add the `transcriptome_ch` channel to the `INDEX` process call.
+Add the `reads_ch` channel to the `TRIM` process call.
 
 
 ```groovy
 [truncated]
 workflow {
-   INDEX(transcriptome_ch)
+  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
+
+  TRIM(reads_ch)
 }
 ```
 
@@ -281,27 +415,26 @@ Now try to run it again by using the command:
 
 
 ```bash 
-$ nextflow run script2.nf
+$ nextflow run script3.nf
 ```
 
 Now the workflow will run successfully.
 
 ```output
 N E X T F L O W  ~  version 22.04.0
-Launching `script2.nf` [mad_aryabhata] DSL2 - revision: 811396b67b
+Launching `script3.nf` [mad_aryabhata] DSL2 - revision: 811396b67b
 R N A S E Q - N F   P I P E L I N E
 ===================================
-transcriptome:data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-reads        : data/yeast/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
 
 executor >  local (1)
-[c0/418d78] process > INDEX (1) [100%] 1 of 1 ✔
+[c0/418d78] process > TRIM (1) [100%] 1 of 1 ✔
 
 ```
 
-The `INDEX` process also defines one `output` channel. 
-This channel will be  populated with `index` directory created during process.
+The `TRIM` process also defines one `output` channel. 
+This channel will be  populated with the trimmed reads created during process.
 To view the contents of the channel we can use the `view` operator.
 
 
@@ -310,8 +443,8 @@ To view the contents of the channel we can use the `view` operator.
 
 ## View the contents of the index_ch
 
-1. Assign the output of the `INDEX` process to the variable `index_ch`.
-2. View the contents of the `index_ch` channel by using the `view` operator.
+1. Assign the output of the `TRIM` process to the variable `trimmed_reads_ch`.
+2. View the contents of the `trimmed_reads_ch` channel by using the `view` operator.
 
 :::::::::::::::  solution
 
@@ -320,8 +453,10 @@ To view the contents of the channel we can use the `view` operator.
 ```groovy 
 [..truncated..]
 workflow {
-  index_ch=INDEX(transcriptome_ch)
-  index_ch.view()
+  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
+
+  trimmed_reads_ch=TRIM(reads_ch)
+  trimmed_reads_ch.view()
 }
 ```
 
@@ -343,176 +478,49 @@ In this step you have learned:
 
 - How to print the content of a channel `view()`
 
-## Collect read files by pairs
-
-This step shows how to match **read** files into pairs, so they can be mapped by salmon.
-
-The script `script3.nf` adds a line to create a channel, `read_pairs_ch`, containing fastq read pair files using the `fromFilePairs` channel factory.
-
-```groovy 
-//script3.nf
-nextflow.enable.dsl = 2
-
-/*
- * pipeline input parameters
- */
-params.reads = "data/yeast/reads/ref1_{1,2}.fq.gz"
-params.transcriptome = "data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
-params.outdir = "results"
-
-log.info """\
-         R N A S E Q - N F   P I P E L I N E
-         ===================================
-         transcriptome: ${params.transcriptome}
-         reads        : ${params.reads}
-         outdir       : ${params.outdir}
-         """
-         .stripIndent()
-
-
-read_pairs_ch = Channel.fromFilePairs( params.reads )
-```
-
-We can view the contents  of the `read_pairs_ch` by adding the following statement as the last line:
-
-```groovy 
-read_pairs_ch.view()
-```
-
-Now if we execute it with the following command:
-
-```bash 
-$ nextflow run script3.nf
-```
-
-It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/yeast/reads/ref1_{1,2}.fq.g`, defined by the variable `params.reads` , and the second is a list representing the actual files.
-
-```output 
-[..truncated..]
-[ref1, [data/yeast/reads/ref1_1.fq.gz,data/yeast/reads/ref1_2.fq.gz]]
-```
-
-To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line. For example, the following command would read in add the ref samples:
-
-```bash 
-$ nextflow run script3.nf --reads 'data/yeast/reads/ref*_{1,2}.fq.gz'
-```
-
-```output 
-[..truncated..]
-[ref2, [data/yeast/reads/ref2_1.fq.gz, data/yeast/reads/ref2_2.fq.gz]]
-[ref3, [data/yeast/reads/ref3_1.fq.gz, data/yeast/reads/ref3_2.fq.gz]]
-[ref1, [data/yeast/reads/ref1_1.fq.gz, data/yeast/reads/ref1_2.fq.gz]]
-```
-
-**Note** File paths including one or more wildcards ie. `*`, `?`, etc. MUST be wrapped in single-quoted characters to avoid Bash expanding the glob pattern on the command line.
-
-We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` channel factory to return an message if the file doesn't exist.
-
-```groovy 
-//script3.nf
-[..truncated..]
-read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists: true )
-```
-
-If we now run the script with the `--reads` parameter `data/yeast/reads/*_1,2}.fq.gz`
-
-```bash 
-$ nextflow run script3.nf --reads 'data/yeast/reads/*_1,2}.fq.gz'
-```
-
-it will return the message .
-
-```output 
-[..truncated..]
-No such file: data/yeast/reads/*_1,2}.fq.gz
-```
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Read in all read pairs
-
-1. Add  the `checkIfExists: true` argument to the `fromFilePairs` channel factory in `script3.nf`.
-2. Using the command line parameter `--reads`, add a glob pattern to read in all the read pairs files from the `data/yeast/reads` directory.
-
-:::::::::::::::  solution
-
-## Solution
-
-```groovy 
-read_pairs_ch =Channel.fromFilePairs(params.reads, checkIfExists: true)
-```
-
-```bash 
-nextflow run script3.nf --reads 'data/yeast/reads/*_{1,2}.fq.gz'
-```
-
-```output 
-[..truncated..]
-[temp33_1, [data/yeast/reads/temp33_1_1.fq.gz, data/yeast/reads/temp33_1_2.fq.gz]]
-[ref2, [data/yeast/reads/ref2_1.fq.gz, data/yeast/reads/ref2_2.fq.gz]]
-[temp33_3, [data/yeast/reads/temp33_3_1.fq.gz, data/yeast/reads/temp33_3_2.fq.gz]]
-[ref3, [data/yeast/reads/ref3_1.fq.gz, data/yeast/reads/ref3_2.fq.gz]]
-[temp33_2, [data/yeast/reads/temp33_2_1.fq.gz,data/yeast/reads/temp33_2_2.fq.gz]]
-[etoh60_2, [data/yeast/reads/etoh60_2_1.fq.gz,data/yeast/reads/etoh60_2_2.fq.gz]]
-[ref1, [data/yeast/reads/ref1_1.fq.gz, data/yeast/reads/ref1_2.fq.gz]]
-[etoh60_3, [data/yeast/reads/etoh60_3_1.fq.gz, data/yeast/reads/etoh60_3_2.fq.gz]]
-[etoh60_1, [data/yeast/reads/etoh60_1_1.fq.gz, data/yeast/reads/etoh60_1_2.fq.gz]]
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-### Recap
-
-In this step you have learned:
-
-- How to use `fromFilePairs` to handle read pair files
-
-- How to use the `checkIfExists` option to check input file existence
-
-## Perform expression quantification
+## Assemble genomes
 
 The script `script4.nf`;
 
-1. Adds the quantification process, `QUANT`.
-2. Calls the `QUANT` process in the workflow block.
+1. Adds the genome assembly process, `ASSEMBLE`.
+2. Calls the `ASSEMBLE` process in the workflow block.
 
 ```groovy 
 //script4.nf
 ..truncated..
 /*
- * Run Salmon to perform the quantification of expression using
- * the index and the matched read files
+ * Run Shovill to perform the genome assembly ad the trimmed read files
  */
-process QUANT {
+process ASSEMBLE {
+    cpus 1
 
     input:
-    each index
-    tuple val(pair_id), path(reads)
+    tuple val(sample_id), path(reads)
 
     output:
-    path(pair_id)
+    tuple val(sample_id), path("${sample_id}.contigs.fa") 
 
     script:
     """
-    salmon quant --threads $task.cpus --libType=U -i $index -1 ${reads[0]} -2 ${reads[1]} -o $pair_id
+    shovill \
+      --R1 ${reads[0]} \
+      --R2 ${reads[1]} \
+      --cpus $task.cpus \
+      --outdir ./${sample_id}_shovill_output \
+      --force
+    mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.fa
     """
 }
 ..truncated..
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
-  transcriptome_ch = Channel.fromPath( params.transcriptome, checkIfExists:true )
 
-  index_ch=INDEX(transcriptome_ch)
-  quant_ch=QUANT(index_ch,read_pairs_ch)
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
 }
 ```
 
-The `index_ch` channel, declared as output in the `INDEX` process, is used as the first input argument to the `QUANT` process.
-
-The second input argument of the `QUANT` process, the `read_pairs_ch` channel, is  a tuple composed of two elements: the `pair_id` and the `reads`.
+The `trimmed_reads_ch` channel, declared as output in the `TRIM` process, is used as the input argument to the `ASSEMBLE` process. It is  a tuple composed of two elements: the `sample_id` and the `reads`. 
 
 Execute it by using the following command:
 
@@ -520,7 +528,7 @@ Execute it by using the following command:
 $ nextflow run script4.nf
 ```
 
-You will see the execution of the index and quantification process.
+You will see the execution of the trimming and assembly processes.
 
 Re run the command using the `-resume` option
 
@@ -533,7 +541,7 @@ The `-resume` option cause the execution of any step that has been already proce
 Try to execute it with more read files as shown below:
 
 ```bash
-$ nextflow run script4.nf -resume --reads 'data/yeast/reads/ref*_{1,2}.fq.gz'
+$ nextflow run script4.nf -resume --reads 'data/bacteria/reads/ref*_{1,2}.fq.gz'
 ```
 
 ```output
@@ -541,18 +549,16 @@ N E X T F L O W  ~  version 21.04.0
 Launching `script4.nf` [shrivelled_brenner] - revision: c21df6839e
 R N A S E Q - N F   P I P E L I N E
 ===================================
-transcriptome: data/yeast/transcriptome/Saccharomyces_c
-erevisiae.R64-1-1.cdna.all.fa.gz
 
-reads        : data/yeast/reads/ref*_{1,2}.fq.gz
+reads        : data/bacteria/reads/ref*_{1,2}.fq.gz
 outdir       : results
 
 executor >  local (8)
-[02/3742cf] process > INDEX     [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > QUANT (9) [100%] 3 of 3, cached: 1 ✔
+[02/3742cf] process > TRIM     [100%] 1 of 1, cached: 1 ✔
+[9a/be3483] process > ASSEMBLE (9) [100%] 3 of 3, cached: 1 ✔
 ```
 
-You will notice that  the `INDEX` step and one of the `QUANT` steps has been cached, and
+You will notice that  the `TRIM` step and one of the `ASSEMBLE` steps has been cached, and
 the quantification process is executed more than one time.
 
 When your input channel contains multiple data items Nextflow, where possible, parallelises the execution of your pipeline.
@@ -563,14 +569,14 @@ In these situations it is useful to add a `tag` directive to add some descriptiv
 
 ## Add a tag directive
 
-Add a `tag` directive to the `QUANT` process of `script4.nf` to provide a more readable execution log.
+Add a `tag` directive to the `ASSEMBLE` process of `script4.nf` to provide a more readable execution log.
 
 :::::::::::::::  solution
 
 ## Solution
 
 ```groovy 
-tag "quantification on $pair_id"
+tag "assembly on $sample_id"
 ```
 
 :::::::::::::::::::::::::
@@ -614,7 +620,7 @@ In this step you have learned:
 
 ## Quality control
 
-This step implements a quality control step for your input reads. The input to the `FASTQC` process is the same `read_pairs_ch` that is provided as input to the quantification process `QUANT` .
+This step implements a quality control step for your input reads. The input to the `FASTQC` process is the same `read_pairs_ch` that is provided as input to the assembly process `ASSEMBLE` .
 
 ```groovy
 //script5.nf
@@ -644,10 +650,9 @@ process FASTQC {
 
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
-  transcriptome_ch = Channel.fromPath( params.transcriptome, checkIfExists:true )
 
-  index_ch=INDEX(transcriptome_ch)
-  quant_ch=QUANT(index_ch,read_pairs_ch)
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
 }
 ```
 
@@ -675,10 +680,9 @@ $ nextflow run script5.nf -resume
 ```groovy
 workflow {
 read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
-transcriptome_ch = Channel.fromPath( params.transcriptome, checkIfExists:true )
 
-index_ch = INDEX( transcriptome_ch )
-quant_ch=QUANT(index_ch,read_pairs_ch)
+trimmed_reads_ch=TRIM(read_pairs_ch)
+assemblies_ch=ASSEMBLE(trimmed_reads_ch)
 fastqc_ch=FASTQC(read_pairs_ch)
 ```
 
@@ -700,7 +704,7 @@ In this step you have learned:
 This step collect the outputs from the quantification and fastqc steps to create a final report by using the [MultiQC](https://multiqc.info/) tool.
 
 The input for the `MULTIQC` process requires all data in a single channel element.
-Therefore, we will need to combine the `FASTQC` and `QUANT` outputs using:
+Therefore, we will need to combine the `TRIM`, `FASTQC`, and `ASSEMBLE` outputs using:
 
 - The combining operator `mix` : combines the items in the two channels into a single channel
 
@@ -735,10 +739,10 @@ ch1.collect().view()
 
 Which is the correct way to combined `mix` and `collect` operators so that you have a single channel with one List item?
 
-1. `quant_ch.mix(fastqc_ch).collect()`
-2. `quant_ch.collect(fastqc_ch).mix()`
-3. `fastqc_ch.mix(quant_ch).collect()`
-4. `fastqc_ch.collect(quant_ch).mix()`
+1. `trim_ch.mix(fastqc_ch).collect()`
+2. `trim_ch.collect(fastqc_ch).mix()`
+3. `fastqc_ch.mix(trim_ch).collect()`
+4. `fastqc_ch.collect(trim_ch).mix()`
 
 :::::::::::::::  solution
 
@@ -751,7 +755,7 @@ collect all the items in a single item.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-In `script6.nf` we use the statement `quant_ch.mix(fastqc_ch).collect()` to combine and collect the outputs of the `QUANT` and `FASTQC` process to
+In `script6.nf` we use the statement `quant_ch.mix(fastqc_ch).collect()` to combine and collect the outputs of the `ASSEMBLE` and `FASTQC` process to
 create the required input for the `MULTIQC` process.
 
 ```groovy
@@ -779,19 +783,18 @@ process MULTIQC {
 
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
-  transcriptome_ch = Channel.fromPath( params.transcriptome, checkIfExists:true )
 
-  index_ch=INDEX(transcriptome_ch)
-  quant_ch=QUANT(index_ch,read_pairs_ch)
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
   fastqc_ch=FASTQC(read_pairs_ch)
-  MULTIQC(quant_ch.mix(fastqc_ch).collect())
+  MULTIQC(trim_ch.mix(fastqc_ch).collect())
 }
 ```
 
 Execute the script with the following command:
 
 ```bash
-$ nextflow run script6.nf --reads 'data/yeast/reads/*_{1,2}.fq.gz' -resume
+$ nextflow run script6.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
 ```
 
 ```output
@@ -799,13 +802,12 @@ N E X T F L O W  ~  version 21.04.0
 Launching `script6.nf` [small_franklin] - revision: 9062818659
 R N A S E Q - N F   P I P E L I N E
 ===================================
-transcriptome: data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-reads        : data/yeast/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
 
 executor >  local (9)
-[02/3742cf] process > INDEX                              [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > QUANT (quantification on etoh60_1) [100%] 9 of 9, cached: 9 ✔
+[02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
+[9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
 [1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
 [2c/206fef] process > MULTIQC                            [100%] 1 of 1 ✔
 ```
@@ -845,7 +847,7 @@ If expression is true? "set value to a" : "else set value to b"
 Try to run it by using the following command:
 
 ```bash
-$ nextflow run script7.nf -resume --reads 'data/yeast/reads/*_{1,2}.fq.gz'
+$ nextflow run script7.nf -resume --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
 ```
 
 ```output
@@ -886,7 +888,7 @@ $ nextflow run script7.nf -resume -with-report -with-trace -with-timeline -with-
 
 ## Solution
 
-The `INDEX` process should be the longest running process.
+The `X` process should be the longest running process.
 dag.png
 ![](fig/dag.png){alt='dag'}
 The vertices in the graph represent the pipeline's processes and operators, while the edges represent the data connections (i.e. channels) between them.
@@ -917,5 +919,3 @@ Note: runtime metrics may be incomplete for run short running tasks..
 - Nextflow is able to produce multiple reports and charts providing several runtime metrics and execution information using the command line options `-with-report`, `-with-trace`, `-with-timeline` and produce a graph using `-with-dag`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
