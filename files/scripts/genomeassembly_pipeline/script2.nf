@@ -7,7 +7,7 @@ params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
 params.outdir = "results"
 
 log.info """\
-         R N A S E Q - N F   P I P E L I N E
+         G E N O M E A S S E M B L Y - N F
          ===================================
          reads        : ${params.reads}
          outdir       : ${params.outdir}
