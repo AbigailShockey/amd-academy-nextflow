@@ -1,7 +1,7 @@
 ---
 title: Simple genome assembly pipeline
-teaching: 20
-exercises: 40
+teaching: 23
+exercises: 46
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
@@ -160,7 +160,7 @@ Below is an example log.info command printing all the pipeline parameters.
 
 ```groovy 
 log.info """\
-        R N A S E Q - N F   P I P E L I N E    
+        G E N O M E A S S E M B L Y - N F   P I P E L I N E    
         ===================================
         reads        : ${params.reads}
         outdir       : ${params.outdir}
@@ -208,7 +208,7 @@ params.reads = "data/bacteria/reads/ref1_{1,2}.fq.gz"
 params.outdir = "results"
 
 log.info """\
-         R N A S E Q - N F   P I P E L I N E
+         G E N O M E A S S E M B L Y - N F   P I P E L I N E
          ===================================
          reads        : ${params.reads}
          outdir       : ${params.outdir}
@@ -353,7 +353,7 @@ params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
 params.outdir = "results"
 
 println """\
-         R N A S E Q - N F   P I P E L I N E
+         G E N O M E A S S E M B L Y - N F   P I P E L I N E
          ===================================
          reads        : ${params.reads}
          outdir       : ${params.outdir}
@@ -396,7 +396,7 @@ $ nextflow run script3.nf
 ```output
 N E X T F L O W  ~  version 22.04.0
 Launching `script3.nf` [happy_brown] DSL2 - revision: 90e932bb8d
-R N A S E Q - N F   P I P E L I N E
+G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
@@ -432,7 +432,7 @@ Now the workflow will run successfully.
 ```output
 N E X T F L O W  ~  version 22.04.0
 Launching `script3.nf` [mad_aryabhata] DSL2 - revision: 811396b67b
-R N A S E Q - N F   P I P E L I N E
+G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
@@ -556,7 +556,7 @@ $ nextflow run script4.nf -resume --reads 'data/bacteria/reads/ref*_{1,2}.fq.gz'
 ```output
 N E X T F L O W  ~  version 21.04.0
 Launching `script4.nf` [shrivelled_brenner] - revision: c21df6839e
-R N A S E Q - N F   P I P E L I N E
+G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 
 reads        : data/bacteria/reads/ref*_{1,2}.fq.gz
@@ -858,7 +858,7 @@ $ nextflow run script7.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
 ```output
 N E X T F L O W  ~  version 21.04.0
 Launching `script6.nf` [small_franklin] - revision: 9062818659
-R N A S E Q - N F   P I P E L I N E
+G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 reads        : data/bacteria/reads/*_{1,2}.fq.gz
 outdir       : results
