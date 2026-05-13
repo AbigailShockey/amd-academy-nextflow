@@ -713,7 +713,7 @@ In this step you have learned:
 This step implements a quality control step for your assemblies. The input to the `QUAST` process is the `assemblies_ch` that is emmitted from `ASSEMBLE`.
 
 ```groovy
-//scriptX.nf
+//script6.nf
 [..truncated..]
 
 /*
@@ -748,10 +748,10 @@ workflow {
 }
 ```
 
-Run the script `scriptX.nf` by using the following command:
+Run the script `script6.nf` by using the following command:
 
 ```bash
-$ nextflow run scriptX.nf -resume
+$ nextflow run script6.nf -resume
 ```
 
 The `QUAST` process will not run as the process has not been declared in the workflow scope.
@@ -812,12 +812,12 @@ collect all the items in a single item.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-In `script6.nf` we use the statement `quant_ch.mix(fastqc_ch).collect()` to combine and collect the outputs of the `ASSEMBLE` and `FASTQC` process to
+In `script7.nf` we use the statement `quant_ch.mix(fastqc_ch).collect()` to combine and collect the outputs of the `ASSEMBLE` and `FASTQC` process to
 create the required input for the `MULTIQC` process.
 
 ```groovy
 [..truncated..]
-//script6.nf
+//script7.nf
 /*
  * Create a report using multiQC for the quantification
  * and fastqc processes
@@ -852,7 +852,7 @@ workflow {
 Execute the script with the following command:
 
 ```bash
-$ nextflow run script6.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
+$ nextflow run script7.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
 ```
 
 ```output
@@ -889,7 +889,7 @@ This step shows how to execute an action when the pipeline completes the executi
 
 **Note:** that Nextflow processes define the execution of asynchronous tasks i.e. they are not executed one after another as they are written in the pipeline script as it would happen in a common imperative programming language.
 
-The script `script7.nf` uses the `workflow.onComplete` event handler to print a confirmation message when the script completes.
+The script `script8.nf` uses the `workflow.onComplete` event handler to print a confirmation message when the script completes.
 
 ```groovy
 workflow.onComplete {
@@ -906,7 +906,7 @@ If expression is true? "set value to a" : "else set value to b"
 Try to run it by using the following command:
 
 ```bash
-$ nextflow run script7.nf -resume --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
+$ nextflow run script8.nf -resume --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
 ```
 
 ```output
@@ -933,7 +933,7 @@ More information can be found [here](https://www.nextflow.io/docs/latest/tracing
 
 ## Metrics and reports
 
-Run the script7.nf with the reporting options as shown below:
+Run the script8.nf with the reporting options as shown below:
 
 ```bash
 $ nextflow run script7.nf -resume -with-report -with-trace -with-timeline -with-dag dag.png
