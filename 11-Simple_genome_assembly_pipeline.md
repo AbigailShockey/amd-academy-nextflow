@@ -36,7 +36,7 @@ $ mkdir fastqc_<sample_id>_logs
 $ fastqc -o fastqc_<sample_id>_logs -f fastq -q <reads>
 ```
 
-2. **Read trimming with Seqtk**: [Seqtk](https://github.com/lh3/seqtk) Seqtk is a fast and lightweight tool for processing sequences in the FASTA or FASTQ format. It seamlessly parses both FASTA and FASTQ files which can also be optionally compressed by gzip.
+2. **Read trimming with Seqtk**: [Seqtk](https://github.com/lh3/seqtk) is a fast and lightweight tool for processing sequences in the FASTA or FASTQ format. It seamlessly parses both FASTA and FASTQ files which can also be optionally compressed by gzip.
 
 ```bash
 $ seqtk trimfq <read1> > <sample_id>_trimmed_R1.fastq
@@ -44,7 +44,7 @@ $ seqtk trimfq <read2> > <sample_id>_trimmed_R2.fastq
 $ gzip *.fastq
 ```
 
-3. **Genome Assembly with Shovill**: After trimming, Shovill is used for genome assembly. Shovill is a pipeline which uses SPAdes at its core, but alters the steps before and after the primary assembly step to get similar results in less time. Shovill also supports other assemblers like SKESA, Velvet and Megahit, so you can take advantage of the pre- and post-processing the Shovill provides with those too.
+3. **Genome Assembly with Shovill**: After trimming, [Shovill](https://github.com/tseemann/shovill) is used for genome assembly. Shovill is a pipeline which uses SPAdes at its core, but alters the steps before and after the primary assembly step to get similar results in less time.
 
 ```bash
 $ shovill \
