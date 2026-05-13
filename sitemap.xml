@@ -37,6 +37,9 @@
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/11-Simple_Rna-Seq_pipeline.html</loc>
   </url>
   <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/11-Simple_genome_assembly_pipeline.html</loc>
+  </url>
+  <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/12-nfcore.html</loc>
   </url>
   <url>
@@ -95,6 +98,9 @@
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_Rna-Seq_pipeline.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_genome_assembly_pipeline.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/12-nfcore.html</loc>
