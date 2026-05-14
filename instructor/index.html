@@ -560,82 +560,214 @@ any links that you are not going to use.
  --></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><p>FIXME: Setup instructions live in this document. Please specify the
-tools and the data sets the Learner needs to have installed.</p>
-<section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
-<hr class="half-width"><!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
---><p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
-and unzip it to your Desktop</p>
-</section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
-<hr class="half-width"><div id="details" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+      </section><section id="setup"><div class="section level1">
+<h1 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a></h1>
+<p>There are two options presented here on how setup your computer to
+complete the exercises in this workshop.</p>
+<ol style="list-style-type: decimal"><li>Running locally on your personal computer</li>
+<li>Running the exercises in your browser using a remote environment
+called Gitpod.</li>
+</ol><div class="section level2">
+<h2 id="running-locally-on-your-personal-computer">Running locally on your personal computer<a class="anchor" aria-label="anchor" href="#running-locally-on-your-personal-computer"></a></h2>
+<div class="section level3">
+<h3 id="training-directory">Training directory<a class="anchor" aria-label="anchor" href="#training-directory"></a></h3>
+<p>Each learner should setup a training folder
+e.g. <code>nf-training</code></p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="fu">mkdir</span> nf-training</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="bu">cd</span> nf-training</span></code></pre>
 </div>
-<span class="callout-header">Discussion</span>
-<div id="details" class="callout-inner">
-<h3 class="callout-title">Details</h3>
-<div class="callout-content">
-<p>Setup for different systems can be presented in dropdown menus via a
-<code>spoiler</code> tag. They will join to this discussion block, so
-you can give a general overview of the software used in this lesson here
-and fill out the individual operating systems (and potentially add more,
-e.g. online setup) in the solutions blocks.</p>
+<p>There are three items that you need to download:</p>
+<ol style="list-style-type: decimal"><li>The training software.</li>
+<li>The training dataset.</li>
+<li>The workshop scripts.</li>
+</ol></div>
+<div class="section level3">
+<h3 id="training-software">Training software<a class="anchor" aria-label="anchor" href="#training-software"></a></h3>
+<p>A list of software with version required for this training is listed
+below:</p>
+<table class="table"><thead><tr><th>Software</th>
+<th>Version</th>
+</tr></thead><tbody><tr><td>Nextflow</td>
+<td>20.10.0</td>
+</tr><tr><td>nf-core/tools</td>
+<td>1.12.1</td>
+</tr><tr><td>salmon</td>
+<td>1.5</td>
+</tr><tr><td>fastqc</td>
+<td>0.11</td>
+</tr><tr><td>multiqc</td>
+<td>1.10</td>
+</tr><tr><td>python</td>
+<td>3.8</td>
+</tr></tbody></table><div class="section level4">
+<h4 id="conda">conda<a class="anchor" aria-label="anchor" href="#conda"></a></h4>
+<p>The simplest way to install the software for this course is using
+conda.</p>
+<p>To install conda see <a href="https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/setup/" class="external-link">here</a>.</p>
+<p>An environment file is provided here <a href="https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml" class="external-link">environment.yml</a></p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co"># You can use either wget or curl to download content from the web via the command line.</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="co"># wget</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="fu">wget</span> https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a><span class="co"># curl </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> environment.yml https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml</span></code></pre>
+</div>
+<p>To create the training environment run:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">conda</span> env create <span class="at">-n</span> nf-training <span class="at">-f</span> environment.yml</span></code></pre>
+</div>
+<p>Then activate the environment by running</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">conda</span> activate nf-training</span></code></pre>
 </div>
 </div>
 </div>
-<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  Windows
-  </h3>
-</button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
-<div class="accordion-body">
-<p>Use PuTTY</p>
+<div class="section level3">
+<h3 id="training-scripts">Training scripts<a class="anchor" aria-label="anchor" href="#training-scripts"></a></h3>
+<p>To aid in the delivery of the lesson, the scripts mentioned in each
+episode, can be found in the respective episode folders in the github
+repository. <a href="https://github.com/carpentries-incubator/workflows-nextflow/tree/gh-pages/files/scripts" class="external-link">https://github.com/carpentries-incubator/workflows-nextflow/tree/main/episodes/files/scripts</a></p>
+<p>To get the scripts associated with each episode you will need to
+download the scripts folder from the github repository.</p>
+<p>Below is a series of commands to download and unpack scripts
+folder.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># get the gitrepo as a zip file</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">wget</span> https://github.com//carpentries-incubator/workflows-nextflow/archive/main.zip</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="co">#or</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> main.zip https://github.com//carpentries-incubator/workflows-nextflow/archive/main.zip</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="co"># unzip the script file</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="fu">unzip</span> main.zip <span class="st">'workflows-nextflow-main/episodes/files/scripts*'</span> <span class="at">-d</span>  .</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a><span class="co"># mv the scripts folder to the nf-training folder</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a><span class="fu">mv</span> workflows-nextflow-main/episodes/files/scripts .</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1" aria-label="code-block-5-13"></a><span class="co"># remove the zip file and the git repo</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1" aria-label="code-block-5-14"></a><span class="fu">rm</span> <span class="at">-r</span> workflows-nextflow-main main.zip</span></code></pre>
+</div>
+<p>The nextflow scripts for each episode, can be found in the respective
+episode folders inside this the scripts folder.</p>
+<div class="section level4">
+<h4 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a></h4>
+<p>Inside the <code>nf-training</code> folder download the workshop
+dataset from Figshare, <a href="https://figshare.com/articles/dataset/RNA-seq_training_dataset/14822481" class="external-link">https://figshare.com/articles/dataset/RNA-seq_training_dataset/14822481</a></p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">wget</span> <span class="at">--content-disposition</span> https://ndownloader.figshare.com/files/28531743</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="co"># or curl</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span>  data.tar.gz https://ndownloader.figshare.com/files/28531743</span></code></pre>
+</div>
+<p>Unpack gzipped tar file:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">tar</span> <span class="at">-xvf</span>  data.tar.gz</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="fu">rm</span> data.tar.gz</span></code></pre>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="visual-studio-code-editor-setup">Visual Studio Code editor setup<a class="anchor" aria-label="anchor" href="#visual-studio-code-editor-setup"></a></h3>
+<p>Any text editor can be used to write Nextflow scripts. A recommended
+code editor is <a href="https://code.visualstudio.com/" class="external-link">Visual Studio
+Code</a>.</p>
+<p>Go to <a href="https://code.visualstudio.com/" class="external-link">Visual Studio Code</a>
+and you should see a download button. The button or buttons should be
+specific to your platform and the download package should be
+installable.</p>
+<div class="section level4">
+<h4 id="nextflow-language-support-in-visual-studio-code">Nextflow language support in Visual Studio Code<a class="anchor" aria-label="anchor" href="#nextflow-language-support-in-visual-studio-code"></a></h4>
+<p>You can add Nextflow language support in Visual Studio Code by
+clicking the <a href="https://marketplace.visualstudio.com/items?itemName=nextflow.nextflow" class="external-link">install</a>
+button on the Nextflow language extension.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="nextflow-install-without-conda">Nextflow install without conda<a class="anchor" aria-label="anchor" href="#nextflow-install-without-conda"></a></h3>
+<p>Nextflow can be used on any POSIX-compatible system (Linux, macOS,
+etc), and on Windows through WSL. It requires Bash 3.2 (or later) and
+Java 11 (or later, up to 22) to be installed</p>
+</div>
+<div class="section level3">
+<h3 id="nextflow-installation">Nextflow installation<a class="anchor" aria-label="anchor" href="#nextflow-installation"></a></h3>
+<p>Install the latest version of Nextflow copy &amp; pasting the
+following snippet in a terminal window:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co"># Make sure that Java v11 or later is installed:</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="ex">java</span> <span class="at">-version</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="co"># Install Nextflow</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="ex">curl</span> <span class="at">-s</span> https://get.nextflow.io <span class="kw">|</span> <span class="fu">bash</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="add-nextflow-binary-to-your-users-path">Add Nextflow binary to your user’s PATH:<a class="anchor" aria-label="anchor" href="#add-nextflow-binary-to-your-users-path"></a></h3>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="fu">mv</span> nextflow ~/bin/</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="co"># OR system-wide installation:</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="co"># sudo mv nextflow /usr/local/bin</span></span></code></pre>
+</div>
+<p>Check the correct installation running the following command:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">nextflow</span> info</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="nf-coretools-installation-without-conda">nf-core/tools installation without conda<a class="anchor" aria-label="anchor" href="#nf-coretools-installation-without-conda"></a></h3>
+<div class="section level4">
+<h4 id="pip">Pip<a class="anchor" aria-label="anchor" href="#pip"></a></h4>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">pip</span> install nf-core</span></code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
-  <h3 class="accordion-header" id="headingSpoiler2">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  MacOS
-  </h3>
-</button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
-<div class="accordion-body">
-<p>Use Terminal.app</p>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
-  <h3 class="accordion-header" id="headingSpoiler3">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  Linux
-  </h3>
-</button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
-<div class="accordion-body">
-<p>Use Terminal</p>
-</div>
-</div>
-</div>
-</div>
-<!--
+<div class="section level2">
+<h2 id="running-exercises-remotely-in-your-web-browser-through-gitpod-">Running exercises remotely in your web-browser through Gitpod.<a class="anchor" aria-label="anchor" href="#running-exercises-remotely-in-your-web-browser-through-gitpod-"></a></h2>
+<p>Gitpod is a cloud-based computing environment that is accessed using
+your web-browser. You can click the button below to open up a Gitpod
+instance ready for training. This Gitpod environment comes with the
+tools necessary for the exercises already installed. You’ll be presented
+with a VSCode-like interface in your browser, which has a file explorer
+panel on the left, a main panel in which to view and edit files, and a
+panel below that includes a terminal in which to run unix commands.</p>
+<p><a href="https://gitpod.io/#https://github.com/carpentries-incubator/workflows-nextflow" class="external-link"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" class="figure"></a></p>
+<p>Gitpod sessions automatically close after some period of inactivity.
+To open your session again, go to the <a href="https://gitpod.io/workspaces" class="external-link">Gitpod Dashboard</a> where you can
+find and reopen any session.</p>
+<p>Gitpod gives each user 10 hours usage allocation per month ( 50 if
+you connect your LinkedIn account). <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
- -->
-</section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
+ --></p>
+</div>
+</div>
+
+      </section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="../instructor/01-getting-started-with-nextflow.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
