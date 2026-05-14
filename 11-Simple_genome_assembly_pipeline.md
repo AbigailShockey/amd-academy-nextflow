@@ -7,7 +7,7 @@ exercises: 46
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Create a simple genome assembly pipeline.
-- Use the `log.info` function to print all the pipeline parameters.
+- Use the `println` function to print all the pipeline parameters.
 - Print a confirmation message when the pipeline completes.
 - Use a conda `environment.yml` file to install the pipeline's software requirement.
 - Produce an execution report and generate run metrics from a pipeline run.
@@ -79,7 +79,7 @@ This pipeline assembles bacterial genomes, starting with quality control and cul
 To start move the episode's nextflow scripts in the `scripts/genomeassembly_pipeline` folder to your home directory.
 
 ```bash
-$ cp scripts/rnaseq_pipeline/* .
+$ cp scripts/genomeassembly_pipeline/* .
 ```
 
 This folder contains files we will be modifying in this episode.
@@ -130,10 +130,10 @@ params.outdir = "results"
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-It can be useful to print the pipeline parameters to the screen. This can be done using the the `log.info` command and a multiline string statement. The string method `.stripIndent()` command is used to remove the indentation on multi-line strings. `log.info` also saves the output to the log execution file `.nextflow.log`.
+It can be useful to print the pipeline parameters to the screen. This can be done using the the `println` command and a multiline string statement. The string method `.stripIndent()` command is used to remove the indentation on multi-line strings. `println` also saves the output to the log execution file `.nextflow.log`.
 
 ```groovy 
-log.info """\
+println """\
          reads: ${params.reads}
          """
          .stripIndent()
@@ -141,9 +141,9 @@ log.info """\
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## log.info
+## println
 
-Modify the `script1.nf` to print all the pipeline parameters by using a single `log.info` command and a multiline string statement.
+Modify the `script1.nf` to print all the pipeline parameters by using a single `println` command and a multiline string statement.
 See an example [here](https://github.com/nextflow-io/rnaseq-nf/blob/3b5b49f/main.nf#L41-L48).
 
 ```bash 
@@ -156,10 +156,10 @@ Look at the output log `.nextflow.log`.
 
 ## Solution
 
-Below is an example log.info command printing all the pipeline parameters.
+Below is an example println command printing all the pipeline parameters.
 
 ```groovy 
-log.info """\
+println """\
         G E N O M E A S S E M B L Y - N F   P I P E L I N E    
         ===================================
         reads        : ${params.reads}
@@ -184,11 +184,9 @@ In this step you have learned:
 
 - How to pass parameters by using the command line.
 
-- The use of `$var` and `${var}` variable placeholders.
-
 - How to use multiline strings.
 
-- How to use `log.info` to print information and save it in the log execution file.
+- How to use `println` to print information and save it in the log execution file.
 
 
 ## Collect read files by pairs
@@ -207,7 +205,7 @@ nextflow.enable.dsl = 2
 params.reads = "data/bacteria/reads/ref1_{1,2}.fq.gz"
 params.outdir = "results"
 
-log.info """\
+println """\
          G E N O M E A S S E M B L Y - N F   P I P E L I N E
          ===================================
          reads        : ${params.reads}
@@ -481,6 +479,8 @@ In this step you have learned:
 
 - How process inputs are declared
 
+- The use of the `${val}` variable placeholder.
+
 - How to assign a channel as input to a process call
 
 - How process outputs are declared
@@ -585,35 +585,13 @@ Add a `tag` directive to the `ASSEMBLE` process of `script4.nf` to provide a mor
 ## Solution
 
 ```groovy 
-tag "assembly on $sample_id"
+tag "Assembly on $sample_id"
 ```
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Data produced by the workflow during a process will be saved in the working directory, by default a directory named `work`.
-The working directory should be considered a temporary storage space and any data you wish to save at the end of the workflow should be specified in the process output with the final storage location  defined in the  `publishDir` directive.
-
-**Note:** by default the `publishDir` directive creates a symbolic link to the files in the working this behaviour can be changed using the `mode` parameter.
-
-## Add a publishDir directive
-
-Add a `publishDir` directive to the quantification process of `script4.nf` to store the process results into folder specified by the `params.outdir` Nextflow variable. Include the `publishDir` `mode` option to copy the output.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-:::::::::::::::  solution
-
-## Solution
-
-```groovy 
-publishDir "${params.outdir}/quant", mode:'copy'
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### Recap
 
@@ -624,8 +602,6 @@ In this step you have learned:
 - How to resume the script execution skipping already already computed steps.
 
 - How to use the `tag` directive to provide a more readable execution output.
-
-- How to use the `publishDir` to store a process results in a path of your choice.
 
 ## Quality control
 
@@ -639,6 +615,7 @@ This step implements a quality control step for your input reads. The input to t
  * Run fastQC to check quality of reads files
  */
 process FASTQC {
+
     tag "FASTQC on $sample_id"
     cpus 1
 
@@ -720,6 +697,7 @@ This step implements a quality control step for your assemblies. The input to th
  * Run QUAST to check quality of the assemblies
  */
 process QUAST {
+
     tag "QUAST on $sample_id"
     cpus 1
 
@@ -754,7 +732,52 @@ Run the script `script6.nf` by using the following command:
 $ nextflow run script6.nf -resume
 ```
 
-The `QUAST` process will not run as the process has not been declared in the workflow scope.
+```output
+N E X T F L O W  ~  version 21.04.0
+Launching `script6.nf` [small_franklin] - revision: 9062818659
+G E N O M E A S S E M B L Y - N F   P I P E L I N E
+===================================
+reads        : data/bacteria/reads/*_{1,2}.fq.gz
+outdir       : results
+
+executor >  local (9)
+[02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
+[9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
+[1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
+[2q/f3g89v] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9
+```
+
+Data produced by the workflow during a process will be saved in the working directory, by default a directory named `work`.
+The working directory should be considered a temporary storage space and any data you wish to save at the end of the workflow should be specified in the process output with the final storage location  defined in the  `publishDir` directive.
+
+**Note:** by default the `publishDir` directive creates a symbolic link to the files in the working this behaviour can be changed using the `mode` parameter.
+
+## Add a publishDir directive
+
+Add a `publishDir` directive to each process of `script6.nf` to store the process results into a folder specified by the `params.outdir` Nextflow variable. Include the `publishDir` `mode` option to copy the output.
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+:::::::::::::::  solution
+
+## Solution
+
+```groovy 
+publishDir "${params.outdir}/trim", mode:'copy'
+publishDir "${params.outdir}/assemble", mode:'copy'
+publishDir "${params.outdir}/fastqc", mode:'copy'
+publishDir "${params.outdir}/quast", mode:'copy'
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Recap
+
+In this step you have learned:
+
+- How to use the `publishDir` to store a process results in a path of your choice.
 
 ## MultiQC report
 
@@ -823,6 +846,8 @@ create the required input for the `MULTIQC` process.
  * and fastqc processes
  */
 process MULTIQC {
+
+    tag "MultiQC on $sample_id"
     publishDir "${params.outdir}/multiqc", mode:'copy'
 
     input:
@@ -867,7 +892,7 @@ executor >  local (9)
 [02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
 [9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
 [1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
-[1f/b7b30a] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
+[2q/f3g89v] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
 [2c/206fef] process > MULTIQC                            [100%] 1 of 1 ✔
 ```
 
@@ -951,8 +976,6 @@ The `X` process should be the longest running process.
 dag.png
 ![](fig/dag.png){alt='dag'}
 The vertices in the graph represent the pipeline's processes and operators, while the edges represent the data connections (i.e. channels) between them.
-
-
 
 :::::::::::::::::::::::::
 
