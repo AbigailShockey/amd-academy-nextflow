@@ -19,6 +19,8 @@ println """\
  */
 process TRIM {
 
+    tag "Trim on $sample_id"
+
     input:
     tuple val(sample_id), path(reads)
 
@@ -37,6 +39,8 @@ process TRIM {
  * define the `ASSEMBLE` process that assembles trimmed reads and emits assemblies
  */
 process ASSEMBLE {
+
+    tag "Assemble on $sample_id"
     cpus 1
 
     input:
@@ -62,7 +66,7 @@ process ASSEMBLE {
  */
 process FASTQC {
 
-    tag "FASTQC on $sample_id"
+    tag "FastQC on $sample_id"
     cpus 1
 
     input:
@@ -82,6 +86,7 @@ process FASTQC {
  * Run QUAST to check quality of the assemblies
  */
 process QUAST {
+    
     tag "QUAST on $sample_id"
     cpus 1
 
