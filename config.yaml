@@ -79,6 +79,8 @@ episodes:
 - 10-workflow_checkpoint_caching.md
 - 11-Simple_genome_assembly_pipeline.md
 - 12-nfcore.md
+- 13-nfcore_pipeline_configuration.md
+- 14-nfcore_pipeline_profiles.md
 
 # Information for Learners
 learners: 
