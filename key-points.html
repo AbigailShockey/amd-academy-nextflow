@@ -401,6 +401,18 @@
 </div>
 <!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush16">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading16">
+        <a href="15-making_nfcore_pipeline.html">15. Making your own nf-core pipeline</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -622,6 +634,19 @@ and/or adding command line parameters.</li>
 <hr class="half-width">
 <ul>
 <li>nf-core pipelines can be tested by using the test profile.</li>
+</ul></section><section id="15-making_nfcore_pipeline"><h2 class="section-heading"><a href="15-making_nfcore_pipeline.html">Making your own nf-core pipeline</a></h2>
+<hr class="half-width">
+<ul>
+<li>You can create a custom pipeline according to the nf-core framework
+using the <code>nf-core pipelines create</code> command.</li>
+<li>An nf-core module is a Nextflow “wrapper” around a command-line tool
+or script, which is a used as a process in an nf-core workflow.</li>
+<li>Modules can be installed using
+<code>nf-core modules install</code>
+</li>
+<li>Modules can be added to your custom pipeline by adding an
+<code>include</code> statement and the module process to the pipeline’s
+workflow script.</li>
 </ul></section>
 </div>
     </main>
