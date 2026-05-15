@@ -73,11 +73,56 @@ Each nf-core module's webpage contains the following information:
 
 Other useful information on a module's webpage includes commands to install the module, and links to ask a question about the module on Slack or open an issue using GitHub. Both Slack and Github do require accounts.
 
-#### Challenge 1
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Samtools module
 
 What are the names of the inputs and outputs of the [samtools stats module](https://nf-co.re/modules/samtools_stats/)?
 
-The solution to this challenge can be found [here](/nf-core/challenge-solutions/creating-pipelines/challenge-1.md).
+:::::::::::::::  solution
+
+```
+ 📥 Inputs           │Description                                                                                           │             Pattern 
+╺━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━╸
+ input[0]            │                                                                                                      │                     
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  meta  (map)        │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                         │                     
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  input  (file)      │BAM/CRAM file from alignment                                                                          │        *.{bam,cram} 
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  input_index  (file)│BAI/CRAI file from alignment                                                                          │        *.{bai,crai} 
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+ input[1]            │                                                                                                      │                     
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  meta2  (map)       │Groovy Map containing reference information e.g. [ id:'genome' ]                                      │                     
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  fasta  (file)      │Reference file the CRAM was created with (optional)                                                   │    *.{fasta,fa,fna} 
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  fai  (file)        │FASTA ref index file                                                                                  │*.{fasta,fa,fna}.fai 
+                     ╵                                                                                                      ╵                     
+                                              ╷                                                                                        ╷          
+ 📥 Outputs                                   │Description                                                                             │  Pattern 
+╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━╸
+ stats                                        │                                                                                        │          
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  meta  (map)                                 │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]           │          
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  *.stats  (file)                             │File containing samtools stats output                                                   │*.{stats} 
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+ versions_samtools                            │                                                                                        │          
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  ${task.process}  (string)                   │Name of the process                                                                     │          
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  samtools  (string)                          │Name of the tool                                                                        │          
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  samtools version | sed "1!d;s/.* //"  (eval)│The expression to obtain the version of the tool                                        │          
+                                              ╵                                                                                        ╵          
+```
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 #### On the command line
 
@@ -318,14 +363,37 @@ The seqtk trim process only requires one input channel, which should contain pai
 SEQTK_TRIM(ch_samplesheet)
 ```
 
-#### Challenge 2
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Add a module
 
 What three lines of code would you need to:
 1. Install the [FastQC module](https://nf-co.re/modules/fastqc/)?
 2. Include the FastQC module in your workflow?
 3. Call the FastQC module in your workflow using `reads_ch` as input?
 
-The solution to this challenge can be found [here](/nf-core/challenge-solutions/creating-pipelines/challenge-2.md).
+:::::::::::::::  solution
+
+## Solution
+
+1.
+```bash 
+nf-core modules install fastqc
+```
+
+2.
+```groovy 
+include { FASTQC             } from '../modules/nf-core/fastqc/main'
+```
+
+3.
+```groovy 
+FASTQC(reads_ch)
+```
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 #### Testing your custom pipeline with a custom test profile
 
