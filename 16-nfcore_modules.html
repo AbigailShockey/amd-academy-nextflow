@@ -526,22 +526,75 @@ an example.</p>
 install the module, and links to ask a question about the module on
 Slack or open an issue using GitHub. Both Slack and Github do require
 accounts.</p>
+<div id="samtools-module" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<div class="section level4">
-<h4 id="challenge-1">Challenge 1<a class="anchor" aria-label="anchor" href="#challenge-1"></a></h4>
+<span class="callout-header">Challenge</span>
+<div id="samtools-module" class="callout-inner">
+<h3 class="callout-title">Samtools module</h3>
+<div class="callout-content">
 <p>What are the names of the inputs and outputs of the <a href="https://nf-co.re/modules/samtools_stats/" class="external-link">samtools stats
 module</a>?</p>
-<p>The solution to this challenge can be found <a href="/nf-core/challenge-solutions/creating-pipelines/challenge-1.html">here</a>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<pre><code> 📥 Inputs           │Description                                                                                           │             Pattern
+╺━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━╸
+ input[0]            │                                                                                                      │
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  meta  (map)        │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                         │
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  input  (file)      │BAM/CRAM file from alignment                                                                          │        *.{bam,cram}
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  input_index  (file)│BAI/CRAI file from alignment                                                                          │        *.{bai,crai}
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+ input[1]            │                                                                                                      │
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  meta2  (map)       │Groovy Map containing reference information e.g. [ id:'genome' ]                                      │
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  fasta  (file)      │Reference file the CRAM was created with (optional)                                                   │    *.{fasta,fa,fna}
+╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
+  fai  (file)        │FASTA ref index file                                                                                  │*.{fasta,fa,fna}.fai
+                     ╵                                                                                                      ╵
+                                              ╷                                                                                        ╷
+ 📥 Outputs                                   │Description                                                                             │  Pattern
+╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━╸
+ stats                                        │                                                                                        │
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  meta  (map)                                 │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]           │
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  *.stats  (file)                             │File containing samtools stats output                                                   │*.{stats}
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+ versions_samtools                            │                                                                                        │
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  ${task.process}  (string)                   │Name of the process                                                                     │
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  samtools  (string)                          │Name of the tool                                                                        │
+╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
+  samtools version | sed "1!d;s/.* //"  (eval)│The expression to obtain the version of the tool                                        │
+                                              ╵                                                                                        ╵          </code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level4">
 <h4 id="on-the-command-line">On the command line<a class="anchor" aria-label="anchor" href="#on-the-command-line"></a></h4>
 <p>To get a list of nf-core modules on the command line, we need to use
 the <code>modules</code> nf-core command with the
 <code>list remote</code> options:</p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nf-core</span> modules list remote</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">nf-core</span> modules list remote</span></code></pre>
 </div>
 <p>This command lists all the modules available in nf-core’s <a href="https://github.com/nf-core/modules.git" class="external-link">GitHub repository</a>. The
 output of this command is quite long, so only the first and last few
@@ -596,19 +649,19 @@ command with the <code>install</code> option. We’re going to continue
 using the shovill assembler as our example. Before installing the
 shovill module, make sure you’ve changed directories into the pipeline’s
 directory:</p>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> myorganization-myfirstworkflow</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">nf-core</span> modules install shovill</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="bu">cd</span> myorganization-myfirstworkflow</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ex">nf-core</span> modules install shovill</span></code></pre>
 </div>
 <p>Once the module has finished installing, we can use the
 <code>modules</code> nf-core command with the <code>list local</code>
 options to see what modules have been downloaded for the pipeline:</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">nf-core</span> modules list local</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">nf-core</span> modules list local</span></code></pre>
 </div>
 <p>Which produces the following output:</p>
 <div class="codewrapper">
@@ -648,10 +701,10 @@ a folder for the shovill module can now be found there:</p>
 subcommand of the tool seqtk, which trims adapters and low quality bases
 from sequencing reads. This is the program we will use to clean our
 reads prior to assembly.</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">nf-core</span> modules install seqtk/trim</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">nf-core</span> modules install seqtk/trim</span></code></pre>
 </div>
 <p>If we view the contents of the modules/nf-core folder, a folder for
 the seqtk trim module can now be found there:</p>
@@ -678,10 +731,10 @@ we need to add an <code>include</code> statement for the module. The
 curly brackets <code>{}</code> (which is also the name of the process
 that uses that module), followed by the <code>from</code> statement and
 the path to that module’s <code>main.nf</code> file. Like so:</p>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>include <span class="op">{</span> MODULE                 <span class="op">}</span> from <span class="st">'path/to/nf-core/module/main'</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>include <span class="op">{</span> MODULE                 <span class="op">}</span> from <span class="st">'path/to/nf-core/module/main'</span></span></code></pre>
 </div>
 <p>Modules should be added to the
 <code>IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS</code> section of the
@@ -691,10 +744,10 @@ section in any order.</p>
 <h4 id="adding-seqtk-trim-to-your-pipeline">Adding seqtk trim to your pipeline<a class="anchor" aria-label="anchor" href="#adding-seqtk-trim-to-your-pipeline"></a></h4>
 <p>The first module we’re going to add to your pipeline is seqtk
 trim:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>include <span class="op">{</span> SEQTK_TRIM             <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a>include <span class="op">{</span> SEQTK_TRIM             <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span></code></pre>
 </div>
 <p>After we’ve added the <code>include</code> statement, we need to add
 the process <code>SEQK_TRIM()</code> to the workflow block. The process
@@ -705,23 +758,23 @@ workflow block <code>MYPIPELINE</code>, which can be found in the
 <code>Collate and save software versions</code> module for reasons we’ll
 discuss later. The process should be added according to the following
 format, which include the module’s name:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="co">//</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="co">//</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="fu">SEQTK_TRIM</span><span class="op">()</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="co">//</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="co">// MODULE: seqtk trim</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="co">//</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="fu">SEQTK_TRIM</span><span class="op">()</span></span></code></pre>
 </div>
 <p>Next we need to add seqtk trim’s input to its process. As previously
 mentioned, you can find a module’s input(s) (and output(s)) on its
 webpage. You can also use the nf-core <code>modules</code> command with
 the <code>info</code> option:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="ex">nf-core</span> modules info seqtk/trim</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">nf-core</span> modules info seqtk/trim</span></code></pre>
 </div>
 <p>Which produces the following output:</p>
 <div class="codewrapper">
@@ -763,69 +816,105 @@ include { SEQTK_TRIM } from '../modules/nf-core/seqtk/trim/main'</code></pre>
 <p>You could also look in a module’s <code>main.nf</code> script or its
 <code>meta.yml</code> file for its input(s) (and output(s)). This is
 seqtk trim’s <code>main.nf</code> script:</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>process SEQTK_TRIM <span class="op">{</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>    tag <span class="st">"</span><span class="ss">$meta</span><span class="op">.</span><span class="ss">id</span><span class="st">"</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>    label <span class="st">'process_low'</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    conda <span class="st">"</span><span class="ss">${</span>moduleDir<span class="ss">}</span><span class="st">/environment.yml"</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    container <span class="st">"</span><span class="ss">${</span> workflow<span class="op">.</span>containerEngine <span class="op">==</span> <span class="st">'singularity'</span> <span class="op">&amp;&amp;</span> <span class="op">!</span>task<span class="op">.</span>ext<span class="op">.</span>singularity_pull_docker_container <span class="op">?</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>        <span class="st">'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_1'</span> <span class="op">:</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>        <span class="st">'biocontainers/seqtk:1.4--he4a0461_1'</span> <span class="ss">}</span><span class="st">"</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a>    input<span class="op">:</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a>    tuple <span class="fu">val</span><span class="op">(</span>meta<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1" aria-label="code-block-15-12"></a></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1" aria-label="code-block-15-13"></a>    output<span class="op">:</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1" aria-label="code-block-15-14"></a>    tuple <span class="fu">val</span><span class="op">(</span>meta<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">"*.fastq.gz"</span><span class="op">),</span> emit<span class="op">:</span> reads</span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1" aria-label="code-block-15-15"></a>    path <span class="st">"versions.yml"</span>                <span class="op">,</span> emit<span class="op">:</span> versions</span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1" aria-label="code-block-15-16"></a></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1" aria-label="code-block-15-17"></a>    when<span class="op">:</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1" aria-label="code-block-15-18"></a>    task<span class="op">.</span>ext<span class="op">.</span>when <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> task<span class="op">.</span>ext<span class="op">.</span>when</span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1" aria-label="code-block-15-19"></a></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1" aria-label="code-block-15-20"></a>    script<span class="op">:</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1" aria-label="code-block-15-21"></a>    <span class="dt">def</span> args   <span class="op">=</span> task<span class="op">.</span>ext<span class="op">.</span>args <span class="op">?:</span> <span class="st">''</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1" aria-label="code-block-15-22"></a>    <span class="dt">def</span> prefix <span class="op">=</span> task<span class="op">.</span>ext<span class="op">.</span>prefix <span class="op">?:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">"</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1" aria-label="code-block-15-23"></a>    <span class="st">"""</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1" aria-label="code-block-15-24"></a><span class="st">    printf "%s</span><span class="sc">\\</span><span class="st">n" </span><span class="ss">$reads</span><span class="st"> | while read f;</span></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1" aria-label="code-block-15-25"></a><span class="st">    do</span></span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1" aria-label="code-block-15-26"></a><span class="st">        seqtk </span><span class="sc">\\</span></span>
-<span id="cb15-27"><a href="#cb15-27" tabindex="-1" aria-label="code-block-15-27"></a><span class="st">            trimfq </span><span class="sc">\\</span></span>
-<span id="cb15-28"><a href="#cb15-28" tabindex="-1" aria-label="code-block-15-28"></a><span class="st">            </span><span class="ss">$args</span><span class="st"> </span><span class="sc">\\</span></span>
-<span id="cb15-29"><a href="#cb15-29" tabindex="-1" aria-label="code-block-15-29"></a><span class="st">            </span><span class="er">\$</span><span class="st">f </span><span class="sc">\\</span></span>
-<span id="cb15-30"><a href="#cb15-30" tabindex="-1" aria-label="code-block-15-30"></a><span class="st">            | gzip --no-name &gt; </span><span class="ss">${</span>prefix<span class="ss">}</span><span class="st">_</span><span class="er">\$</span><span class="st">(basename </span><span class="er">\$</span><span class="st">f)</span></span>
-<span id="cb15-31"><a href="#cb15-31" tabindex="-1" aria-label="code-block-15-31"></a><span class="st">    done</span></span>
-<span id="cb15-32"><a href="#cb15-32" tabindex="-1" aria-label="code-block-15-32"></a></span>
-<span id="cb15-33"><a href="#cb15-33" tabindex="-1" aria-label="code-block-15-33"></a><span class="st">    cat &lt;&lt;-END_VERSIONS &gt; versions.yml</span></span>
-<span id="cb15-34"><a href="#cb15-34" tabindex="-1" aria-label="code-block-15-34"></a><span class="st">    "</span><span class="ss">${</span>task<span class="op">.</span>process<span class="ss">}</span><span class="st">":</span></span>
-<span id="cb15-35"><a href="#cb15-35" tabindex="-1" aria-label="code-block-15-35"></a><span class="st">        seqtk: </span><span class="er">\$</span><span class="st">(echo </span><span class="er">\$</span><span class="st">(seqtk 2&gt;&amp;1) | sed 's/^.*Version: //; s/ .*</span><span class="er">\$</span><span class="st">//')</span></span>
-<span id="cb15-36"><a href="#cb15-36" tabindex="-1" aria-label="code-block-15-36"></a><span class="st">    END_VERSIONS</span></span>
-<span id="cb15-37"><a href="#cb15-37" tabindex="-1" aria-label="code-block-15-37"></a><span class="st">    """</span></span>
-<span id="cb15-38"><a href="#cb15-38" tabindex="-1" aria-label="code-block-15-38"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>process SEQTK_TRIM <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>    tag <span class="st">"</span><span class="ss">$meta</span><span class="op">.</span><span class="ss">id</span><span class="st">"</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    label <span class="st">'process_low'</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>    conda <span class="st">"</span><span class="ss">${</span>moduleDir<span class="ss">}</span><span class="st">/environment.yml"</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>    container <span class="st">"</span><span class="ss">${</span> workflow<span class="op">.</span>containerEngine <span class="op">==</span> <span class="st">'singularity'</span> <span class="op">&amp;&amp;</span> <span class="op">!</span>task<span class="op">.</span>ext<span class="op">.</span>singularity_pull_docker_container <span class="op">?</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>        <span class="st">'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_1'</span> <span class="op">:</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>        <span class="st">'biocontainers/seqtk:1.4--he4a0461_1'</span> <span class="ss">}</span><span class="st">"</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a>    input<span class="op">:</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a>    tuple <span class="fu">val</span><span class="op">(</span>meta<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a>    output<span class="op">:</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a>    tuple <span class="fu">val</span><span class="op">(</span>meta<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">"*.fastq.gz"</span><span class="op">),</span> emit<span class="op">:</span> reads</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1" aria-label="code-block-16-15"></a>    path <span class="st">"versions.yml"</span>                <span class="op">,</span> emit<span class="op">:</span> versions</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1" aria-label="code-block-16-16"></a></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1" aria-label="code-block-16-17"></a>    when<span class="op">:</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1" aria-label="code-block-16-18"></a>    task<span class="op">.</span>ext<span class="op">.</span>when <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> task<span class="op">.</span>ext<span class="op">.</span>when</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1" aria-label="code-block-16-19"></a></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1" aria-label="code-block-16-20"></a>    script<span class="op">:</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1" aria-label="code-block-16-21"></a>    <span class="dt">def</span> args   <span class="op">=</span> task<span class="op">.</span>ext<span class="op">.</span>args <span class="op">?:</span> <span class="st">''</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1" aria-label="code-block-16-22"></a>    <span class="dt">def</span> prefix <span class="op">=</span> task<span class="op">.</span>ext<span class="op">.</span>prefix <span class="op">?:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">"</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1" aria-label="code-block-16-23"></a>    <span class="st">"""</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1" aria-label="code-block-16-24"></a><span class="st">    printf "%s</span><span class="sc">\\</span><span class="st">n" </span><span class="ss">$reads</span><span class="st"> | while read f;</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1" aria-label="code-block-16-25"></a><span class="st">    do</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1" aria-label="code-block-16-26"></a><span class="st">        seqtk </span><span class="sc">\\</span></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1" aria-label="code-block-16-27"></a><span class="st">            trimfq </span><span class="sc">\\</span></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1" aria-label="code-block-16-28"></a><span class="st">            </span><span class="ss">$args</span><span class="st"> </span><span class="sc">\\</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1" aria-label="code-block-16-29"></a><span class="st">            </span><span class="er">\$</span><span class="st">f </span><span class="sc">\\</span></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1" aria-label="code-block-16-30"></a><span class="st">            | gzip --no-name &gt; </span><span class="ss">${</span>prefix<span class="ss">}</span><span class="st">_</span><span class="er">\$</span><span class="st">(basename </span><span class="er">\$</span><span class="st">f)</span></span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1" aria-label="code-block-16-31"></a><span class="st">    done</span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1" aria-label="code-block-16-32"></a></span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1" aria-label="code-block-16-33"></a><span class="st">    cat &lt;&lt;-END_VERSIONS &gt; versions.yml</span></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1" aria-label="code-block-16-34"></a><span class="st">    "</span><span class="ss">${</span>task<span class="op">.</span>process<span class="ss">}</span><span class="st">":</span></span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1" aria-label="code-block-16-35"></a><span class="st">        seqtk: </span><span class="er">\$</span><span class="st">(echo </span><span class="er">\$</span><span class="st">(seqtk 2&gt;&amp;1) | sed 's/^.*Version: //; s/ .*</span><span class="er">\$</span><span class="st">//')</span></span>
+<span id="cb16-36"><a href="#cb16-36" tabindex="-1" aria-label="code-block-16-36"></a><span class="st">    END_VERSIONS</span></span>
+<span id="cb16-37"><a href="#cb16-37" tabindex="-1" aria-label="code-block-16-37"></a><span class="st">    """</span></span>
+<span id="cb16-38"><a href="#cb16-38" tabindex="-1" aria-label="code-block-16-38"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>The seqtk trim process only requires one input channel, which should
 contain paired end FASTQ files and their sample (aka meta) information.
 This channel already exists in the <code>mypipeline.nf</code> workflow
 file as <code>ch_samplesheet</code>, so the seqtk trim module can be
 called using the FASTQs as input with the following lines of code:</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="co">//</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a><span class="co">//</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a><span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="co">//</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="co">// MODULE: seqtk trim</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a><span class="co">//</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a><span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span></code></pre>
 </div>
+<div id="add-a-module" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<div class="section level4">
-<h4 id="challenge-2">Challenge 2<a class="anchor" aria-label="anchor" href="#challenge-2"></a></h4>
+<span class="callout-header">Challenge</span>
+<div id="add-a-module" class="callout-inner">
+<h3 class="callout-title">Add a module</h3>
+<div class="callout-content">
 <p>What three lines of code would you need to: 1. Install the <a href="https://nf-co.re/modules/fastqc/" class="external-link">FastQC module</a>? 2. Include
 the FastQC module in your workflow? 3. Call the FastQC module in your
 workflow using <code>reads_ch</code> as input?</p>
-<p>The solution to this challenge can be found <a href="/nf-core/challenge-solutions/creating-pipelines/challenge-2.html">here</a>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+</li></ol><div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="ex">nf-core</span> modules install fastqc</span></code></pre>
+</div>
+<ol start="2" style="list-style-type: decimal"><li>
+</li></ol><div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a>include <span class="op">{</span> FASTQC             <span class="op">}</span> from <span class="st">'../modules/nf-core/fastqc/main'</span></span></code></pre>
+</div>
+<ol start="3" style="list-style-type: decimal"><li>
+</li></ol><div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="fu">FASTQC</span><span class="op">(</span>reads_ch<span class="op">)</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level4">
 <h4 id="testing-your-custom-pipeline-with-a-custom-test-profile">Testing your custom pipeline with a custom test profile<a class="anchor" aria-label="anchor" href="#testing-your-custom-pipeline-with-a-custom-test-profile"></a></h4>
@@ -833,37 +922,37 @@ workflow using <code>reads_ch</code> as input?</p>
 test profile called <code>demo</code>: We’re going to copy the
 <code>test.config</code> file in the <code>conf</code> directory and
 rename it <code>demo.config</code>:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="bu">cd</span> conf/</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="fu">cp</span> test.config demo.config</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="bu">cd</span> conf/</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1" aria-label="code-block-21-2"></a><span class="fu">cp</span> test.config demo.config</span></code></pre>
 </div>
 <p>Then, in the <code>demo.config</code> file, we’re going to make the
 following changes:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="co">/*</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1" aria-label="code-block-18-3"></a><span class="co">    Nextflow config file for running demo tests</span></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1" aria-label="code-block-18-4"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1" aria-label="code-block-18-5"></a><span class="co">    Defines input files and everything required to run a demo pipeline test.</span></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1" aria-label="code-block-18-6"></a></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1" aria-label="code-block-18-7"></a><span class="co">    Use as follows:</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1" aria-label="code-block-18-8"></a><span class="co">        nextflow run main.nf -profile demo,&lt;docker/singularity&gt; --outdir &lt;OUTDIR&gt;</span></span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1" aria-label="code-block-18-9"></a></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1" aria-label="code-block-18-10"></a><span class="co">----------------------------------------------------------------------------------------</span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1" aria-label="code-block-18-11"></a><span class="co">*/</span></span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1" aria-label="code-block-18-12"></a></span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1" aria-label="code-block-18-13"></a>params <span class="op">{</span></span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1" aria-label="code-block-18-14"></a>    config_profile_name        <span class="op">=</span> <span class="st">'Demo test profile'</span></span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1" aria-label="code-block-18-15"></a>    config_profile_description <span class="op">=</span> <span class="st">'Demo test dataset to check pipeline function'</span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1" aria-label="code-block-18-16"></a></span>
-<span id="cb18-17"><a href="#cb18-17" tabindex="-1" aria-label="code-block-18-17"></a>    <span class="co">// Input data for demo test</span></span>
-<span id="cb18-18"><a href="#cb18-18" tabindex="-1" aria-label="code-block-18-18"></a>    input <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'</span></span>
-<span id="cb18-19"><a href="#cb18-19" tabindex="-1" aria-label="code-block-18-19"></a></span>
-<span id="cb18-20"><a href="#cb18-20" tabindex="-1" aria-label="code-block-18-20"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="co">/*</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1" aria-label="code-block-22-3"></a><span class="co">    Nextflow config file for running demo tests</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1" aria-label="code-block-22-4"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1" aria-label="code-block-22-5"></a><span class="co">    Defines input files and everything required to run a demo pipeline test.</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1" aria-label="code-block-22-6"></a></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1" aria-label="code-block-22-7"></a><span class="co">    Use as follows:</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1" aria-label="code-block-22-8"></a><span class="co">        nextflow run main.nf -profile demo,&lt;docker/singularity&gt; --outdir &lt;OUTDIR&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1" aria-label="code-block-22-9"></a></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1" aria-label="code-block-22-10"></a><span class="co">----------------------------------------------------------------------------------------</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1" aria-label="code-block-22-11"></a><span class="co">*/</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1" aria-label="code-block-22-12"></a></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1" aria-label="code-block-22-13"></a>params <span class="op">{</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1" aria-label="code-block-22-14"></a>    config_profile_name        <span class="op">=</span> <span class="st">'Demo test profile'</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1" aria-label="code-block-22-15"></a>    config_profile_description <span class="op">=</span> <span class="st">'Demo test dataset to check pipeline function'</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1" aria-label="code-block-22-16"></a></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1" aria-label="code-block-22-17"></a>    <span class="co">// Input data for demo test</span></span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1" aria-label="code-block-22-18"></a>    input <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'</span></span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1" aria-label="code-block-22-19"></a></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1" aria-label="code-block-22-20"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>This profile uses a different publicly available input than the
 <code>test</code> profile, because the original <code>test</code>
@@ -876,17 +965,17 @@ folder with the other config files. To finish adding this profile to the
 pipeline, we need to put the following line of code within the curly
 brackets <code>{}</code> of the <code>profile</code> block in the
 <code>nextflow.config</code> file:</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a>demo      <span class="op">{</span> includeConfig <span class="st">'conf/demo.config'</span>      <span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a>demo      <span class="op">{</span> includeConfig <span class="st">'conf/demo.config'</span>      <span class="op">}</span></span></code></pre>
 </div>
 <p>Once this is done, we can test our changes to the pipeline with the
 demo profile:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> docker,demo <span class="at">--outdir</span> demo_results</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> docker,demo <span class="at">--outdir</span> demo_results</span></code></pre>
 </div>
 <p>If the pipeline finishes successfully, you should see something like
 the following:</p>
