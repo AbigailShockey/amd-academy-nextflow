@@ -82,6 +82,7 @@ episodes:
 - 13-nfcore_pipeline_configuration.md
 - 14-nfcore_pipeline_profiles.md
 - 15-making_nfcore_pipeline.md
+- 16-nfcore_modules.md
 
 # Information for Learners
 learners: 
