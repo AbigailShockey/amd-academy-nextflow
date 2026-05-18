@@ -1,7 +1,7 @@
 ---
 title: nf-core modules
-teaching: 20
-exercises: 40
+teaching: 15
+exercises: 30
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
@@ -14,7 +14,7 @@ exercises: 40
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - Explain the purpose and contents of nf-core modules.
-- Add multiple modules to a custom nf-core pipeline.
+- Add a module to a custom nf-core pipeline.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -27,7 +27,7 @@ It's important to note that nf-core modules contain either a single tool with on
 
 While you can develop a module for a tool independently, you can save a lot of time and effort by using [existing nf-core modules](https://nf-co.re/modules/), of which there are thousands. 
 
-### Module contents
+## Module contents
 
 Each nf-core module contains files with strict [guidelines](https://nf-co.re/docs/guidelines/components/modules) for structure and content, and these guidelines expand the number of files from one Nextflow `.nf` script file to five mandatory files. 
 
@@ -59,11 +59,11 @@ A collection of nf-core modules are stored in a [central community repository](h
 
 There are two main ways you can find nf-core modules to add to your pipeline. You can manually search the modules page of the nf-core website, or you can use nf-core tools on the command line.
 
-### Finding nf-core modules
+## Finding nf-core modules
 
-#### Online
+### Online
 
-We're going to add a genome assembly step to your pipeline, so let's use the webpage for [shovill's nf-core module](https://nf-co.re/modules/shovill/) as an example.
+The first step in your pipeline will be read trimming with the [seqtk trim module](https://nf-co.re/modules/seqtk_trim/).
 
 Each nf-core module's webpage contains the following information:
 
@@ -76,63 +76,86 @@ Other useful information on a module's webpage includes commands to install the 
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Samtools module
+## Shovill module
 
-What are the names of the inputs and outputs of the [samtools stats module](https://nf-co.re/modules/samtools_stats/)?
+Assembling trimmed reads with Shovill will be the next step you add to your pipeline. What are the names of the inputs and outputs of the [Shovill](https://nf-co.re/modules/shovill) module?
 
 :::::::::::::::  solution
 
 ```
- 📥 Inputs           │Description                                                                                           │             Pattern 
-╺━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━╸
- input[0]            │                                                                                                      │                     
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  meta  (map)        │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                         │                     
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  input  (file)      │BAM/CRAM file from alignment                                                                          │        *.{bam,cram} 
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  input_index  (file)│BAI/CRAI file from alignment                                                                          │        *.{bai,crai} 
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
- input[1]            │                                                                                                      │                     
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  meta2  (map)       │Groovy Map containing reference information e.g. [ id:'genome' ]                                      │                     
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  fasta  (file)      │Reference file the CRAM was created with (optional)                                                   │    *.{fasta,fa,fna} 
-╶────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────────────╴
-  fai  (file)        │FASTA ref index file                                                                                  │*.{fasta,fa,fna}.fai 
-                     ╵                                                                                                      ╵                     
-                                              ╷                                                                                        ╷          
- 📥 Outputs                                   │Description                                                                             │  Pattern 
-╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━╸
- stats                                        │                                                                                        │          
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
-  meta  (map)                                 │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]           │          
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
-  *.stats  (file)                             │File containing samtools stats output                                                   │*.{stats} 
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
- versions_samtools                            │                                                                                        │          
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
-  ${task.process}  (string)                   │Name of the process                                                                     │          
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
-  samtools  (string)                          │Name of the tool                                                                        │          
-╶─────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────┼─────────╴
-  samtools version | sed "1!d;s/.* //"  (eval)│The expression to obtain the version of the tool                                        │          
-                                              ╵                                                                                        ╵          
+ 📥 Inputs     │Description                                                                                                        │Pattern 
+╺━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━╸
+ input[0]      │                                                                                                                   │        
+╶──────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼───────╴
+  meta  (map)  │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                                      │        
+╶──────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼───────╴
+  reads  (file)│List of input paired-end FastQ files                                                                               │        
+               ╵                                                                                                                   ╵        
+                                                    ╷                                                  ╷                                    
+ 📥 Outputs                                         │Description                                       │                            Pattern 
+╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
+ contigs                                            │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  meta  (map)                                       │Groovy Map containing sample information e.g. [   │                                    
+                                                    │id:'test', single_end:false ]                     │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  contigs.fa  (file)                                │The final assembly produced by Shovill            │                         contigs.fa 
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+ corrections                                        │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  meta  (map)                                       │Groovy Map containing sample information e.g. [   │                                    
+                                                    │id:'test', single_end:false ]                     │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  shovill.corrections  (file)                       │List of post-assembly corrections made by Shovill │                shovill.corrections 
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+ log                                                │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  meta  (map)                                       │Groovy Map containing sample information e.g. [   │                                    
+                                                    │id:'test', single_end:false ]                     │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  shovill.log  (file)                               │Full log file for bug reporting                   │                        shovill.log 
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+ raw_contigs                                        │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  meta  (map)                                       │Groovy Map containing sample information e.g. [   │                                    
+                                                    │id:'test', single_end:false ]                     │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  {skesa,spades,megahit,velvet}.fasta  (file)       │Raw assembly produced by the assembler (SKESA,    │{skesa,spades,megahit,velvet}.fasta 
+                                                    │SPAdes, MEGAHIT, or Velvet)                       │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+ gfa                                                │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  meta  (map)                                       │Groovy Map containing sample information e.g. [   │                                    
+                                                    │id:'test', single_end:false ]                     │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  contigs.{fastg,gfa,LastGraph}  (file)             │Assembly graph produced by MEGAHIT, SPAdes, or    │      contigs.{fastg,gfa,LastGraph} 
+                                                    │Velvet                                            │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+ versions_shovill                                   │                                                  │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  ${task.process}  (string)                         │The name of the process                           │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  shovill  (string)                                 │The name of the tool                              │                                    
+╶───────────────────────────────────────────────────┼──────────────────────────────────────────────────┼───────────────────────────────────╴
+  shovill --version 2>&1 | sed "s/^.*shovill //"    │The expression to obtain the version of the tool  │                                    
+ (eval)                                             │                                                  │                                    
+                                                    ╵                                                  ╵                                    
+
+
 ```
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
-#### On the command line
+### On the command line
 
 To get a list of nf-core modules on the command line, we need to use the `modules` nf-core command with the `list remote` options:
 
 ```bash
-nf-core modules list remote
+$ nf-core modules list remote
 ```
 
-This command lists all the modules available in nf-core's [GitHub repository](https://github.com/nf-core/modules.git). The output of this command is quite long, so only the first and last few entries are shown below, separated by a line of *:
+This command lists all the modules available in nf-core's [GitHub repository](https://github.com/nf-core/modules.git).
 
 ```output
 
@@ -160,8 +183,8 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 │ adapterremoval                                        │
 │ adapterremovalfixprefix                               │
 
-**********************************************************
-                                                                                                                                                                                                   
+[..truncated..]                                                                                
+
 │ xeniumranger/rename                                   │
 │ xeniumranger/resegment                                │
 │ xz/compress                                           │
@@ -174,98 +197,193 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 └───────────────────────────────────────────────────────┘
 ```
 
-### Installing an nf-core module
+## Installing an nf-core module
 
-To install an nf-core module, we use the nf-core `modules` command with the `install` option. We're going to continue using the shovill assembler as our example. Before installing the shovill module, make sure you've changed directories into the pipeline's directory:
+To install an nf-core module, we use the nf-core `modules` command with the `install` option. We're going to continue using seqtk as our example. Before installing the seqtk trim module, make sure you've changed directories into the pipeline's directory:
 
 ```bash
-cd myorganization-myfirstworkflow
-nf-core modules install shovill
+$ cd myorganization-myfirstworkflow
+$ nf-core modules install seqtk/trim
 ```
 
 Once the module has finished installing, we can use the `modules` nf-core command with the `list local` options to see what modules have been downloaded for the pipeline:
 
 ```bash
-nf-core modules list local
+$ nf-core modules list local
 ```
 Which produces the following output:
 
 ```output
-                                          ,--./,-.
+                                         ,--./,-.
           ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 3.2.0 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
+INFO     Repository type: pipeline                                                                                                          
+INFO     Modules installed in '.':                                                                                                          
 
-INFO     Repository type: pipeline                                                                                                                                                                 
-INFO     Modules installed in '.':                                                                                                                                                                 
-                                                                                                                                                                                                   
-┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
-┃ Module Name ┃ Repository      ┃ Version SHA ┃ Message                                                                     ┃ Date       ┃
-┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
-│ multiqc     │ nf-core/modules │ f0719ae     │ bump multiqc 1.26 to 1.27 (#7364)                                           │ 2025-01-27 │
-│ shovill     │ nf-core/modules │ 05954da     │ Delete all tag.yml + relative path in antismash/antismashlite tests (#8116) │ 2025-03-26 │
-└─────────────┴─────────────────┴─────────────┴─────────────────────────────────────────────────────────────────────────────┴────────────┘
+┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Module Name ┃ Repository      ┃ Version SHA ┃ Message                                                                       ┃ Date       ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ multiqc     │ nf-core/modules │ 008f9d3     │ bump multiqc to 1.34 (#11278)                                                 │ 2026-04-24 │
+│ seqtk/trim  │ nf-core/modules │ 6d46786     │ Support for apptainer as well as singularity for .sif in `container` (#11260) │ 2026-04-23 │
+└─────────────┴─────────────────┴─────────────┴───────────────────────────────────────────────────────────────────────────────┴────────────┘
 ```
 
-As you can see, shovill is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder, a folder for the shovill module can now be found there:
-
-```output
-└── modules
-    └── nf-core
-          ├── multiqc/
-          └── shovill/
-```
-
-Next, we're going to download the module for [seqtk trim](https://nf-co.re/modules/seqtk_trim). Trim is a subcommand of the tool seqtk, which trims adapters and low quality bases from sequencing reads. This is the program we will use to clean our reads prior to assembly.
+As you can see, seqtk is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder with the `tree` command, a folder for the shovill module can now be found there.
 
 ```bash
-nf-core modules install seqtk/trim
+$ tree modules/nf-core
 ```
-
-If we view the contents of the modules/nf-core folder, a folder for the seqtk trim module can now be found there:
 
 ```output
-└── modules
-    └── nf-core
-          ├── multiqc/
-          ├── seqtk
-          │   └── trim/
-          └── shovill/
+modules/nf-core
+├── multiqc
+│   ├── environment.yml
+│   ├── main.nf
+│   ├── meta.yml
+│   └── tests
+│       ├── custom_prefix.config
+│       ├── main.nf.test
+│       ├── main.nf.test.snap
+│       └── nextflow.config
+└── seqtk
+    └── trim
+        ├── environment.yml
+        ├── main.nf
+        ├── meta.yml
+        └── tests
+            ├── main.nf.test
+            └── main.nf.test.snap
 ```
 
-### Adding an installed module to the workflow script
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-Installing a module does not automatically add it to your pipeline; it downloads the files the pipeline needs to run the module. Several lines of code need to be added to the `workflow` file for the module to be included.
+## Installing more modules
 
-First, in the `workflows/mypipeline.nf` workflow script, we need to add an `include` statement for the module. The `include` statement should contain the name of the module in curly brackets `{}` (which is also the name of the process that uses that module), followed by the `from` statement and the path to that module's `main.nf` file. Like so:
+Install the following modules: [shovill](https://nf-co.re/modules/shovill), [fastqc](https://nf-co.re/modules/fastqc), and [quast](https://nf-co.re/modules/quast).
+
+:::::::::::::::  solution
+
+## Solution
+
+```bash 
+$ nf-core modules install shovill
+$ nf-core modules install fastqc
+$ nf-core modules install quast
+```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Adding an installed module to the workflow script
+
+Installing a module does not automatically add it to your pipeline; it downloads the files the pipeline needs to run the module. Several lines of code need to be added to the workflow script for the module to be included.
+
+First, in the `workflows/mypipeline.nf` workflow script, we need to add an `include` statement for the module. The `include` statement should contain the name of the module in curly brackets `{}` (which is also the name of the process that uses that module) followed by the `from` statement and the path to that module's `main.nf` file. Modules should be added to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script `mypipeline.nf`. They can be added to that section in any order.
 
 ```groovy
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/ 
 include { MODULE                 } from 'path/to/nf-core/module/main'
 ```
 
-Modules should be added to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script `mypipeline.nf`. They can be added to that section in any order.
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-#### Adding seqtk trim to your pipeline
+## Adding seqtk trim to the Import Modules section
 
-The first module we're going to add to your pipeline is seqtk trim:
+Add the seqtk trim module to the `Import Modules` section of your pipeline's workflow script.
 
-```groovy
+:::::::::::::::  solution
+
+## Solution
+
+```groovy 
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/ 
+
+[..truncated..]                                                                                
+
 include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
 ```
 
-After we've added the `include` statement, we need to add the process `SEQK_TRIM()` to the workflow block. The process needs to be added within the curly brackets `{}` of the workflow block `MYPIPELINE`, which can be found in the `RUN MAIN WORKFLOW` section. We're going to add this module **before**  the `Collate and save software versions` module for reasons we'll discuss later. The process should be added according to the following format, which include the module's name:
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+After we've added the `include` statement, we need to add the process `SEQK_TRIM()` to the workflow block. The process needs to be added within the curly brackets `{}` of the workflow block `MYPIPELINE`, which can be found in the `RUN MAIN WORKFLOW` section. We're going to add this module **before**  the `Collate and save software versions` module for reasons we'll discuss later. The process should be added according to the following format, which includes the module's name:
 
 ```groovy
+
+[..truncated..] 
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    RUN MAIN WORKFLOW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+workflow WORKFLOWNAME {
+
 //
-// MODULE: seqtk trim
+// MODULE: module name
+//
+
+MODULE_NAME()
+
+[..truncated..] 
+
+}
+
+```
+
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Adding seqtk trim to the `Run Main Workflow` section
+
+Add the seqtk trim module to the `Run Main Workflow` section of your pipelines workflow script.
+
+:::::::::::::::  solution
+
+## Solution
+
+```groovy 
+
+[..truncated..] 
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    RUN MAIN WORKFLOW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+workflow GENOMEASSEMBLER {
+
+//
+// MODULE: seqtk_trim
 //
 
 SEQTK_TRIM()
+
+[..truncated..] 
+
+}
+
 ```
+
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Next we need to add seqtk trim's input to its process. As previously mentioned, you can find a module's input(s) (and output(s)) on its webpage. You can also use the nf-core `modules` command with the `info` option:
 
@@ -310,49 +428,6 @@ Use the following statement to include this module:
 include { SEQTK_TRIM } from '../modules/nf-core/seqtk/trim/main'
 ```
 
-You could also look in a module's `main.nf` script or its `meta.yml` file for its input(s) (and output(s)). This is seqtk trim's `main.nf` script:
-
-```groovy
-process SEQTK_TRIM {
-    tag "$meta.id"
-    label 'process_low'
-
-    conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_1' :
-        'biocontainers/seqtk:1.4--he4a0461_1' }"
-
-    input:
-    tuple val(meta), path(reads)
-
-    output:
-    tuple val(meta), path("*.fastq.gz"), emit: reads
-    path "versions.yml"                , emit: versions
-
-    when:
-    task.ext.when == null || task.ext.when
-
-    script:
-    def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
-    """
-    printf "%s\\n" $reads | while read f;
-    do
-        seqtk \\
-            trimfq \\
-            $args \\
-            \$f \\
-            | gzip --no-name > ${prefix}_\$(basename \$f)
-    done
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        seqtk: \$(echo \$(seqtk 2>&1) | sed 's/^.*Version: //; s/ .*\$//')
-    END_VERSIONS
-    """
-}
-```
-
 The seqtk trim process only requires one input channel, which should contain paired end FASTQ files and their sample (aka meta) information. This channel already exists in the `mypipeline.nf` workflow file as `ch_samplesheet`, so the seqtk trim module can be called using the FASTQs as input with the following lines of code:
 
 ```groovy
@@ -365,12 +440,9 @@ SEQTK_TRIM(ch_samplesheet)
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Add a module
+## Add the FastQC module
 
-What three lines of code would you need to:
-1. Install the [FastQC module](https://nf-co.re/modules/fastqc/)?
-2. Include the FastQC module in your workflow?
-3. Call the FastQC module in your workflow using `reads_ch` as input?
+What line of code would you need to add to your workflow script to include the FastQC module in your workflow?
 
 :::::::::::::::  solution
 
