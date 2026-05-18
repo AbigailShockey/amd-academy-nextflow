@@ -438,35 +438,6 @@ The seqtk trim process only requires one input channel, which should contain pai
 SEQTK_TRIM(ch_samplesheet)
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Add the FastQC module
-
-What line of code would you need to add to your workflow script to include the FastQC module in your workflow?
-
-:::::::::::::::  solution
-
-## Solution
-
-1.
-```bash 
-nf-core modules install fastqc
-```
-
-2.
-```groovy 
-include { FASTQC             } from '../modules/nf-core/fastqc/main'
-```
-
-3.
-```groovy 
-FASTQC(reads_ch)
-```
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
 #### Testing your custom pipeline with a custom test profile
 
 To test this addition to the pipeline, we're going to create a custom test profile called `demo`: We're going to copy the `test.config` file in the `conf` directory and rename it `demo.config`:
