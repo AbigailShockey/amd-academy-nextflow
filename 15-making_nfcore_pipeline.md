@@ -124,11 +124,12 @@ nextflow run . -profile docker,test --outdir results
 If the pipeline ran successfully, you should see the following:
 
 ```output
- N E X T F L O W   ~  version 24.10.5
+Nextflow 26.04.1 is available - Please consider updating your version to it
 
-Launching `./main.nf` [berserk_mccarthy] DSL2 - revision: 883bd10359
+ N E X T F L O W   ~  version 25.10.4
 
-Downloading plugin nf-schema@2.3.0
+Launching `./main.nf` [angry_visvesvaraya] DSL2 - revision: 27a6d188dd
+
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
   outdir                    : results
@@ -138,23 +139,23 @@ Institutional config options
   config_profile_description: Minimal test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2025-04-15_15-38-07
+  trace_report_suffix       : 2026-05-15_15-06-31
 
 Core Nextflow options
-  runName                   : berserk_mccarthy
+  runName                   : angry_visvesvaraya
   containerEngine           : docker
-  launchDir                 : /home/username/my-pipeline/myorganization-mypipeline
-  workDir                   : /home/username/my-pipeline/myorganization-mypipeline/work
-  projectDir                : /home/username/my-pipeline/myorganization-mypipeline
-  userName                  : username
+  launchDir                 : /home/ashockey/training/myorg-genomeassembler
+  workDir                   : /home/ashockey/training/myorg-genomeassembler/work
+  projectDir                : /home/ashockey/training/myorg-genomeassembler
+  userName                  : shockeax
   profile                   : docker,test
-  configFiles               : /home/username/my-pipeline/myorganization-mypipeline/nextflow.config
+  configFiles               : /home/ashockey/training/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (1)
-[18/7dd931] process > MYORGANIZATION_MYPIPELINE:MYPIPELINE:MULTIQC [100%] 1 of 1 ✔
--[myorganization/mypipeline] Pipeline completed successfully-
+[b6/042941] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
 The pipeline successfully completed one process, MULTIQC, the output of which can be found in the `results` directory.
