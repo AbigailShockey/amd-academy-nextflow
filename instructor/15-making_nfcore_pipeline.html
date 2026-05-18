@@ -410,7 +410,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Making your own nf-core pipeline</h1>
-        <p>Last updated on 2026-05-15 |
+        <p>Last updated on 2026-05-18 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/15-making_nfcore_pipeline.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -547,11 +547,12 @@ and test it using the <code>nextflow run</code> command and the
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 24.10.5
+<pre class="output" tabindex="0"><code>Nextflow 26.04.1 is available - Please consider updating your version to it
 
-Launching `./main.nf` [berserk_mccarthy] DSL2 - revision: 883bd10359
+ N E X T F L O W   ~  version 25.10.4
 
-Downloading plugin nf-schema@2.3.0
+Launching `./main.nf` [angry_visvesvaraya] DSL2 - revision: 27a6d188dd
+
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
   outdir                    : results
@@ -561,23 +562,23 @@ Institutional config options
   config_profile_description: Minimal test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2025-04-15_15-38-07
+  trace_report_suffix       : 2026-05-15_15-06-31
 
 Core Nextflow options
-  runName                   : berserk_mccarthy
+  runName                   : angry_visvesvaraya
   containerEngine           : docker
-  launchDir                 : /home/username/my-pipeline/myorganization-mypipeline
-  workDir                   : /home/username/my-pipeline/myorganization-mypipeline/work
-  projectDir                : /home/username/my-pipeline/myorganization-mypipeline
-  userName                  : username
+  launchDir                 : /home/ashockey/training/myorg-genomeassembler
+  workDir                   : /home/ashockey/training/myorg-genomeassembler/work
+  projectDir                : /home/ashockey/training/myorg-genomeassembler
+  userName                  : shockeax
   profile                   : docker,test
-  configFiles               : /home/username/my-pipeline/myorganization-mypipeline/nextflow.config
+  configFiles               : /home/ashockey/training/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (1)
-[18/7dd931] process &gt; MYORGANIZATION_MYPIPELINE:MYPIPELINE:MULTIQC [100%] 1 of 1 ✔
--[myorganization/mypipeline] Pipeline completed successfully-</code></pre>
+[b6/042941] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
 </div>
 <p>The pipeline successfully completed one process, MULTIQC, the output
 of which can be found in the <code>results</code> directory.</p>
@@ -657,8 +658,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/15-making_nfcore_pipeline.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/15-making_nfcore_pipeline.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-15",
-  "datePublished": "2026-05-15"
+  "dateModified": "2026-05-18",
+  "datePublished": "2026-05-18"
 }
 
   </script><script>
