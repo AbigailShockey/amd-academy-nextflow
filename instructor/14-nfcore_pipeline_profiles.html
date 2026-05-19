@@ -402,7 +402,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing nf-core pipelines with profiles</h1>
-        <p>Last updated on 2026-05-14 |
+        <p>Last updated on 2026-05-19 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/14-nfcore_pipeline_profiles.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -489,36 +489,27 @@ executed.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nf-core</span> download nf-core/rnaseq <span class="at">-r</span> 3.14.0</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nf-core</span> pipelines download nf-core/rnaseq <span class="at">-r</span> 3.14.0</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>
-                                          ,--./,-.
+<pre class="output" tabindex="0"><code>                                          ,--./,-.
           ___     __   __   __   ___     /,-._.--~\
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 2.14.1 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
 WARNING  Could not find GitHub authentication token. Some API requests may fail.
-? Include the nf-core's default institutional configuration files into the download? No
 
 In addition to the pipeline code, this tool can download software containers.
-? Download software container images: none
-
-If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
-? Choose compression type: none
-INFO     Saving 'nf-core/rnaseq'
-          Pipeline revision: '3.14.0'
-          Use containers: 'none'
-          Container library: 'quay.io'
-          Output directory: 'nf-core-rnaseq_3.14.0'
-          Include default institutional configuration: 'False'
-INFO     Downloading workflow files from GitHub</code></pre>
+? Download software container images: (Use arrow keys)
+ » none
+   singularity
+   docker</code></pre>
 </div>
 <div id="exercise-run-a-demo-nf-core-pipeline" class="callout challenge">
 <div class="callout-square">
@@ -529,16 +520,12 @@ INFO     Downloading workflow files from GitHub</code></pre>
 <h3 class="callout-title">Exercise Run a demo nf-core pipeline</h3>
 <div class="callout-content">
 <p>Run the <code>nf-core/demo</code> pipeline release 1.0.0 with the
-provided test data using the profile <code>test</code>. Add the
-parameters <code>--max_memory 3G</code>, <code>--skip_trim</code>, and
-–outdir “nfcore-demo-out” on the command line. Include the config file,
-<code>nfcore-custom.config</code>, from the previous exercise using the
-option <code>-c</code>, to send an email when your pipeline
-finishes.</p>
+provided test data using the profile <code>test</code> and parameter
+<code>--outdir</code> <code>results</code>.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> nextflow run nf-core/demo <span class="at">-r</span> 1.0.0  <span class="at">-profile</span> test <span class="at">--skip_trim</span> <span class="at">--max_memory</span> 3.GB <span class="at">-c</span> nfcore-custom.config</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> nextflow run nf-core/demo <span class="at">-r</span> 1.0.0 <span class="at">--outdir</span> results <span class="at">-profile</span> test</span></code></pre>
 </div>
 <p>The <code>nf-core/demo</code> pipleine is a simple nf-core style
 bioinformatics pipeline for workshops and demonstrations that runs
@@ -556,14 +543,7 @@ FASTQC and multiqc.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 24.04.3
-
-Launching `https://github.com/nf-core/demo` [silly_bohr] DSL2 - revision: 705f18e4b1 [master]
-
-WARN: Access to undefined parameter `monochromeLogs` -- Initialise it to a default value eg. `params.monochromeLogs = some_value`
-
-
-------------------------------------------------------
+<pre class="output" tabindex="0"><code>------------------------------------------------------
                                         ,--./,-.
         ___     __   __   __   ___     /,-._.--~'
   |\ | |__  __ /  ` /  \ |__) |__         }  {
@@ -572,22 +552,19 @@ WARN: Access to undefined parameter `monochromeLogs` -- Initialise it to a defau
   nf-core/demo v1.0.0-g705f18e
 ------------------------------------------------------
 Core Nextflow options
-  revision                  : master
-  runName                   : silly_bohr
-  launchDir                 : /home/nf-training
-  workDir                   : /home/nf-training/work
-  projectDir                : /home/nf-training/.nextflow/assets/nf-core/demo
-  userName                  : nf-training
-  profile                   : test
+  revision                  : 1.0.0
+  runName                   : spontaneous_lamarr
+  containerEngine           : docker
+  launchDir                 : /home/shockeax/trainings/amd-academy-nextflow
+  workDir                   : /home/shockeax/trainings/amd-academy-nextflow/work
+  projectDir                : /home/shockeax/.nextflow/assets/nf-core/demo
+  userName                  : shockeax
+  profile                   : test,docker
   configFiles               :
 
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
   outdir                    : out
-  email                     : myemail@address.com
-
-Process skipping options
-  skip_trim                 : true
 
 Institutional config options
   config_profile_name       : Test profile
@@ -595,7 +572,7 @@ Institutional config options
 
 Max job request options
   max_cpus                  : 2
-  max_memory                : 3.GB
+  max_memory                : 6.GB
   max_time                  : 6.h
 
 !! Only displaying parameters that differ from the pipeline defaults !!
@@ -610,11 +587,14 @@ If you use nf-core/demo for your analysis please cite:
 * Software dependencies
   https://github.com/nf-core/demo/blob/master/CITATIONS.md
 ------------------------------------------------------
-executor &gt;  local (4)
-[08/94286a] process &gt; NFCORE_DEMO:DEMO:FASTQC (SAMPLE2_PE) [100%] 3 of 3 ✔
-[df/45c5c7] process &gt; NFCORE_DEMO:DEMO:MULTIQC             [100%] 1 of 1 ✔
--[nf-core/demo] Sent summary e-mail to graeme.grimes@ed.ac.uk (sendmail)-
--[nf-core/demo] Pipeline completed successfully-</code></pre>
+executor &gt;  local (7)
+[73/a7c6df] NFCORE_DEMO:DEMO:FASTQC (SAMPLE1_PE)     [100%] 3 of 3 ✔
+[0f/99ae5f] NFCORE_DEMO:DEMO:MULTIQC                 [100%] 1 of 1 ✔
+-[nf-core/demo] Pipeline completed successfully-
+Completed at: 19-May-2026 11:57:42
+Duration    : 1m 9s
+CPU hours   : (a few seconds)
+Succeeded   : 7</code></pre>
 </div>
 </div>
 </div>
@@ -747,7 +727,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/14-nfcore_pipeline_profiles.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/14-nfcore_pipeline_profiles.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-14",
+  "dateModified": "2026-05-19",
   "datePublished": "2026-05-19"
 }
 

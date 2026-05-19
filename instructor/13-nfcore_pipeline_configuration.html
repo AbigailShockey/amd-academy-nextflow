@@ -402,7 +402,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>nf-core pipeline configuraton</h1>
-        <p>Last updated on 2026-05-14 |
+        <p>Last updated on 2026-05-19 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/13-nfcore_pipeline_configuration.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -478,14 +478,14 @@ flag</li>
 </ol><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.14.0 <span class="at">-c</span> mylocal.config</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">nextflow</span> run nf-core/viralrecon <span class="at">-r</span> 3.0.0 <span class="at">-c</span> mylocal.config</span></code></pre>
 </div>
-<p>5. Command line configuration: pipeline parameters can be passed on
-the command line using the <code>--&lt;parameter&gt;</code> syntax.</p>
-<div class="codewrapper sourceCode" id="cb2">
+<ol start="5" style="list-style-type: decimal"><li>Command line configuration: pipeline parameters can be passed on the
+command line using the <code>--&lt;parameter&gt;</code> syntax.</li>
+</ol><div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.14.0 <span class="at">--email</span> <span class="st">"my@email.com"</span><span class="kw">`</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nextflow</span> run nf-core/viralrecon <span class="at">-r</span> 3.0.0 <span class="at">--email</span> <span class="st">"my@email.com"</span><span class="kw">`</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="config-profiles">Config Profiles<a class="anchor" aria-label="anchor" href="#config-profiles"></a></h4>
@@ -503,8 +503,8 @@ profile takes priority.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.14.0 <span class="at">-profile</span> test,conda</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.14.0 <span class="at">-profile</span> <span class="op">&lt;</span>institutional_config_profile<span class="op">&gt;</span>, test, conda</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">nextflow</span> run nf-core/viralrecon <span class="at">-r</span> 3.0.0 <span class="at">-profile</span> test,conda</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">nextflow</span> run nf-core/viralrecon <span class="at">-r</span> 3.0.0 <span class="at">-profile</span> <span class="op">&lt;</span>institutional_config_profile<span class="op">&gt;</span>, test, conda</span></code></pre>
 </div>
 <p><strong>Note</strong> The order in which config profiles are
 specified matters. Their priority increases from left to right.</p>
@@ -632,7 +632,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/13-nfcore_pipeline_configuration.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/13-nfcore_pipeline_configuration.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-14",
+  "dateModified": "2026-05-19",
   "datePublished": "2026-05-19"
 }
 
