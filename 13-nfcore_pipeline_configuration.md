@@ -42,13 +42,13 @@ Nextflow can load pipeline configurations from multiple locations.  nf-core pipe
 4. Local config files given to Nextflow with the `-c` flag
 
 ```bash
-nextflow run nf-core/rnaseq -r 3.14.0 -c mylocal.config
+nextflow run nf-core/viralrecon -r 3.0.0 -c mylocal.config
 ```
 
-5\. Command line configuration: pipeline parameters can be passed on the command line using the `--<parameter>` syntax.
+5. Command line configuration: pipeline parameters can be passed on the command line using the `--<parameter>` syntax.
 
 ```bash
-nextflow run nf-core/rnaseq -r 3.14.0 --email "my@email.com"`
+nextflow run nf-core/viralrecon -r 3.0.0 --email "my@email.com"`
 ```
 
 #### Config Profiles
@@ -60,8 +60,8 @@ Configuration files can contain the definition of one or more profiles. A profil
 Multiple profiles are comma-separated. When there are differing configuration settings provided by different profiles, the right-most profile takes priority.
 
 ```bash
-nextflow run nf-core/rnaseq -r 3.14.0 -profile test,conda
-nextflow run nf-core/rnaseq -r 3.14.0 -profile <institutional_config_profile>, test, conda
+nextflow run nf-core/viralrecon -r 3.0.0 -profile test,conda
+nextflow run nf-core/viralrecon -r 3.0.0 -profile <institutional_config_profile>, test, conda
 ```
 
 **Note** The order in which config profiles are specified matters. Their priority increases from left to right.

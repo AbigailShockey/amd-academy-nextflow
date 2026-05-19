@@ -47,47 +47,36 @@ By default, the pipeline will download the pipeline code and the institutional n
 If you specify the flag `--singularity`, it will also download any singularity image files that are required (this needs Singularity to be installed). All files are saved to a single directory, ready to be transferred to the cluster where the pipeline will be executed.
 
 ```bash
-nf-core download nf-core/rnaseq -r 3.14.0
+nf-core pipelines download nf-core/rnaseq -r 3.14.0
 ```
 
 ```output
-
                                           ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\
+          ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 2.14.1 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
-WARNING  Could not find GitHub authentication token. Some API requests may fail.
-? Include the nf-core's default institutional configuration files into the download? No
+WARNING  Could not find GitHub authentication token. Some API requests may fail.                                                                  
 
 In addition to the pipeline code, this tool can download software containers.
-? Download software container images: none
-
-If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
-? Choose compression type: none
-INFO     Saving 'nf-core/rnaseq'
-          Pipeline revision: '3.14.0'
-          Use containers: 'none'
-          Container library: 'quay.io'
-          Output directory: 'nf-core-rnaseq_3.14.0'
-          Include default institutional configuration: 'False'
-INFO     Downloading workflow files from GitHub
+? Download software container images: (Use arrow keys)
+ » none
+   singularity
+   docker
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ### Exercise  Run a demo nf-core pipeline
 
-Run the `nf-core/demo` pipeline release 1.0.0  with the provided test data using the profile `test`.
-Add the parameters `--max_memory 3G`, `--skip_trim`, and --outdir "nfcore-demo-out" on the command line.
-Include the config file, `nfcore-custom.config`, from the previous exercise using the option `-c`, to send an email when your pipeline finishes.
+Run the `nf-core/demo` pipeline release 1.0.0  with the provided test data using the profile `test` and parameter `--outdir` `results`.
 
 ```bash
-$ nextflow run nf-core/demo -r 1.0.0  -profile test --skip_trim --max_memory 3.GB -c nfcore-custom.config
+$ nextflow run nf-core/demo -r 1.0.0 --outdir results -profile test
 ```
 
 The `nf-core/demo` pipleine is a simple nf-core style bioinformatics pipeline for workshops and demonstrations that runs FASTQC and multiqc.
@@ -97,13 +86,6 @@ The `nf-core/demo` pipleine is a simple nf-core style bioinformatics pipeline fo
 ### Solution
 
 ```output
- N E X T F L O W   ~  version 24.04.3
-
-Launching `https://github.com/nf-core/demo` [silly_bohr] DSL2 - revision: 705f18e4b1 [master]
-
-WARN: Access to undefined parameter `monochromeLogs` -- Initialise it to a default value eg. `params.monochromeLogs = some_value`
-
-
 ------------------------------------------------------
                                         ,--./,-.
         ___     __   __   __   ___     /,-._.--~'
@@ -113,22 +95,19 @@ WARN: Access to undefined parameter `monochromeLogs` -- Initialise it to a defau
   nf-core/demo v1.0.0-g705f18e
 ------------------------------------------------------
 Core Nextflow options
-  revision                  : master
-  runName                   : silly_bohr
-  launchDir                 : /home/nf-training
-  workDir                   : /home/nf-training/work
-  projectDir                : /home/nf-training/.nextflow/assets/nf-core/demo
-  userName                  : nf-training
-  profile                   : test
-  configFiles               :
+  revision                  : 1.0.0
+  runName                   : spontaneous_lamarr
+  containerEngine           : docker
+  launchDir                 : /home/shockeax/trainings/amd-academy-nextflow
+  workDir                   : /home/shockeax/trainings/amd-academy-nextflow/work
+  projectDir                : /home/shockeax/.nextflow/assets/nf-core/demo
+  userName                  : shockeax
+  profile                   : test,docker
+  configFiles               : 
 
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
   outdir                    : out
-  email                     : myemail@address.com
-
-Process skipping options
-  skip_trim                 : true
 
 Institutional config options
   config_profile_name       : Test profile
@@ -136,7 +115,7 @@ Institutional config options
 
 Max job request options
   max_cpus                  : 2
-  max_memory                : 3.GB
+  max_memory                : 6.GB
   max_time                  : 6.h
 
 !! Only displaying parameters that differ from the pipeline defaults !!
@@ -151,11 +130,14 @@ If you use nf-core/demo for your analysis please cite:
 * Software dependencies
   https://github.com/nf-core/demo/blob/master/CITATIONS.md
 ------------------------------------------------------
-executor >  local (4)
-[08/94286a] process > NFCORE_DEMO:DEMO:FASTQC (SAMPLE2_PE) [100%] 3 of 3 ✔
-[df/45c5c7] process > NFCORE_DEMO:DEMO:MULTIQC             [100%] 1 of 1 ✔
--[nf-core/demo] Sent summary e-mail to graeme.grimes@ed.ac.uk (sendmail)-
+executor >  local (7)
+[73/a7c6df] NFCORE_DEMO:DEMO:FASTQC (SAMPLE1_PE)     [100%] 3 of 3 ✔
+[0f/99ae5f] NFCORE_DEMO:DEMO:MULTIQC                 [100%] 1 of 1 ✔
 -[nf-core/demo] Pipeline completed successfully-
+Completed at: 19-May-2026 11:57:42
+Duration    : 1m 9s
+CPU hours   : (a few seconds)
+Succeeded   : 7
 ```
 
 :::::::::::::::::::::::::
