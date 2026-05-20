@@ -27,7 +27,7 @@ exercises: 46
 
 We're now set to develop a multi-step pipeline using Nextflow, for analyzing and performing genome assembly on our bacterial DNA sequences.
 
-In this genome assembly pipeline, we'll undertake the following steps to thoroughly analyze gene expression data:
+In this genome assembly pipeline, we'll undertake the following steps to assemble bacterial sequence data:
 
 1. **Quality Control with FastQC**: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) assesses the quality of the data by generating reports that highlight any potential issues, such as low-quality sequences or contamination. FastQC's output includes an HTML report and a directory containing detailed analyses, which are essential for evaluating the integrity of the sequencing data.
 
