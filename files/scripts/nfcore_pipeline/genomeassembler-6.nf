@@ -59,7 +59,7 @@ workflow GENOMEASSEMBLER {
     // MODULE: quast
     //
     QUAST(ch_assemblies)
-    ch_assembly_qc = QUAST.out.results.collect()
+    ch_assembly_qc = QUAST.out.tsv.collect()
     ch_multiqc_files = ch_multiqc_files.mix(ch_assembly_qc)
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
