@@ -36,6 +36,7 @@ workflow GENOMEASSEMBLER {
     // MODULE: seqtk trim
     //
     SEQTK_TRIM(ch_samplesheet)
+    ch_trimmed_reads = SEQTK_TRIM.out.reads
 
     //
     // Collate and save software versions

@@ -37,6 +37,7 @@ workflow GENOMEASSEMBLER {
     //
 
     SEQTK_TRIM(ch_samplesheet)
+    ch_trimmed_reads = SEQTK_TRIM.out.reads
 
     //
     // MODULE: shovill
