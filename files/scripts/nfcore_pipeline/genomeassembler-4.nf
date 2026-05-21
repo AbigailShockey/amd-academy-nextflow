@@ -49,14 +49,14 @@ workflow GENOMEASSEMBLER {
     //
     // MODULE: fastqc
     //
-    FASTQC(ch_assemblies)
+    FASTQC(ch_samplesheet)
     ch_read_qc = FASTQC.out.collect()
     ch_versions = ch_versions.mix()
 
     //
     // MODULE: quast
     //
-    QUAST(ch_trimmed_reads)
+    QUAST(ch_assemblies)
     ch_versions = ch_versions.mix()
 
     //
