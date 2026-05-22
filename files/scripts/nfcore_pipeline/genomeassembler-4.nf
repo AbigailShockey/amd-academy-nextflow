@@ -37,6 +37,7 @@ workflow GENOMEASSEMBLER {
     //
     SEQTK_TRIM(ch_samplesheet)
     ch_trimmed_reads = SEQTK_TRIM.out.reads
+    seqtk_versions =
     ch_versions = ch_versions.mix()
 
     //
@@ -44,13 +45,15 @@ workflow GENOMEASSEMBLER {
     //
     SHOVILL(ch_trimmed_reads)
     ch_assemblies = SHOVILL.out.contigs
+    shovill_versions =
     ch_versions = ch_versions.mix()
 
     //
     // MODULE: fastqc
     //
     FASTQC(ch_samplesheet)
-    ch_read_qc = FASTQC.out.collect()
+    ch_read_qc = FASTQC.out.zip.collect()
+    fastqc_versions =
     ch_versions = ch_versions.mix()
 
     //
@@ -58,6 +61,7 @@ workflow GENOMEASSEMBLER {
     //
     QUAST(ch_assemblies)
     ch_assembly_qc = QUAST.out.tsv.collect()
+    quast_versions =
     ch_versions = ch_versions.mix()
 
     //
