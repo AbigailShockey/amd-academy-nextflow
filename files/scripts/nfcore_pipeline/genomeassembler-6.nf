@@ -35,33 +35,36 @@ workflow GENOMEASSEMBLER {
     //
     // MODULE: seqtk trim
     //
-
     SEQTK_TRIM(ch_samplesheet)
     ch_trimmed_reads = SEQTK_TRIM.out.reads
-    ch_versions = ch_versions.mix(SEQTK_TRIM.out.versions.first())
+    seqtk_versions = SEQTK_TRIM.out.versions.first()
+    ch_versions = ch_versions.mix(seqtk_versions)
 
     //
     // MODULE: shovill
     //
     SHOVILL(ch_trimmed_reads)
     ch_assemblies = SHOVILL.out.contigs
-    ch_versions = ch_versions.mix(SHOVILL.out.versions.first())
+    shovill_versions = SHOVILL.out.versions.first()
+    ch_versions = ch_versions.mix(shovill_versions)
 
     //
     // MODULE: fastqc
     //
     FASTQC(ch_samplesheet)
-    ch_read_qc = FASTQC.out.collect()
+    ch_read_qc = FASTQC.out.zip.collect()
+    fastqc_versions = FASTQC.out.versions.first()
+    ch_versions = ch_versions.mix(fastqc_versions)
     ch_multiqc_files = ch_multiqc_files.mix(ch_read_qc)
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     //
     // MODULE: quast
     //
     QUAST(ch_assemblies)
     ch_assembly_qc = QUAST.out.tsv.collect()
+    quast_versions = QUAST.out.versions.first()
+    ch_versions = ch_versions.mix(quast_versions)
     ch_multiqc_files = ch_multiqc_files.mix(ch_assembly_qc)
-    ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
     //
     // Collate and save software versions
