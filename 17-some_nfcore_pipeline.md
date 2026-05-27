@@ -41,7 +41,7 @@ This folder contains files we will be modifying in this episode.
 
 ## Add modules to the workflow script
 
-The first thing we want to do is add the remaining modules we just installed to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script.
+The first thing we want to do is add the remaining modules we just installed to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script. Since we will be running FastQC on both the raw and trimmed reads, we will need to list it twice and use `as` to give it a different name, `FASTQC_TRIMMED`.
 
 ```groovy 
 //genomeassembler-1.nf
@@ -50,15 +50,15 @@ The first thing we want to do is add the remaining modules we just installed to 
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
-include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
-include { SHOVILL                } from ''
-include { FASTQC                 } from ''
-include { QUAST                  } from ''
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
+include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+include { SHOVILL                     } from ''
+include { FASTQC                      } from ''
+include { FASTQC as FASTQC_TRIMMED    } from ''
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -77,14 +77,15 @@ Modify `genomeassembler-1.nf`, adding the paths to the Shovill, FastQC, and QUAS
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
-include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
-include { SHOVILL                } from '../modules/nf-core/shovill/main'
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
+include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+include { SHOVILL                     } from '../modules/nf-core/shovill/main'
+include { FASTQC                      } from '../modules/nf-core/fastqc/main'
+include { FASTQC as FASTQC_TRIMMED    } from '../modules/nf-core/fastqc/main'
 ```
 
 :::::::::::::::::::::::::
@@ -143,7 +144,11 @@ workflow GENOMEASSEMBLER {
     //
 
     //
-    // MODULE: fastqc
+    // MODULE: fastqc raw
+    //
+
+    //
+    // MODULE: fastqc trimmed
     //
 
 [..truncated..] 
@@ -197,6 +202,11 @@ workflow GENOMEASSEMBLER {
     // MODULE: fastqc
     //
     FASTQC()
+
+    //
+    // MODULE: fastqc trimmed
+    //
+    FASTQC_TRIMMED()
 
 [..truncated..] 
 
@@ -272,6 +282,12 @@ workflow GENOMEASSEMBLER {
     FASTQC()
     ch_read_qc = .collect { it[1] }
 
+    //
+    // MODULE: fastqc trimmed
+    //
+    FASTQC_TRIMMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = .collect { it[1] }
+
 [..truncated..] 
 
 }
@@ -334,6 +350,12 @@ workflow GENOMEASSEMBLER {
     //
     FASTQC(ch_samplesheet)
     ch_read_qc = FASTQC.out.zip.collect { it[1] }
+
+    //
+    // MODULE: fastqc trimmed
+    //
+    FASTQC_TRIMMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = FASTQC_TRIMMMED.out.zip.collect { it[1] }
 
 [..truncated..] 
 
@@ -403,7 +425,13 @@ workflow GENOMEASSEMBLER {
     //
     FASTQC(ch_samplesheet)
     ch_read_qc = FASTQC.out.zip.collect()
-    fastqc_versions = FASTQC.out.versions.first()
+    ch_multiqc_files = ch_multiqc_files.mix()
+
+    //
+    // MODULE: fastqc trimmed
+    //
+    FASTQC_TRIMMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = FASTQC_TRIMMMED.out.zip.collect { it[1] }
     ch_multiqc_files = ch_multiqc_files.mix()
 
 [..truncated..] 
@@ -463,6 +491,13 @@ workflow GENOMEASSEMBLER {
     FASTQC(ch_samplesheet)
     ch_read_qc = FASTQC.out.zip.collect()
     ch_multiqc_files = ch_multiqc_files.mix(ch_read_qc)
+
+    //
+    // MODULE: fastqc trimmed
+    //
+    FASTQC_TRIMMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = FASTQC_TRIMMMED.out.zip.collect { it[1] }
+    ch_multiqc_files = ch_multiqc_files.mix(ch_trimmed_read_qc)
 
 [..truncated..] 
 
