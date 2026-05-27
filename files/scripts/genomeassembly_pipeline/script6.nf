@@ -82,32 +82,13 @@ process FASTQC {
     """
 }
 
-/*
- * Run QUAST to check quality of the assemblies
- */
-process QUAST {
-    
-    tag "QUAST on $sample_id"
-    cpus 1
-
-    input:
-    tuple val(sample_id), path(contigs)
-
-    output:
-    tuple val(sample_id), path("${sample_id}.quast.tsv")
-
-    script:
-    """
-    quast.py ${contigs} -o .
-    mv report.tsv ${prefix}.quast.tsv
-    """
-}
-
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-  fastqc_ch=FASTQC(read_pairs_ch)
-  quast_ch=QUAST(assemblies_ch)
+  fastqc_ch=FASTQC(read_pairs_ch).collect()
+  fastqc_trimmed_ch=FASTQC(trimmed_reads_ch).collect()
+  multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch)
+  MULTIQC(multiqc_input_ch)
 }

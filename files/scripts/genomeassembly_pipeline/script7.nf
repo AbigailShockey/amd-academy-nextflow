@@ -129,7 +129,8 @@ workflow {
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-  fastqc_ch=FASTQC(read_pairs_ch)
-  quast_ch=QUAST(assemblies_ch)
-  MULTIQC(quast_ch.mix(fastqc_ch).collect())
+  fastqc_ch=FASTQC(read_pairs_ch).collect()
+  fastqc_trimmed_ch=FASTQC(trimmed_reads_ch).collect()
+  multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch)
+  MULTIQC(multiqc_input_ch)
 }

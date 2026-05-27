@@ -289,7 +289,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple genome assembly pipeline</a>
+        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple Nextflow pipeline</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -411,7 +411,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>nf-core pipeline configuraton</h1>
-        <p>Last updated on 2026-05-19 |
+        <p>Last updated on 2026-05-27 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/13-nfcore_pipeline_configuration.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -517,49 +517,6 @@ profile takes priority.</p>
 </div>
 <p><strong>Note</strong> The order in which config profiles are
 specified matters. Their priority increases from left to right.</p>
-<div id="multiple-nextflow-configuration-locations" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="multiple-nextflow-configuration-locations" class="callout-inner">
-<h3 class="callout-title">Multiple Nextflow configuration locations</h3>
-<div class="callout-content">
-<p>Be clever with multiple Nextflow configuration locations. For
-example, use <code>-profile</code> for your cluster configuration, the
-file <code>$HOME/.nextflow/config</code> for your personal config such
-as <code>params.email</code> and a working directory
-&gt;<code>nextflow.config</code> file for reproducible run-specific
-configuration.</p>
-</div>
-</div>
-</div>
-<div id="exercise-create-a-custom-config" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="exercise-create-a-custom-config" class="callout-inner">
-<h3 class="callout-title">Exercise create a custom config</h3>
-<div class="callout-content">
-<p>Add the <code>params.email</code> to a file called
-<code>nfcore-custom.config</code></p>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<p>A line similar to one below in the file custom.config</p>
-<pre><code><span><span class="va">params.email</span> <span class="op">=</span> <span class="st">"myemail@address.com"</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -619,7 +576,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/AbigailShockey/varnish/tree/6df0cc76c6bfc3eac4c77165ab5c7bf810d8b7ea" class="external-link">varnish (1.1.1.9000)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/AbigailShockey/varnish/tree/6df0cc76c6bfc3eac4c77165ab5c7bf810d8b7ea" class="external-link">varnish (1.1.1.9000)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -641,8 +598,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/13-nfcore_pipeline_configuration.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/13-nfcore_pipeline_configuration.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-19",
-  "datePublished": "2026-05-22"
+  "dateModified": "2026-05-27",
+  "datePublished": "2026-05-27"
 }
 
   </script><script>

@@ -357,7 +357,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple genome assembly pipeline</a>
+        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple Nextflow pipeline</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -612,7 +612,7 @@ work directory.</li>
 workflow after a pipeline error or using new data, skipping steps that
 have been successfully executed.</li>
 <li>Re-entrancy is enabled using the <code>-resume</code> option.</li>
-</ul></section><section id="11-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="11-Simple_genome_assembly_pipeline.html">Simple genome assembly pipeline</a></h2>
+</ul></section><section id="11-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="11-Simple_genome_assembly_pipeline.html">Simple Nextflow pipeline</a></h2>
 <hr class="half-width">
 <ul>
 <li>Nextflow can combined tasks (processes) and manage data flows using
@@ -627,10 +627,8 @@ manager.</li>
 <li>Workflow steps are connected via their <code>inputs</code> and
 <code>outputs</code> using <code>Channels</code>.</li>
 <li>Intermediate pipeline results can be transformed using Channel
-<code>operators</code> such as <code>combine</code>.</li>
-<li>Nextflow can execute an action when the pipeline completes the
-execution using the <code>workflow.onComplete</code> event handler to
-print a confirmation message.</li>
+<code>operators</code> such as <code>combine</code> and
+<code>mix</code>.</li>
 <li>Nextflow is able to produce multiple reports and charts providing
 several runtime metrics and execution information using the command line
 options <code>-with-report</code>, <code>-with-trace</code>,
@@ -711,7 +709,7 @@ workflow script.</li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/AbigailShockey/varnish/tree/6df0cc76c6bfc3eac4c77165ab5c7bf810d8b7ea" class="external-link">varnish (1.1.1.9000)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/AbigailShockey/varnish/tree/6df0cc76c6bfc3eac4c77165ab5c7bf810d8b7ea" class="external-link">varnish (1.1.1.9000)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -734,8 +732,8 @@ workflow script.</li>
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/key-points.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/key-points.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-22",
-  "datePublished": "2026-05-22"
+  "dateModified": "2026-05-27",
+  "datePublished": "2026-05-27"
 }
 
   </script><script>
