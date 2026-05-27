@@ -1,5 +1,5 @@
 ---
-title: nf-core modules
+title: Simple nf-core pipeline
 teaching: 15
 exercises: 30
 ---
@@ -27,8 +27,6 @@ We're now set to develop a multi-step genome assembly pipeline using nf-core. Th
 
 3. **Genome Assembly with [Shovill](https://github.com/tseemann/shovill)**
 
-4. **Genome Assembly QC with [QUAST](https://github.com/ablab/quast)**
-
 5. **Aggregating Reports with [MultiQC](https://multiqc.info/)**
 
 To start move the episode's nextflow scripts in the `scripts/nfcore_pipeline` folder to your home directory.
@@ -43,7 +41,7 @@ This folder contains files we will be modifying in this episode.
 
 ## Add modules to the workflow script
 
-The first thing we want to do is add the remaining modules we just installed to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` of the workflow script.
+The first thing we want to do is add the remaining modules we just installed to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script.
 
 ```groovy 
 //genomeassembler-1.nf
@@ -87,7 +85,6 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_geno
 include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
 include { SHOVILL                } from '../modules/nf-core/shovill/main'
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { QUAST                  } from '../modules/nf-core/quast/main'
 ```
 
 :::::::::::::::::::::::::
@@ -149,10 +146,6 @@ workflow GENOMEASSEMBLER {
     // MODULE: fastqc
     //
 
-    //
-    // MODULE: quast
-    //
-
 [..truncated..] 
 
 }
@@ -205,11 +198,6 @@ workflow GENOMEASSEMBLER {
     //
     FASTQC()
 
-    //
-    // MODULE: quast
-    //
-    QUAST()
-
 [..truncated..] 
 
 }
@@ -235,8 +223,9 @@ In this step you have learned:
 
 ## Adding module inputs and assigning module outputs to variables
 
-Next we will add inputs to the modules we previously added to the `RUN MAIN WORKFLOW` section of the workflow script and assign their outputs to variables to they can be passed to the next step in the pipeline. Note:
+Next we will add inputs to the modules we previously added to the `RUN MAIN WORKFLOW` section of the workflow script and assign their outputs to variables to they can be passed to the next step in the pipeline. 
 
+**Note:**
 - The input of Shovill will be the `reads` output from Seqtk
 - The input of FastQC will be the input reads, already stored in `ch_samplesheet`
 - The input of QUAST will be the `contigs` output from Shovill
@@ -275,16 +264,13 @@ workflow GENOMEASSEMBLER {
     // MODULE: shovill
     //
     SHOVILL()
+    ch_assemblies = 
 
     //
     // MODULE: fastqc
     //
     FASTQC()
-
-    //
-    // MODULE: quast
-    //
-    QUAST()
+    ch_read_qc = .collect { it[1] }
 
 [..truncated..] 
 
@@ -295,14 +281,15 @@ workflow GENOMEASSEMBLER {
 
 ## Add module inputs and assign module outputs
 
-Modify `genomeassembler-3.nf`, adding inputs to the Shovill, FastQC, and QUAST, modules. Assign the outputs of each module according to the following naming convention:
+Modify `genomeassembler-3.nf`, assign
+inputs to the Shovill, FastQC, and QUAST, modules. Assign the outputs of each module according to the following naming convention:
 
-- Name the `reads` output of Seqtk `ch_trimmed_reads`
-- Name the `contigs` output of Shovill `ch_assemblies`
-- Name the `zip` output of FastQC `ch_read_qc`
-- Name the `tsv` output of QUAST `ch_assembly_qc`
+- The `reads` output of Seqtk is named `ch_trimmed_reads`
+- The `contigs` output of Shovill is named `ch_assemblies`
+- The `zip` output of FastQC is named `ch_read_qc`
+- The `results` output of QUAST is named `ch_assembly_qc`
 
-**Note:** the outputs of FastQC and QUAST require the `collect` operator. We will pass these outputs to the MultiQC module  in a later section.
+**Note:** the outputs of FastQC and QUAST require the operator `.collect { it[1] }`. We will pass these outputs to the MultiQC module in a later section.
 
 :::::::::::::::  solution
 
@@ -346,13 +333,7 @@ workflow GENOMEASSEMBLER {
     // MODULE: fastqc
     //
     FASTQC(ch_samplesheet)
-    ch_read_qc = FASTQC.out.zip.collect()
-
-    //
-    // MODULE: quast
-    //
-    QUAST(ch_assemblies)
-    ch_assembly_qc = QUAST.out.tsv.collect()
+    ch_read_qc = FASTQC.out.zip.collect { it[1] }
 
 [..truncated..] 
 
@@ -425,14 +406,6 @@ workflow GENOMEASSEMBLER {
     fastqc_versions = FASTQC.out.versions.first()
     ch_multiqc_files = ch_multiqc_files.mix()
 
-    //
-    // MODULE: quast
-    //
-    QUAST(ch_assemblies)
-    ch_assembly_qc = QUAST.out.tsv.collect()
-    quast_versions = QUAST.out.versions.first()
-    ch_multiqc_files = ch_multiqc_files.mix()
-
 [..truncated..] 
 
 }
@@ -490,15 +463,6 @@ workflow GENOMEASSEMBLER {
     FASTQC(ch_samplesheet)
     ch_read_qc = FASTQC.out.zip.collect()
     ch_multiqc_files = ch_multiqc_files.mix(ch_read_qc)
-
-    //
-    // MODULE: quast
-    //
-    QUAST(ch_assemblies)
-    ch_assembly_qc = QUAST.out.tsv.collect()
-    quast_versions = QUAST.out.versions.first()
-    ch_versions = ch_versions.mix(quast_versions)
-    ch_multiqc_files = ch_multiqc_files.mix(ch_assembly_qc)
 
 [..truncated..] 
 
