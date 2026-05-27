@@ -264,7 +264,7 @@ modules/nf-core
 
 ## Installing more modules
 
-Install the following modules: [shovill](https://nf-co.re/modules/shovill), [fastqc](https://nf-co.re/modules/fastqc), and [quast](https://nf-co.re/modules/quast).
+Install the following modules: [shovill](https://nf-co.re/modules/shovill) and [fastqc](https://nf-co.re/modules/fastqc).
 
 :::::::::::::::  solution
 
@@ -273,7 +273,6 @@ Install the following modules: [shovill](https://nf-co.re/modules/shovill), [fas
 ```bash 
 $ nf-core modules install shovill
 $ nf-core modules install fastqc
-$ nf-core modules install quast
 ```
 
 :::::::::::::::::::::::::
@@ -438,7 +437,19 @@ The seqtk trim process only requires one input channel, which should contain pai
 SEQTK_TRIM(ch_samplesheet)
 ```
 
-#### Testing your custom pipeline with a custom test profile
+We can also assign the output of `SEQTK_TRIM()` to a variable that we'll pass to the next module.
+
+
+```groovy
+//
+// MODULE: seqtk trim
+//
+
+SEQTK_TRIM(ch_samplesheet)
+ch_trimmed_reads = SEQTK_TRIM.out.reads
+```
+
+## Testing your custom pipeline with a custom test profile
 
 To test this addition to the pipeline, we're going to create a custom test profile called `demo`: We're going to copy the `test.config` file in the `conf` directory and rename it `demo.config`:
 
