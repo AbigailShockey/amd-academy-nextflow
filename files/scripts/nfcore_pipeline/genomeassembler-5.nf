@@ -3,15 +3,15 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
-include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
-include { SHOVILL                } from '../modules/nf-core/shovill/main'
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { QUAST                  } from '../modules/nf-core/quast/main'
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
+include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+include { SHOVILL                     } from '../modules/nf-core/shovill/main'
+include { FASTQC                      } from '../modules/nf-core/fastqc/main'
+include { FASTQC as FASTQC_TRIMMED    } from '../modules/nf-core/fastqc/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,7 +37,6 @@ workflow GENOMEASSEMBLER {
     //
     SEQTK_TRIM(ch_samplesheet)
     ch_trimmed_reads = SEQTK_TRIM.out.reads
-    seqtk_versions = SEQTK_TRIM.out.versions.first()
     ch_versions = ch_versions.mix(seqtk_versions)
 
     //
@@ -45,26 +44,21 @@ workflow GENOMEASSEMBLER {
     //
     SHOVILL(ch_trimmed_reads)
     ch_assemblies = SHOVILL.out.contigs
-    shovill_versions = SHOVILL.out.versions.first()
     ch_versions = ch_versions.mix(shovill_versions)
 
     //
     // MODULE: fastqc
     //
     FASTQC(ch_samplesheet)
-    ch_read_qc = FASTQC.out.zip.collect()
-    fastqc_versions = FASTQC.out.versions.first()
-    ch_versions = ch_versions.mix(fastqc_versions)
-    ch_multiqc_files = ch_multiqc_files.mix()
+    ch_read_qc = FASTQC.out.zip.collect { it[1] }
+    ch_multiqc_files = ch_multiqc_files.mix(ch_read_qc)
 
     //
-    // MODULE: quast
+    // MODULE: fastqc trimmed
     //
-    QUAST(ch_assemblies)
-    ch_assembly_qc = QUAST.out.tsv.collect()
-    quast_versions = QUAST.out.versions.first()
-    ch_versions = ch_versions.mix(quast_versions)
-    ch_multiqc_files = ch_multiqc_files.mix()
+    FASTQC_TRIMMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = FASTQC_TRIMMMED.out.zip.collect { it[1] }
+    ch_multiqc_files = ch_multiqc_files.mix(ch_trimmed_read_qc)
 
     //
     // Collate and save software versions

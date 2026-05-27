@@ -3,15 +3,15 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
-include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
-include { SHOVILL                } from '../modules/nf-core/shovill/main'
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { QUAST                  } from '../modules/nf-core/quast/main'
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_genomeassembler_pipeline'
+include { SEQTK_TRIM                  } from '../modules/nf-core/seqtk/trim/main'
+include { SHOVILL                     } from '../modules/nf-core/shovill/main'
+include { FASTQC                      } from '../modules/nf-core/fastqc/main'
+include { FASTQC as FASTQC_TRIMMED    } from '../modules/nf-core/fastqc/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,10 +50,10 @@ workflow GENOMEASSEMBLER {
     FASTQC()
 
     //
-    // MODULE: quast
+    // MODULE: fastqc trimmed
     //
-    QUAST()
-
+    FASTQC_TRIMMED()
+    
     //
     // Collate and save software versions
     //
