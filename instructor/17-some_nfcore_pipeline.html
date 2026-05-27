@@ -442,8 +442,7 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>Explain the purpose and contents of nf-core modules.</li>
-<li>Add a module to a custom nf-core pipeline.</li>
+<ul><li>Recreate the simple nextflow pipeline in nf-core</li>
 </ul></div>
 </div>
 </div>
@@ -451,8 +450,7 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>What are nf-core modules?</li>
-<li>How do I add a module to an nf-core pipeline?</li>
+<ul><li>How do I make a simple nf-core pipeline?</li>
 </ul></div>
 </div>
 </div>
@@ -600,7 +598,7 @@ command:</p>
 <span id="cb5-31"><a href="#cb5-31" tabindex="-1" aria-label="code-block-5-31"></a>    <span class="co">//</span></span>
 <span id="cb5-32"><a href="#cb5-32" tabindex="-1" aria-label="code-block-5-32"></a></span>
 <span id="cb5-33"><a href="#cb5-33" tabindex="-1" aria-label="code-block-5-33"></a>    <span class="co">//</span></span>
-<span id="cb5-34"><a href="#cb5-34" tabindex="-1" aria-label="code-block-5-34"></a>    <span class="co">// MODULE: fastqc raw</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1" aria-label="code-block-5-34"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb5-35"><a href="#cb5-35" tabindex="-1" aria-label="code-block-5-35"></a>    <span class="co">//</span></span>
 <span id="cb5-36"><a href="#cb5-36" tabindex="-1" aria-label="code-block-5-36"></a></span>
 <span id="cb5-37"><a href="#cb5-37" tabindex="-1" aria-label="code-block-5-37"></a>    <span class="co">//</span></span>
@@ -756,7 +754,7 @@ of QUAST will be the <code>contigs</code> output from Shovill</p>
 <span id="cb8-42"><a href="#cb8-42" tabindex="-1" aria-label="code-block-8-42"></a>    <span class="co">//</span></span>
 <span id="cb8-43"><a href="#cb8-43" tabindex="-1" aria-label="code-block-8-43"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
 <span id="cb8-44"><a href="#cb8-44" tabindex="-1" aria-label="code-block-8-44"></a>    <span class="co">//</span></span>
-<span id="cb8-45"><a href="#cb8-45" tabindex="-1" aria-label="code-block-8-45"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1" aria-label="code-block-8-45"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">()</span></span>
 <span id="cb8-46"><a href="#cb8-46" tabindex="-1" aria-label="code-block-8-46"></a>    ch_trimmed_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
 <span id="cb8-47"><a href="#cb8-47" tabindex="-1" aria-label="code-block-8-47"></a></span>
 <span id="cb8-48"><a href="#cb8-48" tabindex="-1" aria-label="code-block-8-48"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
