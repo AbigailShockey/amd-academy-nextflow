@@ -6,15 +6,13 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- What are nf-core modules?
-- How do I add a module to an nf-core pipeline?
+- How do I make a simple nf-core pipeline?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Explain the purpose and contents of nf-core modules.
-- Add a module to a custom nf-core pipeline.
+- Recreate the simple nextflow pipeline in nf-core
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -37,7 +35,7 @@ $ mkdir bin
 $ cp scripts/nfcore_pipeline/* bin
 ```
 
-This folder contains files we will be modifying in this episode.
+This folder contains files we will be modifying in this episode. 
 
 ## Add modules to the workflow script
 
@@ -144,7 +142,7 @@ workflow GENOMEASSEMBLER {
     //
 
     //
-    // MODULE: fastqc raw
+    // MODULE: fastqc
     //
 
     //
@@ -285,7 +283,7 @@ workflow GENOMEASSEMBLER {
     //
     // MODULE: fastqc trimmed
     //
-    FASTQC_TRIMMMED(ch_trimmed_reads)
+    FASTQC_TRIMMMED()
     ch_trimmed_read_qc = .collect { it[1] }
 
 [..truncated..] 
