@@ -40,12 +40,13 @@ A list of software with version required for this training is listed below:
 
 |Software|Version|
 |--------|-------|
-|Nextflow|20.10.0|
-|nf-core/tools|1.12.1|
-|salmon|1.5|
-|fastqc|0.11|
-|multiqc|1.10|
-|python|3.8|
+|Nextflow|25.10.0|
+|nf-core/tools|4.0.2|
+|seqtk|1.4|
+|shovill|1.1.0|
+|fastqc|0.12.1|
+|multiqc|1.34|
+|python|>=3.8|
 
 #### conda
 
