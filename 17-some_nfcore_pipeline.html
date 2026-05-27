@@ -477,7 +477,10 @@ bacterial whole genome sequence data:</p>
 <section><h2 class="section-heading" id="add-modules-to-the-workflow-script">Add modules to the workflow script<a class="anchor" aria-label="anchor" href="#add-modules-to-the-workflow-script"></a></h2>
 <hr class="half-width"><p>The first thing we want to do is add the remaining modules we just
 installed to the <code>IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS</code>
-section of the workflow script.</p>
+section of the workflow script. Since we will be running FastQC on both
+the raw and trimmed reads, we will need to list it twice and use
+<code>as</code> to give it a different name,
+<code>FASTQC_TRIMMED</code>.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -487,15 +490,15 @@ section of the workflow script.</p>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="co">    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a><span class="co">*/</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>include <span class="op">{</span> MULTIQC                <span class="op">}</span> from <span class="st">'../modules/nf-core/multiqc/main'</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>include <span class="op">{</span> paramsSummaryMap       <span class="op">}</span> from <span class="st">'plugin/nf-schema'</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>include <span class="op">{</span> paramsSummaryMultiqc   <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>include <span class="op">{</span> softwareVersionsToYAML <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>include <span class="op">{</span> methodsDescriptionText <span class="op">}</span> from <span class="st">'../subworkflows/local/utils_nfcore_genomeassembler_pipeline'</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>include <span class="op">{</span> SEQTK_TRIM             <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>include <span class="op">{</span> SHOVILL                <span class="op">}</span> from <span class="st">''</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>include <span class="op">{</span> FASTQC                 <span class="op">}</span> from <span class="st">''</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>include <span class="op">{</span> QUAST                  <span class="op">}</span> from <span class="st">''</span></span></code></pre>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>include <span class="op">{</span> MULTIQC                     <span class="op">}</span> from <span class="st">'../modules/nf-core/multiqc/main'</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>include <span class="op">{</span> paramsSummaryMap            <span class="op">}</span> from <span class="st">'plugin/nf-schema'</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>include <span class="op">{</span> paramsSummaryMultiqc        <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>include <span class="op">{</span> softwareVersionsToYAML      <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>include <span class="op">{</span> methodsDescriptionText      <span class="op">}</span> from <span class="st">'../subworkflows/local/utils_nfcore_genomeassembler_pipeline'</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>include <span class="op">{</span> SEQTK_TRIM                  <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>include <span class="op">{</span> SHOVILL                     <span class="op">}</span> from <span class="st">''</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>include <span class="op">{</span> FASTQC                      <span class="op">}</span> from <span class="st">''</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>include <span class="op">{</span> FASTQC <span class="kw">as</span> FASTQC_TRIMMED    <span class="op">}</span> from <span class="st">''</span></span></code></pre>
 </div>
 <div id="include-modules" class="callout challenge">
 <div class="callout-square">
@@ -516,7 +519,7 @@ Shovill, FastQC, and QUAST, modules to the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -526,14 +529,15 @@ Shovill, FastQC, and QUAST, modules to the
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="co">    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS</span></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="co">*/</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>include <span class="op">{</span> MULTIQC                <span class="op">}</span> from <span class="st">'../modules/nf-core/multiqc/main'</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>include <span class="op">{</span> paramsSummaryMap       <span class="op">}</span> from <span class="st">'plugin/nf-schema'</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>include <span class="op">{</span> paramsSummaryMultiqc   <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>include <span class="op">{</span> softwareVersionsToYAML <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>include <span class="op">{</span> methodsDescriptionText <span class="op">}</span> from <span class="st">'../subworkflows/local/utils_nfcore_genomeassembler_pipeline'</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>include <span class="op">{</span> SEQTK_TRIM             <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>include <span class="op">{</span> SHOVILL                <span class="op">}</span> from <span class="st">'../modules/nf-core/shovill/main'</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>include <span class="op">{</span> FASTQC                 <span class="op">}</span> from <span class="st">'../modules/nf-core/fastqc/main'</span></span></code></pre>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>include <span class="op">{</span> MULTIQC                     <span class="op">}</span> from <span class="st">'../modules/nf-core/multiqc/main'</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>include <span class="op">{</span> paramsSummaryMap            <span class="op">}</span> from <span class="st">'plugin/nf-schema'</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>include <span class="op">{</span> paramsSummaryMultiqc        <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>include <span class="op">{</span> softwareVersionsToYAML      <span class="op">}</span> from <span class="st">'../subworkflows/nf-core/utils_nfcore_pipeline'</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>include <span class="op">{</span> methodsDescriptionText      <span class="op">}</span> from <span class="st">'../subworkflows/local/utils_nfcore_genomeassembler_pipeline'</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>include <span class="op">{</span> SEQTK_TRIM                  <span class="op">}</span> from <span class="st">'../modules/nf-core/seqtk/trim/main'</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>include <span class="op">{</span> SHOVILL                     <span class="op">}</span> from <span class="st">'../modules/nf-core/shovill/main'</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>include <span class="op">{</span> FASTQC                      <span class="op">}</span> from <span class="st">'../modules/nf-core/fastqc/main'</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a>include <span class="op">{</span> FASTQC <span class="kw">as</span> FASTQC_TRIMMED    <span class="op">}</span> from <span class="st">'../modules/nf-core/fastqc/main'</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -594,12 +598,16 @@ command:</p>
 <span id="cb5-31"><a href="#cb5-31" tabindex="-1" aria-label="code-block-5-31"></a>    <span class="co">//</span></span>
 <span id="cb5-32"><a href="#cb5-32" tabindex="-1" aria-label="code-block-5-32"></a></span>
 <span id="cb5-33"><a href="#cb5-33" tabindex="-1" aria-label="code-block-5-33"></a>    <span class="co">//</span></span>
-<span id="cb5-34"><a href="#cb5-34" tabindex="-1" aria-label="code-block-5-34"></a>    <span class="co">// MODULE: fastqc</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1" aria-label="code-block-5-34"></a>    <span class="co">// MODULE: fastqc raw</span></span>
 <span id="cb5-35"><a href="#cb5-35" tabindex="-1" aria-label="code-block-5-35"></a>    <span class="co">//</span></span>
 <span id="cb5-36"><a href="#cb5-36" tabindex="-1" aria-label="code-block-5-36"></a></span>
-<span id="cb5-37"><a href="#cb5-37" tabindex="-1" aria-label="code-block-5-37"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb5-38"><a href="#cb5-38" tabindex="-1" aria-label="code-block-5-38"></a></span>
-<span id="cb5-39"><a href="#cb5-39" tabindex="-1" aria-label="code-block-5-39"></a><span class="op">}</span></span></code></pre>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1" aria-label="code-block-5-37"></a>    <span class="co">//</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1" aria-label="code-block-5-38"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1" aria-label="code-block-5-39"></a>    <span class="co">//</span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1" aria-label="code-block-5-40"></a></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1" aria-label="code-block-5-41"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1" aria-label="code-block-5-42"></a></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1" aria-label="code-block-5-43"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="include-modules-1" class="callout challenge">
 <div class="callout-square">
@@ -620,7 +628,7 @@ and QUAST, modules (but not their inputs) to the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -661,9 +669,14 @@ and QUAST, modules (but not their inputs) to the
 <span id="cb6-34"><a href="#cb6-34" tabindex="-1" aria-label="code-block-6-34"></a>    <span class="co">//</span></span>
 <span id="cb6-35"><a href="#cb6-35" tabindex="-1" aria-label="code-block-6-35"></a>    <span class="fu">FASTQC</span><span class="op">()</span></span>
 <span id="cb6-36"><a href="#cb6-36" tabindex="-1" aria-label="code-block-6-36"></a></span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1" aria-label="code-block-6-37"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1" aria-label="code-block-6-38"></a></span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1" aria-label="code-block-6-39"></a><span class="op">}</span></span></code></pre>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1" aria-label="code-block-6-37"></a>    <span class="co">//</span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1" aria-label="code-block-6-38"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1" aria-label="code-block-6-39"></a>    <span class="co">//</span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1" aria-label="code-block-6-40"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">()</span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1" aria-label="code-block-6-41"></a></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1" aria-label="code-block-6-42"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1" aria-label="code-block-6-43"></a></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1" aria-label="code-block-6-44"></a><span class="op">}</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -738,9 +751,15 @@ of QUAST will be the <code>contigs</code> output from Shovill</p>
 <span id="cb8-39"><a href="#cb8-39" tabindex="-1" aria-label="code-block-8-39"></a>    <span class="fu">FASTQC</span><span class="op">()</span></span>
 <span id="cb8-40"><a href="#cb8-40" tabindex="-1" aria-label="code-block-8-40"></a>    ch_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
 <span id="cb8-41"><a href="#cb8-41" tabindex="-1" aria-label="code-block-8-41"></a></span>
-<span id="cb8-42"><a href="#cb8-42" tabindex="-1" aria-label="code-block-8-42"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb8-43"><a href="#cb8-43" tabindex="-1" aria-label="code-block-8-43"></a></span>
-<span id="cb8-44"><a href="#cb8-44" tabindex="-1" aria-label="code-block-8-44"></a><span class="op">}</span></span></code></pre>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1" aria-label="code-block-8-42"></a>    <span class="co">//</span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1" aria-label="code-block-8-43"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1" aria-label="code-block-8-44"></a>    <span class="co">//</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1" aria-label="code-block-8-45"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1" aria-label="code-block-8-46"></a>    ch_trimmed_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1" aria-label="code-block-8-47"></a></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1" aria-label="code-block-8-48"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1" aria-label="code-block-8-49"></a></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1" aria-label="code-block-8-50"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="add-module-inputs-and-assign-module-outputs" class="callout challenge">
 <div class="callout-square">
@@ -777,7 +796,7 @@ the MultiQC module in a later section.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -821,9 +840,15 @@ the MultiQC module in a later section.</p>
 <span id="cb9-37"><a href="#cb9-37" tabindex="-1" aria-label="code-block-9-37"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
 <span id="cb9-38"><a href="#cb9-38" tabindex="-1" aria-label="code-block-9-38"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
 <span id="cb9-39"><a href="#cb9-39" tabindex="-1" aria-label="code-block-9-39"></a></span>
-<span id="cb9-40"><a href="#cb9-40" tabindex="-1" aria-label="code-block-9-40"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb9-41"><a href="#cb9-41" tabindex="-1" aria-label="code-block-9-41"></a></span>
-<span id="cb9-42"><a href="#cb9-42" tabindex="-1" aria-label="code-block-9-42"></a><span class="op">}</span></span></code></pre>
+<span id="cb9-40"><a href="#cb9-40" tabindex="-1" aria-label="code-block-9-40"></a>    <span class="co">//</span></span>
+<span id="cb9-41"><a href="#cb9-41" tabindex="-1" aria-label="code-block-9-41"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb9-42"><a href="#cb9-42" tabindex="-1" aria-label="code-block-9-42"></a>    <span class="co">//</span></span>
+<span id="cb9-43"><a href="#cb9-43" tabindex="-1" aria-label="code-block-9-43"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb9-44"><a href="#cb9-44" tabindex="-1" aria-label="code-block-9-44"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb9-45"><a href="#cb9-45" tabindex="-1" aria-label="code-block-9-45"></a></span>
+<span id="cb9-46"><a href="#cb9-46" tabindex="-1" aria-label="code-block-9-46"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb9-47"><a href="#cb9-47" tabindex="-1" aria-label="code-block-9-47"></a></span>
+<span id="cb9-48"><a href="#cb9-48" tabindex="-1" aria-label="code-block-9-48"></a><span class="op">}</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -893,12 +918,18 @@ results of FastQC and QUAST can be passed to the MultiQC module.</p>
 <span id="cb11-38"><a href="#cb11-38" tabindex="-1" aria-label="code-block-11-38"></a>    <span class="co">//</span></span>
 <span id="cb11-39"><a href="#cb11-39" tabindex="-1" aria-label="code-block-11-39"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
 <span id="cb11-40"><a href="#cb11-40" tabindex="-1" aria-label="code-block-11-40"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span><span class="op">()</span></span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1" aria-label="code-block-11-41"></a>    fastqc_versions <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>versions<span class="op">.</span><span class="fu">first</span><span class="op">()</span></span>
-<span id="cb11-42"><a href="#cb11-42" tabindex="-1" aria-label="code-block-11-42"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
-<span id="cb11-43"><a href="#cb11-43" tabindex="-1" aria-label="code-block-11-43"></a></span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1" aria-label="code-block-11-44"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1" aria-label="code-block-11-45"></a></span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1" aria-label="code-block-11-46"></a><span class="op">}</span></span></code></pre>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1" aria-label="code-block-11-41"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1" aria-label="code-block-11-42"></a></span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1" aria-label="code-block-11-43"></a>    <span class="co">//</span></span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1" aria-label="code-block-11-44"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1" aria-label="code-block-11-45"></a>    <span class="co">//</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1" aria-label="code-block-11-46"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1" aria-label="code-block-11-47"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1" aria-label="code-block-11-48"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1" aria-label="code-block-11-49"></a></span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1" aria-label="code-block-11-50"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1" aria-label="code-block-11-51"></a></span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1" aria-label="code-block-11-52"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="add-module-inputs-and-assign-module-outputs-1" class="callout challenge">
 <div class="callout-square">
@@ -921,7 +952,7 @@ operator to combine the <code>ch_read_qc</code> and
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -968,9 +999,16 @@ operator to combine the <code>ch_read_qc</code> and
 <span id="cb12-40"><a href="#cb12-40" tabindex="-1" aria-label="code-block-12-40"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span><span class="op">()</span></span>
 <span id="cb12-41"><a href="#cb12-41" tabindex="-1" aria-label="code-block-12-41"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
 <span id="cb12-42"><a href="#cb12-42" tabindex="-1" aria-label="code-block-12-42"></a></span>
-<span id="cb12-43"><a href="#cb12-43" tabindex="-1" aria-label="code-block-12-43"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb12-44"><a href="#cb12-44" tabindex="-1" aria-label="code-block-12-44"></a></span>
-<span id="cb12-45"><a href="#cb12-45" tabindex="-1" aria-label="code-block-12-45"></a><span class="op">}</span></span></code></pre>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1" aria-label="code-block-12-43"></a>    <span class="co">//</span></span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1" aria-label="code-block-12-44"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb12-45"><a href="#cb12-45" tabindex="-1" aria-label="code-block-12-45"></a>    <span class="co">//</span></span>
+<span id="cb12-46"><a href="#cb12-46" tabindex="-1" aria-label="code-block-12-46"></a>    <span class="fu">FASTQC_TRIMMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb12-47"><a href="#cb12-47" tabindex="-1" aria-label="code-block-12-47"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb12-48"><a href="#cb12-48" tabindex="-1" aria-label="code-block-12-48"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_trimmed_read_qc<span class="op">)</span></span>
+<span id="cb12-49"><a href="#cb12-49" tabindex="-1" aria-label="code-block-12-49"></a></span>
+<span id="cb12-50"><a href="#cb12-50" tabindex="-1" aria-label="code-block-12-50"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb12-51"><a href="#cb12-51" tabindex="-1" aria-label="code-block-12-51"></a></span>
+<span id="cb12-52"><a href="#cb12-52" tabindex="-1" aria-label="code-block-12-52"></a><span class="op">}</span></span></code></pre>
 </div>
 </div>
 </div>
