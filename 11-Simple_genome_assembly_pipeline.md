@@ -1,15 +1,13 @@
 ---
-title: Simple genome assembly pipeline
-teaching: 23
-exercises: 46
+title: Simple Nextflow pipeline
+teaching: 22
+exercises: 44
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Create a simple genome assembly pipeline.
 - Use the `println` function to print all the pipeline parameters.
-- Print a confirmation message when the pipeline completes.
-- Use a conda `environment.yml` file to install the pipeline's software requirement.
+- Create a simple genome assembly pipeline.
 - Produce an execution report and generate run metrics from a pipeline run.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -19,13 +17,12 @@ exercises: 46
 - How can I create a Nextflow pipeline from a series of unix commands and input data?
 - How do I log my pipelines parameters?
 - How can I manage my pipeline software requirements?
-- How do I know when my pipeline has finished?
 - How do I see how much resources my pipeline has used?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-We're now set to develop a multi-step pipeline using Nextflow, for analyzing and performing genome assembly on our bacterial DNA sequences.
+We're now set to develop a multi-step pipeline using Nextflow, for performing genome assembly on our bacterial DNA sequences.
 
 In this genome assembly pipeline, we'll undertake the following steps to assemble bacterial sequence data:
 
@@ -57,24 +54,12 @@ $ shovill \
 $ mv <sample_id>_shovill_output/contigs.fa <sample_id>.fa
 ```
 
-
-4. **Genome Assembly QC with Quast**: After assembly, [QUAST](https://github.com/ablab/quast) is used to assess assembly quality. QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics.
-
-```bash
-$ quast.py <sample_id>.fa -o .
-$ mv report.tsv <sample_id>.quast.tsv
-```
-
-
-5. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and outputs from FastQC and QUAST. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
+4. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and output from FastQC. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
 
 
 ```bash
 $ multiqc .
 ```
-
-This pipeline assembles bacterial genomes, starting with quality control and culminating in an aggregated report for easy interpretation of the results.
-
 
 To start move the episode's nextflow scripts in the `scripts/genomeassembly_pipeline` folder to your home directory.
 
@@ -105,11 +90,11 @@ $ nextflow run script1.nf
 We can specify a different input parameter using the `--<params>` option, for example :
 
 ```groovy 
-$ nextflow run script1.nf --reads "data/bacteria/reads/ref1*_{1,2}.fq.gz"
+$ nextflow run script1.nf --reads "data/bacteria/reads/sample1*_{1,2}.fq.gz"
 ```
 
 ```output 
-reads: data/bacteria/reads/ref1*_{1,2}.fq.gz
+reads: data/bacteria/reads/sample1*_{1,2}.fq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -134,9 +119,10 @@ It can be useful to print the pipeline parameters to the screen. This can be don
 
 ```groovy 
 println """\
-         reads: ${params.reads}
-         """
-         .stripIndent()
+        reads: ${params.reads}
+        outdir: ${params.outdir}
+        """
+        .stripIndent()
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -176,19 +162,6 @@ $ less .nextflow.log
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Recap
-
-In this step you have learned:
-
-- How to define parameters in your pipeline script.
-
-- How to pass parameters by using the command line.
-
-- How to use multiline strings.
-
-- How to use `println` to print information and save it in the log execution file.
-
-
 ## Collect read files by pairs
 
 This step shows how to match **read** files into pairs, so they can be trimmed by Seqtk and their quality assessed by FastQC.
@@ -202,7 +175,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/ref1_{1,2}.fq.gz"
+params.reads = "data/bacteria/reads/sample1_{1,2}.fq.gz"
 params.outdir = "results"
 
 println """\
@@ -214,7 +187,7 @@ println """\
          .stripIndent()
 
 
-read_pairs_ch = Channel.fromFilePairs( params.reads )
+read_pairs_ch = Channel.fromFilePairs(params.reads)
 ```
 
 We can view the contents  of the `read_pairs_ch` by adding the following statement as the last line:
@@ -229,24 +202,24 @@ Now if we execute it with the following command:
 $ nextflow run script2.nf
 ```
 
-It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/ref1_{1,2}.fq.gz`, defined by the variable `params.reads` , and the second is a list representing the actual files.
+It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/sample1_{1,2}.fq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
 
 ```output 
 [..truncated..]
-[ref1, [data/bacteria/reads/ref1_1.fq.gz,data/bacteria/reads/ref1_2.fq.gz]]
+[ref1, [data/bacteria/reads/sample1_1.fq.gz,data/bacteria/reads/sample1_2.fq.gz]]
 ```
 
 To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line. For example, the following command would read in add the ref samples:
 
 ```bash 
-$ nextflow run script2.nf --reads 'data/bacteria/reads/ref*_{1,2}.fq.gz'
+$ nextflow run script2.nf --reads 'data/bacteria/reads/sample*_{1,2}.fq.gz'
 ```
 
 ```output 
 [..truncated..]
-[ref2, [data/bacteria/reads/ref2_1.fq.gz, data/bacteria/reads/ref2_2.fq.gz]]
-[ref3, [data/bacteria/reads/ref3_1.fq.gz, data/bacteria/reads/ref3_2.fq.gz]]
-[ref1, [data/bacteria/reads/ref1_1.fq.gz, data/bacteria/reads/ref1_2.fq.gz]]
+[ref2, [data/bacteria/reads/sample2_1.fq.gz, data/bacteria/reads/sample2_2.fq.gz]]
+[ref3, [data/bacteria/reads/sample3_1.fq.gz, data/bacteria/reads/sample3_2.fq.gz]]
+[ref1, [data/bacteria/reads/sample1_1.fq.gz, data/bacteria/reads/sample1_2.fq.gz]]
 ```
 
 **Note** File paths including one or more wildcards ie. `*`, `?`, etc. MUST be wrapped in single-quoted characters to avoid Bash expanding the glob pattern on the command line.
@@ -294,12 +267,12 @@ nextflow run script2.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
 ```output 
 [..truncated..]
 [temp33_1, [data/bacteria/reads/temp33_1_1.fq.gz, data/bacteria/reads/temp33_1_2.fq.gz]]
-[ref2, [data/bacteria/reads/ref2_1.fq.gz, data/bacteria/reads/ref2_2.fq.gz]]
+[ref2, [data/bacteria/reads/sample2_1.fq.gz, data/bacteria/reads/sample2_2.fq.gz]]
 [temp33_3, [data/bacteria/reads/temp33_3_1.fq.gz, data/bacteria/reads/temp33_3_2.fq.gz]]
-[ref3, [data/bacteria/reads/ref3_1.fq.gz, data/bacteria/reads/ref3_2.fq.gz]]
+[ref3, [data/bacteria/reads/sample3_1.fq.gz, data/bacteria/reads/sample3_2.fq.gz]]
 [temp33_2, [data/bacteria/reads/temp33_2_1.fq.gz,data/bacteria/reads/temp33_2_2.fq.gz]]
 [etoh60_2, [data/bacteria/reads/etoh60_2_1.fq.gz,data/bacteria/reads/etoh60_2_2.fq.gz]]
-[ref1, [data/bacteria/reads/ref1_1.fq.gz, data/bacteria/reads/ref1_2.fq.gz]]
+[ref1, [data/bacteria/reads/sample1_1.fq.gz, data/bacteria/reads/sample1_2.fq.gz]]
 [etoh60_3, [data/bacteria/reads/etoh60_3_1.fq.gz, data/bacteria/reads/etoh60_3_2.fq.gz]]
 [etoh60_1, [data/bacteria/reads/etoh60_1_1.fq.gz, data/bacteria/reads/etoh60_1_2.fq.gz]]
 ```
@@ -307,14 +280,6 @@ nextflow run script2.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-### Recap
-
-In this step you have learned:
-
-- How to use `fromFilePairs` to handle read pair files
-
-- How to use the `checkIfExists` option to check input file existence
 
 ## Trim reads
 
@@ -408,7 +373,6 @@ The execution will fail because the program the process, `TRIM` , has not been p
 
 Add the `reads_ch` channel to the `TRIM` process call.
 
-
 ```groovy
 [truncated]
 workflow {
@@ -419,7 +383,6 @@ workflow {
 ```
 
 Now try to run it again by using the command:
-
 
 ```bash 
 $ nextflow run script3.nf
@@ -443,8 +406,6 @@ executor >  local (1)
 The `TRIM` process also defines one `output` channel. 
 This channel will be  populated with the trimmed reads created during process.
 To view the contents of the channel we can use the `view` operator.
-
-
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -471,22 +432,6 @@ workflow {
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Recap
-
-In this step you have learned:
-
-- How to define a process executing a custom command
-
-- How process inputs are declared
-
-- The use of the `${val}` variable placeholder.
-
-- How to assign a channel as input to a process call
-
-- How process outputs are declared
-
-- How to print the content of a channel `view()`
-
 ## Assemble genomes
 
 The script `script4.nf`;
@@ -498,10 +443,10 @@ The script `script4.nf`;
 //script4.nf
 ..truncated..
 /*
- * Run Shovill to perform the genome assembly ad the trimmed read files
+ * Run Shovill to perform the genome assembly on the trimmed read files
  */
 process ASSEMBLE {
-    cpus 1
+    cpus 2
 
     input:
     tuple val(sample_id), path(reads)
@@ -545,12 +490,12 @@ Re run the command using the `-resume` option
 $ nextflow run script4.nf -resume
 ```
 
-The `-resume` option cause the execution of any step that has been already processed to be skipped.
+The `-resume` option causes the execution of any step that has been already processed to be skipped.
 
 Try to execute it with more read files as shown below:
 
 ```bash
-$ nextflow run script4.nf -resume --reads 'data/bacteria/reads/ref*_{1,2}.fq.gz'
+$ nextflow run script4.nf -resume --reads 'data/bacteria/reads/sample*_{1,2}.fq.gz'
 ```
 
 ```output
@@ -559,7 +504,7 @@ Launching `script4.nf` [shrivelled_brenner] - revision: c21df6839e
 G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 
-reads        : data/bacteria/reads/ref*_{1,2}.fq.gz
+reads        : data/bacteria/reads/sample*_{1,2}.fq.gz
 outdir       : results
 
 executor >  local (8)
@@ -592,20 +537,9 @@ tag "Assembly on $sample_id"
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
-### Recap
-
-In this step you have learned:
-
-- How to connect two processes by using the channel declarations.
-
-- How to resume the script execution skipping already already computed steps.
-
-- How to use the `tag` directive to provide a more readable execution output.
-
 ## Quality control
 
-This step implements a quality control step for your input reads. The input to the `FASTQC` process is the same `read_pairs_ch` that is provided as input to the assembly process `ASSEMBLE` .
+This step implements a quality control step for your input reads and trimmed reads.
 
 ```groovy
 //script5.nf
@@ -652,10 +586,9 @@ The `FASTQC` process will not run as the process has not been declared in the wo
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Add FASTQC process
+## Add FASTQC process for untrimmed and trimmed reads
  
-Add the `FASTQC` process to the `workflow scope` of `script5.nf` adding the `read_pairs_ch` channel as an input.
-Run the nextflow script using the `-resume` option.
+Add two instances of the `FASTQC` process to the `workflow scope` of `script5.nf`. One instance should use `read_pairs_ch` channel as an input. The second instance should use the `trimmed_reads_ch` as input. Run the nextflow script using the `-resume` option.
 
 ```bash
 $ nextflow run script5.nf -resume
@@ -670,121 +603,20 @@ read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 trimmed_reads_ch=TRIM(read_pairs_ch)
 assemblies_ch=ASSEMBLE(trimmed_reads_ch)
 fastqc_ch=FASTQC(read_pairs_ch)
+fastqc_trimmed_ch=FASTQC(trimmed_reads_ch)
 ```
-
 }
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-### Recap
-
-In this step you have learned:
-
-- How to use the add a `process` to the `workflow` scope.
-- Add a channel as input to a `process`.
-
-## Genome Assembly QC
-
-This step implements a quality control step for your assemblies. The input to the `QUAST` process is the `assemblies_ch` that is emmitted from `ASSEMBLE`.
-
-```groovy
-//script6.nf
-[..truncated..]
-
-/*
- * Run QUAST to check quality of the assemblies
- */
-process QUAST {
-
-    tag "QUAST on $sample_id"
-    cpus 1
-
-    input:
-    tuple val(sample_id), path(contigs)
-
-    output:
-    tuple val(sample_id), path("${sample_id}.quast.tsv")
-
-    script:
-    """
-    quast.py ${contigs} -o .
-    mv report.tsv ${prefix}.quast.tsv
-    """
-}
-
-[..truncated..]
-
-workflow {
-  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
-
-  trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-  fastqc_ch=FASTQC(read_pairs_ch)
-  quast_ch=QUAST(assemblies_ch)
-}
-```
-
-Run the script `script6.nf` by using the following command:
-
-```bash
-$ nextflow run script6.nf -resume
-```
-
-```output
-N E X T F L O W  ~  version 21.04.0
-Launching `script6.nf` [small_franklin] - revision: 9062818659
-G E N O M E A S S E M B L Y - N F   P I P E L I N E
-===================================
-reads        : data/bacteria/reads/*_{1,2}.fq.gz
-outdir       : results
-
-executor >  local (9)
-[02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
-[1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
-[2q/f3g89v] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9
-```
-
-Data produced by the workflow during a process will be saved in the working directory, by default a directory named `work`.
-The working directory should be considered a temporary storage space and any data you wish to save at the end of the workflow should be specified in the process output with the final storage location  defined in the  `publishDir` directive.
-
-**Note:** by default the `publishDir` directive creates a symbolic link to the files in the working this behaviour can be changed using the `mode` parameter.
-
-## Add a publishDir directive
-
-Add a `publishDir` directive to each process of `script6.nf` to store the process results into a folder specified by the `params.outdir` Nextflow variable. Include the `publishDir` `mode` option to copy the output.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-:::::::::::::::  solution
-
-## Solution
-
-```groovy 
-publishDir "${params.outdir}/trim", mode:'copy'
-publishDir "${params.outdir}/assemble", mode:'copy'
-publishDir "${params.outdir}/fastqc", mode:'copy'
-publishDir "${params.outdir}/quast", mode:'copy'
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-### Recap
-
-In this step you have learned:
-
-- How to use the `publishDir` to store a process results in a path of your choice.
 
 ## MultiQC report
 
-This step collect the outputs from the quantification and fastqc steps to create a final report by using the [MultiQC](https://multiqc.info/) tool.
+This step collects the outputs from the Fastqc step to create a final report by using the [MultiQC](https://multiqc.info/) tool.
 
 The input for the `MULTIQC` process requires all data in a single channel element.
-Therefore, we will need to combine the `TRIM`, `FASTQC`, and `ASSEMBLE` outputs using:
+Therefore, we will need to combine the outputs of `FASTQC` using:
 
 - The combining operator `mix` : combines the items in the two channels into a single channel
 
@@ -801,7 +633,7 @@ ch1.mix(ch2).view()
 a
 ```
 
-- The transformation operator `collect`  collects all the items in the new combined channel into a single item.
+- The transformation operator `collect` collects all the items in the new combined channel into a single item.
 
 ```groovy
 //example of the collect operator
@@ -813,29 +645,7 @@ ch1.collect().view()
 [1, 2, 3]
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Combining operators
-
-Which is the correct way to combined `mix` and `collect` operators so that you have a single channel with one List item?
-
-1. `quast_ch.mix(fastqc_ch).collect()`
-2. `quast_ch.collect(fastqc_ch).mix()`
-3. `fastqc_ch.mix(quast_ch).collect()`
-4. `fastqc_ch.collect(quast_ch).mix()`
-
-:::::::::::::::  solution
-
-## Solution
-
-You need to use the `mix` operator first to combine the channels followed by the `collect` operator to
-collect all the items in a single item.
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-In `script7.nf` we use the statement `quant_ch.mix(fastqc_ch).collect()` to combine and collect the outputs of the `ASSEMBLE` and `FASTQC` process to
+In `script6.nf` we use `collect` to collect the items in each FastQC output channel and `mix` to combine the channels and
 create the required input for the `MULTIQC` process.
 
 ```groovy
@@ -868,16 +678,17 @@ workflow {
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-  fastqc_ch=FASTQC(read_pairs_ch)
-  quast_ch=QUAST(assemblies_ch)
-  MULTIQC(quast_ch.mix(fastqc_ch).collect())
+  fastqc_ch=FASTQC(read_pairs_ch).collect()
+  fastqc_trimmed_ch=FASTQC(trimmed_reads_ch).collect()
+  multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch)
+  MULTIQC(multiqc_input_ch)
 }
 ```
 
 Execute the script with the following command:
 
 ```bash
-$ nextflow run script7.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
+$ nextflow run script6.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
 ```
 
 ```output
@@ -892,52 +703,36 @@ executor >  local (9)
 [02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
 [9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
 [1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
-[2q/f3g89v] process > QUAST (QUAST on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
 [2c/206fef] process > MULTIQC                            [100%] 1 of 1 ✔
 ```
 
 It creates the final report in the results folder in the `${params.outdir}/multiqc` directory.
 
-### Recap
+Data produced by the workflow during a process will be saved in the working directory, by default a directory named `work`.
+The working directory should be considered a temporary storage space and any data you wish to save at the end of the workflow should be specified in the process output with the final storage location  defined in the  `publishDir` directive.
 
-In this step you have learned:
+**Note:** by default the `publishDir` directive creates a symbolic link to the files in the working this behaviour can be changed using the `mode` parameter.
 
-- How to collect many outputs to a single input with the `collect` operator
+## Add a publishDir directive
 
-- How to mix two channels in a single channel using the `mix` operator.
+Add a `publishDir` directive to each process of `script6.nf` to store the process results into a folder specified by the `params.outdir` Nextflow variable. Include the `publishDir` `mode` option to copy the output.
 
-- How to chain two or more operators togethers using the `.` operator.
+:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Handle completion event
+:::::::::::::::  solution
 
-This step shows how to execute an action when the pipeline completes the execution.
+## Solution
 
-**Note:** that Nextflow processes define the execution of asynchronous tasks i.e. they are not executed one after another as they are written in the pipeline script as it would happen in a common imperative programming language.
-
-The script `script8.nf` uses the `workflow.onComplete` event handler to print a confirmation message when the script completes.
-
-```groovy
-workflow.onComplete {
-	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> $params.outdir/multiqc/multiqc_report.html\n" : "Oops .. something went wrong" )
-}
+```groovy 
+publishDir "${params.outdir}/trim", mode:'copy'
+publishDir "${params.outdir}/assemble", mode:'copy'
+publishDir "${params.outdir}/fastqc", mode:'copy'
+publishDir "${params.outdir}/multiqc", mode:'copy'
 ```
 
-This code uses the ternary operator that is a shortcut expression that is equivalent to an if/else branch assigning some value to a variable.
+:::::::::::::::::::::::::
 
-```source
-If expression is true? "set value to a" : "else set value to b"
-```
-
-Try to run it by using the following command:
-
-```bash
-$ nextflow run script8.nf -resume --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
-```
-
-```output
-[..truncated..]
-Done! Open the following report in your browser --> results/multiqc/multiqc_report.html
-```
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Metrics and reports
 
@@ -985,7 +780,7 @@ The vertices in the graph represent the pipeline's processes and operators, whil
 
 ## short running tasks
 
-Note: runtime metrics may be incomplete for run short running tasks..
+Note: runtime metrics may be incomplete for run short running tasks.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -996,8 +791,7 @@ Note: runtime metrics may be incomplete for run short running tasks..
 - A Workflow can be parameterise using `params` . These value of the parameters can be captured in a log file using  `log.info`
 - Nextflow can handle a workflow's software requirements using several technologies including the `conda` package and enviroment manager.
 - Workflow steps are connected via their `inputs` and `outputs` using `Channels`.
-- Intermediate pipeline results can be transformed using Channel `operators` such as `combine`.
-- Nextflow can execute an action when the pipeline completes the execution using the `workflow.onComplete` event handler to print a confirmation message.
+- Intermediate pipeline results can be transformed using Channel `operators` such as `combine` and `mix`.
 - Nextflow is able to produce multiple reports and charts providing several runtime metrics and execution information using the command line options `-with-report`, `-with-trace`, `-with-timeline` and produce a graph using `-with-dag`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

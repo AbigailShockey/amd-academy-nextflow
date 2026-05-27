@@ -66,35 +66,6 @@ nextflow run nf-core/viralrecon -r 3.0.0 -profile <institutional_config_profile>
 
 **Note** The order in which config profiles are specified matters. Their priority increases from left to right.
 
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-### Multiple Nextflow configuration locations
-
-Be clever with multiple Nextflow configuration locations. For example, use `-profile` for your cluster  configuration, the file `$HOME/.nextflow/config` for your personal config such as `params.email` and a working directory >`nextflow.config` file for reproducible run-specific configuration.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-### Exercise  create a custom config
-
-Add the `params.email`  to a file called `nfcore-custom.config`
-
-:::::::::::::::  solution
-
-### Solution
-
-A line similar to one below in the file custom.config
-
-```
-params.email = "myemail@address.com"
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
