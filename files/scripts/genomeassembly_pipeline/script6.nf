@@ -62,7 +62,7 @@ process ASSEMBLE {
 }
 
 /*
- * Run fastQC to check quality of reads files
+ * define the `FASTQC` process that checks quality of raw reads files
  */
 process FASTQC {
 
@@ -79,6 +79,46 @@ process FASTQC {
     """
     mkdir fastqc_${sample_id}_logs
     fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
+    """
+}
+
+/*
+ * define the `FASTQC_TRIMMED` process that checks quality of trimmed reads files
+ */
+process FASTQC_TRIMMED {
+
+    tag "FastQC on trimmed $sample_id"
+    cpus 1
+
+    input:
+    tuple val(sample_id), path(reads)
+
+    output:
+    path("fastqc_${sample_id}_logs")
+
+    script:
+    """
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
+    """
+}
+
+/*
+ * define the `MultiQC` process to combnie FastQC results into one report
+ */
+process MULTIQC {
+
+    tag "MultiQC on $sample_id"
+
+    input:
+    path('*')
+
+    output:
+    path('multiqc_report.html')
+
+    script:
+    """
+    multiqc .
     """
 }
 
