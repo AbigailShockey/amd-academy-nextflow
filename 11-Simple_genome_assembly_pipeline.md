@@ -90,11 +90,11 @@ $ nextflow run script1.nf
 We can specify a different input parameter using the `--<params>` option, for example :
 
 ```groovy 
-$ nextflow run script1.nf --reads "data/bacteria/reads/sample1*_{1,2}.fq.gz"
+$ nextflow run script1.nf --reads "data/bacteria/reads/sample*_{1,2}.fq.gz"
 ```
 
 ```output 
-reads: data/bacteria/reads/sample1*_{1,2}.fq.gz
+reads: data/bacteria/reads/sample*_{1,2}.fq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -546,9 +546,30 @@ This step implements a quality control step for your input reads and trimmed rea
 [..truncated..]
 
 /*
- * Run fastQC to check quality of reads files
+ * Run fastQC to check quality of raw reads files
  */
 process FASTQC {
+
+    tag "FASTQC on $sample_id"
+    cpus 1
+
+    input:
+    tuple val(sample_id), path(reads)
+
+    output:
+    path("fastqc_${sample_id}_logs")
+
+    script:
+    """
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
+    """
+}
+
+/*
+ * Run fastQC to check quality of trimmed reads files
+ */
+process FASTQC_TRIMMED {
 
     tag "FASTQC on $sample_id"
     cpus 1
@@ -588,7 +609,7 @@ The `FASTQC` process will not run as the process has not been declared in the wo
 
 ## Add FASTQC process for untrimmed and trimmed reads
  
-Add two instances of the `FASTQC` process to the `workflow scope` of `script5.nf`. One instance should use `read_pairs_ch` channel as an input. The second instance should use the `trimmed_reads_ch` as input. Run the nextflow script using the `-resume` option.
+Add the `FASTQC` and `FASTQC_TRIMMED` processes to the `workflow scope` of `script5.nf`. `FASTQC` should use `read_pairs_ch` channel as an input and `FASTQC_TRIMMED` should use the `trimmed_reads_ch` as input. Run the nextflow script using the `-resume` option.
 
 ```bash
 $ nextflow run script5.nf -resume
@@ -603,13 +624,15 @@ read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 trimmed_reads_ch=TRIM(read_pairs_ch)
 assemblies_ch=ASSEMBLE(trimmed_reads_ch)
 fastqc_ch=FASTQC(read_pairs_ch)
-fastqc_trimmed_ch=FASTQC(trimmed_reads_ch)
+fastqc_trimmed_ch=FASTQC_TRIMMED(trimmed_reads_ch)
 ```
 }
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+**Note:** Nextflow does not allow you to repeat processes with different inputs. In this example, we have duplicated the FastQC process and given it the name `FASTQC_TRIMMED`. This is a non-optimal way of repeating a process. In a later lesson, we will learn about `modules` and `aliases`, which will allow you to repeat processes with different inputs.
 
 ## MultiQC report
 
