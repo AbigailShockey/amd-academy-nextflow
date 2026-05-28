@@ -20,6 +20,7 @@ println """\
 process TRIM {
 
     tag "Trim on $sample_id"
+    publishDir "${params.outdir}/trim", mode:'copy'
 
     input:
     tuple val(sample_id), path(reads)
@@ -42,6 +43,7 @@ process ASSEMBLE {
 
     tag "Assemble on $sample_id"
     cpus 1
+    publishDir "${params.outdir}/assemble", mode:'copy'
 
     input:
     tuple val(sample_id), path(reads)
@@ -68,6 +70,7 @@ process FASTQC {
 
     tag "FastQC on $sample_id"
     cpus 1
+    publishDir "${params.outdir}/fastqc", mode:'copy'
 
     input:
     tuple val(sample_id), path(reads)
@@ -83,29 +86,29 @@ process FASTQC {
 }
 
 /*
- * Run QUAST to check quality of the assemblies
+ * define the `FASTQC_TRIMMED` process that checks quality of trimmed reads files
  */
-process QUAST {
-    
-    tag "QUAST on $sample_id"
+process FASTQC_TRIMMED {
+
+    tag "FastQC on trimmed $sample_id"
     cpus 1
+    publishDir "${params.outdir}/fastqc_trimmed", mode:'copy'
 
     input:
-    tuple val(sample_id), path(contigs)
+    tuple val(sample_id), path(reads)
 
     output:
-    tuple val(sample_id), path("${sample_id}.quast.tsv")
+    path("fastqc_${sample_id}_logs")
 
     script:
     """
-    quast.py ${contigs} -o .
-    mv report.tsv ${prefix}.quast.tsv
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
     """
 }
 
 /*
- * Create a report using multiQC for the quantification
- * and fastqc processes
+ * define the `MultiQC` process to combnie FastQC results into one report
  */
 process MULTIQC {
 
