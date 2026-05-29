@@ -352,9 +352,6 @@ In addition to this documentation, each pipeline comes with basic command line r
 nextflow run -r 3.0.0 nf-core/viralrecon --help
 ```
 
-```output
-```
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - nf-core is a community-led project to develop a set of best-practice pipelines built using the Nextflow workflow management system.

@@ -144,12 +144,12 @@ Generic options
 Core Nextflow options
   runName                   : angry_visvesvaraya
   containerEngine           : conda
-  launchDir                 : /home/ashockey/training/myorg-genomeassembler
-  workDir                   : /home/ashockey/training/myorg-genomeassembler/work
-  projectDir                : /home/ashockey/training/myorg-genomeassembler
-  userName                  : shockeax
+  launchDir                 : /home/user/training/myorg-genomeassembler
+  workDir                   : /home/user/training/myorg-genomeassembler/work
+  projectDir                : /home/user/training/myorg-genomeassembler
+  userName                  : user
   profile                   : test
-  configFiles               : /home/ashockey/training/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/training/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------

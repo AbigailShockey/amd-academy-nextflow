@@ -61,7 +61,7 @@ Multiple profiles are comma-separated. When there are differing configuration se
 
 ```bash
 nextflow run nf-core/viralrecon -r 3.0.0 -profile test,conda
-nextflow run nf-core/viralrecon -r 3.0.0 -profile <institutional_config_profile>, test, conda
+nextflow run nf-core/viralrecon -r 3.0.0 -profile <institutional_config_profile>,test,conda
 ```
 
 **Note** The order in which config profiles are specified matters. Their priority increases from left to right.

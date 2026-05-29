@@ -202,7 +202,7 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 To install an nf-core module, we use the nf-core `modules` command with the `install` option. We're going to continue using seqtk as our example. Before installing the seqtk trim module, make sure you've changed directories into the pipeline's directory:
 
 ```bash
-$ cd myorganization-myfirstworkflow
+$ cd myorg-genomeassembler
 $ nf-core modules install seqtk/trim
 ```
 
@@ -463,27 +463,25 @@ Then, in the `demo.config` file, we're going to make the following changes:
 ```groovy
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Nextflow config file for running demo tests
+    Nextflow config file for running a demo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Defines input files and everything required to run a demo pipeline test.
+    Defines input files and everything required to run a fast and simple demo.
 
     Use as follows:
-        nextflow run main.nf -profile demo,<docker/singularity> --outdir <OUTDIR>
+        nextflow run myorg/genomeassembler -profile demo,<docker/singularity> --outdir <OUTDIR>
 
-----------------------------------------------------------------------------------------
-*/
+[..truncated..]
 
 params {
-    config_profile_name        = 'Demo test profile'
-    config_profile_description = 'Demo test dataset to check pipeline function'
+    config_profile_name        = 'Demo profile'
+    config_profile_description = 'Minimal test dataset to demo the pipeline'
 
-    // Input data for demo test
+    // Input data
     input = 'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'
-
 }
 ```
 
-This profile uses a different publicly available input than the `test` profile, because the original `test` profile uses paired and single end reads as input, while the assembly step we're going to add requires paired (but not single) end reads as input.
+This profile uses a different publicly available data set as input than the `test` profile, because the original `test` profile uses paired and single end reads as input, while the assembly step we're going to add later requires paired (but not single) end reads.
 
 The config file for the `demo` profile, `demo.config`, should be saved in the `conf/` folder with the other config files. To finish adding this profile to the pipeline, we need to put the following line of code within the curly brackets `{}` of the `profile` block in the `nextflow.config` file:
 
@@ -494,13 +492,13 @@ demo      { includeConfig 'conf/demo.config'      }
 Once this is done, we can test our changes to the pipeline with the demo profile:
 
 ```bash
-nextflow run . -profile docker,demo --outdir demo_results
+nextflow run . -profile demo --outdir demo_results
 ```
 
 If the pipeline finishes successfully, you should see something like the following:
 
 ```output
- N E X T F L O W   ~  version 24.10.5
+ N E X T F L O W   ~  version 25.10.0
 
 Launching `main.nf` [dreamy_meninsky] DSL2 - revision: 883bd10359
 
@@ -517,20 +515,20 @@ Generic options
 
 Core Nextflow options
   runName                   : dreamy_meninsky
-  containerEngine           : docker
-  launchDir                 : /home/username/my-pipeline/myorganization-mypipeline
-  workDir                   : /home/username/my-pipeline/myorganization-mypipeline/work
-  projectDir                : /home/username/my-pipeline/myorganization-mypipeline
+  containerEngine           : conda
+  launchDir                 : /home/username/my-pipeline/myorg-mypipeline
+  workDir                   : /home/username/my-pipeline/myorg-mypipeline/work
+  projectDir                : /home/username/my-pipeline/myorg-mypipeline
   userName                  : username
-  profile                   : demo,docker
-  configFiles               : /home/username/my-pipeline/myorganization-mypipeline/nextflow.config
+  profile                   : demo,conda
+  configFiles               : /home/username/my-pipeline/myorg-mypipeline/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (4)
 [66/2d7219] process > MYORGANIZATION_MYPIPELINE:MYPIPELINE:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
 [7f/776766] process > MYORGANIZATION_MYPIPELINE:MYPIPELINE:MULTIQC               [100%] 1 of 1 ✔
--[myorganization/mypipeline] Pipeline completed successfully-
+-[myorg/mypipeline] Pipeline completed successfully-
 ```
 
 This time the pipeline ran two processes, `MULTIQC` and the newly added `SEQTK_TRIM`, the results of which can be found in the `demo_results` directory.
