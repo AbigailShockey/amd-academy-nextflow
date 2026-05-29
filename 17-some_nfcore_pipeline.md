@@ -515,7 +515,5 @@ $ nextflow run main.nf --outdir results --profile demo
 ```
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
-- An nf-core module is a Nextflow  "wrapper" around a command-line tool or script, which is a used as a process in an nf-core workflow.
-- Modules can be installed using `nf-core modules install`
-- Modules can be added to your custom pipeline by adding an `include` statement and the module process to the pipeline's workflow script.
+- ALiases allow you to use the same module multiple times under different names
 ::::::::::::::::::::::::::::::::::::::::::::::::::
