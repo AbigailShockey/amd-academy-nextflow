@@ -419,7 +419,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Making your own nf-core pipeline</h1>
-        <p>Last updated on 2026-05-18 |
+        <p>Last updated on 2026-05-29 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/15-making_nfcore_pipeline.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -465,8 +465,8 @@ pipeline using this command line tool.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="fu">mkdir</span> my-pipeline</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="bu">cd</span> my-pipeline</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="fu">mkdir</span> nfcore-pipeline</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="bu">cd</span> nfcore-pipeline</span></code></pre>
 </div>
 <p>Then we can use the nf-core tools <code>pipelines</code> command with
 the <code>create</code> option to start an interactive text user
@@ -515,8 +515,8 @@ go!</strong>
 <li>Select <strong>Next</strong>
 </li>
 </ol><figure><img src="fig/pipeline-type.png" title="pipeline-type" class="figure mx-auto d-block"></figure><ol start="4" style="list-style-type: decimal"><li>On the <strong>Basic Details</strong> page, for <strong>GitHub
-organization</strong> enter “myorganization”<br></li>
-<li>For <strong>Workflow name</strong> enter “mypipeline”<br></li>
+organization</strong> enter “myorg”<br></li>
+<li>For <strong>Workflow name</strong> enter “genomeassembler”<br></li>
 <li>For <strong>A short description of your pipeline</strong> enter “My
 first nf-core pipeline”<br></li>
 <li>For <strong>Name of the main author / authors</strong> enter your
@@ -547,8 +547,8 @@ and test it using the <code>nextflow run</code> command and the
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> myorganization-mypipeline</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> docker,test <span class="at">--outdir</span> results</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> myorg-genomeassembler</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> test <span class="at">--outdir</span> results</span></code></pre>
 </div>
 <p>If the pipeline ran successfully, you should see the following:</p>
 <div class="codewrapper">
@@ -573,12 +573,12 @@ Generic options
 
 Core Nextflow options
   runName                   : angry_visvesvaraya
-  containerEngine           : docker
+  containerEngine           : conda
   launchDir                 : /home/ashockey/training/myorg-genomeassembler
   workDir                   : /home/ashockey/training/myorg-genomeassembler/work
   projectDir                : /home/ashockey/training/myorg-genomeassembler
   userName                  : shockeax
-  profile                   : docker,test
+  profile                   : test
   configFiles               : /home/ashockey/training/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
@@ -665,7 +665,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/15-making_nfcore_pipeline.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/15-making_nfcore_pipeline.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-18",
+  "dateModified": "2026-05-29",
   "datePublished": "2026-05-29"
 }
 
