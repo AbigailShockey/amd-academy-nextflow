@@ -3,7 +3,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
+params.reads = "data/bacteria/reads/*_R{1,2}.fq.gz"
 params.outdir = "results"
 
 log.info """\
