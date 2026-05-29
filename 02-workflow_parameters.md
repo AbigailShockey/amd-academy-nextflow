@@ -1,5 +1,5 @@
 ---
-title: "Workflow parameterisation"
+title: "Workflow parameterization"
 teaching: 20
 exercises: 5
 ---
@@ -15,7 +15,7 @@ exercises: 5
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - How can I change the data a workflow uses?
-- How can I parameterise a workflow?
+- How can I parameterize a workflow?
 - How can I add my parameters to a file?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
