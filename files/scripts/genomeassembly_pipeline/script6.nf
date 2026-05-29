@@ -106,7 +106,7 @@ process FASTQC_TRIMMED {
 }
 
 /*
- * define the `MultiQC` process to combnie FastQC results into one report
+ * define the `MultiQC` process to combine FastQC results into one report
  */
 process MULTIQC {
 
