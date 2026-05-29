@@ -127,7 +127,7 @@
             More <i data-feather="chevron-down"></i>
           </button>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-<li><a class="dropdown-item" href="reference.html">Reference</a></li>
+<li><a class="dropdown-item" href="reference.html">Groovy syntax</a></li>
           </ul>
 </li>
       </ul>
@@ -461,7 +461,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="reference.html">Reference</a></li>
+                      <li><a href="reference.html">Groovy syntax</a></li>
                     </ul>
 </div>
                 </div>
@@ -492,14 +492,114 @@
         <h1>Instructor Notes</h1>
         
 
-<p>This is a placeholder file. Please add content here.</p>
+<section><h2 class="section-heading" id="when-to-use-a-workflow-system">When to use a workflow system?<a class="anchor" aria-label="anchor" href="#when-to-use-a-workflow-system"></a>
+</h2>
+<hr class="half-width">
+<p>You may be asked by the learners when you would need to use a
+workflow system. The paper <a href="https://pubmed.ncbi.nlm.nih.gov/31477884/" class="external-link">Workflow systems turn
+raw data into scientific knowledge</a> has a view on this:</p>
+<blockquote>
+<p>So, do you need a workflow system? Not every task requires one, and
+there is a learning curve. Scripting usually suffices for one-off tasks
+and when working out the pipeline itself. The tipping point, most agree,
+comes when you need to run the same workflow over and over again, or if
+the data are likely to be published.</p>
+</blockquote>
+<div class="section level3">
+<h3 id="which-workflow-system-to-use">Which workflow system to use?<a class="anchor" aria-label="anchor" href="#which-workflow-system-to-use"></a>
+</h3>
+<p>The paper <a href="https://doi.org/10.1371/journal.pcbi.1008622" class="external-link">Using prototyping to
+choose a bioinformatics workflow management system</a> discusses why
+they chose nextflow compared to other workflow systems. It also has a
+view about when to use workflow systems:</p>
+<blockquote>
+<p>We conclude that many […] multistep data analysis workflows can be
+rewritten in a workflow management system, and we advocate prototyping
+as a low-cost (both time and effort) way of making an informed selection
+of software for use within a research project.</p>
+</blockquote>
+</div>
+</section><section><h2 class="section-heading" id="nextflow-echo-option">Nextflow echo option<a class="anchor" aria-label="anchor" href="#nextflow-echo-option"></a>
+</h2>
+<hr class="half-width">
+<p>It can be useful to use the <code>-process.echo</code> option to echo
+output from a process when you run Nextflow .</p>
+<pre><code>nextflow run main.nf -process.echo</code></pre>
+</section><section><h2 class="section-heading" id="nextflow-video">Nextflow video<a class="anchor" aria-label="anchor" href="#nextflow-video"></a>
+</h2>
+<hr class="half-width">
+<p>The nextflow lesson material has been adapted from the sequera-labs
+training course <a href="https://seqera.io/training" class="external-link">link here</a> there
+is video of this material being presented <a href="https://youtu.be/8_i8Tn335X0" class="external-link">here</a></p>
+</section><section><h2 class="section-heading" id="code-editor">Code Editor<a class="anchor" aria-label="anchor" href="#code-editor"></a>
+</h2>
+<hr class="half-width">
+<p>The preferred code editor is <a href="https://code.visualstudio.com" class="external-link">Visual Studio Code</a>. Visual
+Studio Code has a <a href="https://marketplace.visualstudio.com/items?itemName=nextflow.nextflow" class="external-link">syntax
+highlighting</a> extension that adds the Nextflow language support.</p>
+</section><section><h2 class="section-heading" id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
+<hr class="half-width">
+<p>For questions about the main Nextflow tool, use the Nextflow Gitter
+chat community: <a href="https://gitter.im/nextflow-io/nextflow" class="external-link">https://gitter.im/nextflow-io/nextflow</a></p>
+<p>Many nf-core resources are to be found on this website. If in doubt,
+get in touch with the nf-core community via <a href="https://nf-co.re/join" class="external-link">Slack</a>.</p>
+<p>The nf-core Slack channel has a #carpentries-course channel for
+asking questions about the course.</p>
+</section><section><h2 class="section-heading" id="nextflow-repl-console">Nextflow REPL console<a class="anchor" aria-label="anchor" href="#nextflow-repl-console"></a>
+</h2>
+<hr class="half-width">
+<p>Nextflow has a console graphical interface. The Nextflow console is a
+REPL (read-eval-print loop) environment that allows one to quickly test
+part of a script or pieces of Nextflow code in an interactive
+manner.</p>
+<p>It is a handy tool that allows one to evaluate fragments of
+Nextflow/Groovy code or fast prototype a complete pipeline script.</p>
+<p>See the blog post <a href="https://www.nextflow.io/blog/2015/introducing-nextflow-console.html" class="external-link">here</a>
+for more information.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nextflow</span> console</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h2>
+<hr class="half-width">
+<p>Nextflow produces a <a href="https://www.nextflow.io/blog/2023/learn-nextflow-in-2023.html" class="external-link">blog
+post</a> each year with links to training materials and workshops. This
+is a good website to show learners who want to learn more.</p>
+</section><section><h2 class="section-heading" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<hr class="half-width">
+<ul>
+<li>
+<a href="https://www.nature.com/articles/nbt.3820" class="external-link">Di Tommaso P,
+Chatzou M, Floden EW, Barja PP, Palumbo E, Notredame C. Nextflow enables
+reproducible computational workflows. Nat Biotechnol.
+2017;35(4):316-319.</a> doi: 10.1038/nbt.3820). doi:
+10.1038/nbt.3820.</li>
+<li>
+<a href="https://www.nature.com/articles/s41587-020-0439-x" class="external-link">Ewels
+PA, Peltzer A, Fillinger S, et al. The nf-core framework for
+community-curated bioinformatics pipelines. Nat Biotechnol.
+2020;38(3):276-278.</a> DOI: <a href="https://doi.org/10.1038/s41587-020-0439-x" class="external-link">10.1038/s41587-020-0439-x</a>
+</li>
+<li>
+<a href="https://www.nature.com/articles/d41586-019-02619-z" class="external-link">Perkel
+JM. Workflow systems turn raw data into scientific knowledge. Nature.
+2019;573(7772):149-150.</a> DOI: 10.1038/d41586-019-02619-z</li>
+<li>
+<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008622" class="external-link">Jackson
+M, Wallace EWJ, Kavoussanakis K, PLoS Computational Biology. Using
+prototyping to choose a bioinformatics workflow management system. 2021;
+17 :e1008622.</a> <a href="https://doi.org/10.1371/journal.pcbi.1008622" class="external-link">doi:
+10.1371/journal.pcbi.1008622</a>
+</li>
+</ul>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
- -->
-
-
-      <section id="aggregate-instructor-notes"></section>
+ --></section><section id="aggregate-instructor-notes"></section>
 </div>
     </main>
 </div>

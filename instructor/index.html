@@ -102,7 +102,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Groovy syntax</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -372,7 +372,7 @@
                       <li>
                         <a href="../instructor/images.html">Extract All Images</a>
                       </li>
-                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+                      <hr><li><a class="dropdown-item" href="reference.html">Groovy syntax</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -618,15 +618,8 @@ any links that you are not going to use.
       </p>
       </section><section id="setup"><div class="section level1">
 <h1 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a></h1>
-<p>There are two options presented here on how setup your computer to
-complete the exercises in this workshop.</p>
-<ol style="list-style-type: decimal"><li>Running locally on your personal computer</li>
-<li>Running the exercises in your browser using a remote environment
-called Gitpod.</li>
-</ol><div class="section level2">
-<h2 id="running-locally-on-your-personal-computer">Running locally on your personal computer<a class="anchor" aria-label="anchor" href="#running-locally-on-your-personal-computer"></a></h2>
-<div class="section level3">
-<h3 id="training-directory">Training directory<a class="anchor" aria-label="anchor" href="#training-directory"></a></h3>
+<div class="section level2">
+<h2 id="training-directory">Training directory<a class="anchor" aria-label="anchor" href="#training-directory"></a></h2>
 <p>Each learner should setup a training folder
 e.g. <code>nf-training</code></p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -640,8 +633,8 @@ e.g. <code>nf-training</code></p>
 <li>The training dataset.</li>
 <li>The workshop scripts.</li>
 </ol></div>
-<div class="section level3">
-<h3 id="training-software">Training software<a class="anchor" aria-label="anchor" href="#training-software"></a></h3>
+<div class="section level2">
+<h2 id="training-software">Training software<a class="anchor" aria-label="anchor" href="#training-software"></a></h2>
 <p>A list of software with version required for this training is listed
 below:</p>
 <table class="table"><thead><tr><th>Software</th>
@@ -660,8 +653,8 @@ below:</p>
 <td>1.34</td>
 </tr><tr><td>python</td>
 <td>&gt;=3.8</td>
-</tr></tbody></table><div class="section level4">
-<h4 id="conda">conda<a class="anchor" aria-label="anchor" href="#conda"></a></h4>
+</tr></tbody></table><div class="section level3">
+<h3 id="conda">conda<a class="anchor" aria-label="anchor" href="#conda"></a></h3>
 <p>The simplest way to install the software for this course is using
 conda.</p>
 <p>To install conda see <a href="https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/setup/" class="external-link">here</a>.</p>
@@ -690,8 +683,8 @@ conda.</p>
 </div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="training-scripts">Training scripts<a class="anchor" aria-label="anchor" href="#training-scripts"></a></h3>
+<div class="section level2">
+<h2 id="training-scripts">Training scripts<a class="anchor" aria-label="anchor" href="#training-scripts"></a></h2>
 <p>To aid in the delivery of the lesson, the scripts mentioned in each
 episode, can be found in the respective episode folders in the github
 repository. <a href="https://github.com/carpentries-incubator/workflows-nextflow/tree/gh-pages/files/scripts" class="external-link">https://github.com/carpentries-incubator/workflows-nextflow/tree/main/episodes/files/scripts</a></p>
@@ -719,8 +712,8 @@ folder.</p>
 </div>
 <p>The nextflow scripts for each episode, can be found in the respective
 episode folders inside this the scripts folder.</p>
-<div class="section level4">
-<h4 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a></h4>
+<div class="section level3">
+<h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a></h3>
 <p>Inside the <code>nf-training</code> folder download the workshop
 dataset from Figshare, <a href="https://figshare.com/articles/dataset/RNA-seq_training_dataset/14822481" class="external-link">https://figshare.com/articles/dataset/RNA-seq_training_dataset/14822481</a></p>
 <div class="codewrapper sourceCode" id="cb6">
@@ -740,8 +733,8 @@ dataset from Figshare, <a href="https://figshare.com/articles/dataset/RNA-seq_tr
 </div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="visual-studio-code-editor-setup">Visual Studio Code editor setup<a class="anchor" aria-label="anchor" href="#visual-studio-code-editor-setup"></a></h3>
+<div class="section level2">
+<h2 id="visual-studio-code-editor-setup">Visual Studio Code editor setup<a class="anchor" aria-label="anchor" href="#visual-studio-code-editor-setup"></a></h2>
 <p>Any text editor can be used to write Nextflow scripts. A recommended
 code editor is <a href="https://code.visualstudio.com/" class="external-link">Visual Studio
 Code</a>.</p>
@@ -749,21 +742,21 @@ Code</a>.</p>
 and you should see a download button. The button or buttons should be
 specific to your platform and the download package should be
 installable.</p>
-<div class="section level4">
-<h4 id="nextflow-language-support-in-visual-studio-code">Nextflow language support in Visual Studio Code<a class="anchor" aria-label="anchor" href="#nextflow-language-support-in-visual-studio-code"></a></h4>
+<div class="section level3">
+<h3 id="nextflow-language-support-in-visual-studio-code">Nextflow language support in Visual Studio Code<a class="anchor" aria-label="anchor" href="#nextflow-language-support-in-visual-studio-code"></a></h3>
 <p>You can add Nextflow language support in Visual Studio Code by
 clicking the <a href="https://marketplace.visualstudio.com/items?itemName=nextflow.nextflow" class="external-link">install</a>
 button on the Nextflow language extension.</p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="nextflow-install-without-conda">Nextflow install without conda<a class="anchor" aria-label="anchor" href="#nextflow-install-without-conda"></a></h3>
+<div class="section level2">
+<h2 id="nextflow-install-without-conda">Nextflow install without conda<a class="anchor" aria-label="anchor" href="#nextflow-install-without-conda"></a></h2>
 <p>Nextflow can be used on any POSIX-compatible system (Linux, macOS,
 etc), and on Windows through WSL. It requires Bash 3.2 (or later) and
 Java 11 (or later, up to 22) to be installed</p>
 </div>
-<div class="section level3">
-<h3 id="nextflow-installation">Nextflow installation<a class="anchor" aria-label="anchor" href="#nextflow-installation"></a></h3>
+<div class="section level2">
+<h2 id="nextflow-installation">Nextflow installation<a class="anchor" aria-label="anchor" href="#nextflow-installation"></a></h2>
 <p>Install the latest version of Nextflow copy &amp; pasting the
 following snippet in a terminal window:</p>
 <div class="codewrapper sourceCode" id="cb8">
@@ -776,8 +769,8 @@ following snippet in a terminal window:</p>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="ex">curl</span> <span class="at">-s</span> https://get.nextflow.io <span class="kw">|</span> <span class="fu">bash</span></span></code></pre>
 </div>
 </div>
-<div class="section level3">
-<h3 id="add-nextflow-binary-to-your-users-path">Add Nextflow binary to your user’s PATH:<a class="anchor" aria-label="anchor" href="#add-nextflow-binary-to-your-users-path"></a></h3>
+<div class="section level2">
+<h2 id="add-nextflow-binary-to-your-users-path">Add Nextflow binary to your user’s PATH:<a class="anchor" aria-label="anchor" href="#add-nextflow-binary-to-your-users-path"></a></h2>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -792,10 +785,10 @@ following snippet in a terminal window:</p>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">nextflow</span> info</span></code></pre>
 </div>
 </div>
+<div class="section level2">
+<h2 id="nf-coretools-installation-without-conda">nf-core/tools installation without conda<a class="anchor" aria-label="anchor" href="#nf-coretools-installation-without-conda"></a></h2>
 <div class="section level3">
-<h3 id="nf-coretools-installation-without-conda">nf-core/tools installation without conda<a class="anchor" aria-label="anchor" href="#nf-coretools-installation-without-conda"></a></h3>
-<div class="section level4">
-<h4 id="pip">Pip<a class="anchor" aria-label="anchor" href="#pip"></a></h4>
+<h3 id="pip">Pip<a class="anchor" aria-label="anchor" href="#pip"></a></h3>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -805,7 +798,6 @@ following snippet in a terminal window:</p>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div>
 </div>
 </div>
 </div>
