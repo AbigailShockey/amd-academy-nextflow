@@ -25,8 +25,8 @@ To lower the difficulty barrier for nf-core pipeline development, nf-core provid
 Let's start by creating a directory for your new pipeline.
 
 ```bash
-mkdir my-pipeline
-cd my-pipeline
+mkdir nfcore-pipeline
+cd nfcore-pipeline
 ```
 
 Then we can use the nf-core tools `pipelines` command with the `create` option to start an interactive text user interface tool for setting up the pipeline.
@@ -75,8 +75,8 @@ Follow the steps below to start setting up your pipeline:
 
 ![](fig/pipeline-type.png 'pipeline-type')
 
-4.  On the **Basic Details** page, for **GitHub organization**  enter "myorganization"  
-5.  For **Workflow name** enter "mypipeline"  
+4.  On the **Basic Details** page, for **GitHub organization**  enter "myorg"  
+5.  For **Workflow name** enter "genomeassembler"  
 6.  For **A short description of your pipeline** enter "My first nf-core pipeline"  
 7.  For **Name of the main author / authors** enter your name
 8.  Select **Next**
@@ -117,8 +117,8 @@ Follow the steps below to start setting up your pipeline:
 Once your pipeline has been set up, you can change to its directory and test it using the `nextflow run` command and the `test` profile.
 
 ```bash
-cd myorganization-mypipeline
-nextflow run . -profile docker,test --outdir results
+cd myorg-genomeassembler
+nextflow run . -profile test --outdir results
 ```
 
 If the pipeline ran successfully, you should see the following:
@@ -143,12 +143,12 @@ Generic options
 
 Core Nextflow options
   runName                   : angry_visvesvaraya
-  containerEngine           : docker
+  containerEngine           : conda
   launchDir                 : /home/ashockey/training/myorg-genomeassembler
   workDir                   : /home/ashockey/training/myorg-genomeassembler/work
   projectDir                : /home/ashockey/training/myorg-genomeassembler
   userName                  : shockeax
-  profile                   : docker,test
+  profile                   : test
   configFiles               : /home/ashockey/training/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
