@@ -423,7 +423,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>nf-core modules</h1>
-        <p>Last updated on 2026-05-27 |
+        <p>Last updated on 2026-05-29 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/16-nfcore_modules.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -555,7 +555,7 @@ to your pipeline. What are the names of the inputs and outputs of the <a href="h
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <pre><code> 📥 Inputs     │Description                                                                                                        │Pattern
 ╺━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━╸
@@ -682,7 +682,7 @@ make sure you’ve changed directories into the pipeline’s directory:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> cd myorganization-myfirstworkflow</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> cd myorg-genomeassembler</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ex">$</span> nf-core modules install seqtk/trim</span></code></pre>
 </div>
 <p>Once the module has finished installing, we can use the
@@ -763,7 +763,7 @@ be found there.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -818,7 +818,7 @@ of your pipeline’s workflow script.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -889,7 +889,7 @@ section of your pipelines workflow script.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1009,30 +1009,28 @@ following changes:</p>
 </h3>
 <pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="co">/*</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a><span class="co">    Nextflow config file for running demo tests</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a><span class="co">    Nextflow config file for running a demo</span></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1" aria-label="code-block-20-4"></a><span class="co">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1" aria-label="code-block-20-5"></a><span class="co">    Defines input files and everything required to run a demo pipeline test.</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1" aria-label="code-block-20-5"></a><span class="co">    Defines input files and everything required to run a fast and simple demo.</span></span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1" aria-label="code-block-20-6"></a></span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1" aria-label="code-block-20-7"></a><span class="co">    Use as follows:</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1" aria-label="code-block-20-8"></a><span class="co">        nextflow run main.nf -profile demo,&lt;docker/singularity&gt; --outdir &lt;OUTDIR&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1" aria-label="code-block-20-8"></a><span class="co">        nextflow run myorg/genomeassembler -profile demo,&lt;docker/singularity&gt; --outdir &lt;OUTDIR&gt;</span></span>
 <span id="cb20-9"><a href="#cb20-9" tabindex="-1" aria-label="code-block-20-9"></a></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1" aria-label="code-block-20-10"></a><span class="co">----------------------------------------------------------------------------------------</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1" aria-label="code-block-20-11"></a><span class="co">*/</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1" aria-label="code-block-20-12"></a></span>
-<span id="cb20-13"><a href="#cb20-13" tabindex="-1" aria-label="code-block-20-13"></a>params <span class="op">{</span></span>
-<span id="cb20-14"><a href="#cb20-14" tabindex="-1" aria-label="code-block-20-14"></a>    config_profile_name        <span class="op">=</span> <span class="st">'Demo test profile'</span></span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1" aria-label="code-block-20-15"></a>    config_profile_description <span class="op">=</span> <span class="st">'Demo test dataset to check pipeline function'</span></span>
-<span id="cb20-16"><a href="#cb20-16" tabindex="-1" aria-label="code-block-20-16"></a></span>
-<span id="cb20-17"><a href="#cb20-17" tabindex="-1" aria-label="code-block-20-17"></a>    <span class="co">// Input data for demo test</span></span>
-<span id="cb20-18"><a href="#cb20-18" tabindex="-1" aria-label="code-block-20-18"></a>    input <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'</span></span>
-<span id="cb20-19"><a href="#cb20-19" tabindex="-1" aria-label="code-block-20-19"></a></span>
-<span id="cb20-20"><a href="#cb20-20" tabindex="-1" aria-label="code-block-20-20"></a><span class="op">}</span></span></code></pre>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1" aria-label="code-block-20-10"></a><span class="co">[..truncated..]</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1" aria-label="code-block-20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1" aria-label="code-block-20-12"></a><span class="co">params {</span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1" aria-label="code-block-20-13"></a><span class="co">    config_profile_name        = 'Demo profile'</span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1" aria-label="code-block-20-14"></a><span class="co">    config_profile_description = 'Minimal test dataset to demo the pipeline'</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1" aria-label="code-block-20-15"></a></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1" aria-label="code-block-20-16"></a><span class="co">    // Input data</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1" aria-label="code-block-20-17"></a><span class="co">    input = 'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1" aria-label="code-block-20-18"></a><span class="co">}</span></span></code></pre>
 </div>
-<p>This profile uses a different publicly available input than the
-<code>test</code> profile, because the original <code>test</code>
-profile uses paired and single end reads as input, while the assembly
-step we’re going to add requires paired (but not single) end reads as
-input.</p>
+<p>This profile uses a different publicly available data set as input
+than the <code>test</code> profile, because the original
+<code>test</code> profile uses paired and single end reads as input,
+while the assembly step we’re going to add later requires paired (but
+not single) end reads.</p>
 <p>The config file for the <code>demo</code> profile,
 <code>demo.config</code>, should be saved in the <code>conf/</code>
 folder with the other config files. To finish adding this profile to the
@@ -1049,14 +1047,14 @@ demo profile:</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> docker,demo <span class="at">--outdir</span> demo_results</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="ex">nextflow</span> run . <span class="at">-profile</span> demo <span class="at">--outdir</span> demo_results</span></code></pre>
 </div>
 <p>If the pipeline finishes successfully, you should see something like
 the following:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 24.10.5
+<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.0
 
 Launching `main.nf` [dreamy_meninsky] DSL2 - revision: 883bd10359
 
@@ -1073,20 +1071,20 @@ Generic options
 
 Core Nextflow options
   runName                   : dreamy_meninsky
-  containerEngine           : docker
-  launchDir                 : /home/username/my-pipeline/myorganization-mypipeline
-  workDir                   : /home/username/my-pipeline/myorganization-mypipeline/work
-  projectDir                : /home/username/my-pipeline/myorganization-mypipeline
+  containerEngine           : conda
+  launchDir                 : /home/username/my-pipeline/myorg-mypipeline
+  workDir                   : /home/username/my-pipeline/myorg-mypipeline/work
+  projectDir                : /home/username/my-pipeline/myorg-mypipeline
   userName                  : username
-  profile                   : demo,docker
-  configFiles               : /home/username/my-pipeline/myorganization-mypipeline/nextflow.config
+  profile                   : demo,conda
+  configFiles               : /home/username/my-pipeline/myorg-mypipeline/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (4)
 [66/2d7219] process &gt; MYORGANIZATION_MYPIPELINE:MYPIPELINE:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
 [7f/776766] process &gt; MYORGANIZATION_MYPIPELINE:MYPIPELINE:MULTIQC               [100%] 1 of 1 ✔
--[myorganization/mypipeline] Pipeline completed successfully-</code></pre>
+-[myorg/mypipeline] Pipeline completed successfully-</code></pre>
 </div>
 <p>This time the pipeline ran two processes, <code>MULTIQC</code> and
 the newly added <code>SEQTK_TRIM</code>, the results of which can be
@@ -1173,7 +1171,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/16-nfcore_modules.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/16-nfcore_modules.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-27",
+  "dateModified": "2026-05-29",
   "datePublished": "2026-05-29"
 }
 
