@@ -51,7 +51,7 @@ $ shovill \
     --ram <memory> \
     --outdir ./<sample_id>_shovill_output \
     --force
-$ mv <sample_id>_shovill_output/contigs.fa <sample_id>.fa
+$ mv <sample_id>_shovill_output/contigs.fa <sample_id>.contigs.fa
 ```
 
 4. **Aggregating Reports with MultiQC**: Finally, the pipeline employs [MultiQC](https://multiqc.info/) to aggregate logs and output from FastQC. MultiQC scans the outputs and compiles a summary report, which provides an overview of the results and highlights any areas that may need further investigation.
@@ -76,9 +76,15 @@ The script `script1.nf` defines the pipeline input parameters.
 
 ```groovy 
 //script1.nf
-params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
+/*
+ * pipeline input parameters
+ */
+
+params.reads = "data/bacteria/reads/*_R{1,2}.fastq.gz"
+
 
 println "reads: $params.reads"
+
 ```
 
 Run it by using the following command:
@@ -90,11 +96,11 @@ $ nextflow run script1.nf
 We can specify a different input parameter using the `--<params>` option, for example :
 
 ```groovy 
-$ nextflow run script1.nf --reads "data/bacteria/reads/sample*_{1,2}.fq.gz"
+$ nextflow run script1.nf --reads "data/bacteria/reads/sample*_{1,2}.fastq.gz"
 ```
 
 ```output 
-reads: data/bacteria/reads/sample*_{1,2}.fq.gz
+reads: data/bacteria/reads/sample*_{1,2}.fastq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -175,19 +181,18 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/sample1_{1,2}.fq.gz"
+params.reads = "data/bacteria/reads/*_R{1,2}.fastq.gz"
 params.outdir = "results"
 
-println """\
-         G E N O M E A S S E M B L Y - N F   P I P E L I N E
+log.info """\
+         G E N O M E A S S E M B L Y - N F
          ===================================
          reads        : ${params.reads}
          outdir       : ${params.outdir}
          """
          .stripIndent()
 
-
-read_pairs_ch = Channel.fromFilePairs(params.reads)
+read_pairs_ch = Channel.fromFilePairs( params.reads )
 ```
 
 We can view the contents  of the `read_pairs_ch` by adding the following statement as the last line:
@@ -202,27 +207,16 @@ Now if we execute it with the following command:
 $ nextflow run script2.nf
 ```
 
-It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/sample1_{1,2}.fq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
+It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/sample1_R{1,2}.fastq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
 
 ```output 
 [..truncated..]
-[ref1, [data/bacteria/reads/sample1_1.fq.gz,data/bacteria/reads/sample1_2.fq.gz]]
+[sample1, [data/bacteria/reads/sample1_1.fastq.gz,data/bacteria/reads/sample1_2.fastq.gz]]
 ```
 
-To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line. For example, the following command would read in add the ref samples:
+To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line.
 
-```bash 
-$ nextflow run script2.nf --reads 'data/bacteria/reads/sample*_{1,2}.fq.gz'
-```
-
-```output 
-[..truncated..]
-[ref2, [data/bacteria/reads/sample2_1.fq.gz, data/bacteria/reads/sample2_2.fq.gz]]
-[ref3, [data/bacteria/reads/sample3_1.fq.gz, data/bacteria/reads/sample3_2.fq.gz]]
-[ref1, [data/bacteria/reads/sample1_1.fq.gz, data/bacteria/reads/sample1_2.fq.gz]]
-```
-
-**Note** File paths including one or more wildcards ie. `*`, `?`, etc. MUST be wrapped in single-quoted characters to avoid Bash expanding the glob pattern on the command line.
+**Note** File paths including one or more wildcards, i.e. `*`, `?`, etc. MUST be wrapped in single-quoted characters to avoid Bash expanding the glob pattern on the command line.
 
 We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` channel factory to return an message if the file doesn't exist.
 
@@ -232,17 +226,17 @@ We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` chann
 read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists: true )
 ```
 
-If we now run the script with the `--reads` parameter `data/bacteria/reads/*_1,2}.fq.gz`
+If we now run the script with the `--reads` parameter `data/bacteria/reads/*_1,2}.fastq.gz`
 
 ```bash 
-$ nextflow run script2.nf --reads 'data/bacteria/reads/*_1,2}.fq.gz'
+$ nextflow run script2.nf --reads 'data/bacteria/reads/*_R1,2}.fastq.gz'
 ```
 
 it will return the message .
 
 ```output 
 [..truncated..]
-No such file: data/bacteria/reads/*_1,2}.fq.gz
+No such file: data/bacteria/reads/*_R1,2}.fastq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -261,20 +255,14 @@ read_pairs_ch =Channel.fromFilePairs(params.reads, checkIfExists: true)
 ```
 
 ```bash 
-nextflow run script2.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz'
+nextflow run script2.nf --reads 'data/bacteria/reads/*_R{1,2}.fastq.gz'
 ```
 
 ```output 
 [..truncated..]
-[temp33_1, [data/bacteria/reads/temp33_1_1.fq.gz, data/bacteria/reads/temp33_1_2.fq.gz]]
-[ref2, [data/bacteria/reads/sample2_1.fq.gz, data/bacteria/reads/sample2_2.fq.gz]]
-[temp33_3, [data/bacteria/reads/temp33_3_1.fq.gz, data/bacteria/reads/temp33_3_2.fq.gz]]
-[ref3, [data/bacteria/reads/sample3_1.fq.gz, data/bacteria/reads/sample3_2.fq.gz]]
-[temp33_2, [data/bacteria/reads/temp33_2_1.fq.gz,data/bacteria/reads/temp33_2_2.fq.gz]]
-[etoh60_2, [data/bacteria/reads/etoh60_2_1.fq.gz,data/bacteria/reads/etoh60_2_2.fq.gz]]
-[ref1, [data/bacteria/reads/sample1_1.fq.gz, data/bacteria/reads/sample1_2.fq.gz]]
-[etoh60_3, [data/bacteria/reads/etoh60_3_1.fq.gz, data/bacteria/reads/etoh60_3_2.fq.gz]]
-[etoh60_1, [data/bacteria/reads/etoh60_1_1.fq.gz, data/bacteria/reads/etoh60_1_2.fq.gz]]
+[sammple2, [data/bacteria/reads/sample2_R1.fastq.gz, data/bacteria/reads/sample2_R2.fastq.gz]]
+[sample3, [data/bacteria/reads/sample3_R1.fastq.gz, data/bacteria/reads/sample3_R2.fastq.gz]]
+[sample1, [data/bacteria/reads/sample1_R1.fastq.gz, data/bacteria/reads/sample1_R2.fastq.gz]]
 ```
 
 :::::::::::::::::::::::::
@@ -307,22 +295,7 @@ The third example, `script3.nf` adds,
 
 ```groovy 
 //script3.nf
-
-
-/*
- * pipeline input parameters
- */
-params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
-params.outdir = "results"
-
-println """\
-         G E N O M E A S S E M B L Y - N F   P I P E L I N E
-         ===================================
-         reads        : ${params.reads}
-         outdir       : ${params.outdir}
-         """
-         .stripIndent()
-
+[..truncated..]
 
 /*
  * define the `TRIM` process that trims raw reads and emits trimmed reads
@@ -357,11 +330,11 @@ $ nextflow run script3.nf
 ```
 
 ```output
-N E X T F L O W  ~  version 22.04.0
+N E X T F L O W  ~  version 25.10.0
 Launching `script3.nf` [happy_brown] DSL2 - revision: 90e932bb8d
 G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
-reads        : data/bacteria/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 Process `TRIM` declares 1 input channel but 0 were specified
@@ -374,7 +347,7 @@ The execution will fail because the program the process, `TRIM` , has not been p
 Add the `reads_ch` channel to the `TRIM` process call.
 
 ```groovy
-[truncated]
+[..truncated..]
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
@@ -391,11 +364,11 @@ $ nextflow run script3.nf
 Now the workflow will run successfully.
 
 ```output
-N E X T F L O W  ~  version 22.04.0
+N E X T F L O W  ~  version 25.10.0
 Launching `script3.nf` [mad_aryabhata] DSL2 - revision: 811396b67b
 G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
-reads        : data/bacteria/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (1)
@@ -441,11 +414,12 @@ The script `script4.nf`;
 
 ```groovy 
 //script4.nf
-..truncated..
+[..truncated..]
 /*
- * Run Shovill to perform the genome assembly on the trimmed read files
+ * define the `ASSEMBLE` process that assembles trimmed reads and emits assemblies
  */
 process ASSEMBLE {
+
     cpus 2
 
     input:
@@ -462,10 +436,10 @@ process ASSEMBLE {
       --cpus $task.cpus \
       --outdir ./${sample_id}_shovill_output \
       --force
-    mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.fa
+    mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.contigs.fa
     """
 }
-..truncated..
+
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
@@ -495,21 +469,21 @@ The `-resume` option causes the execution of any step that has been already proc
 Try to execute it with more read files as shown below:
 
 ```bash
-$ nextflow run script4.nf -resume --reads 'data/bacteria/reads/sample*_{1,2}.fq.gz'
+$ nextflow run script4.nf -resume --reads 'data/bacteria/reads/sample*_{1,2}.fastq.gz'
 ```
 
 ```output
-N E X T F L O W  ~  version 21.04.0
+N E X T F L O W  ~  version 25.10.0
 Launching `script4.nf` [shrivelled_brenner] - revision: c21df6839e
 G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
 
-reads        : data/bacteria/reads/sample*_{1,2}.fq.gz
+reads        : data/bacteria/reads/sample*_{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (8)
 [02/3742cf] process > TRIM     [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > ASSEMBLE (9) [100%] 3 of 3, cached: 1 ✔
+[9a/be3483] process > ASSEMBLE [100%] 3 of 3, cached: 1 ✔
 ```
 
 You will notice that  the `TRIM` step and one of the `ASSEMBLE` steps has been cached, and
@@ -546,11 +520,11 @@ This step implements a quality control step for your input reads and trimmed rea
 [..truncated..]
 
 /*
- * Run fastQC to check quality of raw reads files
+ * define the `FASTQC` process that checks quality of raw reads files
  */
 process FASTQC {
 
-    tag "FASTQC on $sample_id"
+    tag "FastQC on $sample_id"
     cpus 1
 
     input:
@@ -567,27 +541,25 @@ process FASTQC {
 }
 
 /*
- * Run fastQC to check quality of trimmed reads files
+ * define the `FASTQC_TRIMMED` process that checks quality of trimmed reads files
  */
 process FASTQC_TRIMMED {
 
-    tag "FASTQC on $sample_id"
+    tag "FastQC on trimmed $sample_id"
     cpus 1
 
     input:
     tuple val(sample_id), path(reads)
 
     output:
-    path("fastqc_${sample_id}_logs")
+    path("fastqc_${sample_id}_trimmed_logs")
 
     script:
     """
-    mkdir fastqc_${sample_id}_logs
-    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
+    mkdir fastqc_${sample_id}_trimmed_logs
+    fastqc -o fastqc_${sample_id}_trimmed_logs -f fastq -q ${reads} -t ${task.cpus}
     """
 }
-
-[..truncated..]
 
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
@@ -632,7 +604,7 @@ fastqc_trimmed_ch=FASTQC_TRIMMED(trimmed_reads_ch)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**Note:** Nextflow does not allow you to repeat processes with different inputs. In this example, we have duplicated the FastQC process and given it the name `FASTQC_TRIMMED`. This is a non-optimal way of repeating a process. In a later lesson, we will learn about `modules` and `aliases`, which will allow you to repeat processes with different inputs.
+**Note:** Nextflow does not allow you to repeat processes with different inputs. In this example, we have duplicated the FastQC process and given it the name `FASTQC_TRIMMED`, but this is a non-optimal way of repeating a process. In a later lesson, we will learn about `modules` and `aliases`, which will allow you to repeat the same process with different inputs under a different name.
 
 ## MultiQC report
 
@@ -673,14 +645,13 @@ create the required input for the `MULTIQC` process.
 
 ```groovy
 [..truncated..]
-//script7.nf
+//script6.nf
 /*
- * Create a report using multiQC for the quantification
- * and fastqc processes
+ * define the `MultiQC` process to combine FastQC results into one report
  */
 process MULTIQC {
 
-    tag "MultiQC on $sample_id"
+    tag "MultiQC"
     publishDir "${params.outdir}/multiqc", mode:'copy'
 
     input:
@@ -695,15 +666,14 @@ process MULTIQC {
     """
 }
 
-
 workflow {
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
   assemblies_ch=ASSEMBLE(trimmed_reads_ch)
-  fastqc_ch=FASTQC(read_pairs_ch).collect()
-  fastqc_trimmed_ch=FASTQC(trimmed_reads_ch).collect()
-  multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch)
+  fastqc_ch=FASTQC(read_pairs_ch)
+  fastqc_trimmed_ch=FASTQC_TRIMMED(trimmed_reads_ch)
+  multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch).collect()
   MULTIQC(multiqc_input_ch)
 }
 ```
@@ -711,7 +681,7 @@ workflow {
 Execute the script with the following command:
 
 ```bash
-$ nextflow run script6.nf --reads 'data/bacteria/reads/*_{1,2}.fq.gz' -resume
+$ nextflow run script6.nf --reads 'data/bacteria/reads/*_R{1,2}.fastq.gz' -resume
 ```
 
 ```output
@@ -719,14 +689,15 @@ N E X T F L O W  ~  version 21.04.0
 Launching `script6.nf` [small_franklin] - revision: 9062818659
 G E N O M E A S S E M B L Y - N F   P I P E L I N E
 ===================================
-reads        : data/bacteria/reads/*_{1,2}.fq.gz
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (9)
 [02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > ASSEMBLE (assembly on etoh60_1) [100%] 9 of 9, cached: 9 ✔
-[1f/b7b30a] process > FASTQC (FASTQC on etoh60_1)        [100%] 9 of 9, cached: 1 ✔
-[2c/206fef] process > MULTIQC                            [100%] 1 of 1 ✔
+[9a/be3483] process > ASSEMBLE (assembly on sample1)    [100%] 3 of 3, cached: 3 ✔
+[1f/b7b30a] process > FASTQC (FastQC on sample1)        [100%] 3 of 3, cached: 1 ✔
+[1f/b7b30a] process > FASTQC_TRIMMED (FastQC on trimmed sample1)        [100%] 3 of 3, cached: 1 ✔
+[2c/206fef] process > MULTIQC                           [100%] 1 of 1 ✔
 ```
 
 It creates the final report in the results folder in the `${params.outdir}/multiqc` directory.
@@ -750,6 +721,7 @@ Add a `publishDir` directive to each process of `script6.nf` to store the proces
 publishDir "${params.outdir}/trim", mode:'copy'
 publishDir "${params.outdir}/assemble", mode:'copy'
 publishDir "${params.outdir}/fastqc", mode:'copy'
+publishDir "${params.outdir}/fastqc_trimmed", mode:'copy'
 publishDir "${params.outdir}/multiqc", mode:'copy'
 ```
 

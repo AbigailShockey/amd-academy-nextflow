@@ -43,7 +43,7 @@ process TRIM {
 process ASSEMBLE {
 
     tag "Assemble on $sample_id"
-    cpus 1
+    cpus 2
 
     input:
     tuple val(sample_id), path(reads)

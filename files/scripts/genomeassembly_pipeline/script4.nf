@@ -40,7 +40,7 @@ process TRIM {
  */
 process ASSEMBLE {
 
-    cpus 1
+    cpus 2
 
     input:
     tuple val(sample_id), path(reads)
