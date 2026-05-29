@@ -3,7 +3,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/*_{1,2}.fq.gz"
+params.reads = "data/bacteria/reads/*_R{1,2}.fq.gz"
 params.outdir = "results"
 
 println """\
@@ -14,6 +14,7 @@ println """\
          """
          .stripIndent()
 
+read_pairs_ch = Channel.fromFilePairs(params.reads)
 
 /*
  * define the `TRIM` process that trims raw reads and emits trimmed reads
@@ -38,6 +39,7 @@ process TRIM {
  * define the `ASSEMBLE` process that assembles trimmed reads and emits assemblies
  */
 process ASSEMBLE {
+
     cpus 1
 
     input:
@@ -54,7 +56,7 @@ process ASSEMBLE {
       --cpus $task.cpus \
       --outdir ./${sample_id}_shovill_output \
       --force
-    mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.fa
+    mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.contigs.fa
     """
 }
 
