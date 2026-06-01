@@ -37,14 +37,18 @@ workflow GENOMEASSEMBLER {
     //
     SEQTK_TRIM(ch_samplesheet)
     ch_trimmed_reads = SEQTK_TRIM.out.reads
-    ch_versions = ch_versions.mix(seqtk_versions)
+    
+    // update meta.id with '_trimmed'
+    ch_trimmed_reads
+    .map { meta, reads -> [[id: "${meta.id}_trimmed", single_end: "${meta.single_end}"], reads]
+    }
+    .set { ch_trimmed_reads_fastqc }
 
     //
     // MODULE: shovill
     //
     SHOVILL(ch_trimmed_reads)
     ch_assemblies = SHOVILL.out.contigs
-    ch_versions = ch_versions.mix(shovill_versions)
 
     //
     // MODULE: fastqc
@@ -56,7 +60,7 @@ workflow GENOMEASSEMBLER {
     //
     // MODULE: fastqc trimmed
     //
-    FASTQC_TRIMMED(ch_trimmed_reads)
+    FASTQC_TRIMMED(ch_trimmed_reads_fastqc)
     ch_trimmed_read_qc = FASTQC_TRIMMED.out.zip.collect { it[1] }
     ch_multiqc_files = ch_multiqc_files.mix(ch_trimmed_read_qc)
 
@@ -112,7 +116,10 @@ workflow GENOMEASSEMBLER {
     )
     emit:multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
+
 }
+
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
