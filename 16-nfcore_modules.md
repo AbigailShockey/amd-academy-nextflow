@@ -61,9 +61,105 @@ There are two main ways you can find nf-core modules to add to your pipeline. Yo
 
 ## Finding nf-core modules
 
-### Online
+### On the command line
 
-The first step in your pipeline will be read trimming with the [seqtk trim module](https://nf-co.re/modules/seqtk_trim/).
+To get a list of nf-core modules on the command line, we need to use the `modules` nf-core command with the `list remote` options.
+
+```bash
+$ nf-core modules list remote
+```
+
+This command lists all the modules available in nf-core's [GitHub repository](https://github.com/nf-core/modules.git).
+
+```output
+
+
+
+                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\ 
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 3.2.0 - https://nf-co.re
+
+
+
+INFO     Modules available from https://github.com/nf-core/modules.git (master):                                                                                                                   
+                                                                                                                                                                                                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Module Name                                           ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ abacas                                                │
+│ abricate/run                                          │
+│ abricate/summary                                      │
+│ abritamr/run                                          │
+│ adapterremoval                                        │
+│ adapterremovalfixprefix                               │
+
+[..truncated..]                                                                                
+
+│ xeniumranger/rename                                   │
+│ xeniumranger/resegment                                │
+│ xz/compress                                           │
+│ xz/decompress                                         │
+│ yahs                                                  │
+│ yak/count                                             │
+│ yara/index                                            │
+│ yara/mapper                                           │
+│ zip                                                   │
+└───────────────────────────────────────────────────────┘
+```
+
+The information (inputs, outputs, and installation command) associated with each module can be found using the `modules info` options. The first step in your pipeline will be read trimming with the [seqtk trim module](https://nf-co.re/modules/seqtk_trim/), so we'll start with it.
+
+```bash
+nf-core modules info seqtk/trim
+```
+
+```output
+          ___     __   __   __   ___     /,-._.--~\ 
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+╭─ Module: seqtk/trim  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 🌐 Repository: https://github.com/nf-core/modules.git                                                                                                                                        │
+│ 🔧 Tools: seqtk                                                                                                                                                                              │
+│ 📖 Description: Trim low quality bases from FastQ files                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+               ╷                                                                                                                                                                  ╷             
+ 📥 Inputs     │Description                                                                                                                                                       │     Pattern 
+╺━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━╸
+ input[0]      │                                                                                                                                                                  │             
+╶──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  meta  (map)  │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                                                                                     │             
+╶──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  reads  (file)│List of input FastQ files                                                                                                                                         │*.{fastq.gz} 
+               ╵                                                                                                                                                                  ╵             
+                                               ╷                                                                                                                                  ╷             
+ 📥 Outputs                                    │Description                                                                                                                       │     Pattern 
+╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━╸
+ reads                                         │                                                                                                                                  │             
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  meta  (map)                                  │Groovy Map containing sample information e.g. [ id:'test', single_end:false ]                                                     │             
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  *.fastq.gz  (file)                           │Filtered FastQ files                                                                                                              │*.{fastq.gz} 
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+ versions_seqtk                                │                                                                                                                                  │             
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  ${task.process}  (string)                    │The name of the process                                                                                                           │             
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  seqtk  (string)                              │The name of the tool                                                                                                              │             
+╶──────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼────────────╴
+  seqtk 2>&1 | sed -n 's/^Version: //p'  (eval)│The expression to obtain the version of the tool                                                                                  │             
+                                               ╵                                                            
+```
+
+### Online
 
 Each nf-core module's webpage contains the following information:
 
@@ -72,7 +168,6 @@ Each nf-core module's webpage contains the following information:
  3. Output - A list and description of the module's outputs
 
 Other useful information on a module's webpage includes commands to install the module, and links to ask a question about the module on Slack or open an issue using GitHub. Both Slack and Github do require accounts.
-
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -140,62 +235,37 @@ Assembling trimmed reads with Shovill will be the next step you add to your pipe
   shovill --version 2>&1 | sed "s/^.*shovill //"    │The expression to obtain the version of the tool  │                                    
  (eval)                                             │                                                  │                                    
                                                     ╵                                                  ╵                                    
-
-
 ```
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### On the command line
 
-To get a list of nf-core modules on the command line, we need to use the `modules` nf-core command with the `list remote` options:
+## Meta maps and sample metadata
 
-```bash
-$ nf-core modules list remote
+You may have noticed that the metadata associated with the input file(s) of a module are listed in that module's inputs. This is because nf-core pipelines use something call ‘meta maps’ to carry sample metadata alongside files throughout the pipeline.
+
+Meta maps are used for recording IDs or names, tracking pipeline-generated metadata, grouping or splitting operations, and specifying per-sample tool arguments. 
+
+The meta map in an nf-core pipeline is an unordered key-value list in the Groovy language. A meta map sits in a tuple within a Nextflow channel object next to the file(s) the metadata describes.
+
+```groovy
+[ [id: 'sample1', single_end: false], [ sample1_R1.fastq.gz, sample1_R2.fastq.gz] ]
 ```
 
-This command lists all the modules available in nf-core's [GitHub repository](https://github.com/nf-core/modules.git).
+There are two standard nf-core meta map keys: `id` and `single_end`.
 
-```output
+`meta.id`: Unique file identifiers associated with a file (e.g. sample names; string)
+`single_end`: Whether the sequencing data used by the pipeline is single- or paired-end (true/false)
 
+nf-core modules refer to meta maps in the `input` block of a process.
 
-
-                                          ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\ 
-    |\ | |__  __ /  ` /  \ |__) |__         }  {
-    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
-                                          `._,._,'
-
-    nf-core/tools version 3.2.0 - https://nf-co.re
-
-
-
-INFO     Modules available from https://github.com/nf-core/modules.git (master):                                                                                                                   
-                                                                                                                                                                                                   
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Module Name                                           ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ abacas                                                │
-│ abricate/run                                          │
-│ abricate/summary                                      │
-│ abritamr/run                                          │
-│ adapterremoval                                        │
-│ adapterremovalfixprefix                               │
-
-[..truncated..]                                                                                
-
-│ xeniumranger/rename                                   │
-│ xeniumranger/resegment                                │
-│ xz/compress                                           │
-│ xz/decompress                                         │
-│ yahs                                                  │
-│ yak/count                                             │
-│ yara/index                                            │
-│ yara/mapper                                           │
-│ zip                                                   │
-└───────────────────────────────────────────────────────┘
+```groovy
+input:
+tuple val(meta), path(reads)
 ```
+
+Later, we will learn how to alter a meta map and rename the meta.id.
 
 ## Installing an nf-core module
 
