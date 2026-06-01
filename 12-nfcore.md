@@ -1,7 +1,7 @@
 ---
 title: Deploying nf-core pipelines
 teaching: 30
-exercises: 10
+exercises: 15
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
@@ -360,5 +360,3 @@ nextflow run -r 3.0.0 nf-core/viralrecon --help
 - An nf-core workflow is run using `nextflow run nf-core/<pipeline>` syntax.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-

@@ -1,7 +1,7 @@
 ---
 title: nf-core modules
-teaching: 15
-exercises: 30
+teaching: 16
+exercises: 8
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
@@ -283,7 +283,7 @@ $ nf-core modules install fastqc
 
 Installing a module does not automatically add it to your pipeline; it downloads the files the pipeline needs to run the module. Several lines of code need to be added to the workflow script for the module to be included.
 
-First, in the `workflows/mypipeline.nf` workflow script, we need to add an `include` statement for the module. The `include` statement should contain the name of the module in curly brackets `{}` (which is also the name of the process that uses that module) followed by the `from` statement and the path to that module's `main.nf` file. Modules should be added to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script `mypipeline.nf`. They can be added to that section in any order.
+First, in the `workflows/genomeassembler.nf` workflow script, we need to add an `include` statement for the module. The `include` statement should contain the name of the module in curly brackets `{}` (which is also the name of the process that uses that module) followed by the `from` statement and the path to that module's `main.nf` file. Modules should be added to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script `genomeassembler.nf`. They can be added to that section in any order.
 
 ```groovy
 /*
@@ -320,7 +320,7 @@ include { SEQTK_TRIM             } from '../modules/nf-core/seqtk/trim/main'
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-After we've added the `include` statement, we need to add the process `SEQK_TRIM()` to the workflow block. The process needs to be added within the curly brackets `{}` of the workflow block `MYPIPELINE`, which can be found in the `RUN MAIN WORKFLOW` section. We're going to add this module **before**  the `Collate and save software versions` module for reasons we'll discuss later. The process should be added according to the following format, which includes the module's name:
+After we've added the `include` statement, we need to add the process `SEQK_TRIM()` to the workflow block. The process needs to be added within the curly brackets `{}` of the workflow block `GENOMEASSEMBLER`, which can be found in the `RUN MAIN WORKFLOW` section. We're going to add this module **before**  the `Collate and save software versions` module for reasons we'll discuss later. The process should be added according to the following format, which includes the module's name:
 
 ```groovy
 
@@ -427,7 +427,7 @@ Use the following statement to include this module:
 include { SEQTK_TRIM } from '../modules/nf-core/seqtk/trim/main'
 ```
 
-The seqtk trim process only requires one input channel, which should contain paired end FASTQ files and their sample (aka meta) information. This channel already exists in the `mypipeline.nf` workflow file as `ch_samplesheet`, so the seqtk trim module can be called using the FASTQs as input with the following lines of code:
+The seqtk trim process only requires one input channel, which should contain paired end FASTQ files and their sample (aka meta) information. This channel already exists in the `genomeassembler.nf` workflow file as `ch_samplesheet`, so the seqtk trim module can be called using the FASTQs as input with the following lines of code:
 
 ```groovy
 //
@@ -516,19 +516,19 @@ Generic options
 Core Nextflow options
   runName                   : dreamy_meninsky
   containerEngine           : conda
-  launchDir                 : /home/username/my-pipeline/myorg-mypipeline
-  workDir                   : /home/username/my-pipeline/myorg-mypipeline/work
-  projectDir                : /home/username/my-pipeline/myorg-mypipeline
-  userName                  : username
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo,conda
-  configFiles               : /home/username/my-pipeline/myorg-mypipeline/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (4)
-[66/2d7219] process > MYORGANIZATION_MYPIPELINE:MYPIPELINE:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
-[7f/776766] process > MYORGANIZATION_MYPIPELINE:MYPIPELINE:MULTIQC               [100%] 1 of 1 ✔
--[myorg/mypipeline] Pipeline completed successfully-
+[66/2d7219] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
+[7f/776766] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC               [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
 This time the pipeline ran two processes, `MULTIQC` and the newly added `SEQTK_TRIM`, the results of which can be found in the `demo_results` directory.

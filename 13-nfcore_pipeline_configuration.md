@@ -1,7 +1,7 @@
 ---
 title: nf-core pipeline configuraton
-teaching: 30
-exercises: 10
+teaching: 6
+exercises: 3
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives

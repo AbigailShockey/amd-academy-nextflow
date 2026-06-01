@@ -54,8 +54,8 @@ workflow GENOMEASSEMBLER {
     //
     // MODULE: fastqc trimmed
     //
-    FASTQC_TRIMMMED(ch_trimmed_reads)
-    ch_trimmed_read_qc = FASTQC_TRIMMMED.out.zip.collect { it[1] }
+    FASTQC_TRIMMED(ch_trimmed_reads)
+    ch_trimmed_read_qc = FASTQC_TRIMMED.out.zip.collect { it[1] }
     ch_multiqc_files = ch_multiqc_files.mix()
 
     //

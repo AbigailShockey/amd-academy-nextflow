@@ -32,7 +32,7 @@ To start move the episode's nextflow scripts in the `scripts/nfcore_pipeline` fo
 ```bash
 $ cd myorg-genomeassembler
 $ mkdir bin
-$ cp scripts/nfcore_pipeline/* bin
+$ cp scripts/nfcore_pipeline/*.nf bin/
 ```
 
 This folder contains files we will be modifying in this episode. 
