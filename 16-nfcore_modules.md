@@ -23,7 +23,7 @@ exercises: 8
 
 An nf-core module is a Nextflow  "wrapper" around a command-line tool or script. A "wrapper" is a computer science term for a program or function that calls another program or function. In other words, a module contains a Nextflow script (and a few other files we'll discuss later) that is used to run the command-line tool or script contained within that module. Modules are used as individual processes within a pipeline.
 
-It's important to note that nf-core modules contain either a single tool with one subcommand, or one subcommand of a tool with multiple subcommands. For example, the genome assembly tool shovill contains only one command, so there is only one shovill module. Conversely, the FASTA/FASTQ processing tool seqtk contains multiple subcommands, so there are multiple seqtk modules (one for each subcommand).
+It's important to note that nf-core modules contain either a single tool with one subcommand, or one subcommand of a tool with multiple subcommands. For example, the genome assembly tool Shovill contains only one command, so there is only one Shovill module. Conversely, the FASTA/FASTQ processing tool seqtk contains multiple subcommands, so there are multiple seqtk modules (one for each subcommand).
 
 While you can develop a module for a tool independently, you can save a lot of time and effort by using [existing nf-core modules](https://nf-co.re/modules/), of which there are thousands. 
 
@@ -303,7 +303,7 @@ INFO     Modules installed in '.':
 └─────────────┴─────────────────┴─────────────┴───────────────────────────────────────────────────────────────────────────────┴────────────┘
 ```
 
-As you can see, seqtk is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder with the `tree` command, a folder for the shovill module can now be found there.
+As you can see, seqtk is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder with the `tree` command, a folder for the Shovill module can now be found there.
 
 ```bash
 $ tree modules/nf-core
@@ -585,7 +585,6 @@ Generic options
 
 Core Nextflow options
   runName                   : dreamy_meninsky
-  containerEngine           : conda
   launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
   workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
   projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler

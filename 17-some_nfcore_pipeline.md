@@ -101,7 +101,7 @@ $ nextflow run main.nf --outdir results --profile demo
 ```output
  N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [golden_chandrasekhar] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [cranky_legentil] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -112,22 +112,22 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_13-55-29
+  trace_report_suffix       : 2026-06-01_18-52-56
 
 Core Nextflow options
-  runName                   : golden_chandrasekhar
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : cranky_legentil
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (4)
-[04/272682] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
-[07/af3ec4] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[47/d1eb63] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
+[0b/9fa7b7] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
@@ -138,6 +138,7 @@ tree results
 ```
 
 ```output
+results
 ├── multiqc
 │   ├── multiqc_data
 │   │   ├── llms-full.txt
@@ -149,12 +150,12 @@ tree results
 │   │   └── multiqc_sources.txt
 │   └── multiqc_report.html
 ├── pipeline_info
-│   ├── execution_report_2026-06-01_14-37-09.html
-│   ├── execution_timeline_2026-06-01_14-37-09.html
-│   ├── execution_trace_2026-06-01_14-37-09.txt
+│   ├── execution_report_2026-06-01_18-52-56.html
+│   ├── execution_timeline_2026-06-01_18-52-56.html
+│   ├── execution_trace_2026-06-01_18-52-56.txt
 │   ├── genomeassembler_software_mqc_versions.yml
-│   ├── params_2026-06-01_14-37-12.json
-│   └── pipeline_dag_2026-06-01_14-37-09.html
+│   ├── params_2026-06-01_18-52-59.json
+│   └── pipeline_dag_2026-06-01_18-52-56.html
 └── seqtk
     ├── Sample01_Sample01_R1.fastq.gz
     ├── Sample01_Sample01_R2.fastq.gz
@@ -218,7 +219,7 @@ workflow GENOMEASSEMBLER {
 
 ## Add the remaining modules
 
-Modify `genomeassembler-2.nf`, adding the Shovill, FastQC, and FASTQC_TRIMMED, modules (but not their inputs) to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section.
+Modify `genomeassembler-2.nf`, adding the SHOVILL, FASTQC, and FASTQC_TRIMMED, modules (but not their inputs) to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section.
 
 :::::::::::::::  solution
 
@@ -285,7 +286,7 @@ $ nextflow run main.nf --outdir results --profile demo -resume
 ```output
  N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [soggy_curie] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [voluminous_mestorf] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -296,16 +297,16 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-07-39
+  trace_report_suffix       : 2026-06-01_18-57-51
 
 Core Nextflow options
-  runName                   : soggy_curie
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : voluminous_mestorf
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -383,8 +384,7 @@ workflow GENOMEASSEMBLER {
 
 ## Add module inputs and assign module outputs
 
-Modify `genomeassembler-3.nf`, assign
-inputs to the Shovill, FastQC, and FASTQC_TRIMMED, modules. Assign the outputs of each module according to the following naming convention:
+Modify `genomeassembler-3.nf`, assign inputs to the SHOVILL, FASTQC, and FASTQC_TRIMMED, modules. Assign the outputs of each module according to the following naming convention:
 
 - The `reads` output of SEQTK_TRIM is named `ch_trimmed_reads`
 - The `contigs` output of SHOVILL is named `ch_assemblies`
@@ -469,7 +469,7 @@ $ nextflow run main.nf --outdir results --profile demo -resume
 ```output
  N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [focused_shaw] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [special_mayer] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -480,25 +480,25 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-16-16
+  trace_report_suffix       : 2026-06-01_18-59-36
 
 Core Nextflow options
-  runName                   : focused_shaw
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : special_mayer
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (10)
-[80/eca45c] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
-[8f/6ac1d5] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3 ✔
-[e0/26b994] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample02)         [100%] 3 of 3 ✔
-[d3/68586a] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3 ✔
-[a9/c2addb] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[52/4da2b6] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
+[99/24083e] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3 ✔
+[a2/d468a1] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample03)         [100%] 3 of 3 ✔
+[ba/f254df] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3 ✔
+[48/0a6795] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
@@ -536,22 +536,22 @@ results
 │   │   └── multiqc_sources.txt
 │   └── multiqc_report.html
 ├── pipeline_info
-│   ├── execution_report_2026-06-01_14-37-09.html
-│   ├── execution_report_2026-06-01_14-41-50.html
-│   ├── execution_report_2026-06-01_14-42-22.html
-│   ├── execution_timeline_2026-06-01_14-37-09.html
-│   ├── execution_timeline_2026-06-01_14-41-50.html
-│   ├── execution_timeline_2026-06-01_14-42-22.html
-│   ├── execution_trace_2026-06-01_14-37-09.txt
-│   ├── execution_trace_2026-06-01_14-41-50.txt
-│   ├── execution_trace_2026-06-01_14-42-22.txt
+│   ├── execution_report_2026-06-01_18-52-56.html
+│   ├── execution_report_2026-06-01_18-57-51.html
+│   ├── execution_report_2026-06-01_18-59-36.html
+│   ├── execution_timeline_2026-06-01_18-52-56.html
+│   ├── execution_timeline_2026-06-01_18-57-51.html
+│   ├── execution_timeline_2026-06-01_18-59-36.html
+│   ├── execution_trace_2026-06-01_18-52-56.txt
+│   ├── execution_trace_2026-06-01_18-57-51.txt
+│   ├── execution_trace_2026-06-01_18-59-36.txt
 │   ├── genomeassembler_software_mqc_versions.yml
-│   ├── params_2026-06-01_14-37-12.json
-│   ├── params_2026-06-01_14-41-53.json
-│   ├── params_2026-06-01_14-42-25.json
-│   ├── pipeline_dag_2026-06-01_14-37-09.html
-│   ├── pipeline_dag_2026-06-01_14-41-50.html
-│   └── pipeline_dag_2026-06-01_14-42-22.html
+│   ├── params_2026-06-01_18-52-59.json
+│   ├── params_2026-06-01_18-57-55.json
+│   ├── params_2026-06-01_18-59-39.json
+│   ├── pipeline_dag_2026-06-01_18-52-56.html
+│   ├── pipeline_dag_2026-06-01_18-57-51.html
+│   └── pipeline_dag_2026-06-01_18-59-36.html
 ├── seqtk
 │   ├── Sample01_Sample01_R1.fastq.gz
 │   ├── Sample01_Sample01_R2.fastq.gz
@@ -675,7 +675,7 @@ workflow GENOMEASSEMBLER {
     // MODULE: fastqc
     //
     FASTQC(ch_samplesheet)
-    ch_read_qc = FASTQC.out.zip.collect()
+    ch_read_qc = FASTQC.out.zip.collect { it[1] }
     ch_multiqc_files = ch_multiqc_files.mix(ch_read_qc)
 
     //
@@ -703,9 +703,9 @@ $ nextflow run main.nf --outdir results --profile demo -resume
 ```
 
 ```output
- N E X T F L O W   ~  version 25.10.4
+X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [spontaneous_meucci] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [cheesy_banach] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -716,34 +716,116 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-31-35
+  trace_report_suffix       : 2026-06-01_19-12-40
 
 Core Nextflow options
-  runName                   : spontaneous_meucci
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : cheesy_banach
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (1)
-[78/b642c5] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3, cached: 3 ✔
-[81/640d26] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample01)        [100%] 3 of 3, cached: 3 ✔
-[48/089fa9] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample01)         [100%] 3 of 3, cached: 3 ✔
-[f5/7fec1b] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample01) [100%] 3 of 3, cached: 3 ✔
-[d9/9a4281] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[52/4da2b6] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
+[99/24083e] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3, cached: 3 ✔
+[a2/d468a1] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample03)         [100%] 3 of 3, cached: 3 ✔
+[ba/f254df] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3, cached: 3 ✔
+[5a/b7335a] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
-## Altering the meta map
+```output
+results
+├── fastqc
+[..truncated..] 
+│   ├── multiqc_data
+│   │   ├── fastqc_adapter_content_plot.txt
+│   │   ├── fastqc_per_base_n_content_plot.txt
+│   │   ├── fastqc_per_base_sequence_quality_plot.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+│   │   ├── fastqc_per_sequence_quality_scores_plot.txt
+│   │   ├── fastqc_sequence_counts_plot.txt
+│   │   ├── fastqc_sequence_duplication_levels_plot.txt
+│   │   ├── fastqc_sequence_length_distribution_plot.txt
+│   │   ├── fastqc-status-check-heatmap.txt
+│   │   ├── fastqc_top_overrepresented_sequences_table.txt
+│   │   ├── llms-full.txt
+│   │   ├── multiqc_citations.txt
+│   │   ├── multiqc_data.json
+│   │   ├── multiqc_fastqc.txt
+│   │   ├── multiqc_general_stats.txt
+│   │   ├── multiqc.log
+│   │   ├── multiqc.parquet
+│   │   ├── multiqc_software_versions.txt
+│   │   └── multiqc_sources.txt
+│   ├── multiqc_plots
+│   │   ├── pdf
+│   │   │   ├── fastqc_adapter_content_plot.pdf
+│   │   │   ├── fastqc_per_base_n_content_plot.pdf
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.pdf
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-pct.pdf
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.pdf
+│   │   │   ├── fastqc_sequence_length_distribution_plot.pdf
+│   │   │   ├── fastqc-status-check-heatmap.pdf
+│   │   │   └── fastqc_top_overrepresented_sequences_table.pdf
+│   │   ├── png
+│   │   │   ├── fastqc_adapter_content_plot.png
+│   │   │   ├── fastqc_per_base_n_content_plot.png
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.png
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.png
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.png
+│   │   │   ├── fastqc_sequence_counts_plot-pct.png
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.png
+│   │   │   ├── fastqc_sequence_length_distribution_plot.png
+│   │   │   ├── fastqc-status-check-heatmap.png
+│   │   │   └── fastqc_top_overrepresented_sequences_table.png
+│   │   └── svg
+│   │       ├── fastqc_adapter_content_plot.svg
+│   │       ├── fastqc_per_base_n_content_plot.svg
+│   │       ├── fastqc_per_base_sequence_quality_plot.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Counts.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Percentages.svg
+│   │       ├── fastqc_per_sequence_quality_scores_plot.svg
+│   │       ├── fastqc_sequence_counts_plot-cnt.svg
+│   │       ├── fastqc_sequence_counts_plot-pct.svg
+│   │       ├── fastqc_sequence_duplication_levels_plot.svg
+│   │       ├── fastqc_sequence_length_distribution_plot.svg
+│   │       ├── fastqc-status-check-heatmap.svg
+│   │       └── fastqc_top_overrepresented_sequences_table.svg
+│   └── multiqc_report.html
+[..truncated..] 
+```
 
-Our final addition to your nf-core pipeline will be four lines of code that alter the `meta.id` item of the meta map. This change will give the input files of FASTQC_TRIMMED a different name (ID), which will give the output files of the module a different name as well. This change needs to be made so the results of both FastQC modules have unique names, ensuring one will not overwrite the other during the MultiQC step.
+## Updating the meta map
+
+Our final addition to your nf-core pipeline will be four lines of code that will change the `meta.id` item of the meta map. This change will give the input files of FASTQC_TRIMMED a different name (ID), which will give the output files of the module a different name as well. This change needs to be made so the results of both FastQC modules have unique names, ensuring one will not overwrite the other during the MultiQC step.
+
+These four lines of code are:
+
+```groovy
+ch_trimmed_reads
+.map { meta, reads -> [[id: "${meta.id}_trimmed", single_end: "${meta.single_end}"], reads]
+}
+.set { ch_trimmed_reads_fastqc }
+```
+
+The `map` operator operator transforms items in a channel, and the `set` operator assigns the data stream from a channel to a target variable name, in this case `ch_trimmed_reads_fastqc`. So, these four lines of code transform the items in the `ch_trimmed_reads` channel, specifically `meta.id`, and assign them to the variable `ch_trimmed_reads_fastqc`. The transformation is the addition of the string "_trimmed" to `meta.id`. All other items in the channel (`meta.single_end` and `reads`) remain the same.
+
+This code block will go after the SEQTK_TRIM process in the workflow.
 
 ```groovy 
-//genomeassembler-4.nf
+//genomeassembler-5.nf
 
 [..truncated..] 
 
@@ -801,6 +883,143 @@ workflow GENOMEASSEMBLER {
 [..truncated..] 
 
 }
+```
+
+Copy the modified `genomeassembler-5.nf` script to the `workflows/` directory, renaming it to `genomeassembler.nf`, and run it by using the following command:
+
+```bash
+$ cp bin/genomeassembler-5.nf workflows/genomeassembler.nf
+$ nextflow run main.nf --outdir results --profile demo -resume
+```
+
+```output
+ N E X T F L O W   ~  version 25.10.4
+
+Launching `main.nf` [cranky_euclid] DSL2 - revision: 27a6d188dd
+
+Input/output options
+  input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
+  outdir                    : results
+
+Institutional config options
+  config_profile_name       : Demo test profile
+  config_profile_description: Demo test dataset to check pipeline function
+
+Generic options
+  trace_report_suffix       : 2026-06-01_19-14-20
+
+Core Nextflow options
+  runName                   : cranky_euclid
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
+  profile                   : demo
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+------------------------------------------------------
+executor >  local (4)
+[ce/61ab1d] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample01)             [100%] 3 of 3, cached: 3 ✔
+[10/4915f4] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample01)                [100%] 3 of 3, cached: 3 ✔
+[e2/fb63c7] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample01)                 [100%] 3 of 3, cached: 3 ✔
+[9d/726149] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample02_trimmed) [100%] 3 of 3 ✔
+[2d/a5fb18] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler)         [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-
+```
+
+```output
+results
+├── fastqc
+│   ├── Sample01_1_fastqc.html
+│   ├── Sample01_1_fastqc.zip
+│   ├── Sample01_2_fastqc.html
+│   ├── Sample01_2_fastqc.zip
+│   ├── Sample01_trimmed_1_fastqc.html
+│   ├── Sample01_trimmed_1_fastqc.zip
+│   ├── Sample01_trimmed_2_fastqc.html
+│   ├── Sample01_trimmed_2_fastqc.zip
+│   ├── Sample02_1_fastqc.html
+│   ├── Sample02_1_fastqc.zip
+│   ├── Sample02_2_fastqc.html
+│   ├── Sample02_2_fastqc.zip
+│   ├── Sample02_trimmed_1_fastqc.html
+│   ├── Sample02_trimmed_1_fastqc.zip
+│   ├── Sample02_trimmed_2_fastqc.html
+│   ├── Sample02_trimmed_2_fastqc.zip
+│   ├── Sample03_1_fastqc.html
+│   ├── Sample03_1_fastqc.zip
+│   ├── Sample03_2_fastqc.html
+│   ├── Sample03_2_fastqc.zip
+│   ├── Sample03_trimmed_1_fastqc.html
+│   ├── Sample03_trimmed_1_fastqc.zip
+│   ├── Sample03_trimmed_2_fastqc.html
+│   └── Sample03_trimmed_2_fastqc.zip
+├── multiqc
+│   ├── multiqc_data
+│   │   ├── fastqc_adapter_content_plot.txt
+│   │   ├── fastqc_per_base_n_content_plot.txt
+│   │   ├── fastqc_per_base_sequence_quality_plot.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+│   │   ├── fastqc_per_sequence_quality_scores_plot.txt
+│   │   ├── fastqc_sequence_counts_plot.txt
+│   │   ├── fastqc_sequence_duplication_levels_plot.txt
+│   │   ├── fastqc_sequence_length_distribution_plot.txt
+│   │   ├── fastqc-status-check-heatmap.txt
+│   │   ├── fastqc_top_overrepresented_sequences_table.txt
+│   │   ├── llms-full.txt
+│   │   ├── multiqc_citations.txt
+│   │   ├── multiqc_data.json
+│   │   ├── multiqc_fastqc.txt
+│   │   ├── multiqc_general_stats.txt
+│   │   ├── multiqc.log
+│   │   ├── multiqc.parquet
+│   │   ├── multiqc_software_versions.txt
+│   │   └── multiqc_sources.txt
+│   ├── multiqc_plots
+│   │   ├── pdf
+│   │   │   ├── fastqc_adapter_content_plot.pdf
+│   │   │   ├── fastqc_per_base_n_content_plot.pdf
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.pdf
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-pct.pdf
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.pdf
+│   │   │   ├── fastqc_sequence_length_distribution_plot.pdf
+│   │   │   ├── fastqc-status-check-heatmap.pdf
+│   │   │   └── fastqc_top_overrepresented_sequences_table.pdf
+│   │   ├── png
+│   │   │   ├── fastqc_adapter_content_plot.png
+│   │   │   ├── fastqc_per_base_n_content_plot.png
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.png
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.png
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.png
+│   │   │   ├── fastqc_sequence_counts_plot-pct.png
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.png
+│   │   │   ├── fastqc_sequence_length_distribution_plot.png
+│   │   │   ├── fastqc-status-check-heatmap.png
+│   │   │   └── fastqc_top_overrepresented_sequences_table.png
+│   │   └── svg
+│   │       ├── fastqc_adapter_content_plot.svg
+│   │       ├── fastqc_per_base_n_content_plot.svg
+│   │       ├── fastqc_per_base_sequence_quality_plot.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Counts.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Percentages.svg
+│   │       ├── fastqc_per_sequence_quality_scores_plot.svg
+│   │       ├── fastqc_sequence_counts_plot-cnt.svg
+│   │       ├── fastqc_sequence_counts_plot-pct.svg
+│   │       ├── fastqc_sequence_duplication_levels_plot.svg
+│   │       ├── fastqc_sequence_length_distribution_plot.svg
+│   │       ├── fastqc-status-check-heatmap.svg
+│   │       └── fastqc_top_overrepresented_sequences_table.svg
+│   └── multiqc_report.html
+
+[..truncated..]
 ```
 
 :::::::::::::::::::::::::::::::::::::::: keypoints

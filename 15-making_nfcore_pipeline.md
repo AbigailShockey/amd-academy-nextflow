@@ -143,7 +143,6 @@ Generic options
 
 Core Nextflow options
   runName                   : angry_visvesvaraya
-  containerEngine           : conda
   launchDir                 : /home/user/training/myorg-genomeassembler
   workDir                   : /home/user/training/myorg-genomeassembler/work
   projectDir                : /home/user/training/myorg-genomeassembler
