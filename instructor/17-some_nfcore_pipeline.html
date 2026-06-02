@@ -357,7 +357,7 @@
 <li><a href="#add-modules-to-the-workflow-section">Add modules to the workflow section</a></li>
 <li><a href="#adding-module-inputs-and-assigning-module-outputs-to-variables">Adding module inputs and assigning module outputs to variables</a></li>
 <li><a href="#mixing-fastqc-results">Mixing FastQC results</a></li>
-<li><a href="#altering-the-meta-map">Altering the meta map</a></li>
+<li><a href="#updating-the-meta-map">Updating the meta map</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -422,7 +422,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Simple nf-core pipeline</h1>
-        <p>Last updated on 2026-06-01 |
+        <p>Last updated on 2026-06-02 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/17-some_nfcore_pipeline.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -520,7 +520,7 @@ Shovill, FastQC, and FASTQC_TRIMMED, module paths to the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -559,7 +559,7 @@ command:</p>
 </h3>
 <pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [golden_chandrasekhar] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [cranky_legentil] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -570,22 +570,22 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_13-55-29
+  trace_report_suffix       : 2026-06-01_18-52-56
 
 Core Nextflow options
-  runName                   : golden_chandrasekhar
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : cranky_legentil
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (4)
-[04/272682] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
-[07/af3ec4] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[47/d1eb63] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
+[0b/9fa7b7] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
 </div>
 <p>Viewing the <code>results</code> directory with <code>tree</code>
@@ -600,7 +600,8 @@ Information about the pipeline’s execution can be found in the
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>├── multiqc
+<pre class="output" tabindex="0"><code>results
+├── multiqc
 │   ├── multiqc_data
 │   │   ├── llms-full.txt
 │   │   ├── multiqc_citations.txt
@@ -611,12 +612,12 @@ Information about the pipeline’s execution can be found in the
 │   │   └── multiqc_sources.txt
 │   └── multiqc_report.html
 ├── pipeline_info
-│   ├── execution_report_2026-06-01_14-37-09.html
-│   ├── execution_timeline_2026-06-01_14-37-09.html
-│   ├── execution_trace_2026-06-01_14-37-09.txt
+│   ├── execution_report_2026-06-01_18-52-56.html
+│   ├── execution_timeline_2026-06-01_18-52-56.html
+│   ├── execution_trace_2026-06-01_18-52-56.txt
 │   ├── genomeassembler_software_mqc_versions.yml
-│   ├── params_2026-06-01_14-37-12.json
-│   └── pipeline_dag_2026-06-01_14-37-09.html
+│   ├── params_2026-06-01_18-52-59.json
+│   └── pipeline_dag_2026-06-01_18-52-56.html
 └── seqtk
     ├── Sample01_Sample01_R1.fastq.gz
     ├── Sample01_Sample01_R2.fastq.gz
@@ -684,7 +685,7 @@ Information about the pipeline’s execution can be found in the
 <div id="add-the-remaining-modules" class="callout-inner">
 <h3 class="callout-title">Add the remaining modules</h3>
 <div class="callout-content">
-<p>Modify <code>genomeassembler-2.nf</code>, adding the Shovill, FastQC,
+<p>Modify <code>genomeassembler-2.nf</code>, adding the SHOVILL, FASTQC,
 and FASTQC_TRIMMED, modules (but not their inputs) to the
 <code>IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS</code> section.</p>
 </div>
@@ -695,7 +696,7 @@ and FASTQC_TRIMMED, modules (but not their inputs) to the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -764,7 +765,7 @@ command:</p>
 </h3>
 <pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [soggy_curie] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [voluminous_mestorf] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -775,16 +776,16 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-07-39
+  trace_report_suffix       : 2026-06-01_18-57-51
 
 Core Nextflow options
-  runName                   : soggy_curie
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : voluminous_mestorf
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -869,7 +870,7 @@ Shovill</p>
 outputs</h3>
 <div class="callout-content">
 <p>Modify <code>genomeassembler-3.nf</code>, assign inputs to the
-Shovill, FastQC, and FASTQC_TRIMMED, modules. Assign the outputs of each
+SHOVILL, FASTQC, and FASTQC_TRIMMED, modules. Assign the outputs of each
 module according to the following naming convention:</p>
 <ul><li>The <code>reads</code> output of SEQTK_TRIM is named
 <code>ch_trimmed_reads</code>
@@ -904,7 +905,7 @@ a later section.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -977,7 +978,7 @@ command:</p>
 </h3>
 <pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [focused_shaw] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [special_mayer] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -988,25 +989,25 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-16-16
+  trace_report_suffix       : 2026-06-01_18-59-36
 
 Core Nextflow options
-  runName                   : focused_shaw
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : special_mayer
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (10)
-[80/eca45c] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
-[8f/6ac1d5] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3 ✔
-[e0/26b994] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample02)         [100%] 3 of 3 ✔
-[d3/68586a] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3 ✔
-[a9/c2addb] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[52/4da2b6] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
+[99/24083e] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3 ✔
+[a2/d468a1] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample03)         [100%] 3 of 3 ✔
+[ba/f254df] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3 ✔
+[48/0a6795] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
 </div>
 <p>The pipeline should finished successfully this time, because we gave
@@ -1048,22 +1049,22 @@ Additionally, there are more pipeline executation files in the
 │   │   └── multiqc_sources.txt
 │   └── multiqc_report.html
 ├── pipeline_info
-│   ├── execution_report_2026-06-01_14-37-09.html
-│   ├── execution_report_2026-06-01_14-41-50.html
-│   ├── execution_report_2026-06-01_14-42-22.html
-│   ├── execution_timeline_2026-06-01_14-37-09.html
-│   ├── execution_timeline_2026-06-01_14-41-50.html
-│   ├── execution_timeline_2026-06-01_14-42-22.html
-│   ├── execution_trace_2026-06-01_14-37-09.txt
-│   ├── execution_trace_2026-06-01_14-41-50.txt
-│   ├── execution_trace_2026-06-01_14-42-22.txt
+│   ├── execution_report_2026-06-01_18-52-56.html
+│   ├── execution_report_2026-06-01_18-57-51.html
+│   ├── execution_report_2026-06-01_18-59-36.html
+│   ├── execution_timeline_2026-06-01_18-52-56.html
+│   ├── execution_timeline_2026-06-01_18-57-51.html
+│   ├── execution_timeline_2026-06-01_18-59-36.html
+│   ├── execution_trace_2026-06-01_18-52-56.txt
+│   ├── execution_trace_2026-06-01_18-57-51.txt
+│   ├── execution_trace_2026-06-01_18-59-36.txt
 │   ├── genomeassembler_software_mqc_versions.yml
-│   ├── params_2026-06-01_14-37-12.json
-│   ├── params_2026-06-01_14-41-53.json
-│   ├── params_2026-06-01_14-42-25.json
-│   ├── pipeline_dag_2026-06-01_14-37-09.html
-│   ├── pipeline_dag_2026-06-01_14-41-50.html
-│   └── pipeline_dag_2026-06-01_14-42-22.html
+│   ├── params_2026-06-01_18-52-59.json
+│   ├── params_2026-06-01_18-57-55.json
+│   ├── params_2026-06-01_18-59-39.json
+│   ├── pipeline_dag_2026-06-01_18-52-56.html
+│   ├── pipeline_dag_2026-06-01_18-57-51.html
+│   └── pipeline_dag_2026-06-01_18-59-36.html
 ├── seqtk
 │   ├── Sample01_Sample01_R1.fastq.gz
 │   ├── Sample01_Sample01_R2.fastq.gz
@@ -1163,7 +1164,7 @@ operator to combine the <code>ch_read_qc</code> and
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1205,7 +1206,7 @@ operator to combine the <code>ch_read_qc</code> and
 <span id="cb20-35"><a href="#cb20-35" tabindex="-1" aria-label="code-block-20-35"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb20-36"><a href="#cb20-36" tabindex="-1" aria-label="code-block-20-36"></a>    <span class="co">//</span></span>
 <span id="cb20-37"><a href="#cb20-37" tabindex="-1" aria-label="code-block-20-37"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb20-38"><a href="#cb20-38" tabindex="-1" aria-label="code-block-20-38"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span><span class="op">()</span></span>
+<span id="cb20-38"><a href="#cb20-38" tabindex="-1" aria-label="code-block-20-38"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
 <span id="cb20-39"><a href="#cb20-39" tabindex="-1" aria-label="code-block-20-39"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
 <span id="cb20-40"><a href="#cb20-40" tabindex="-1" aria-label="code-block-20-40"></a></span>
 <span id="cb20-41"><a href="#cb20-41" tabindex="-1" aria-label="code-block-20-41"></a>    <span class="co">//</span></span>
@@ -1236,9 +1237,9 @@ command:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.4
+<pre class="output" tabindex="0"><code>X T F L O W   ~  version 25.10.4
 
-Launching `main.nf` [spontaneous_meucci] DSL2 - revision: 27a6d188dd
+Launching `main.nf` [cheesy_banach] DSL2 - revision: 27a6d188dd
 
 Input/output options
   input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
@@ -1249,96 +1250,329 @@ Institutional config options
   config_profile_description: Demo test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-06-01_14-31-35
+  trace_report_suffix       : 2026-06-01_19-12-40
 
 Core Nextflow options
-  runName                   : spontaneous_meucci
-  launchDir                 : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler
-  userName                  : shockeax
+  runName                   : cheesy_banach
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
   profile                   : demo
-  configFiles               : /home/shockeax/trainings/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (1)
-[78/b642c5] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3, cached: 3 ✔
-[81/640d26] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample01)        [100%] 3 of 3, cached: 3 ✔
-[48/089fa9] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample01)         [100%] 3 of 3, cached: 3 ✔
-[f5/7fec1b] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample01) [100%] 3 of 3, cached: 3 ✔
-[d9/9a4281] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[52/4da2b6] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample03)     [100%] 3 of 3, cached: 3 ✔
+[99/24083e] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample03)        [100%] 3 of 3, cached: 3 ✔
+[a2/d468a1] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample03)         [100%] 3 of 3, cached: 3 ✔
+[ba/f254df] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample03) [100%] 3 of 3, cached: 3 ✔
+[5a/b7335a] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
 </div>
-</section><section><h2 class="section-heading" id="altering-the-meta-map">Altering the meta map<a class="anchor" aria-label="anchor" href="#altering-the-meta-map"></a></h2>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>results
+├── fastqc
+[..truncated..]
+│   ├── multiqc_data
+│   │   ├── fastqc_adapter_content_plot.txt
+│   │   ├── fastqc_per_base_n_content_plot.txt
+│   │   ├── fastqc_per_base_sequence_quality_plot.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+│   │   ├── fastqc_per_sequence_quality_scores_plot.txt
+│   │   ├── fastqc_sequence_counts_plot.txt
+│   │   ├── fastqc_sequence_duplication_levels_plot.txt
+│   │   ├── fastqc_sequence_length_distribution_plot.txt
+│   │   ├── fastqc-status-check-heatmap.txt
+│   │   ├── fastqc_top_overrepresented_sequences_table.txt
+│   │   ├── llms-full.txt
+│   │   ├── multiqc_citations.txt
+│   │   ├── multiqc_data.json
+│   │   ├── multiqc_fastqc.txt
+│   │   ├── multiqc_general_stats.txt
+│   │   ├── multiqc.log
+│   │   ├── multiqc.parquet
+│   │   ├── multiqc_software_versions.txt
+│   │   └── multiqc_sources.txt
+│   ├── multiqc_plots
+│   │   ├── pdf
+│   │   │   ├── fastqc_adapter_content_plot.pdf
+│   │   │   ├── fastqc_per_base_n_content_plot.pdf
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.pdf
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-pct.pdf
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.pdf
+│   │   │   ├── fastqc_sequence_length_distribution_plot.pdf
+│   │   │   ├── fastqc-status-check-heatmap.pdf
+│   │   │   └── fastqc_top_overrepresented_sequences_table.pdf
+│   │   ├── png
+│   │   │   ├── fastqc_adapter_content_plot.png
+│   │   │   ├── fastqc_per_base_n_content_plot.png
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.png
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.png
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.png
+│   │   │   ├── fastqc_sequence_counts_plot-pct.png
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.png
+│   │   │   ├── fastqc_sequence_length_distribution_plot.png
+│   │   │   ├── fastqc-status-check-heatmap.png
+│   │   │   └── fastqc_top_overrepresented_sequences_table.png
+│   │   └── svg
+│   │       ├── fastqc_adapter_content_plot.svg
+│   │       ├── fastqc_per_base_n_content_plot.svg
+│   │       ├── fastqc_per_base_sequence_quality_plot.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Counts.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Percentages.svg
+│   │       ├── fastqc_per_sequence_quality_scores_plot.svg
+│   │       ├── fastqc_sequence_counts_plot-cnt.svg
+│   │       ├── fastqc_sequence_counts_plot-pct.svg
+│   │       ├── fastqc_sequence_duplication_levels_plot.svg
+│   │       ├── fastqc_sequence_length_distribution_plot.svg
+│   │       ├── fastqc-status-check-heatmap.svg
+│   │       └── fastqc_top_overrepresented_sequences_table.svg
+│   └── multiqc_report.html
+[..truncated..] </code></pre>
+</div>
+</section><section><h2 class="section-heading" id="updating-the-meta-map">Updating the meta map<a class="anchor" aria-label="anchor" href="#updating-the-meta-map"></a></h2>
 <hr class="half-width"><p>Our final addition to your nf-core pipeline will be four lines of
-code that alter the <code>meta.id</code> item of the meta map. This
-change will give the input files of FASTQC_TRIMMED a different name
+code that will change the <code>meta.id</code> item of the meta map.
+This change will give the input files of FASTQC_TRIMMED a different name
 (ID), which will give the output files of the module a different name as
 well. This change needs to be made so the results of both FastQC modules
 have unique names, ensuring one will not overwrite the other during the
 MultiQC step.</p>
-<div class="codewrapper sourceCode" id="cb23">
+<p>These four lines of code are:</p>
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="co">//genomeassembler-4.nf</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1" aria-label="code-block-23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1" aria-label="code-block-23-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1" aria-label="code-block-23-4"></a></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1" aria-label="code-block-23-5"></a><span class="st">/*</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1" aria-label="code-block-23-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1" aria-label="code-block-23-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1" aria-label="code-block-23-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1" aria-label="code-block-23-9"></a><span class="st">*/</span></span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1" aria-label="code-block-23-10"></a></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1" aria-label="code-block-23-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1" aria-label="code-block-23-12"></a></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1" aria-label="code-block-23-13"></a>    take<span class="op">:</span></span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1" aria-label="code-block-23-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
-<span id="cb23-15"><a href="#cb23-15" tabindex="-1" aria-label="code-block-23-15"></a>    multiqc_config</span>
-<span id="cb23-16"><a href="#cb23-16" tabindex="-1" aria-label="code-block-23-16"></a>    multiqc_logo</span>
-<span id="cb23-17"><a href="#cb23-17" tabindex="-1" aria-label="code-block-23-17"></a>    outdir</span>
-<span id="cb23-18"><a href="#cb23-18" tabindex="-1" aria-label="code-block-23-18"></a></span>
-<span id="cb23-19"><a href="#cb23-19" tabindex="-1" aria-label="code-block-23-19"></a>    main<span class="op">:</span></span>
-<span id="cb23-20"><a href="#cb23-20" tabindex="-1" aria-label="code-block-23-20"></a></span>
-<span id="cb23-21"><a href="#cb23-21" tabindex="-1" aria-label="code-block-23-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb23-22"><a href="#cb23-22" tabindex="-1" aria-label="code-block-23-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb23-23"><a href="#cb23-23" tabindex="-1" aria-label="code-block-23-23"></a></span>
-<span id="cb23-24"><a href="#cb23-24" tabindex="-1" aria-label="code-block-23-24"></a>    <span class="co">//</span></span>
-<span id="cb23-25"><a href="#cb23-25" tabindex="-1" aria-label="code-block-23-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb23-26"><a href="#cb23-26" tabindex="-1" aria-label="code-block-23-26"></a>    <span class="co">//</span></span>
-<span id="cb23-27"><a href="#cb23-27" tabindex="-1" aria-label="code-block-23-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb23-28"><a href="#cb23-28" tabindex="-1" aria-label="code-block-23-28"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
-<span id="cb23-29"><a href="#cb23-29" tabindex="-1" aria-label="code-block-23-29"></a>    </span>
-<span id="cb23-30"><a href="#cb23-30" tabindex="-1" aria-label="code-block-23-30"></a>    <span class="co">// update meta.id with '_trimmed'</span></span>
-<span id="cb23-31"><a href="#cb23-31" tabindex="-1" aria-label="code-block-23-31"></a>    ch_trimmed_reads</span>
-<span id="cb23-32"><a href="#cb23-32" tabindex="-1" aria-label="code-block-23-32"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> meta<span class="op">,</span> reads <span class="op">-&gt;</span> <span class="op">[[</span>id<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">_trimmed"</span><span class="op">,</span> single_end<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>single_end<span class="ss">}</span><span class="st">"</span><span class="op">],</span> reads<span class="op">]</span></span>
-<span id="cb23-33"><a href="#cb23-33" tabindex="-1" aria-label="code-block-23-33"></a>    <span class="op">}</span></span>
-<span id="cb23-34"><a href="#cb23-34" tabindex="-1" aria-label="code-block-23-34"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> ch_trimmed_reads_fastqc <span class="op">}</span></span>
-<span id="cb23-35"><a href="#cb23-35" tabindex="-1" aria-label="code-block-23-35"></a></span>
-<span id="cb23-36"><a href="#cb23-36" tabindex="-1" aria-label="code-block-23-36"></a>    <span class="co">//</span></span>
-<span id="cb23-37"><a href="#cb23-37" tabindex="-1" aria-label="code-block-23-37"></a>    <span class="co">// MODULE: shovill</span></span>
-<span id="cb23-38"><a href="#cb23-38" tabindex="-1" aria-label="code-block-23-38"></a>    <span class="co">//</span></span>
-<span id="cb23-39"><a href="#cb23-39" tabindex="-1" aria-label="code-block-23-39"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
-<span id="cb23-40"><a href="#cb23-40" tabindex="-1" aria-label="code-block-23-40"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
-<span id="cb23-41"><a href="#cb23-41" tabindex="-1" aria-label="code-block-23-41"></a></span>
-<span id="cb23-42"><a href="#cb23-42" tabindex="-1" aria-label="code-block-23-42"></a>    <span class="co">//</span></span>
-<span id="cb23-43"><a href="#cb23-43" tabindex="-1" aria-label="code-block-23-43"></a>    <span class="co">// MODULE: fastqc</span></span>
-<span id="cb23-44"><a href="#cb23-44" tabindex="-1" aria-label="code-block-23-44"></a>    <span class="co">//</span></span>
-<span id="cb23-45"><a href="#cb23-45" tabindex="-1" aria-label="code-block-23-45"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb23-46"><a href="#cb23-46" tabindex="-1" aria-label="code-block-23-46"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb23-47"><a href="#cb23-47" tabindex="-1" aria-label="code-block-23-47"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
-<span id="cb23-48"><a href="#cb23-48" tabindex="-1" aria-label="code-block-23-48"></a></span>
-<span id="cb23-49"><a href="#cb23-49" tabindex="-1" aria-label="code-block-23-49"></a>    <span class="co">//</span></span>
-<span id="cb23-50"><a href="#cb23-50" tabindex="-1" aria-label="code-block-23-50"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
-<span id="cb23-51"><a href="#cb23-51" tabindex="-1" aria-label="code-block-23-51"></a>    <span class="co">//</span></span>
-<span id="cb23-52"><a href="#cb23-52" tabindex="-1" aria-label="code-block-23-52"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads_fastqc<span class="op">)</span></span>
-<span id="cb23-53"><a href="#cb23-53" tabindex="-1" aria-label="code-block-23-53"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb23-54"><a href="#cb23-54" tabindex="-1" aria-label="code-block-23-54"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_trimmed_read_qc<span class="op">)</span></span>
-<span id="cb23-55"><a href="#cb23-55" tabindex="-1" aria-label="code-block-23-55"></a></span>
-<span id="cb23-56"><a href="#cb23-56" tabindex="-1" aria-label="code-block-23-56"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb23-57"><a href="#cb23-57" tabindex="-1" aria-label="code-block-23-57"></a></span>
-<span id="cb23-58"><a href="#cb23-58" tabindex="-1" aria-label="code-block-23-58"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a>ch_trimmed_reads</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1" aria-label="code-block-24-2"></a><span class="op">.</span><span class="fu">map</span> <span class="op">{</span> meta<span class="op">,</span> reads <span class="op">-&gt;</span> <span class="op">[[</span>id<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">_trimmed"</span><span class="op">,</span> single_end<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>single_end<span class="ss">}</span><span class="st">"</span><span class="op">],</span> reads<span class="op">]</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1" aria-label="code-block-24-3"></a><span class="op">}</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1" aria-label="code-block-24-4"></a><span class="op">.</span><span class="fu">set</span> <span class="op">{</span> ch_trimmed_reads_fastqc <span class="op">}</span></span></code></pre>
+</div>
+<p>The <code>map</code> operator operator transforms items in a channel,
+and the <code>set</code> operator assigns the data stream from a channel
+to a target variable name, in this case
+<code>ch_trimmed_reads_fastqc</code>. So, these four lines of code
+transform the items in the <code>ch_trimmed_reads</code> channel,
+specifically <code>meta.id</code>, and assign them to the variable
+<code>ch_trimmed_reads_fastqc</code>. The transformation is the addition
+of the string “_trimmed” to <code>meta.id</code>. All other items in the
+channel (<code>meta.single_end</code> and <code>reads</code>) remain the
+same.</p>
+<p>This code block will go after the SEQTK_TRIM process in the
+workflow.</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="co">//genomeassembler-5.nf</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1" aria-label="code-block-25-4"></a></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1" aria-label="code-block-25-5"></a><span class="st">/*</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1" aria-label="code-block-25-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1" aria-label="code-block-25-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1" aria-label="code-block-25-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1" aria-label="code-block-25-9"></a><span class="st">*/</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1" aria-label="code-block-25-10"></a></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1" aria-label="code-block-25-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1" aria-label="code-block-25-12"></a></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1" aria-label="code-block-25-13"></a>    take<span class="op">:</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1" aria-label="code-block-25-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1" aria-label="code-block-25-15"></a>    multiqc_config</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1" aria-label="code-block-25-16"></a>    multiqc_logo</span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1" aria-label="code-block-25-17"></a>    outdir</span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1" aria-label="code-block-25-18"></a></span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1" aria-label="code-block-25-19"></a>    main<span class="op">:</span></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1" aria-label="code-block-25-20"></a></span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1" aria-label="code-block-25-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1" aria-label="code-block-25-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1" aria-label="code-block-25-23"></a></span>
+<span id="cb25-24"><a href="#cb25-24" tabindex="-1" aria-label="code-block-25-24"></a>    <span class="co">//</span></span>
+<span id="cb25-25"><a href="#cb25-25" tabindex="-1" aria-label="code-block-25-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
+<span id="cb25-26"><a href="#cb25-26" tabindex="-1" aria-label="code-block-25-26"></a>    <span class="co">//</span></span>
+<span id="cb25-27"><a href="#cb25-27" tabindex="-1" aria-label="code-block-25-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb25-28"><a href="#cb25-28" tabindex="-1" aria-label="code-block-25-28"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
+<span id="cb25-29"><a href="#cb25-29" tabindex="-1" aria-label="code-block-25-29"></a>    </span>
+<span id="cb25-30"><a href="#cb25-30" tabindex="-1" aria-label="code-block-25-30"></a>    <span class="co">// update meta.id with '_trimmed'</span></span>
+<span id="cb25-31"><a href="#cb25-31" tabindex="-1" aria-label="code-block-25-31"></a>    ch_trimmed_reads</span>
+<span id="cb25-32"><a href="#cb25-32" tabindex="-1" aria-label="code-block-25-32"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> meta<span class="op">,</span> reads <span class="op">-&gt;</span> <span class="op">[[</span>id<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">_trimmed"</span><span class="op">,</span> single_end<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>single_end<span class="ss">}</span><span class="st">"</span><span class="op">],</span> reads<span class="op">]</span></span>
+<span id="cb25-33"><a href="#cb25-33" tabindex="-1" aria-label="code-block-25-33"></a>    <span class="op">}</span></span>
+<span id="cb25-34"><a href="#cb25-34" tabindex="-1" aria-label="code-block-25-34"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> ch_trimmed_reads_fastqc <span class="op">}</span></span>
+<span id="cb25-35"><a href="#cb25-35" tabindex="-1" aria-label="code-block-25-35"></a></span>
+<span id="cb25-36"><a href="#cb25-36" tabindex="-1" aria-label="code-block-25-36"></a>    <span class="co">//</span></span>
+<span id="cb25-37"><a href="#cb25-37" tabindex="-1" aria-label="code-block-25-37"></a>    <span class="co">// MODULE: shovill</span></span>
+<span id="cb25-38"><a href="#cb25-38" tabindex="-1" aria-label="code-block-25-38"></a>    <span class="co">//</span></span>
+<span id="cb25-39"><a href="#cb25-39" tabindex="-1" aria-label="code-block-25-39"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb25-40"><a href="#cb25-40" tabindex="-1" aria-label="code-block-25-40"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
+<span id="cb25-41"><a href="#cb25-41" tabindex="-1" aria-label="code-block-25-41"></a></span>
+<span id="cb25-42"><a href="#cb25-42" tabindex="-1" aria-label="code-block-25-42"></a>    <span class="co">//</span></span>
+<span id="cb25-43"><a href="#cb25-43" tabindex="-1" aria-label="code-block-25-43"></a>    <span class="co">// MODULE: fastqc</span></span>
+<span id="cb25-44"><a href="#cb25-44" tabindex="-1" aria-label="code-block-25-44"></a>    <span class="co">//</span></span>
+<span id="cb25-45"><a href="#cb25-45" tabindex="-1" aria-label="code-block-25-45"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb25-46"><a href="#cb25-46" tabindex="-1" aria-label="code-block-25-46"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb25-47"><a href="#cb25-47" tabindex="-1" aria-label="code-block-25-47"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
+<span id="cb25-48"><a href="#cb25-48" tabindex="-1" aria-label="code-block-25-48"></a></span>
+<span id="cb25-49"><a href="#cb25-49" tabindex="-1" aria-label="code-block-25-49"></a>    <span class="co">//</span></span>
+<span id="cb25-50"><a href="#cb25-50" tabindex="-1" aria-label="code-block-25-50"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
+<span id="cb25-51"><a href="#cb25-51" tabindex="-1" aria-label="code-block-25-51"></a>    <span class="co">//</span></span>
+<span id="cb25-52"><a href="#cb25-52" tabindex="-1" aria-label="code-block-25-52"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads_fastqc<span class="op">)</span></span>
+<span id="cb25-53"><a href="#cb25-53" tabindex="-1" aria-label="code-block-25-53"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb25-54"><a href="#cb25-54" tabindex="-1" aria-label="code-block-25-54"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_trimmed_read_qc<span class="op">)</span></span>
+<span id="cb25-55"><a href="#cb25-55" tabindex="-1" aria-label="code-block-25-55"></a></span>
+<span id="cb25-56"><a href="#cb25-56" tabindex="-1" aria-label="code-block-25-56"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
+<span id="cb25-57"><a href="#cb25-57" tabindex="-1" aria-label="code-block-25-57"></a></span>
+<span id="cb25-58"><a href="#cb25-58" tabindex="-1" aria-label="code-block-25-58"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Copy the modified <code>genomeassembler-5.nf</code> script to the
+<code>workflows/</code> directory, renaming it to
+<code>genomeassembler.nf</code>, and run it by using the following
+command:</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="ex">$</span> cp bin/genomeassembler-5.nf workflows/genomeassembler.nf</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="ex">$</span> nextflow run main.nf <span class="at">--outdir</span> results <span class="at">--profile</span> demo <span class="at">-resume</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.4
+
+Launching `main.nf` [cranky_euclid] DSL2 - revision: 27a6d188dd
+
+Input/output options
+  input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
+  outdir                    : results
+
+Institutional config options
+  config_profile_name       : Demo test profile
+  config_profile_description: Demo test dataset to check pipeline function
+
+Generic options
+  trace_report_suffix       : 2026-06-01_19-14-20
+
+Core Nextflow options
+  runName                   : cranky_euclid
+  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  userName                  : user
+  profile                   : demo
+  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+------------------------------------------------------
+executor &gt;  local (4)
+[ce/61ab1d] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample01)             [100%] 3 of 3, cached: 3 ✔
+[10/4915f4] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL (Sample01)                [100%] 3 of 3, cached: 3 ✔
+[e2/fb63c7] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC (Sample01)                 [100%] 3 of 3, cached: 3 ✔
+[9d/726149] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:FASTQC_TRIMMED (Sample02_trimmed) [100%] 3 of 3 ✔
+[2d/a5fb18] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler)         [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>results
+├── fastqc
+│   ├── Sample01_1_fastqc.html
+│   ├── Sample01_1_fastqc.zip
+│   ├── Sample01_2_fastqc.html
+│   ├── Sample01_2_fastqc.zip
+│   ├── Sample01_trimmed_1_fastqc.html
+│   ├── Sample01_trimmed_1_fastqc.zip
+│   ├── Sample01_trimmed_2_fastqc.html
+│   ├── Sample01_trimmed_2_fastqc.zip
+│   ├── Sample02_1_fastqc.html
+│   ├── Sample02_1_fastqc.zip
+│   ├── Sample02_2_fastqc.html
+│   ├── Sample02_2_fastqc.zip
+│   ├── Sample02_trimmed_1_fastqc.html
+│   ├── Sample02_trimmed_1_fastqc.zip
+│   ├── Sample02_trimmed_2_fastqc.html
+│   ├── Sample02_trimmed_2_fastqc.zip
+│   ├── Sample03_1_fastqc.html
+│   ├── Sample03_1_fastqc.zip
+│   ├── Sample03_2_fastqc.html
+│   ├── Sample03_2_fastqc.zip
+│   ├── Sample03_trimmed_1_fastqc.html
+│   ├── Sample03_trimmed_1_fastqc.zip
+│   ├── Sample03_trimmed_2_fastqc.html
+│   └── Sample03_trimmed_2_fastqc.zip
+├── multiqc
+│   ├── multiqc_data
+│   │   ├── fastqc_adapter_content_plot.txt
+│   │   ├── fastqc_per_base_n_content_plot.txt
+│   │   ├── fastqc_per_base_sequence_quality_plot.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+│   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+│   │   ├── fastqc_per_sequence_quality_scores_plot.txt
+│   │   ├── fastqc_sequence_counts_plot.txt
+│   │   ├── fastqc_sequence_duplication_levels_plot.txt
+│   │   ├── fastqc_sequence_length_distribution_plot.txt
+│   │   ├── fastqc-status-check-heatmap.txt
+│   │   ├── fastqc_top_overrepresented_sequences_table.txt
+│   │   ├── llms-full.txt
+│   │   ├── multiqc_citations.txt
+│   │   ├── multiqc_data.json
+│   │   ├── multiqc_fastqc.txt
+│   │   ├── multiqc_general_stats.txt
+│   │   ├── multiqc.log
+│   │   ├── multiqc.parquet
+│   │   ├── multiqc_software_versions.txt
+│   │   └── multiqc_sources.txt
+│   ├── multiqc_plots
+│   │   ├── pdf
+│   │   │   ├── fastqc_adapter_content_plot.pdf
+│   │   │   ├── fastqc_per_base_n_content_plot.pdf
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.pdf
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.pdf
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.pdf
+│   │   │   ├── fastqc_sequence_counts_plot-pct.pdf
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.pdf
+│   │   │   ├── fastqc_sequence_length_distribution_plot.pdf
+│   │   │   ├── fastqc-status-check-heatmap.pdf
+│   │   │   └── fastqc_top_overrepresented_sequences_table.pdf
+│   │   ├── png
+│   │   │   ├── fastqc_adapter_content_plot.png
+│   │   │   ├── fastqc_per_base_n_content_plot.png
+│   │   │   ├── fastqc_per_base_sequence_quality_plot.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Counts.png
+│   │   │   ├── fastqc_per_sequence_gc_content_plot_Percentages.png
+│   │   │   ├── fastqc_per_sequence_quality_scores_plot.png
+│   │   │   ├── fastqc_sequence_counts_plot-cnt.png
+│   │   │   ├── fastqc_sequence_counts_plot-pct.png
+│   │   │   ├── fastqc_sequence_duplication_levels_plot.png
+│   │   │   ├── fastqc_sequence_length_distribution_plot.png
+│   │   │   ├── fastqc-status-check-heatmap.png
+│   │   │   └── fastqc_top_overrepresented_sequences_table.png
+│   │   └── svg
+│   │       ├── fastqc_adapter_content_plot.svg
+│   │       ├── fastqc_per_base_n_content_plot.svg
+│   │       ├── fastqc_per_base_sequence_quality_plot.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Counts.svg
+│   │       ├── fastqc_per_sequence_gc_content_plot_Percentages.svg
+│   │       ├── fastqc_per_sequence_quality_scores_plot.svg
+│   │       ├── fastqc_sequence_counts_plot-cnt.svg
+│   │       ├── fastqc_sequence_counts_plot-pct.svg
+│   │       ├── fastqc_sequence_duplication_levels_plot.svg
+│   │       ├── fastqc_sequence_length_distribution_plot.svg
+│   │       ├── fastqc-status-check-heatmap.svg
+│   │       └── fastqc_top_overrepresented_sequences_table.svg
+│   └── multiqc_report.html
+
+[..truncated..]</code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -1416,8 +1650,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/17-some_nfcore_pipeline.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/17-some_nfcore_pipeline.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-06-01",
-  "datePublished": "2026-06-01"
+  "dateModified": "2026-06-02",
+  "datePublished": "2026-06-02"
 }
 
   </script><script>
