@@ -674,8 +674,12 @@ workflow script.</li>
 </ul></section><section id="17-some_nfcore_pipeline"><h2 class="section-heading"><a href="17-some_nfcore_pipeline.html">Simple nf-core pipeline</a></h2>
 <hr class="half-width">
 <ul>
-<li>Aliases allow you to use the same module multiple times under
-different names</li>
+<li>Aliases allow you to run the same process multiple times using
+different names.</li>
+<li>Using <code>collect { it[1] }</code> tells Nextflow to collect all
+files (not the metadata) in an output.</li>
+<li>The <code>meta.id</code> meta map key can be changed using
+<code>map</code> and <code>set</code> to change a sample ID.</li>
 </ul></section>
 </div>
     </main>
@@ -726,8 +730,8 @@ different names</li>
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/key-points.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/key-points.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-06-16",
-  "datePublished": "2026-06-16"
+  "dateModified": "2026-06-17",
+  "datePublished": "2026-06-17"
 }
 
   </script><script>
