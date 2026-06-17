@@ -5,6 +5,8 @@ permalink: /setup/
 
 # Setup
 
+THESE INSTRUCTIONS ARE PLACEHOLDERS AND WILL BE CHANGED
+
 ## Training directory
 
 Each learner should setup a training folder e.g. `nf-training`
