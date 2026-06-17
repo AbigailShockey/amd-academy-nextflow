@@ -6,15 +6,15 @@ exercises: 18
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- How do I create a custom nf-core pipeline?
-- How do I test a custom nf-core pipeline?
+- Create a custom nf-core pipeline using nf-core tools.
+- Run a custom nf-core pipeline using a test profile.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Create a custom nf-core pipeline using nf-core tools.
-- Run a custom nf-core pipeline using a test profile.
+- How do I create a custom nf-core pipeline?
+- How do I test a custom nf-core pipeline?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

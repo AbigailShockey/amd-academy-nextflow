@@ -6,13 +6,17 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- How do I make a simple nf-core pipeline?
+- Recreate the simple nextflow pipeline in nf-core.
+- Use an alias to execute a module multiple times.
+- Change sample IDs using the `map` and `set` operators.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Recreate the simple nextflow pipeline in nf-core
+- How do I make a simple nf-core pipeline?
+- How can I use the same Nextflow process or nf-core module multiple times?
+- How do I change the `meta.id` of my samples?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -37,7 +41,7 @@ $ cp scripts/nfcore_pipeline/*.nf bin/
 
 This folder contains files we will be modifying in this episode. 
 
-## Add modules to the workflow script
+## Include modules in the workflow script
 
 The first thing we want to do is add the remaining modules we just installed to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section of the workflow script. Since we will be running FastQC on both the raw and trimmed reads, we will need to list it twice and use `as` to give it a different name, `FASTQC_TRIMMED`. This new name is known as an "alias".
 
@@ -61,7 +65,7 @@ include { FASTQC as FASTQC_TRIMMED    } from ''
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Include modules
+## Including modules
 
 Modify `genomeassembler-1.nf`, adding the paths to the Shovill, FastQC, and FASTQC_TRIMMED, module paths to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section.
 
@@ -131,7 +135,7 @@ executor >  local (4)
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
-Viewing the `results` directory with `tree` shows us that the pipeline emitted results for both MultiQC and FastQC. Information about the pipeline's execution can be found in the `pipeline_info` directory.
+Viewing the `results` directory with `tree` shows us that the pipeline emitted results for both MultiQC and Seqtk. Information about the pipeline's execution can be found in the `pipeline_info` directory.
 
 ```bash
 tree results
@@ -165,9 +169,9 @@ results
     └── Sample03_Sample03_R2.fastq.gz
 ```
 
-## Add modules to the workflow section
+## Adding processes to the workflow definition
 
-Next we want to add the modules we just included in the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section to the `RUN MAIN WORKFLOW` section. 
+Next we want to add the modules we just included in the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section to the `RUN MAIN WORKFLOW` section within the workflow definition as processes.
 
 ```groovy 
 //genomeassembler-2.nf
@@ -217,9 +221,9 @@ workflow GENOMEASSEMBLER {
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Add the remaining modules
+## Adding the remaining processes
 
-Modify `genomeassembler-2.nf`, adding the SHOVILL, FASTQC, and FASTQC_TRIMMED, modules (but not their inputs) to the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section.
+Modify `genomeassembler-2.nf`, adding the SHOVILL, FASTQC, and FASTQC_TRIMMED processes to the `RUN MAIN WORKFLOW` section. Do not add their inputs, we'll add those later.
 
 :::::::::::::::  solution
 
@@ -318,9 +322,9 @@ Process `MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SHOVILL` declares 1 input but was
 
 The pipeline will fail this time because the modules we added to the workflow have no inputs.
 
-## Adding module inputs and assigning module outputs to variables
+## Adding inputs and assigning outputs to variables
 
-Next we will add inputs to the modules we previously added to the `RUN MAIN WORKFLOW` section of the workflow script and assign their outputs to variables to they can be passed to the next step in the pipeline. 
+Next we will add inputs to the processes we previously added to the `RUN MAIN WORKFLOW` section of the workflow script and assign their outputs to variables to they can be passed to the next step in the pipeline. 
 
 **Note:**
 - The input of SHOVILL will be the `reads` output from Seqtk
@@ -382,9 +386,9 @@ workflow GENOMEASSEMBLER {
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Add module inputs and assign module outputs
+## Add inputs and assign outputs
 
-Modify `genomeassembler-3.nf`, assign inputs to the SHOVILL, FASTQC, and FASTQC_TRIMMED, modules. Assign the outputs of each module according to the following naming convention:
+Modify `genomeassembler-3.nf`, assign inputs to the SHOVILL, FASTQC, and FASTQC_TRIMMED processes. Assign the outputs of each process according to the following naming convention:
 
 - The `reads` output of SEQTK_TRIM is named `ch_trimmed_reads`
 - The `contigs` output of SHOVILL is named `ch_assemblies`
@@ -502,7 +506,7 @@ executor >  local (10)
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
-The pipeline should finished successfully this time, because we gave each module an input.
+The pipeline should finished successfully this time, because we gave each process an input.
 
 Viewing the `results` directory with `tree` shows us the pipeline emitted results for the added modules. Additionally, there are more pipeline executation files in the `pipeline_info` directory.
 
@@ -566,11 +570,13 @@ results
     └── spades.fasta
 ```
 
-Because of the way the Shovill module is coded, only the output of the last sample passed to Shovill is available in the `results` directory.
+Because of the way the Shovill module is coded, only the output of the last sample assembled is available in the `results` directory. The assembly results for each sample can still be passed to downstream processes.
+
+Notably, there are only results for one instance of FastQC, even though the pipeline runs FastQC twice. This is because the files have the same `meta.id` and get overwritten. In a later step, we will change the `meta.id` of the trimmed reads so both results are available in the MultiQC report.
 
 ## Mixing FastQC results
 
-Next we will use the `mix` operator to combine the `ch_read_qc` and `ch_assembly_qc` channels with the prexisting, empty `ch_multiqc_files` channel, so the results of FastQC and FASTQC_TRIMMED can be passed to the MultiQC module.
+Next we will use the `mix` operator to combine the `ch_read_qc` and `ch_assembly_qc` channels with the prexisting, empty `ch_multiqc_files` channel, so the results of FASTQC and FASTQC_TRIMMED can be passed to the MULTIQC process.
 
 ```groovy 
 //genomeassembler-4.nf
@@ -629,7 +635,7 @@ workflow GENOMEASSEMBLER {
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Add module inputs and assign module outputs
+## Add the mix operator
 
 Modify `genomeassembler-4.nf` and use the `mix` operator to combine the `ch_read_qc` and `ch_assembly_qc` channels with the prexisting, empty `ch_multiqc_files` channel.
 
@@ -703,7 +709,7 @@ $ nextflow run main.nf --outdir results --profile demo -resume
 ```
 
 ```output
-X T F L O W   ~  version 25.10.4
+N E X T F L O W   ~  version 25.10.4
 
 Launching `main.nf` [cheesy_banach] DSL2 - revision: 27a6d188dd
 
@@ -737,6 +743,8 @@ executor >  local (1)
 [5a/b7335a] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
+
+The Nextflow output printed to the terminal doesn't look significantly different, but using the `tree` command on the `results` directory shows there are new output files in the `multiqc_data` directory. These are files associated with plotting the FastQC results. 
 
 ```output
 results
@@ -807,11 +815,11 @@ results
 [..truncated..] 
 ```
 
+If we view the `multiqc_report.html` file, there are only results for one instance of FastQC, even though the pipeline runs the FastQC process twice. As prevously mentioned, this is because the files have the same `meta.id` and one set of results gets overwritten. In the next step, we will change the `meta.id` of the trimmed reads so both results are available in the MultiQC report.
+
 ## Updating the meta map
 
-Our final addition to your nf-core pipeline will be four lines of code that will change the `meta.id` item of the meta map. This change will give the input files of FASTQC_TRIMMED a different name (ID), which will give the output files of the module a different name as well. This change needs to be made so the results of both FastQC modules have unique names, ensuring one will not overwrite the other during the MultiQC step.
-
-These four lines of code are:
+Our final addition to your nf-core pipeline will be four lines of code that will change the `meta.id` item of the meta map. This change will give the input files of FASTQC_TRIMMED a different `meta.id` (i.e. sample name), which will give the output files of the module a different name as well. These four lines of code are:
 
 ```groovy
 ch_trimmed_reads
@@ -820,9 +828,9 @@ ch_trimmed_reads
 .set { ch_trimmed_reads_fastqc }
 ```
 
-The `map` operator operator transforms items in a channel, and the `set` operator assigns the data stream from a channel to a target variable name, in this case `ch_trimmed_reads_fastqc`. So, these four lines of code transform the items in the `ch_trimmed_reads` channel, specifically `meta.id`, and assign them to the variable `ch_trimmed_reads_fastqc`. The transformation is the addition of the string "_trimmed" to `meta.id`. All other items in the channel (`meta.single_end` and `reads`) remain the same.
+The `map` operator operator transforms items in a channel, and the `set` operator assigns the data stream from a channel to a target variable name, in this case `ch_trimmed_reads_fastqc`. That means these four lines of code transform the items in the `ch_trimmed_reads` channel, specifically `meta.id`, and assign them to the variable `ch_trimmed_reads_fastqc`. The transformation is the addition of the string "_trimmed" to `meta.id`. All other items in the channel (`meta.single_end` and `reads`) remain the same.
 
-This code block will go after the SEQTK_TRIM process in the workflow.
+This code block goes after the SEQTK_TRIM process in the workflow.
 
 ```groovy 
 //genomeassembler-5.nf
@@ -928,6 +936,8 @@ executor >  local (4)
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
+The Nextflow output printed to the terminal still doesn't look significantly different, but using the `tree` command on the `results` directory shows there are results for both the trimmed and untrimmed reads in the `fastqc` directory.
+
 ```output
 results
 ├── fastqc
@@ -1022,6 +1032,10 @@ results
 [..truncated..]
 ```
 
+And if we view the `multiqc_report.html` file, there are results for both instances of FastQC.
+
 :::::::::::::::::::::::::::::::::::::::: keypoints
-- Aliases allow you to use the same module multiple times under different names
+- Aliases allow you to run the same process multiple times using different names.
+- Using `collect { it[1] }` tells Nextflow to collect all files (not the metadata) in an output.
+- The `meta.id` meta map key can be changed using `map` and `set` to change a sample ID.
 ::::::::::::::::::::::::::::::::::::::::::::::::::

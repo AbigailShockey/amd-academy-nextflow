@@ -6,24 +6,25 @@ exercises: 8
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- What are nf-core modules?
-- How do I add a module to an nf-core pipeline?
+- Explain the purpose and contents of nf-core modules.
+- Add a module to a custom nf-core pipeline.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Explain the purpose and contents of nf-core modules.
-- Add a module to a custom nf-core pipeline.
+- What are nf-core modules?
+- How do I add a module to an nf-core pipeline?
+- What are meta maps?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 ## Adding modules to your pipeline
 
-An nf-core module is a Nextflow  "wrapper" around a command-line tool or script. A "wrapper" is a computer science term for a program or function that calls another program or function. In other words, a module contains a Nextflow script (and a few other files we'll discuss later) that is used to run the command-line tool or script contained within that module. Modules are used as individual processes within a pipeline.
+An nf-core module is a Nextflow  "wrapper" around a command-line tool or script. A "wrapper" is a computer science term for a program or function that calls another program or function. In other words, a module contains a Nextflow script (and a few other files we'll discuss later) that is used to run the command-line tool or script contained within that module. Modules are used as individual processes within a pipeline, and some people use those words interchangeably.
 
-It's important to note that nf-core modules contain either a single tool with one subcommand, or one subcommand of a tool with multiple subcommands. For example, the genome assembly tool Shovill contains only one command, so there is only one Shovill module. Conversely, the FASTA/FASTQ processing tool seqtk contains multiple subcommands, so there are multiple seqtk modules (one for each subcommand).
+It's important to note that nf-core modules contain either a single tool with one subcommand, or one subcommand of a tool with multiple subcommands. For example, the genome assembly tool Shovill contains only one command, so there is only one Shovill module. Conversely, the FASTA/FASTQ processing tool Seqtk contains multiple subcommands, so there are multiple Seqtk modules (one for each subcommand).
 
 While you can develop a module for a tool independently, you can save a lot of time and effort by using [existing nf-core modules](https://nf-co.re/modules/), of which there are thousands. 
 
@@ -111,7 +112,7 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 └───────────────────────────────────────────────────────┘
 ```
 
-The information (inputs, outputs, and installation command) associated with each module can be found using the `modules info` options. The first step in your pipeline will be read trimming with the [seqtk trim module](https://nf-co.re/modules/seqtk_trim/), so we'll start with it.
+The information (inputs, outputs, and installation command) associated with each module can be found using the `modules info` options. The first step in your pipeline will be read trimming with the [seqtk trim](https://nf-co.re/modules/seqtk_trim/) module, so we'll start with that.
 
 ```bash
 nf-core modules info seqtk/trim
@@ -303,7 +304,7 @@ INFO     Modules installed in '.':
 └─────────────┴─────────────────┴─────────────┴───────────────────────────────────────────────────────────────────────────────┴────────────┘
 ```
 
-As you can see, seqtk is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder with the `tree` command, a folder for the Shovill module can now be found there.
+As you can see, Seqtk is now listed as a module locally installed for our pipeline. If we view the contents of the modules/nf-core folder with the `tree` command, a folder for the seqtk_trim module can now be found there.
 
 ```bash
 $ tree modules/nf-core
@@ -454,50 +455,9 @@ SEQTK_TRIM()
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Next we need to add seqtk trim's input to its process. As previously mentioned, you can find a module's input(s) (and output(s)) on its webpage. You can also use the nf-core `modules` command with the `info` option:
+Next we need to add seqtk trim's input to its process. As previously mentioned, you can find a module's input(s) (and output(s)) on its webpage. You can also use the nf-core `modules` command with the `info` option.
 
-```bash
-nf-core modules info seqtk/trim
-```
-
-Which produces the following output:
-
-```output
-╭─ Module: seqtk/trim  ─────────────────────────────────────────────────────────────────────────────╮
-│ Location: modules/nf-core/seqtk/trim                                                              │
-│ 🔧 Tools: seqtk                                                                                   │
-│ 📖 Description: Trim low quality bases from FastQ files                                           │
-╰───────────────────────────────────────────────────────────────────────────────────────────────────╯
-               ╷                                                                       ╷
- 📥 Inputs     │Description                                                            │     Pattern
-╺━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━╸
- input[0]      │                                                                       │
-╶──────────────┼───────────────────────────────────────────────────────────────────────┼────────────╴
-  meta  (map)  │Groovy Map containing sample information e.g. [ id:'test',             │
-               │single_end:false ]                                                     │
-╶──────────────┼───────────────────────────────────────────────────────────────────────┼────────────╴
-  reads  (file)│List of input FastQ files                                              │*.{fastq.gz}
-               ╵                                                                       ╵
-                      ╷                                                                ╷
- 📥 Outputs           │Description                                                     │     Pattern
-╺━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━╸
- reads                │                                                                │
-╶─────────────────────┼────────────────────────────────────────────────────────────────┼────────────╴
-  meta  (map)         │Groovy Map containing sample information e.g. [ id:'test',      │
-                      │single_end:false ]                                              │
-╶─────────────────────┼────────────────────────────────────────────────────────────────┼────────────╴
-  *.fastq.gz  (file)  │Filtered FastQ files                                            │*.{fastq.gz}
-╶─────────────────────┼────────────────────────────────────────────────────────────────┼────────────╴
- versions             │                                                                │
-╶─────────────────────┼────────────────────────────────────────────────────────────────┼────────────╴
-  versions.yml  (file)│File containing software versions                               │versions.yml
-                      ╵                                                                ╵
-Use the following statement to include this module:
-
-include { SEQTK_TRIM } from '../modules/nf-core/seqtk/trim/main'
-```
-
-The seqtk trim process only requires one input channel, which should contain paired end FASTQ files and their sample (aka meta) information. This channel already exists in the `genomeassembler.nf` workflow file as `ch_samplesheet`, so the seqtk trim module can be called using the FASTQs as input with the following lines of code:
+The seqtk trim process only requires one input channel, which should contain paired end FASTQ files and their sample (aka meta) information. This channel already exists in the `genomeassembler.nf` workflow file as `ch_samplesheet`, so the seqtk_trim module can be called using the FASTQs as input with the following lines of code:
 
 ```groovy
 //

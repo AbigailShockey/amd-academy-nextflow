@@ -225,7 +225,7 @@ $ nextflow run wc-params.nf --sleep 1 --input 'data/yeast/reads/*.fq.gz'
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Parameter File
+## Parameter file
 
 If we have many parameters to pass to a script it is best to create a
 parameters file. Parameters can be stored in JSON format. JSON is a
