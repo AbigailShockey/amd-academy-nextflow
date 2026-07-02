@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 params.bam = 'data/yeast/bams/*.bam'
 
 process FLAGSTAT {
@@ -34,5 +32,5 @@ process MERGEFLAGSTAT {
 }
 
 workflow {
-    bam_ch = Channel.fromPath( params.bams )
+    bam_ch = channel.fromPath( params.bams )
 }

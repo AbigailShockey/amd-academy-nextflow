@@ -1,6 +1,3 @@
-//process_exercise_tuple_answer.nf
-
-
 process COMBINE_REPS {
   input:
   tuple val(sample_id), path(reads)
@@ -15,9 +12,9 @@ process COMBINE_REPS {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*.fq.gz',size:-1)
-
 workflow{
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*.fq.gz',size:-1)
+
   COMBINE_REPS(reads_ch)
   COMBINE_REPS.out.view()
 }

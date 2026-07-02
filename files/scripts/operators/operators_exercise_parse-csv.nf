@@ -1,1 +1,1 @@
-csv_ch = Channel.fromPath( 'data/yeast/samples.csv' )
+csv_ch = channel.fromPath( 'data/yeast/samples.csv' )

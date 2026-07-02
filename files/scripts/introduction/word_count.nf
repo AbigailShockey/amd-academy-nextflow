@@ -7,7 +7,7 @@ nextflow.enable.dsl = 2
     or providing useful information such as workflow usage.
 
     Usage:
-       nextflow run wc.nf --input <input_file>
+       nextflow run word_count.nf --input <input_file>
 
     Multi-line comments start with a slash asterisk /* and finish with an asterisk slash. */
 //  Single line comments start with a double slash // and finish on the same line
@@ -20,7 +20,7 @@ params.input = "data/yeast/reads/ref1_1.fq.gz"
 workflow {
 
     //  Input data is received through channels
-    input_ch = Channel.fromPath(params.input)
+    input_ch = channel.fromPath(params.input)
 
     /*  The script to execute is called by it's process name,
         and input is provided between brackets. */

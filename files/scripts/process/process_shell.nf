@@ -1,6 +1,3 @@
-//process_shell.nf
-
-
 process NUM_IDS {
 
   shell:

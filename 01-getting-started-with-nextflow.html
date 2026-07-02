@@ -425,7 +425,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Getting Started with Nextflow</h1>
-        <p>Last updated on 2026-05-12 |
+        <p>Last updated on 2026-07-02 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/01-getting-started-with-nextflow.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -599,53 +599,49 @@ the following code:</p>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a><span class="co">/*</span></span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a><span class="co">========================================================================================</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a><span class="co">    Input data is received through channels</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a><span class="co">   Main Workflow</span></span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1" aria-label="code-block-2-17"></a><span class="co">========================================================================================</span></span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1" aria-label="code-block-2-18"></a><span class="co">*/</span></span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1" aria-label="code-block-2-19"></a></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>input_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span>params<span class="op">.</span>input<span class="op">)</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a><span class="st">/*</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a><span class="st">========================================================================================</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a><span class="st">   Main Workflow</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a><span class="st">========================================================================================</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a><span class="st">*/</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a></span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a>workflow <span class="op">{</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>    <span class="co">//  The script to execute is called by it's process name, and input is provided between brackets.</span></span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a>    <span class="fu">NUM_LINES</span><span class="op">(</span>input_ch<span class="op">)</span></span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1" aria-label="code-block-2-32"></a></span>
-<span id="cb2-33"><a href="#cb2-33" tabindex="-1" aria-label="code-block-2-33"></a>    <span class="st">/*  Process output is accessed using the `out` channel.</span></span>
-<span id="cb2-34"><a href="#cb2-34" tabindex="-1" aria-label="code-block-2-34"></a><span class="st">        The channel operator view() is used to print process output to the terminal. */</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>workflow <span class="op">{</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>    <span class="co">//  Input data is received through channels.</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>    input_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span>params<span class="op">.</span>input<span class="op">)</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a>    <span class="co">//  The script to execute is called by it's process name, and input is provided between brackets.</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a>    <span class="fu">NUM_LINES</span><span class="op">(</span>input_ch<span class="op">)</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>    <span class="st">/*  Process output is accessed using the `out` channel.</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a><span class="st">        The channel operator view() is used to print process output to the terminal. */</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1" aria-label="code-block-2-32"></a>    NUM_LINES<span class="op">.</span>out<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1" aria-label="code-block-2-33"></a></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1" aria-label="code-block-2-34"></a><span class="op">}</span></span>
 <span id="cb2-35"><a href="#cb2-35" tabindex="-1" aria-label="code-block-2-35"></a></span>
-<span id="cb2-36"><a href="#cb2-36" tabindex="-1" aria-label="code-block-2-36"></a>    NUM_LINES<span class="op">.</span>out<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span>
-<span id="cb2-37"><a href="#cb2-37" tabindex="-1" aria-label="code-block-2-37"></a></span>
-<span id="cb2-38"><a href="#cb2-38" tabindex="-1" aria-label="code-block-2-38"></a><span class="op">}</span></span>
-<span id="cb2-39"><a href="#cb2-39" tabindex="-1" aria-label="code-block-2-39"></a></span>
-<span id="cb2-40"><a href="#cb2-40" tabindex="-1" aria-label="code-block-2-40"></a><span class="st">/*</span></span>
-<span id="cb2-41"><a href="#cb2-41" tabindex="-1" aria-label="code-block-2-41"></a><span class="st">========================================================================================</span></span>
-<span id="cb2-42"><a href="#cb2-42" tabindex="-1" aria-label="code-block-2-42"></a><span class="st">    A Nextflow process block. Process names are written, by convention, in uppercase.</span></span>
-<span id="cb2-43"><a href="#cb2-43" tabindex="-1" aria-label="code-block-2-43"></a><span class="st">    This convention is used to enhance workflow readability.</span></span>
-<span id="cb2-44"><a href="#cb2-44" tabindex="-1" aria-label="code-block-2-44"></a><span class="st">========================================================================================</span></span>
-<span id="cb2-45"><a href="#cb2-45" tabindex="-1" aria-label="code-block-2-45"></a><span class="st">*/</span></span>
-<span id="cb2-46"><a href="#cb2-46" tabindex="-1" aria-label="code-block-2-46"></a>process NUM_LINES <span class="op">{</span></span>
-<span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a></span>
-<span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>    input<span class="op">:</span></span>
-<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a>    path read</span>
-<span id="cb2-50"><a href="#cb2-50" tabindex="-1" aria-label="code-block-2-50"></a></span>
-<span id="cb2-51"><a href="#cb2-51" tabindex="-1" aria-label="code-block-2-51"></a>    output<span class="op">:</span></span>
-<span id="cb2-52"><a href="#cb2-52" tabindex="-1" aria-label="code-block-2-52"></a>    stdout</span>
-<span id="cb2-53"><a href="#cb2-53" tabindex="-1" aria-label="code-block-2-53"></a></span>
-<span id="cb2-54"><a href="#cb2-54" tabindex="-1" aria-label="code-block-2-54"></a>    script<span class="op">:</span></span>
-<span id="cb2-55"><a href="#cb2-55" tabindex="-1" aria-label="code-block-2-55"></a>    <span class="st">"""</span></span>
-<span id="cb2-56"><a href="#cb2-56" tabindex="-1" aria-label="code-block-2-56"></a><span class="st">    # Print file name</span></span>
-<span id="cb2-57"><a href="#cb2-57" tabindex="-1" aria-label="code-block-2-57"></a><span class="st">    printf '</span><span class="ss">${</span>read<span class="ss">}</span><span class="sc">\\</span><span class="st">t'</span></span>
-<span id="cb2-58"><a href="#cb2-58" tabindex="-1" aria-label="code-block-2-58"></a></span>
-<span id="cb2-59"><a href="#cb2-59" tabindex="-1" aria-label="code-block-2-59"></a><span class="st">    # Unzip file and count number of lines</span></span>
-<span id="cb2-60"><a href="#cb2-60" tabindex="-1" aria-label="code-block-2-60"></a><span class="st">    gunzip -c </span><span class="ss">${</span>read<span class="ss">}</span><span class="st"> | wc -l</span></span>
-<span id="cb2-61"><a href="#cb2-61" tabindex="-1" aria-label="code-block-2-61"></a><span class="st">    """</span></span>
-<span id="cb2-62"><a href="#cb2-62" tabindex="-1" aria-label="code-block-2-62"></a><span class="op">}</span></span></code></pre>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1" aria-label="code-block-2-36"></a><span class="st">/*</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1" aria-label="code-block-2-37"></a><span class="st">========================================================================================</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1" aria-label="code-block-2-38"></a><span class="st">    A Nextflow process block. Process names are written, by convention, in uppercase.</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1" aria-label="code-block-2-39"></a><span class="st">    This convention is used to enhance workflow readability.</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1" aria-label="code-block-2-40"></a><span class="st">========================================================================================</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1" aria-label="code-block-2-41"></a><span class="st">*/</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1" aria-label="code-block-2-42"></a>process NUM_LINES <span class="op">{</span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1" aria-label="code-block-2-43"></a></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1" aria-label="code-block-2-44"></a>    input<span class="op">:</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1" aria-label="code-block-2-45"></a>    path read</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1" aria-label="code-block-2-46"></a></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a>    output<span class="op">:</span></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>    stdout</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1" aria-label="code-block-2-50"></a>    script<span class="op">:</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1" aria-label="code-block-2-51"></a>    <span class="st">"""</span></span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1" aria-label="code-block-2-52"></a><span class="st">    # Print file name</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1" aria-label="code-block-2-53"></a><span class="st">    printf '</span><span class="ss">${</span>read<span class="ss">}</span><span class="sc">\\</span><span class="st">t'</span></span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1" aria-label="code-block-2-54"></a></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1" aria-label="code-block-2-55"></a><span class="st">    # Unzip file and count number of lines</span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1" aria-label="code-block-2-56"></a><span class="st">    gunzip -c </span><span class="ss">${</span>read<span class="ss">}</span><span class="st"> | wc -l</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1" aria-label="code-block-2-57"></a><span class="st">    """</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1" aria-label="code-block-2-58"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>This is a Nextflow script, which contains the following:</p>
 <ol style="list-style-type: decimal"><li>An optional interpreter directive (“Shebang”) line, specifying the
@@ -704,20 +700,24 @@ terminal:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 21.04.3
-Launching `word_count.nf` [fervent_babbage] - revision: c54a707593
-executor &gt;  local (1)
-[21/b259be] process &gt; NUM_LINES (1) [100%] 1 of 1 ✔
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
 
- ref1_1.fq.gz 58708</code></pre>
+Launching `word_count.nf` [shrivelled_fourier] revision: 224ebafda1
+
+executor &gt;  local (1)
+[32/366d91] process &gt; NUM_LINES (1) [100%] 1 of 1 ✔
+ref1_1.fq.gz 58708
+
+</code></pre>
 </div>
 <ol style="list-style-type: decimal"><li>The first line shows the Nextflow version number.</li>
-<li>The second line shows the run name <code>fervent_babbage</code>
+<li>The second line shows the run name <code>shrivelled_fourier</code>
 (adjective and scientist name) and revision id
-<code>c54a707593</code>.</li>
+<code>224ebafda1</code>.</li>
 <li>The third line tells you the process has been executed locally
 (<code>executor &gt;  local</code>).</li>
-<li>The next line shows the process id <code>21/b259be</code>, process
+<li>The next line shows the process id <code>32/366d91</code>, process
 name, number of cpus, percentage task completion, and how many instances
 of the process have been run.</li>
 <li>The final line is the output of the <code>.view()</code>
@@ -820,8 +820,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/01-getting-started-with-nextflow.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/01-getting-started-with-nextflow.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-12",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-07-02",
+  "datePublished": "2026-07-02"
 }
 
   </script><script>

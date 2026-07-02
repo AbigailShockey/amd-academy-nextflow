@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 kmer = 31
 
 process INDEX {

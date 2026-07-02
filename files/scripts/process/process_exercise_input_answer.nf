@@ -1,5 +1,3 @@
-
-
 params.chr = "A"
 params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"> >
 
@@ -14,8 +12,10 @@ process CHR_COUNT {
  """
 }
 
-transcriptome_ch = channel.fromPath(params.transcriptome)
-
 workflow {
- CHR_COUNT(transcriptome_ch)
+    
+    transcriptome_ch = channel.fromPath(params.transcriptome)
+
+    CHR_COUNT(transcriptome_ch)
+
 }

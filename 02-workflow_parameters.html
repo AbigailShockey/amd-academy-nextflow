@@ -420,7 +420,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Workflow parameterization</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-07-02 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/02-workflow_parameters.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -487,11 +487,16 @@ e.g. <code>data/yeast/reads/ref2_2.fq.gz</code>, in the
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 21.04.0
-Launching `word_count.nf` [gigantic_woese] - revision: 8acb5cb9b0
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [serene_solvay] revision: 224ebafda1
+
 executor &gt;  local (1)
-[26/3cf986] process &gt; NUM_LINES (1) [100%] 1 of 1 ✔
-ref2_2.fq.gz 81720</code></pre>
+[2b/738be1] process &gt; NUM_LINES (1) [100%] 1 of 1 ✔
+ref2_2.fq.gz 81720
+
+</code></pre>
 </div>
 <p>We can also use wild cards to specify multiple input files (This will
 be covered in the channels episode). In the example below we use the
@@ -509,13 +514,18 @@ matches.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 21.04.0
-Launching `word_count.nf` [tender_lumiere] - revision: 8acb5cb9b0
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [amazing_turing] revision: 224ebafda1
+
 executor &gt;  local (2)
-[cc/b6f793] process &gt; NUM_LINES (1) [100%] 2 of 2 ✔
+[04/5a871f] process &gt; NUM_LINES (2) [100%] 2 of 2 ✔
 ref2_2.fq.gz 81720
 
-ref2_1.fq.gz 81720</code></pre>
+ref2_1.fq.gz 81720
+
+</code></pre>
 </div>
 <div id="change-a-pipelines-input-using-a-parameter" class="callout challenge">
 <div class="callout-square">
@@ -538,7 +548,7 @@ with <code>.fq.gz</code>:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -551,21 +561,25 @@ this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 20.10.0
-Launching `word_count.nf` [soggy_miescher] - revision: c54a707593
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [naughty_perlman] revision: 224ebafda1
+
 executor &gt;  local (6)
-[d3/9ca185] process &gt; NUM_LINES (2) [100%] 6 of 6 ✔
+[2b/f481db] process &gt; NUM_LINES (5) [100%] 6 of 6 ✔
 ref3_2.fq.gz 52592
 
 ref2_2.fq.gz 81720
 
 ref1_1.fq.gz 58708
 
-ref1_2.fq.gz 58708
-
 ref3_1.fq.gz 52592
 
-ref2_1.fq.gz 81720</code></pre>
+ref1_2.fq.gz 58708
+
+ref2_1.fq.gz 81720
+</code></pre>
 </div>
 </div>
 </div>
@@ -612,7 +626,7 @@ Example:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">nextflow</span> run wc-params.nf <span class="at">--sleep</span> 10</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">$</span> nextflow run wc-params.nf <span class="at">--sleep</span> 10</span></code></pre>
 </div>
 <div id="add-a-pipeline-parameter" class="callout challenge">
 <div class="callout-square">
@@ -647,7 +661,7 @@ input to 1 second?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -701,7 +715,8 @@ parameters <code>sleep</code> and <code>input</code> in JSON format.</p>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a><span class="fu">}</span></span></code></pre>
 </div>
 <p>Create a file called <code>wc-params.json</code> with the above
-contents.</p>
+contents. In the VS Code Explorer panel on the left, click the New File
+icon. Name it “wc-params.json” and add the above contents.</p>
 <p>To run the <code>wc-params.nf</code> script using these parameters we
 add the option <code>-params-file</code> and pass the file
 <code>wc-params.json</code>:</p>
@@ -713,13 +728,18 @@ add the option <code>-params-file</code> and pass the file
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 21.04.0
-Launching `wc-params.nf` [nostalgic_northcutt] - revision: 2f86c9ac7e
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `wc-params.nf` [golden_colden] revision: 527e45d396
+
 executor &gt;  local (2)
-[b4/747eaa] process &gt; NUM_LINES (1) [100%] 2 of 2 ✔
+[00/e01dcc] process &gt; NUM_LINES (1) [100%] 2 of 2 ✔
+etoh60_1_1.fq.gz 87348
+
 etoh60_1_2.fq.gz 87348
 
-etoh60_1_1.fq.gz 87348</code></pre>
+</code></pre>
 </div>
 <div id="create-and-use-a-parameter-file." class="callout challenge">
 <div class="callout-square">
@@ -743,7 +763,7 @@ created parameter file, specifying:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">JSON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -761,10 +781,16 @@ created parameter file, specifying:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W
- version 21.04.0 Launching `wc-params.nf` [small_wiles] - revision:
-f5ef7b7a01 executor \&gt; local (1) [f3/4fa480] process \&gt; NUM_LINES
-(1) [100%] 1 of 1 ✔ ref3_1.fq.gz 52592 </code></pre>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `wc-params.nf` [chaotic_davinci] revision: 527e45d396
+
+executor &gt;  local (1)
+[81/48e6e7] process &gt; NUM_LINES (1) [100%] 1 of 1 ✔
+ref3_1.fq.gz 52592
+
+</code></pre>
 </div>
 </div>
 </div>
@@ -850,8 +876,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/02-workflow_parameters.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/02-workflow_parameters.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-06-17",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-07-02",
+  "datePublished": "2026-07-02"
 }
 
   </script><script>

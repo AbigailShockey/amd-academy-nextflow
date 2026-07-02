@@ -1,6 +1,3 @@
-//process_multi_line.nf
-
-
 process NUMSEQ_CHR {
     script:
     """

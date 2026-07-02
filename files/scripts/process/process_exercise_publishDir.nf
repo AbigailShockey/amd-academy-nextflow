@@ -1,6 +1,3 @@
-//process_exercise_publishDir.nf
-
-
 params.reads= "data/yeast/reads/ref{1,2,3}*{1,2}.fq.gz"
 
 process MERGE_REPS {
@@ -16,8 +13,9 @@ process MERGE_REPS {
   cat *2.fq.gz > ${sample_id}.merged.R2.fq.gz
   """
 }
-reads_ch = Channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
 
 workflow {
+  reads_ch = channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
+  
   MERGE_REPS(reads_ch)
 }

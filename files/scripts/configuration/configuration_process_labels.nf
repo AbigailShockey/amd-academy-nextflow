@@ -2,7 +2,7 @@ nextflow.enable.dsl = 2
 
 process P1 {
 
-    label "bigmem"
+    label "big_mem"
 
     script:
     """
@@ -12,7 +12,7 @@ process P1 {
 
 process P2 {
 
-    label "bigmem"
+    label "big_mem"
 
     script:
     """

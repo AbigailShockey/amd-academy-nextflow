@@ -425,7 +425,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Simple Nextflow pipeline</h1>
-        <p>Last updated on 2026-05-29 |
+        <p>Last updated on 2026-07-02 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/11-Simple_genome_assembly_pipeline.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -525,19 +525,18 @@ highlights any areas that may need further investigation.</li>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> multiqc .</span></code></pre>
 </div>
-<p>To start move the episode’s nextflow scripts in the
+<p>To start copy the episode’s nextflow scripts in the
 <code>scripts/genomeassembly_pipeline</code> folder to your home
 directory.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> cp scripts/genomeassembly_pipeline/<span class="pp">*</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> cp episodes/files/scripts/genomeassembly_pipeline/<span class="pp">*</span> .</span></code></pre>
 </div>
-<p>This folder contains files we will be modifying in this episode.</p>
 <section><h2 class="section-heading" id="define-the-pipeline-parameters">Define the pipeline parameters<a class="anchor" aria-label="anchor" href="#define-the-pipeline-parameters"></a></h2>
 <hr class="half-width"><p>The first thing we want to do when writing a pipeline is define the
-pipeline parameters. The script <code>script1.nf</code> defines the
-pipeline input parameters.</p>
+pipeline parameters. The script <code>script1.nf</code> already defines
+the pipeline input parameters with <code>params.reads</code>.</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -548,8 +547,9 @@ pipeline input parameters.</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a>params<span class="op">.</span>reads <span class="op">=</span> <span class="st">"data/bacteria/reads/*_R{1,2}.fastq.gz"</span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a>println <span class="st">"reads: </span><span class="ss">$params</span><span class="op">.</span><span class="ss">reads</span><span class="st">"</span></span></code></pre>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a>workflow <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a>  println <span class="st">"reads: </span><span class="ss">$params</span><span class="op">.</span><span class="ss">reads</span><span class="st">"</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Run it by using the following command:</p>
 <div class="codewrapper sourceCode" id="cb7">
@@ -557,17 +557,32 @@ pipeline input parameters.</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">$</span> nextflow run script1.nf</span></code></pre>
 </div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script1.nf` [zen_linnaeus] revision: 706a4fc6f8
+
+reads: data/bacteria/reads/*_R{1,2}.fastq.gz</code></pre>
+</div>
 <p>We can specify a different input parameter using the
 <code>--&lt;params&gt;</code> option, for example :</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>$ nextflow run script1<span class="op">.</span>nf <span class="op">--</span>reads <span class="st">"data/bacteria/reads/sample*_{1,2}.fastq.gz"</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>$ nextflow run script1<span class="op">.</span>nf <span class="op">--</span>reads <span class="st">"data/bacteria/reads/sample*_{1,2}.fastq.gz"</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>reads: data/bacteria/reads/sample*_{1,2}.fastq.gz</code></pre>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script1.nf` [elated_yalow] revision: 706a4fc6f8
+
+reads: data/bacteria/reads/sample*_{1,2}.fastq.gz</code></pre>
 </div>
 <div id="add-a-parameter" class="callout challenge">
 <div class="callout-square">
@@ -577,7 +592,7 @@ pipeline input parameters.</p>
 <div id="add-a-parameter" class="callout-inner">
 <h3 class="callout-title">Add a parameter</h3>
 <div class="callout-content">
-<p>Modify the <code>script1.nf</code> adding a second parameter named
+<p>Modify <code>script1.nf</code> by adding a second parameter named
 <code>outdir</code> and set it to <code>results</code>. This parameter
 will be used as the pipeline output directory.</p>
 </div>
@@ -590,10 +605,10 @@ will be used as the pipeline output directory.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>params<span class="op">.</span>outdir <span class="op">=</span> <span class="st">"results"</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>params<span class="op">.</span>outdir <span class="op">=</span> <span class="st">"results"</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -604,15 +619,19 @@ can be done using the the <code>println</code> command and a multiline
 string statement. The string method <code>.stripIndent()</code> command
 is used to remove the indentation on multi-line strings.
 <code>println</code> also saves the output to the log execution file
-<code>.nextflow.log</code>.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<code>.nextflow.log</code>. It is best practice to not mix statements
+with script declarations, so <code>println</code> is nested in a
+workflow block, which we will expand on later.</p>
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>println <span class="st">"""</span><span class="op">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a><span class="st">        reads: </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="st">        outdir: </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a><span class="st">        """</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>        <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a>workflow <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  println <span class="st">"""</span><span class="op">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="st">        reads: </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="st">        outdir: </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="st">        """</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a>        <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="println" class="callout challenge">
 <div class="callout-square">
@@ -624,13 +643,19 @@ is used to remove the indentation on multi-line strings.
 <div class="callout-content">
 <p>Modify the <code>script1.nf</code> to print all the pipeline
 parameters by using a single <code>println</code> command and a
-multiline string statement. See an example <a href="https://github.com/nextflow-io/rnaseq-nf/blob/3b5b49f/main.nf#L41-L48" class="external-link">here</a>.</p>
-<div class="codewrapper sourceCode" id="cb12">
+multiline string statement.</p>
+<p>See an example <a href="https://github.com/nextflow-io/rnaseq-nf/blob/7d4a2cd/main.nf#L26-L32" class="external-link">here</a>.</p>
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">$</span> nextflow run script1.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="ex">$</span> nextflow run script1.nf</span></code></pre>
 </div>
 <p>Look at the output log <code>.nextflow.log</code>.</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">$</span> less .nextflow.log</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -643,21 +668,16 @@ multiline string statement. See an example <a href="https://github.com/nextflow-
 <div class="accordion-body">
 <p>Below is an example println command printing all the pipeline
 parameters.</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a>println <span class="st">"""</span><span class="op">\</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="st">        G E N O M E A S S E M B L Y - N F   P I P E L I N E    </span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="st">        ===================================</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a><span class="st">        reads        : </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="st">        outdir       : </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a><span class="st">        """</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>        <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">$</span> less .nextflow.log</span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>println <span class="st">"""</span><span class="op">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a><span class="st">        G E N O M E A S S E M B L Y - N F   P I P E L I N E    </span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a><span class="st">        ===================================</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="st">        reads        : </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a><span class="st">        outdir       : </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a><span class="st">        """</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>        <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -670,40 +690,42 @@ FastQC.</p>
 <p>The script <code>script2.nf</code> adds a line to create a channel,
 <code>read_pairs_ch</code>, containing fastq read pair files using the
 <code>fromFilePairs</code> channel factory.</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="co">//script2.nf</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>nextflow<span class="op">.</span>enable<span class="op">.</span>dsl <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="co">/*</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a><span class="co"> * pipeline input parameters</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a><span class="co"> */</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>params<span class="op">.</span>reads <span class="op">=</span> <span class="st">"data/bacteria/reads/*_R{1,2}.fastq.gz"</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>params<span class="op">.</span>outdir <span class="op">=</span> <span class="st">"results"</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a>log<span class="op">.</span><span class="fu">info</span> <span class="st">"""</span><span class="op">\</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a><span class="st">         G E N O M E A S S E M B L Y - N F</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1" aria-label="code-block-15-12"></a><span class="st">         ===================================</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1" aria-label="code-block-15-13"></a><span class="st">         reads        : </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1" aria-label="code-block-15-14"></a><span class="st">         outdir       : </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1" aria-label="code-block-15-15"></a><span class="st">         """</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1" aria-label="code-block-15-16"></a>         <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1" aria-label="code-block-15-17"></a></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1" aria-label="code-block-15-18"></a>read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads <span class="op">)</span></span></code></pre>
-</div>
-<p>We can view the contents of the <code>read_pairs_ch</code> by adding
-the following statement as the last line:</p>
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>read_pairs_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="co">//script2.nf</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>nextflow<span class="op">.</span>enable<span class="op">.</span>dsl <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a><span class="co">/*</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a><span class="co"> * pipeline input parameters</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a><span class="co"> */</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>params<span class="op">.</span>reads <span class="op">=</span> <span class="st">"data/bacteria/reads/*_R{1,2}.fastq.gz"</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>params<span class="op">.</span>outdir <span class="op">=</span> <span class="st">"results"</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a>workflow <span class="op">{</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a>  log<span class="op">.</span><span class="fu">info</span> <span class="st">"""</span><span class="op">\</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a><span class="st">          G E N O M E A S S E M B L Y - N F</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a><span class="st">          ===================================</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a><span class="st">          reads        : </span><span class="ss">${</span>params<span class="op">.</span>reads<span class="ss">}</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1" aria-label="code-block-16-15"></a><span class="st">          outdir       : </span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1" aria-label="code-block-16-16"></a><span class="st">          """</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1" aria-label="code-block-16-17"></a>          <span class="op">.</span><span class="fu">stripIndent</span><span class="op">()</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1" aria-label="code-block-16-18"></a></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1" aria-label="code-block-16-19"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads <span class="op">)</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1" aria-label="code-block-16-20"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>We can view the contents of the <code>read_pairs_ch</code> by adding
+the following statement as the last line:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>read_pairs_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
 </div>
 <p>Now if we execute it with the following command:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="ex">$</span> nextflow run script2.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="ex">$</span> nextflow run script2.nf</span></code></pre>
 </div>
 <p>It will print an output similar to the one shown below that shows how
 the <code>read_pairs_ch</code> channel emits a tuple. The tuple is
@@ -714,8 +736,15 @@ list representing the actual files.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[..truncated..]
-[sample1, [data/bacteria/reads/sample1_1.fastq.gz,data/bacteria/reads/sample1_2.fastq.gz]]</code></pre>
+<pre class="output" tabindex="0"><code>Launching `script2.nf` [prickly_cray] revision: 50c9628d41
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
+outdir       : results
+
+[sample1, [/home/eriny/data/bacteria/reads/sample1_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample1_R2.fastq.gz]]
+[sample2, [/home/eriny/data/bacteria/reads/sample2_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample2_R2.fastq.gz]]</code></pre>
 </div>
 <p>To read in other read pairs we can specify a different glob pattern
 in the <code>params.reads</code> variable by using <code>--reads</code>
@@ -727,26 +756,39 @@ command line.</p>
 <p>We can also add a argument, <code>checkIfExists: true</code> , to the
 <code>fromFilePairs</code> channel factory to return an message if the
 file doesn’t exist.</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="co">//script2.nf</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1" aria-label="code-block-19-3"></a>read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span> <span class="kw">true</span> <span class="op">)</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="co">//script2.nf</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a>read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span> <span class="kw">true</span> <span class="op">)</span></span></code></pre>
 </div>
 <p>If we now run the script with the <code>--reads</code> parameter
 <code>data/bacteria/reads/*_1,2}.fastq.gz</code></p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">$</span> nextflow run script2.nf <span class="at">--reads</span> <span class="st">'data/bacteria/reads/*_R1,2}.fastq.gz'</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="ex">$</span> nextflow run script2.nf <span class="at">--reads</span> <span class="st">'data/bacteria/reads/*_R1,2}.fastq.gz'</span></span></code></pre>
 </div>
 <p>it will return the message .</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[..truncated..]
-No such file: data/bacteria/reads/*_R1,2}.fastq.gz</code></pre>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script2.nf` [extravagant_gates] revision: 50c9628d41
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R1,2}.fastq.gz
+outdir       : results
+
+ERROR ~ Unmatched closing ')' near index 8
+(.*)_R1|2)\.fastq\.gz
+        ^
+
+ -- Check '.nextflow.log' file for details</code></pre>
 </div>
 <div id="read-in-all-read-pairs" class="callout challenge">
 <div class="callout-square">
@@ -772,23 +814,30 @@ pattern to read in all the read pairs files from the
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a>read_pairs_ch <span class="op">=</span><span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span>params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span> <span class="kw">true</span><span class="op">)</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a>read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span>params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span> <span class="kw">true</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="ex">nextflow</span> run script2.nf <span class="at">--reads</span> <span class="st">'data/bacteria/reads/*_R{1,2}.fastq.gz'</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="ex">$</span> nextflow run script2.nf <span class="at">--reads</span> <span class="st">'data/bacteria/reads/*_R{1,2}.fastq.gz'</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[..truncated..]
-[sammple2, [data/bacteria/reads/sample2_R1.fastq.gz, data/bacteria/reads/sample2_R2.fastq.gz]]
-[sample3, [data/bacteria/reads/sample3_R1.fastq.gz, data/bacteria/reads/sample3_R2.fastq.gz]]
-[sample1, [data/bacteria/reads/sample1_R1.fastq.gz, data/bacteria/reads/sample1_R2.fastq.gz]]</code></pre>
+<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 26.04.4
+
+Launching `script2.nf` [elated_majorana] revision: 50c9628d41
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
+outdir       : results
+
+[sample1, [/home/eriny/data/bacteria/reads/sample1_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample1_R2.fastq.gz]]
+[sample2, [/home/eriny/data/bacteria/reads/sample2_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample2_R2.fastq.gz]]</code></pre>
 </div>
 </div>
 </div>
@@ -798,19 +847,19 @@ pattern to read in all the read pairs files from the
 <hr class="half-width"><p>Remember, Nextflow allows the execution of any command or user script
 by using a <code>process</code> definition.</p>
 <p>For example,</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="ex">$</span> seqtk trimfq <span class="va">${reads</span><span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="va">}</span> <span class="op">&gt;</span> <span class="va">${sample_id}</span>_trimmed_R1.fastq</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a><span class="ex">$</span> seqtk trimfq <span class="va">${reads</span><span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="va">}</span> <span class="op">&gt;</span> <span class="va">${sample_id}</span>_trimmed_R2.fastq</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a><span class="ex">$</span> gzip <span class="pp">*</span>.fastq</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="ex">$</span> seqtk trimfq <span class="va">${reads</span><span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="va">}</span> <span class="op">&gt;</span> <span class="va">${sample_id}</span>_trimmed_R1.fastq</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="ex">$</span> seqtk trimfq <span class="va">${reads</span><span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="va">}</span> <span class="op">&gt;</span> <span class="va">${sample_id}</span>_trimmed_R2.fastq</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a><span class="ex">$</span> gzip <span class="pp">*</span>.fastq</span></code></pre>
 </div>
 <p>A process is defined by providing three main declarations:</p>
 <ol style="list-style-type: decimal"><li>The process <a href="https://www.nextflow.io/docs/latest/process.html#inputs" class="external-link">inputs</a>,</li>
 <li>The process <a href="https://www.nextflow.io/docs/latest/process.html#outputs" class="external-link">outputs</a>
 </li>
 <li>Finally the command <a href="https://www.nextflow.io/docs/latest/process.html#script" class="external-link">script</a>.</li>
-</ol><p>The third example, <code>script3.nf</code> adds,</p>
+</ol><p>Add the process <code>TRIM</code> to <code>script3.nf</code>:</p>
 <ol style="list-style-type: decimal"><li>The process <code>TRIM</code> which generate a directory with the
 trimmed reads. This process takes paired reads as the input and emits
 the trimmed reads.</li>
@@ -818,90 +867,96 @@ the trimmed reads.</li>
 defined in params variable <code>params.reads</code>.</li>
 <li>Finally the script adds a <code>workflow</code> definition block
 which calls the <code>TRIM</code> process.</li>
-</ol><div class="codewrapper sourceCode" id="cb26">
+</ol><div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="co">//script3.nf</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1" aria-label="code-block-26-4"></a><span class="st">/*</span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1" aria-label="code-block-26-5"></a><span class="st"> * define the `TRIM` process that trims raw reads and emits trimmed reads</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1" aria-label="code-block-26-6"></a><span class="st"> */</span></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1" aria-label="code-block-26-7"></a>process TRIM <span class="op">{</span></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1" aria-label="code-block-26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1" aria-label="code-block-26-9"></a>    input<span class="op">:</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1" aria-label="code-block-26-10"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
-<span id="cb26-11"><a href="#cb26-11" tabindex="-1" aria-label="code-block-26-11"></a></span>
-<span id="cb26-12"><a href="#cb26-12" tabindex="-1" aria-label="code-block-26-12"></a>    output<span class="op">:</span></span>
-<span id="cb26-13"><a href="#cb26-13" tabindex="-1" aria-label="code-block-26-13"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">'*trimmed*'</span><span class="op">),</span> emit<span class="op">:</span> trimmed_reads</span>
-<span id="cb26-14"><a href="#cb26-14" tabindex="-1" aria-label="code-block-26-14"></a></span>
-<span id="cb26-15"><a href="#cb26-15" tabindex="-1" aria-label="code-block-26-15"></a>    script<span class="op">:</span></span>
-<span id="cb26-16"><a href="#cb26-16" tabindex="-1" aria-label="code-block-26-16"></a>    <span class="st">"""</span></span>
-<span id="cb26-17"><a href="#cb26-17" tabindex="-1" aria-label="code-block-26-17"></a><span class="st">    seqtk trimfq </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="ss">}</span><span class="st"> &gt; </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_R1.fastq</span></span>
-<span id="cb26-18"><a href="#cb26-18" tabindex="-1" aria-label="code-block-26-18"></a><span class="st">    seqtk trimfq </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="ss">}</span><span class="st"> &gt; </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_R2.fastq</span></span>
-<span id="cb26-19"><a href="#cb26-19" tabindex="-1" aria-label="code-block-26-19"></a><span class="st">    gzip *.fastq</span></span>
-<span id="cb26-20"><a href="#cb26-20" tabindex="-1" aria-label="code-block-26-20"></a><span class="st">    """</span></span>
-<span id="cb26-21"><a href="#cb26-21" tabindex="-1" aria-label="code-block-26-21"></a><span class="op">}</span></span>
-<span id="cb26-22"><a href="#cb26-22" tabindex="-1" aria-label="code-block-26-22"></a></span>
-<span id="cb26-23"><a href="#cb26-23" tabindex="-1" aria-label="code-block-26-23"></a>workflow <span class="op">{</span></span>
-<span id="cb26-24"><a href="#cb26-24" tabindex="-1" aria-label="code-block-26-24"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb26-25"><a href="#cb26-25" tabindex="-1" aria-label="code-block-26-25"></a></span>
-<span id="cb26-26"><a href="#cb26-26" tabindex="-1" aria-label="code-block-26-26"></a>  <span class="fu">TRIM</span><span class="op">()</span></span>
-<span id="cb26-27"><a href="#cb26-27" tabindex="-1" aria-label="code-block-26-27"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="co">//script3.nf</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1" aria-label="code-block-27-3"></a></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1" aria-label="code-block-27-4"></a><span class="st">/*</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1" aria-label="code-block-27-5"></a><span class="st"> * define the `TRIM` process that trims raw reads and emits trimmed reads</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1" aria-label="code-block-27-6"></a><span class="st"> */</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1" aria-label="code-block-27-7"></a>process TRIM <span class="op">{</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1" aria-label="code-block-27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1" aria-label="code-block-27-9"></a>    input<span class="op">:</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1" aria-label="code-block-27-10"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1" aria-label="code-block-27-11"></a></span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1" aria-label="code-block-27-12"></a>    output<span class="op">:</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1" aria-label="code-block-27-13"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">'*trimmed*'</span><span class="op">),</span> emit<span class="op">:</span> trimmed_reads</span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1" aria-label="code-block-27-14"></a></span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1" aria-label="code-block-27-15"></a>    script<span class="op">:</span></span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1" aria-label="code-block-27-16"></a>    <span class="st">"""</span></span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1" aria-label="code-block-27-17"></a><span class="st">    seqtk trimfq </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="ss">}</span><span class="st"> &gt; </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_R1.fastq</span></span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1" aria-label="code-block-27-18"></a><span class="st">    seqtk trimfq </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="ss">}</span><span class="st"> &gt; </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_R2.fastq</span></span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1" aria-label="code-block-27-19"></a><span class="st">    gzip *.fastq</span></span>
+<span id="cb27-20"><a href="#cb27-20" tabindex="-1" aria-label="code-block-27-20"></a><span class="st">    """</span></span>
+<span id="cb27-21"><a href="#cb27-21" tabindex="-1" aria-label="code-block-27-21"></a><span class="op">}</span></span>
+<span id="cb27-22"><a href="#cb27-22" tabindex="-1" aria-label="code-block-27-22"></a></span>
+<span id="cb27-23"><a href="#cb27-23" tabindex="-1" aria-label="code-block-27-23"></a>workflow <span class="op">{</span></span>
+<span id="cb27-24"><a href="#cb27-24" tabindex="-1" aria-label="code-block-27-24"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb27-25"><a href="#cb27-25" tabindex="-1" aria-label="code-block-27-25"></a></span>
+<span id="cb27-26"><a href="#cb27-26" tabindex="-1" aria-label="code-block-27-26"></a>  <span class="fu">TRIM</span><span class="op">()</span></span>
+<span id="cb27-27"><a href="#cb27-27" tabindex="-1" aria-label="code-block-27-27"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Try to run it by using the command:</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="ex">$</span> nextflow run script3.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="ex">$</span> nextflow run script3.nf</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 25.10.0
-Launching `script3.nf` [happy_brown] DSL2 - revision: 90e932bb8d
-G E N O M E A S S E M B L Y - N F   P I P E L I N E
-===================================
-reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
-outdir       : results
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
 
-Process `TRIM` declares 1 input channel but 0 were specified
+Launching `script3.nf` [cranky_nobel] revision: 731bf50c59
 
- -- Check script 'script3.nf' at line: 41 or see '.nextflow.log' file for more details</code></pre>
+Error script3.nf:39:3: Incorrect number of call arguments, expected 1 but received 0
+│  39 |   TRIM()
+╰     |   ^^^^^^
+
+
+ERROR ~ Script compilation failed
+
+ -- Check '.nextflow.log' file for details</code></pre>
 </div>
 <p>The execution will fail because the program the process,
 <code>TRIM</code> , has not been passed any input channel.</p>
 <p>Add the <code>reads_ch</code> channel to the <code>TRIM</code>
 process call.</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb29-1"><a href="#cb29-1" tabindex="-1" aria-label="code-block-29-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1" aria-label="code-block-29-2"></a>workflow <span class="op">{</span></span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1" aria-label="code-block-29-3"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1" aria-label="code-block-29-4"></a></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1" aria-label="code-block-29-5"></a>  <span class="fu">TRIM</span><span class="op">(</span>reads_ch<span class="op">)</span></span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1" aria-label="code-block-29-6"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a>workflow <span class="op">{</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1" aria-label="code-block-30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1" aria-label="code-block-30-5"></a>  <span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1" aria-label="code-block-30-6"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Now try to run it again by using the command:</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a><span class="ex">$</span> nextflow run script3.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1" aria-label="code-block-31-1"></a><span class="ex">$</span> nextflow run script3.nf</span></code></pre>
 </div>
 <p>Now the workflow will run successfully.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 25.10.0
-Launching `script3.nf` [mad_aryabhata] DSL2 - revision: 811396b67b
-G E N O M E A S S E M B L Y - N F   P I P E L I N E
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script3.nf` [desperate_jang] revision: 31974be5d1
+
+G E N O M E A S S E M B L Y - N F
 ===================================
 reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-executor &gt;  local (1)
-[c0/418d78] process &gt; TRIM (1) [100%] 1 of 1 ✔
+executor &gt;  local (2)
+[22/3db789] TRIM (1) | 2 of 2 ✔
 </code></pre>
 </div>
 <p>The <code>TRIM</code> process also defines one <code>output</code>
@@ -930,102 +985,142 @@ using the <code>view</code> operator.</li>
 </button>
 <div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb32">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1" aria-label="code-block-32-2"></a>workflow <span class="op">{</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1" aria-label="code-block-32-3"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1" aria-label="code-block-32-4"></a></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1" aria-label="code-block-32-5"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>reads_ch<span class="op">)</span></span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1" aria-label="code-block-32-6"></a>  trimmed_reads_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1" aria-label="code-block-32-7"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1" aria-label="code-block-33-2"></a>workflow <span class="op">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1" aria-label="code-block-33-3"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1" aria-label="code-block-33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1" aria-label="code-block-33-5"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1" aria-label="code-block-33-6"></a>  trimmed_reads_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1" aria-label="code-block-33-7"></a><span class="op">}</span></span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="assemble-genomes">Assemble genomes<a class="anchor" aria-label="anchor" href="#assemble-genomes"></a></h2>
-<hr class="half-width"><p>The script <code>script4.nf</code>;</p>
-<ol style="list-style-type: decimal"><li>Adds the genome assembly process, <code>ASSEMBLE</code>.</li>
+<hr class="half-width"><p>Add a new process to <code>script4.nf</code>:</p>
+<ol style="list-style-type: decimal"><li>Add the genome assembly process, <code>ASSEMBLE</code>.</li>
 <li>Calls the <code>ASSEMBLE</code> process in the workflow block.</li>
-</ol><div class="codewrapper sourceCode" id="cb33">
+</ol><div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a><span class="co">//script4.nf</span></span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1" aria-label="code-block-33-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1" aria-label="code-block-33-3"></a><span class="st">/*</span></span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1" aria-label="code-block-33-4"></a><span class="st"> * define the `ASSEMBLE` process that assembles trimmed reads and emits assemblies</span></span>
-<span id="cb33-5"><a href="#cb33-5" tabindex="-1" aria-label="code-block-33-5"></a><span class="st"> */</span></span>
-<span id="cb33-6"><a href="#cb33-6" tabindex="-1" aria-label="code-block-33-6"></a>process ASSEMBLE <span class="op">{</span></span>
-<span id="cb33-7"><a href="#cb33-7" tabindex="-1" aria-label="code-block-33-7"></a></span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1" aria-label="code-block-33-8"></a>    cpus <span class="dv">2</span></span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1" aria-label="code-block-33-9"></a></span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1" aria-label="code-block-33-10"></a>    input<span class="op">:</span></span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1" aria-label="code-block-33-11"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
-<span id="cb33-12"><a href="#cb33-12" tabindex="-1" aria-label="code-block-33-12"></a></span>
-<span id="cb33-13"><a href="#cb33-13" tabindex="-1" aria-label="code-block-33-13"></a>    output<span class="op">:</span></span>
-<span id="cb33-14"><a href="#cb33-14" tabindex="-1" aria-label="code-block-33-14"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">"</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">.contigs.fa"</span><span class="op">)</span> </span>
-<span id="cb33-15"><a href="#cb33-15" tabindex="-1" aria-label="code-block-33-15"></a></span>
-<span id="cb33-16"><a href="#cb33-16" tabindex="-1" aria-label="code-block-33-16"></a>    script<span class="op">:</span></span>
-<span id="cb33-17"><a href="#cb33-17" tabindex="-1" aria-label="code-block-33-17"></a>    <span class="st">"""</span></span>
-<span id="cb33-18"><a href="#cb33-18" tabindex="-1" aria-label="code-block-33-18"></a><span class="st">    shovill </span><span class="er">\</span></span>
-<span id="cb33-19"><a href="#cb33-19" tabindex="-1" aria-label="code-block-33-19"></a><span class="st">      --R1 </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="ss">}</span><span class="st"> </span><span class="er">\</span></span>
-<span id="cb33-20"><a href="#cb33-20" tabindex="-1" aria-label="code-block-33-20"></a><span class="st">      --R2 </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="ss">}</span><span class="st"> </span><span class="er">\</span></span>
-<span id="cb33-21"><a href="#cb33-21" tabindex="-1" aria-label="code-block-33-21"></a><span class="st">      --cpus </span><span class="ss">$task</span><span class="op">.</span><span class="ss">cpus</span><span class="st"> </span><span class="er">\</span></span>
-<span id="cb33-22"><a href="#cb33-22" tabindex="-1" aria-label="code-block-33-22"></a><span class="st">      --outdir ./</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_shovill_output </span><span class="er">\</span></span>
-<span id="cb33-23"><a href="#cb33-23" tabindex="-1" aria-label="code-block-33-23"></a><span class="st">      --force</span></span>
-<span id="cb33-24"><a href="#cb33-24" tabindex="-1" aria-label="code-block-33-24"></a><span class="st">    mv </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_shovill_output/contigs.fa </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">.contigs.fa</span></span>
-<span id="cb33-25"><a href="#cb33-25" tabindex="-1" aria-label="code-block-33-25"></a><span class="st">    """</span></span>
-<span id="cb33-26"><a href="#cb33-26" tabindex="-1" aria-label="code-block-33-26"></a><span class="op">}</span></span>
-<span id="cb33-27"><a href="#cb33-27" tabindex="-1" aria-label="code-block-33-27"></a></span>
-<span id="cb33-28"><a href="#cb33-28" tabindex="-1" aria-label="code-block-33-28"></a>workflow <span class="op">{</span></span>
-<span id="cb33-29"><a href="#cb33-29" tabindex="-1" aria-label="code-block-33-29"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb33-30"><a href="#cb33-30" tabindex="-1" aria-label="code-block-33-30"></a></span>
-<span id="cb33-31"><a href="#cb33-31" tabindex="-1" aria-label="code-block-33-31"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb33-32"><a href="#cb33-32" tabindex="-1" aria-label="code-block-33-32"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
-<span id="cb33-33"><a href="#cb33-33" tabindex="-1" aria-label="code-block-33-33"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1" aria-label="code-block-34-2"></a><span class="st">/*</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1" aria-label="code-block-34-3"></a><span class="st"> * define the `ASSEMBLE` process that assembles trimmed reads and emits assemblies</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1" aria-label="code-block-34-4"></a><span class="st"> */</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1" aria-label="code-block-34-5"></a>process ASSEMBLE <span class="op">{</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1" aria-label="code-block-34-6"></a></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1" aria-label="code-block-34-7"></a>    cpus <span class="dv">2</span></span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1" aria-label="code-block-34-8"></a></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1" aria-label="code-block-34-9"></a>    input<span class="op">:</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1" aria-label="code-block-34-10"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1" aria-label="code-block-34-11"></a></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1" aria-label="code-block-34-12"></a>    output<span class="op">:</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1" aria-label="code-block-34-13"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">"</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">.contigs.fa"</span><span class="op">)</span> </span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1" aria-label="code-block-34-14"></a></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1" aria-label="code-block-34-15"></a>    script<span class="op">:</span></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1" aria-label="code-block-34-16"></a>    <span class="st">"""</span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1" aria-label="code-block-34-17"></a><span class="st">    shovill </span><span class="er">\</span></span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1" aria-label="code-block-34-18"></a><span class="st">      --R1 </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">0</span><span class="op">]</span><span class="ss">}</span><span class="st"> </span><span class="er">\</span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1" aria-label="code-block-34-19"></a><span class="st">      --R2 </span><span class="ss">${</span>reads<span class="op">[</span><span class="dv">1</span><span class="op">]</span><span class="ss">}</span><span class="st"> </span><span class="er">\</span></span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1" aria-label="code-block-34-20"></a><span class="st">      --cpus </span><span class="ss">$task</span><span class="op">.</span><span class="ss">cpus</span><span class="st"> </span><span class="er">\</span></span>
+<span id="cb34-21"><a href="#cb34-21" tabindex="-1" aria-label="code-block-34-21"></a><span class="st">      --outdir ./</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_shovill_output </span><span class="er">\</span></span>
+<span id="cb34-22"><a href="#cb34-22" tabindex="-1" aria-label="code-block-34-22"></a><span class="st">      --force</span></span>
+<span id="cb34-23"><a href="#cb34-23" tabindex="-1" aria-label="code-block-34-23"></a><span class="st">    mv </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_shovill_output/contigs.fa </span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">.contigs.fa</span></span>
+<span id="cb34-24"><a href="#cb34-24" tabindex="-1" aria-label="code-block-34-24"></a><span class="st">    """</span></span>
+<span id="cb34-25"><a href="#cb34-25" tabindex="-1" aria-label="code-block-34-25"></a><span class="op">}</span></span>
+<span id="cb34-26"><a href="#cb34-26" tabindex="-1" aria-label="code-block-34-26"></a></span>
+<span id="cb34-27"><a href="#cb34-27" tabindex="-1" aria-label="code-block-34-27"></a>workflow <span class="op">{</span></span>
+<span id="cb34-28"><a href="#cb34-28" tabindex="-1" aria-label="code-block-34-28"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb34-29"><a href="#cb34-29" tabindex="-1" aria-label="code-block-34-29"></a></span>
+<span id="cb34-30"><a href="#cb34-30" tabindex="-1" aria-label="code-block-34-30"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb34-31"><a href="#cb34-31" tabindex="-1" aria-label="code-block-34-31"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb34-32"><a href="#cb34-32" tabindex="-1" aria-label="code-block-34-32"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>The <code>trimmed_reads_ch</code> channel, declared as output in the
 <code>TRIM</code> process, is used as the input argument to the
 <code>ASSEMBLE</code> process. It is a tuple composed of two elements:
 the <code>sample_id</code> and the <code>reads</code>.</p>
 <p>Execute it by using the following command:</p>
-<div class="codewrapper sourceCode" id="cb34">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="ex">$</span> nextflow run script4.nf</span></code></pre>
-</div>
-<p>You will see the execution of the trimming and assembly
-processes.</p>
-<p>Re run the command using the <code>-resume</code> option</p>
 <div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" tabindex="-1" aria-label="code-block-35-1"></a><span class="ex">$</span> nextflow run script4.nf <span class="at">-resume</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" tabindex="-1" aria-label="code-block-35-1"></a><span class="ex">$</span> nextflow run script4.nf</span></code></pre>
 </div>
-<p>The <code>-resume</code> option causes the execution of any step that
-has been already processed to be skipped.</p>
-<p>Try to execute it with more read files as shown below:</p>
-<div class="codewrapper sourceCode" id="cb36">
+<p>You will see the execution of the trimming and assembly
+processes.</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script4.nf` [fabulous_fermi] revision: e046bc73fd
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
+outdir       : results
+
+executor &gt;  local (4)
+[22/e853e5] TRIM (1)     | 2 of 2 ✔
+[f4/0ede60] ASSEMBLE (2) | 2 of 2 ✔
+Completed at: 01-Jul-2026 13:08:44
+Duration    : 1m 59s
+CPU hours   : 0.1
+Succeeded   : 4
+</code></pre>
+</div>
+<p>Re run the command using the <code>-resume</code> option</p>
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" tabindex="-1" aria-label="code-block-36-1"></a><span class="ex">$</span> nextflow run script4.nf <span class="at">-resume</span> <span class="at">--reads</span> <span class="st">'data/bacteria/reads/sample*_{1,2}.fastq.gz'</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" tabindex="-1" aria-label="code-block-37-1"></a><span class="ex">$</span> nextflow run script4.nf <span class="at">-resume</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>N E X T F L O W  ~  version 25.10.0
-Launching `script4.nf` [shrivelled_brenner] - revision: c21df6839e
-G E N O M E A S S E M B L Y - N F   P I P E L I N E
-===================================
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
 
-reads        : data/bacteria/reads/sample*_{1,2}.fastq.gz
+Launching `script4.nf` [silly_booth] revision: e046bc73fd
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-executor &gt;  local (8)
-[02/3742cf] process &gt; TRIM     [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process &gt; ASSEMBLE [100%] 3 of 3, cached: 1 ✔</code></pre>
+[22/e853e5] TRIM (1)     | 2 of 2, cached: 2 ✔
+[fb/b534ed] ASSEMBLE (1) | 2 of 2, cached: 2 ✔
+</code></pre>
+</div>
+<p>The <code>-resume</code> option causes the execution of any step that
+has been already processed to be skipped.</p>
+<p>Try to execute it with more read files as shown below:</p>
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" tabindex="-1" aria-label="code-block-39-1"></a><span class="ex">$</span> nextflow run script4.nf <span class="at">-resume</span> <span class="at">--reads</span> <span class="st">'data/bacteria/reads/sample*_R{1,2}.fastq.gz'</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script4.nf` [peaceful_jennings] revision: e046bc73fd
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/sample*_R{1,2}.fastq.gz
+outdir       : results
+
+[39/fe43e6] TRIM (2)     | 2 of 2, cached: 2 ✔
+[fb/b534ed] ASSEMBLE (2) | 2 of 2, cached: 2 ✔
+</code></pre>
 </div>
 <p>You will notice that the <code>TRIM</code> step and one of the
 <code>ASSEMBLE</code> steps has been cached, and the quantification
@@ -1054,10 +1149,10 @@ of <code>script4.nf</code> to provide a more readable execution log.</p>
 </button>
 <div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb38-1"><a href="#cb38-1" tabindex="-1" aria-label="code-block-38-1"></a>tag <span class="st">"Assembly on </span><span class="ss">$sample_id</span><span class="st">"</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb41-1"><a href="#cb41-1" tabindex="-1" aria-label="code-block-41-1"></a>tag <span class="st">"Assembly on </span><span class="ss">$sample_id</span><span class="st">"</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1066,67 +1161,83 @@ of <code>script4.nf</code> to provide a more readable execution log.</p>
 </section><section><h2 class="section-heading" id="quality-control">Quality control<a class="anchor" aria-label="anchor" href="#quality-control"></a></h2>
 <hr class="half-width"><p>This step implements a quality control step for your input reads and
 trimmed reads.</p>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb39-1"><a href="#cb39-1" tabindex="-1" aria-label="code-block-39-1"></a><span class="co">//script5.nf</span></span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1" aria-label="code-block-39-2"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1" aria-label="code-block-39-3"></a></span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1" aria-label="code-block-39-4"></a><span class="st">/*</span></span>
-<span id="cb39-5"><a href="#cb39-5" tabindex="-1" aria-label="code-block-39-5"></a><span class="st"> * define the `FASTQC` process that checks quality of raw reads files</span></span>
-<span id="cb39-6"><a href="#cb39-6" tabindex="-1" aria-label="code-block-39-6"></a><span class="st"> */</span></span>
-<span id="cb39-7"><a href="#cb39-7" tabindex="-1" aria-label="code-block-39-7"></a>process FASTQC <span class="op">{</span></span>
-<span id="cb39-8"><a href="#cb39-8" tabindex="-1" aria-label="code-block-39-8"></a></span>
-<span id="cb39-9"><a href="#cb39-9" tabindex="-1" aria-label="code-block-39-9"></a>    tag <span class="st">"FastQC on </span><span class="ss">$sample_id</span><span class="st">"</span></span>
-<span id="cb39-10"><a href="#cb39-10" tabindex="-1" aria-label="code-block-39-10"></a>    cpus <span class="dv">1</span></span>
-<span id="cb39-11"><a href="#cb39-11" tabindex="-1" aria-label="code-block-39-11"></a></span>
-<span id="cb39-12"><a href="#cb39-12" tabindex="-1" aria-label="code-block-39-12"></a>    input<span class="op">:</span></span>
-<span id="cb39-13"><a href="#cb39-13" tabindex="-1" aria-label="code-block-39-13"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
-<span id="cb39-14"><a href="#cb39-14" tabindex="-1" aria-label="code-block-39-14"></a></span>
-<span id="cb39-15"><a href="#cb39-15" tabindex="-1" aria-label="code-block-39-15"></a>    output<span class="op">:</span></span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1" aria-label="code-block-39-16"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">"fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs"</span><span class="op">)</span></span>
-<span id="cb39-17"><a href="#cb39-17" tabindex="-1" aria-label="code-block-39-17"></a></span>
-<span id="cb39-18"><a href="#cb39-18" tabindex="-1" aria-label="code-block-39-18"></a>    script<span class="op">:</span></span>
-<span id="cb39-19"><a href="#cb39-19" tabindex="-1" aria-label="code-block-39-19"></a>    <span class="st">"""</span></span>
-<span id="cb39-20"><a href="#cb39-20" tabindex="-1" aria-label="code-block-39-20"></a><span class="st">    mkdir fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs</span></span>
-<span id="cb39-21"><a href="#cb39-21" tabindex="-1" aria-label="code-block-39-21"></a><span class="st">    fastqc -o fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs -f fastq -q </span><span class="ss">${</span>reads<span class="ss">}</span><span class="st"> -t </span><span class="ss">${</span>task<span class="op">.</span>cpus<span class="ss">}</span></span>
-<span id="cb39-22"><a href="#cb39-22" tabindex="-1" aria-label="code-block-39-22"></a><span class="st">    """</span></span>
-<span id="cb39-23"><a href="#cb39-23" tabindex="-1" aria-label="code-block-39-23"></a><span class="op">}</span></span>
-<span id="cb39-24"><a href="#cb39-24" tabindex="-1" aria-label="code-block-39-24"></a></span>
-<span id="cb39-25"><a href="#cb39-25" tabindex="-1" aria-label="code-block-39-25"></a><span class="st">/*</span></span>
-<span id="cb39-26"><a href="#cb39-26" tabindex="-1" aria-label="code-block-39-26"></a><span class="st"> * define the `FASTQC_TRIMMED` process that checks quality of trimmed reads files</span></span>
-<span id="cb39-27"><a href="#cb39-27" tabindex="-1" aria-label="code-block-39-27"></a><span class="st"> */</span></span>
-<span id="cb39-28"><a href="#cb39-28" tabindex="-1" aria-label="code-block-39-28"></a>process FASTQC_TRIMMED <span class="op">{</span></span>
-<span id="cb39-29"><a href="#cb39-29" tabindex="-1" aria-label="code-block-39-29"></a></span>
-<span id="cb39-30"><a href="#cb39-30" tabindex="-1" aria-label="code-block-39-30"></a>    tag <span class="st">"FastQC on trimmed </span><span class="ss">$sample_id</span><span class="st">"</span></span>
-<span id="cb39-31"><a href="#cb39-31" tabindex="-1" aria-label="code-block-39-31"></a>    cpus <span class="dv">1</span></span>
-<span id="cb39-32"><a href="#cb39-32" tabindex="-1" aria-label="code-block-39-32"></a></span>
-<span id="cb39-33"><a href="#cb39-33" tabindex="-1" aria-label="code-block-39-33"></a>    input<span class="op">:</span></span>
-<span id="cb39-34"><a href="#cb39-34" tabindex="-1" aria-label="code-block-39-34"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
-<span id="cb39-35"><a href="#cb39-35" tabindex="-1" aria-label="code-block-39-35"></a></span>
-<span id="cb39-36"><a href="#cb39-36" tabindex="-1" aria-label="code-block-39-36"></a>    output<span class="op">:</span></span>
-<span id="cb39-37"><a href="#cb39-37" tabindex="-1" aria-label="code-block-39-37"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">"fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs"</span><span class="op">)</span></span>
-<span id="cb39-38"><a href="#cb39-38" tabindex="-1" aria-label="code-block-39-38"></a></span>
-<span id="cb39-39"><a href="#cb39-39" tabindex="-1" aria-label="code-block-39-39"></a>    script<span class="op">:</span></span>
-<span id="cb39-40"><a href="#cb39-40" tabindex="-1" aria-label="code-block-39-40"></a>    <span class="st">"""</span></span>
-<span id="cb39-41"><a href="#cb39-41" tabindex="-1" aria-label="code-block-39-41"></a><span class="st">    mkdir fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs</span></span>
-<span id="cb39-42"><a href="#cb39-42" tabindex="-1" aria-label="code-block-39-42"></a><span class="st">    fastqc -o fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs -f fastq -q </span><span class="ss">${</span>reads<span class="ss">}</span><span class="st"> -t </span><span class="ss">${</span>task<span class="op">.</span>cpus<span class="ss">}</span></span>
-<span id="cb39-43"><a href="#cb39-43" tabindex="-1" aria-label="code-block-39-43"></a><span class="st">    """</span></span>
-<span id="cb39-44"><a href="#cb39-44" tabindex="-1" aria-label="code-block-39-44"></a><span class="op">}</span></span>
-<span id="cb39-45"><a href="#cb39-45" tabindex="-1" aria-label="code-block-39-45"></a></span>
-<span id="cb39-46"><a href="#cb39-46" tabindex="-1" aria-label="code-block-39-46"></a>workflow <span class="op">{</span></span>
-<span id="cb39-47"><a href="#cb39-47" tabindex="-1" aria-label="code-block-39-47"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb39-48"><a href="#cb39-48" tabindex="-1" aria-label="code-block-39-48"></a></span>
-<span id="cb39-49"><a href="#cb39-49" tabindex="-1" aria-label="code-block-39-49"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb39-50"><a href="#cb39-50" tabindex="-1" aria-label="code-block-39-50"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
-<span id="cb39-51"><a href="#cb39-51" tabindex="-1" aria-label="code-block-39-51"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb42-1"><a href="#cb42-1" tabindex="-1" aria-label="code-block-42-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1" aria-label="code-block-42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1" aria-label="code-block-42-3"></a><span class="st">/*</span></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1" aria-label="code-block-42-4"></a><span class="st"> * define the `FASTQC` process that checks quality of raw reads files</span></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1" aria-label="code-block-42-5"></a><span class="st"> */</span></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1" aria-label="code-block-42-6"></a>process FASTQC <span class="op">{</span></span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1" aria-label="code-block-42-7"></a></span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1" aria-label="code-block-42-8"></a>    tag <span class="st">"FastQC on </span><span class="ss">$sample_id</span><span class="st">"</span></span>
+<span id="cb42-9"><a href="#cb42-9" tabindex="-1" aria-label="code-block-42-9"></a>    cpus <span class="dv">1</span></span>
+<span id="cb42-10"><a href="#cb42-10" tabindex="-1" aria-label="code-block-42-10"></a></span>
+<span id="cb42-11"><a href="#cb42-11" tabindex="-1" aria-label="code-block-42-11"></a>    input<span class="op">:</span></span>
+<span id="cb42-12"><a href="#cb42-12" tabindex="-1" aria-label="code-block-42-12"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
+<span id="cb42-13"><a href="#cb42-13" tabindex="-1" aria-label="code-block-42-13"></a></span>
+<span id="cb42-14"><a href="#cb42-14" tabindex="-1" aria-label="code-block-42-14"></a>    output<span class="op">:</span></span>
+<span id="cb42-15"><a href="#cb42-15" tabindex="-1" aria-label="code-block-42-15"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">"fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs"</span><span class="op">)</span></span>
+<span id="cb42-16"><a href="#cb42-16" tabindex="-1" aria-label="code-block-42-16"></a></span>
+<span id="cb42-17"><a href="#cb42-17" tabindex="-1" aria-label="code-block-42-17"></a>    script<span class="op">:</span></span>
+<span id="cb42-18"><a href="#cb42-18" tabindex="-1" aria-label="code-block-42-18"></a>    <span class="st">"""</span></span>
+<span id="cb42-19"><a href="#cb42-19" tabindex="-1" aria-label="code-block-42-19"></a><span class="st">    mkdir fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs</span></span>
+<span id="cb42-20"><a href="#cb42-20" tabindex="-1" aria-label="code-block-42-20"></a><span class="st">    fastqc -o fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_logs -f fastq -q </span><span class="ss">${</span>reads<span class="ss">}</span><span class="st"> -t </span><span class="ss">${</span>task<span class="op">.</span>cpus<span class="ss">}</span></span>
+<span id="cb42-21"><a href="#cb42-21" tabindex="-1" aria-label="code-block-42-21"></a><span class="st">    """</span></span>
+<span id="cb42-22"><a href="#cb42-22" tabindex="-1" aria-label="code-block-42-22"></a><span class="op">}</span></span>
+<span id="cb42-23"><a href="#cb42-23" tabindex="-1" aria-label="code-block-42-23"></a></span>
+<span id="cb42-24"><a href="#cb42-24" tabindex="-1" aria-label="code-block-42-24"></a><span class="st">/*</span></span>
+<span id="cb42-25"><a href="#cb42-25" tabindex="-1" aria-label="code-block-42-25"></a><span class="st"> * define the `FASTQC_TRIMMED` process that checks quality of trimmed reads files</span></span>
+<span id="cb42-26"><a href="#cb42-26" tabindex="-1" aria-label="code-block-42-26"></a><span class="st"> */</span></span>
+<span id="cb42-27"><a href="#cb42-27" tabindex="-1" aria-label="code-block-42-27"></a>process FASTQC_TRIMMED <span class="op">{</span></span>
+<span id="cb42-28"><a href="#cb42-28" tabindex="-1" aria-label="code-block-42-28"></a></span>
+<span id="cb42-29"><a href="#cb42-29" tabindex="-1" aria-label="code-block-42-29"></a>    tag <span class="st">"FastQC on trimmed </span><span class="ss">$sample_id</span><span class="st">"</span></span>
+<span id="cb42-30"><a href="#cb42-30" tabindex="-1" aria-label="code-block-42-30"></a>    cpus <span class="dv">1</span></span>
+<span id="cb42-31"><a href="#cb42-31" tabindex="-1" aria-label="code-block-42-31"></a></span>
+<span id="cb42-32"><a href="#cb42-32" tabindex="-1" aria-label="code-block-42-32"></a>    input<span class="op">:</span></span>
+<span id="cb42-33"><a href="#cb42-33" tabindex="-1" aria-label="code-block-42-33"></a>    tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span>reads<span class="op">)</span></span>
+<span id="cb42-34"><a href="#cb42-34" tabindex="-1" aria-label="code-block-42-34"></a></span>
+<span id="cb42-35"><a href="#cb42-35" tabindex="-1" aria-label="code-block-42-35"></a>    output<span class="op">:</span></span>
+<span id="cb42-36"><a href="#cb42-36" tabindex="-1" aria-label="code-block-42-36"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">"fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs"</span><span class="op">)</span></span>
+<span id="cb42-37"><a href="#cb42-37" tabindex="-1" aria-label="code-block-42-37"></a></span>
+<span id="cb42-38"><a href="#cb42-38" tabindex="-1" aria-label="code-block-42-38"></a>    script<span class="op">:</span></span>
+<span id="cb42-39"><a href="#cb42-39" tabindex="-1" aria-label="code-block-42-39"></a>    <span class="st">"""</span></span>
+<span id="cb42-40"><a href="#cb42-40" tabindex="-1" aria-label="code-block-42-40"></a><span class="st">    mkdir fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs</span></span>
+<span id="cb42-41"><a href="#cb42-41" tabindex="-1" aria-label="code-block-42-41"></a><span class="st">    fastqc -o fastqc_</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">_trimmed_logs -f fastq -q </span><span class="ss">${</span>reads<span class="ss">}</span><span class="st"> -t </span><span class="ss">${</span>task<span class="op">.</span>cpus<span class="ss">}</span></span>
+<span id="cb42-42"><a href="#cb42-42" tabindex="-1" aria-label="code-block-42-42"></a><span class="st">    """</span></span>
+<span id="cb42-43"><a href="#cb42-43" tabindex="-1" aria-label="code-block-42-43"></a><span class="op">}</span></span>
+<span id="cb42-44"><a href="#cb42-44" tabindex="-1" aria-label="code-block-42-44"></a></span>
+<span id="cb42-45"><a href="#cb42-45" tabindex="-1" aria-label="code-block-42-45"></a>workflow <span class="op">{</span></span>
+<span id="cb42-46"><a href="#cb42-46" tabindex="-1" aria-label="code-block-42-46"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb42-47"><a href="#cb42-47" tabindex="-1" aria-label="code-block-42-47"></a></span>
+<span id="cb42-48"><a href="#cb42-48" tabindex="-1" aria-label="code-block-42-48"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb42-49"><a href="#cb42-49" tabindex="-1" aria-label="code-block-42-49"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb42-50"><a href="#cb42-50" tabindex="-1" aria-label="code-block-42-50"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Run the script <code>script5.nf</code> by using the following
 command:</p>
-<div class="codewrapper sourceCode" id="cb40">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a><span class="ex">$</span> nextflow run script5.nf <span class="at">-resume</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" tabindex="-1" aria-label="code-block-43-1"></a><span class="ex">$</span> nextflow run script5.nf <span class="at">-resume</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script5.nf` [intergalactic_yalow] revision: 69555aad62
+
+G E N O M E A S S E M B L Y - N F
+===================================
+reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
+outdir       : results
+
+[22/e853e5] TRIM (Trim on sample1)         | 2 of 2, cached: 2 ✔
+[fb/b534ed] ASSEMBLE (Assemble on sample2) | 2 of 2, cached: 2 ✔
+</code></pre>
 </div>
 <p>The <code>FASTQC</code> process will not run as the process has not
 been declared in the workflow scope.</p>
@@ -1140,16 +1251,11 @@ been declared in the workflow scope.</p>
 reads</h3>
 <div class="callout-content">
 <p>Add the <code>FASTQC</code> and <code>FASTQC_TRIMMED</code> processes
-to the <code>workflow scope</code> of <code>script5.nf</code>.
+to the <code>workflow</code> block of <code>script5.nf</code>.
 <code>FASTQC</code> should use <code>read_pairs_ch</code> channel as an
 input and <code>FASTQC_TRIMMED</code> should use the
 <code>trimmed_reads_ch</code> as input. Run the nextflow script using
 the <code>-resume</code> option.</p>
-<div class="codewrapper sourceCode" id="cb41">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" tabindex="-1" aria-label="code-block-41-1"></a><span class="ex">$</span> nextflow run script5.nf <span class="at">-resume</span></span></code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -1160,18 +1266,18 @@ the <code>-resume</code> option.</p>
 </button>
 <div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb42">
+<div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb42-1"><a href="#cb42-1" tabindex="-1" aria-label="code-block-42-1"></a>workflow <span class="op">{</span></span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1" aria-label="code-block-42-2"></a>read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1" aria-label="code-block-42-3"></a></span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1" aria-label="code-block-42-4"></a>trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb42-5"><a href="#cb42-5" tabindex="-1" aria-label="code-block-42-5"></a>assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1" aria-label="code-block-42-6"></a>fastqc_ch<span class="op">=</span><span class="fu">FASTQC</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb42-7"><a href="#cb42-7" tabindex="-1" aria-label="code-block-42-7"></a>fastqc_trimmed_ch<span class="op">=</span><span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb45-1"><a href="#cb45-1" tabindex="-1" aria-label="code-block-45-1"></a>workflow <span class="op">{</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1" aria-label="code-block-45-2"></a>  read_pairs_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1" aria-label="code-block-45-3"></a></span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1" aria-label="code-block-45-4"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1" aria-label="code-block-45-5"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb45-6"><a href="#cb45-6" tabindex="-1" aria-label="code-block-45-6"></a>  fastqc_ch<span class="op">=</span><span class="fu">FASTQC</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb45-7"><a href="#cb45-7" tabindex="-1" aria-label="code-block-45-7"></a>  fastqc_trimmed_ch<span class="op">=</span><span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb45-8"><a href="#cb45-8" tabindex="-1" aria-label="code-block-45-8"></a><span class="op">}</span></span></code></pre>
 </div>
-<p>}</p>
 </div>
 </div>
 </div>
@@ -1192,13 +1298,13 @@ single channel element. Therefore, we will need to combine the outputs
 of <code>FASTQC</code> using:</p>
 <ul><li>The combining operator <code>mix</code> : combines the items in the
 two channels into a single channel</li>
-</ul><div class="codewrapper sourceCode" id="cb43">
+</ul><div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb43-1"><a href="#cb43-1" tabindex="-1" aria-label="code-block-43-1"></a><span class="co">//example of the mix operator</span></span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1" aria-label="code-block-43-2"></a>ch1 <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span></span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1" aria-label="code-block-43-3"></a>ch2 <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="st">'a'</span><span class="op">)</span></span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1" aria-label="code-block-43-4"></a>ch1<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch2<span class="op">).</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb46-1"><a href="#cb46-1" tabindex="-1" aria-label="code-block-46-1"></a><span class="co">//example of the mix operator</span></span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1" aria-label="code-block-46-2"></a>ch1 <span class="op">=</span> channel<span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1" aria-label="code-block-46-3"></a>ch2 <span class="op">=</span> channel<span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="st">'a'</span><span class="op">)</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1" aria-label="code-block-46-4"></a>ch1<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch2<span class="op">).</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1209,12 +1315,12 @@ two channels into a single channel</li>
 </div>
 <ul><li>The transformation operator <code>collect</code> collects all the
 items in the new combined channel into a single item.</li>
-</ul><div class="codewrapper sourceCode" id="cb45">
+</ul><div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb45-1"><a href="#cb45-1" tabindex="-1" aria-label="code-block-45-1"></a><span class="co">//example of the collect operator</span></span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1" aria-label="code-block-45-2"></a>ch1 <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">)</span></span>
-<span id="cb45-3"><a href="#cb45-3" tabindex="-1" aria-label="code-block-45-3"></a>ch1<span class="op">.</span><span class="fu">collect</span><span class="op">().</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb48-1"><a href="#cb48-1" tabindex="-1" aria-label="code-block-48-1"></a><span class="co">//example of the collect operator</span></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1" aria-label="code-block-48-2"></a>ch1 <span class="op">=</span> channel<span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">)</span></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1" aria-label="code-block-48-3"></a>ch1<span class="op">.</span><span class="fu">collect</span><span class="op">().</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1225,47 +1331,47 @@ items in the new combined channel into a single item.</li>
 items in each FastQC output channel and <code>mix</code> to combine the
 channels and create the required input for the <code>MULTIQC</code>
 process.</p>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb50">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb47-1"><a href="#cb47-1" tabindex="-1" aria-label="code-block-47-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1" aria-label="code-block-47-2"></a><span class="co">//script6.nf</span></span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1" aria-label="code-block-47-3"></a><span class="co">/*</span></span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1" aria-label="code-block-47-4"></a><span class="co"> * define the `MultiQC` process to combine FastQC results into one report</span></span>
-<span id="cb47-5"><a href="#cb47-5" tabindex="-1" aria-label="code-block-47-5"></a><span class="co"> */</span></span>
-<span id="cb47-6"><a href="#cb47-6" tabindex="-1" aria-label="code-block-47-6"></a>process MULTIQC <span class="op">{</span></span>
-<span id="cb47-7"><a href="#cb47-7" tabindex="-1" aria-label="code-block-47-7"></a></span>
-<span id="cb47-8"><a href="#cb47-8" tabindex="-1" aria-label="code-block-47-8"></a>    tag <span class="st">"MultiQC"</span></span>
-<span id="cb47-9"><a href="#cb47-9" tabindex="-1" aria-label="code-block-47-9"></a>    publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/multiqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
-<span id="cb47-10"><a href="#cb47-10" tabindex="-1" aria-label="code-block-47-10"></a></span>
-<span id="cb47-11"><a href="#cb47-11" tabindex="-1" aria-label="code-block-47-11"></a>    input<span class="op">:</span></span>
-<span id="cb47-12"><a href="#cb47-12" tabindex="-1" aria-label="code-block-47-12"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">'*'</span><span class="op">)</span></span>
-<span id="cb47-13"><a href="#cb47-13" tabindex="-1" aria-label="code-block-47-13"></a></span>
-<span id="cb47-14"><a href="#cb47-14" tabindex="-1" aria-label="code-block-47-14"></a>    output<span class="op">:</span></span>
-<span id="cb47-15"><a href="#cb47-15" tabindex="-1" aria-label="code-block-47-15"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">'multiqc_report.html'</span><span class="op">)</span></span>
-<span id="cb47-16"><a href="#cb47-16" tabindex="-1" aria-label="code-block-47-16"></a></span>
-<span id="cb47-17"><a href="#cb47-17" tabindex="-1" aria-label="code-block-47-17"></a>    script<span class="op">:</span></span>
-<span id="cb47-18"><a href="#cb47-18" tabindex="-1" aria-label="code-block-47-18"></a>    <span class="st">"""</span></span>
-<span id="cb47-19"><a href="#cb47-19" tabindex="-1" aria-label="code-block-47-19"></a><span class="st">    multiqc .</span></span>
-<span id="cb47-20"><a href="#cb47-20" tabindex="-1" aria-label="code-block-47-20"></a><span class="st">    """</span></span>
-<span id="cb47-21"><a href="#cb47-21" tabindex="-1" aria-label="code-block-47-21"></a><span class="op">}</span></span>
-<span id="cb47-22"><a href="#cb47-22" tabindex="-1" aria-label="code-block-47-22"></a></span>
-<span id="cb47-23"><a href="#cb47-23" tabindex="-1" aria-label="code-block-47-23"></a>workflow <span class="op">{</span></span>
-<span id="cb47-24"><a href="#cb47-24" tabindex="-1" aria-label="code-block-47-24"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
-<span id="cb47-25"><a href="#cb47-25" tabindex="-1" aria-label="code-block-47-25"></a></span>
-<span id="cb47-26"><a href="#cb47-26" tabindex="-1" aria-label="code-block-47-26"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb47-27"><a href="#cb47-27" tabindex="-1" aria-label="code-block-47-27"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
-<span id="cb47-28"><a href="#cb47-28" tabindex="-1" aria-label="code-block-47-28"></a>  fastqc_ch<span class="op">=</span><span class="fu">FASTQC</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
-<span id="cb47-29"><a href="#cb47-29" tabindex="-1" aria-label="code-block-47-29"></a>  fastqc_trimmed_ch<span class="op">=</span><span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
-<span id="cb47-30"><a href="#cb47-30" tabindex="-1" aria-label="code-block-47-30"></a>  multiqc_input_ch<span class="op">=</span>fastqc_ch<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>fastqc_trimmed_ch<span class="op">).</span><span class="fu">collect</span><span class="op">()</span></span>
-<span id="cb47-31"><a href="#cb47-31" tabindex="-1" aria-label="code-block-47-31"></a>  <span class="fu">MULTIQC</span><span class="op">(</span>multiqc_input_ch<span class="op">)</span></span>
-<span id="cb47-32"><a href="#cb47-32" tabindex="-1" aria-label="code-block-47-32"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb50-1"><a href="#cb50-1" tabindex="-1" aria-label="code-block-50-1"></a><span class="op">[..</span>truncated<span class="op">..]</span></span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1" aria-label="code-block-50-2"></a><span class="co">//script6.nf</span></span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1" aria-label="code-block-50-3"></a><span class="co">/*</span></span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1" aria-label="code-block-50-4"></a><span class="co"> * define the `MultiQC` process to combine FastQC results into one report</span></span>
+<span id="cb50-5"><a href="#cb50-5" tabindex="-1" aria-label="code-block-50-5"></a><span class="co"> */</span></span>
+<span id="cb50-6"><a href="#cb50-6" tabindex="-1" aria-label="code-block-50-6"></a>process MULTIQC <span class="op">{</span></span>
+<span id="cb50-7"><a href="#cb50-7" tabindex="-1" aria-label="code-block-50-7"></a></span>
+<span id="cb50-8"><a href="#cb50-8" tabindex="-1" aria-label="code-block-50-8"></a>    tag <span class="st">"MultiQC"</span></span>
+<span id="cb50-9"><a href="#cb50-9" tabindex="-1" aria-label="code-block-50-9"></a>    publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/multiqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
+<span id="cb50-10"><a href="#cb50-10" tabindex="-1" aria-label="code-block-50-10"></a></span>
+<span id="cb50-11"><a href="#cb50-11" tabindex="-1" aria-label="code-block-50-11"></a>    input<span class="op">:</span></span>
+<span id="cb50-12"><a href="#cb50-12" tabindex="-1" aria-label="code-block-50-12"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">'*'</span><span class="op">)</span></span>
+<span id="cb50-13"><a href="#cb50-13" tabindex="-1" aria-label="code-block-50-13"></a></span>
+<span id="cb50-14"><a href="#cb50-14" tabindex="-1" aria-label="code-block-50-14"></a>    output<span class="op">:</span></span>
+<span id="cb50-15"><a href="#cb50-15" tabindex="-1" aria-label="code-block-50-15"></a>    <span class="fu">path</span><span class="op">(</span><span class="st">'multiqc_report.html'</span><span class="op">)</span></span>
+<span id="cb50-16"><a href="#cb50-16" tabindex="-1" aria-label="code-block-50-16"></a></span>
+<span id="cb50-17"><a href="#cb50-17" tabindex="-1" aria-label="code-block-50-17"></a>    script<span class="op">:</span></span>
+<span id="cb50-18"><a href="#cb50-18" tabindex="-1" aria-label="code-block-50-18"></a>    <span class="st">"""</span></span>
+<span id="cb50-19"><a href="#cb50-19" tabindex="-1" aria-label="code-block-50-19"></a><span class="st">    multiqc .</span></span>
+<span id="cb50-20"><a href="#cb50-20" tabindex="-1" aria-label="code-block-50-20"></a><span class="st">    """</span></span>
+<span id="cb50-21"><a href="#cb50-21" tabindex="-1" aria-label="code-block-50-21"></a><span class="op">}</span></span>
+<span id="cb50-22"><a href="#cb50-22" tabindex="-1" aria-label="code-block-50-22"></a></span>
+<span id="cb50-23"><a href="#cb50-23" tabindex="-1" aria-label="code-block-50-23"></a>workflow <span class="op">{</span></span>
+<span id="cb50-24"><a href="#cb50-24" tabindex="-1" aria-label="code-block-50-24"></a>  read_pairs_ch <span class="op">=</span> <span class="bu">Channel</span><span class="op">.</span><span class="fu">fromFilePairs</span><span class="op">(</span> params<span class="op">.</span>reads<span class="op">,</span> checkIfExists<span class="op">:</span><span class="kw">true</span> <span class="op">)</span></span>
+<span id="cb50-25"><a href="#cb50-25" tabindex="-1" aria-label="code-block-50-25"></a></span>
+<span id="cb50-26"><a href="#cb50-26" tabindex="-1" aria-label="code-block-50-26"></a>  trimmed_reads_ch<span class="op">=</span><span class="fu">TRIM</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb50-27"><a href="#cb50-27" tabindex="-1" aria-label="code-block-50-27"></a>  assemblies_ch<span class="op">=</span><span class="fu">ASSEMBLE</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb50-28"><a href="#cb50-28" tabindex="-1" aria-label="code-block-50-28"></a>  fastqc_ch<span class="op">=</span><span class="fu">FASTQC</span><span class="op">(</span>read_pairs_ch<span class="op">)</span></span>
+<span id="cb50-29"><a href="#cb50-29" tabindex="-1" aria-label="code-block-50-29"></a>  fastqc_trimmed_ch<span class="op">=</span><span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>trimmed_reads_ch<span class="op">)</span></span>
+<span id="cb50-30"><a href="#cb50-30" tabindex="-1" aria-label="code-block-50-30"></a>  multiqc_input_ch<span class="op">=</span>fastqc_ch<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>fastqc_trimmed_ch<span class="op">).</span><span class="fu">collect</span><span class="op">()</span></span>
+<span id="cb50-31"><a href="#cb50-31" tabindex="-1" aria-label="code-block-50-31"></a>  <span class="fu">MULTIQC</span><span class="op">(</span>multiqc_input_ch<span class="op">)</span></span>
+<span id="cb50-32"><a href="#cb50-32" tabindex="-1" aria-label="code-block-50-32"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Execute the script with the following command:</p>
-<div class="codewrapper sourceCode" id="cb48">
+<div class="codewrapper sourceCode" id="cb51">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" tabindex="-1" aria-label="code-block-48-1"></a><span class="ex">$</span> nextflow run script6.nf <span class="at">--reads</span> <span class="st">'data/bacteria/reads/*_R{1,2}.fastq.gz'</span> <span class="at">-resume</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1" aria-label="code-block-51-1"></a><span class="ex">$</span> nextflow run script6.nf <span class="at">-resume</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1320,14 +1426,14 @@ output.</p>
 </button>
 <div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb50">
+<div class="codewrapper sourceCode" id="cb53">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb50-1"><a href="#cb50-1" tabindex="-1" aria-label="code-block-50-1"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/trim"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
-<span id="cb50-2"><a href="#cb50-2" tabindex="-1" aria-label="code-block-50-2"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/assemble"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
-<span id="cb50-3"><a href="#cb50-3" tabindex="-1" aria-label="code-block-50-3"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/fastqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
-<span id="cb50-4"><a href="#cb50-4" tabindex="-1" aria-label="code-block-50-4"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/fastqc_trimmed"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
-<span id="cb50-5"><a href="#cb50-5" tabindex="-1" aria-label="code-block-50-5"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/multiqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb53-1"><a href="#cb53-1" tabindex="-1" aria-label="code-block-53-1"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/trim"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1" aria-label="code-block-53-2"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/assemble"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1" aria-label="code-block-53-3"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/fastqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1" aria-label="code-block-53-4"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/fastqc_trimmed"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1" aria-label="code-block-53-5"></a>publishDir <span class="st">"</span><span class="ss">${</span>params<span class="op">.</span>outdir<span class="ss">}</span><span class="st">/multiqc"</span><span class="op">,</span> mode<span class="op">:</span><span class="st">'copy'</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1359,11 +1465,11 @@ visualization software, in your system.</p></li>
 <div id="metrics-and-reports-1" class="callout-inner">
 <h3 class="callout-title">Metrics and reports</h3>
 <div class="callout-content">
-<p>Run the script8.nf with the reporting options as shown below:</p>
-<div class="codewrapper sourceCode" id="cb51">
+<p>Run the script7.nf with the reporting options as shown below:</p>
+<div class="codewrapper sourceCode" id="cb54">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" tabindex="-1" aria-label="code-block-51-1"></a><span class="ex">$</span> nextflow run script7.nf <span class="at">-resume</span> <span class="at">-with-report</span> <span class="at">-with-trace</span> <span class="at">-with-timeline</span> <span class="at">-with-dag</span> dag.png</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" tabindex="-1" aria-label="code-block-54-1"></a><span class="ex">$</span> nextflow run script7.nf <span class="at">-resume</span> <span class="at">-with-report</span> <span class="at">-with-trace</span> <span class="at">-with-timeline</span> <span class="at">-with-dag</span> dag.png</span></code></pre>
 </div>
 <ol style="list-style-type: decimal"><li>Open the file <code>report.html</code> with a browser to see the
 report created with the above command.</li>
@@ -1494,8 +1600,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_genome_assembly_pipeline.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_genome_assembly_pipeline.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-05-29",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-07-02",
+  "datePublished": "2026-07-02"
 }
 
   </script><script>

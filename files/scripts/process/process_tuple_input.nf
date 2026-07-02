@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 process TUPLEINPUT{
 
     input:
@@ -13,6 +11,6 @@ process TUPLEINPUT{
 }
 
 workflow {
-    reads_ch = Channel.fromFilePairs( 'data/yeast/reads/ref1_{1,2}.fq.gz' )
+    reads_ch = channel.fromFilePairs( 'data/yeast/reads/ref1_{1,2}.fq.gz' )
     TUPLEINPUT( reads_ch )
 }
