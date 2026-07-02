@@ -1,6 +1,3 @@
-// process_exercise_combine_answer.nf
-
-
 process COMBINE {
  input:
 

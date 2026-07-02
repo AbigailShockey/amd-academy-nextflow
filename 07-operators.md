@@ -250,7 +250,7 @@ X
 
 ### Filter a channel
 
-Add two channel filters to the Nextflow script below to view only the even numbered chromosomes.
+Create a nextflow script named operators_exercise_filter.nf. Add two channel filters to the Nextflow script below to view only the even numbered chromosomes.
 
 **Note:** The expression `it % 2`  produces the remainder of a division.
 
@@ -272,7 +272,16 @@ chr_ch = channel
   .view()
 ```
 
+```bash
+$ nextflow run operators_exercise_filter.nf
+```
+
 ```output 
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `operators_exercise_filter_answer.nf` [admiring_gutenberg] revision: 23d6cbb0aa
+
 2
 4
 6
@@ -358,10 +367,10 @@ file data/yeast/reads/etoh60_3_1.fq.gz contains 26254 reads
 
 ### map operator
 
-Add a `map` operator to the Nextflow script below to transform the contents into a tuple with the file and the file's name, using the `.getName` method. The `getName` method gives the filename. Finally `view` the channel contents.
+Create a nextflow script named operators_exercise_map.nf. Add a `map` operator to the Nextflow script below to transform the contents into a tuple with the file and the file's name, using the `.getName` method. The `getName` method gives the filename. Finally `view` the channel contents.
 
 ```groovy 
- channel
+channel
  .fromPath( 'data/yeast/reads/*.fq.gz' )
  .view()
 ```
@@ -375,6 +384,36 @@ ch = channel
   .fromPath( 'data/yeast/reads/*.fq.gz' )
   .map ({file -> [ file, file.getName() ]})
   .view({file, name -> "file's name: $name"})
+```
+
+```bash
+$ nextflow run operators_exercise_map.nf
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `operators_exercise_map_answer.nf` [shrivelled_celsius] revision: c1a1b7658d
+
+file's name: ref1_1.fq.gz
+file's name: ref3_1.fq.gz
+file's name: etoh60_3_1.fq.gz
+file's name: temp33_1_1.fq.gz
+file's name: etoh60_1_2.fq.gz
+file's name: temp33_2_1.fq.gz
+file's name: ref3_2.fq.gz
+file's name: ref2_2.fq.gz
+file's name: etoh60_1_1.fq.gz
+file's name: temp33_1_2.fq.gz
+file's name: temp33_2_2.fq.gz
+file's name: ref2_1.fq.gz
+file's name: etoh60_2_2.fq.gz
+file's name: temp33_3_2.fq.gz
+file's name: etoh60_2_1.fq.gz
+file's name: temp33_3_1.fq.gz
+file's name: ref1_2.fq.gz
+file's name: etoh60_3_2.fq.gz
 ```
 
 :::::::::::::::::::::::::
@@ -412,7 +451,7 @@ The above snippet prints:
 3
 ```
 
-This is similar to the channel factory `Channel.fromList`.
+This is similar to the channel factory `channel.fromList`.
 
 #### Converting the contents of a channel to a single list item.
 
@@ -475,6 +514,8 @@ This operator is useful to process altogether all elements for which there's a c
 
 ### Group Tuple
 
+Create a nextflow script named operators_exercise_grouptuple.nf.
+
 ```groovy 
 channel.fromPath('data/yeast/reads/*.fq.gz')
        .view()
@@ -497,6 +538,23 @@ ch = channel.fromPath('data/yeast/reads/*.fq.gz')
     .map { file -> [ file.getName().split('_')[0], file ] }
     .groupTuple()
     .view()
+```
+
+```bash
+$ nextflow run operators_exercise_grouptuple.nf
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `operators_exercise_grouptuple_answer.nf` [magical_fermi] revision: 7169b2f3cf
+
+[ref1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
+[ref3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[etoh60, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
+[temp33, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz]]
+[ref2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz]]
 ```
 
 :::::::::::::::::::::::::
@@ -672,7 +730,7 @@ data/yeast/reads/ref2_1.fq.gz
 
 ### Parse a CSV file
 
-Modify the Nextflow script to print the first column `sample_id`.
+Create a nextflow script named operators_exercise_parse-csv.nf. Modify the Nextflow script to print the first column `sample_id`.
 
 ```groovy 
 csv_ch=channel
@@ -689,6 +747,20 @@ csv_ch=channel
         .splitCsv(header:true)
 
 csv_ch.view({it.sample_id})
+```
+
+```bash
+$ nextflow run operators_exercise_parse-csv.nf
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `operators_exercise_parse-csv_answer.nf` [big_dubinsky] revision: 1aeee4a9e3
+
+ref1
+ref2
 ```
 
 :::::::::::::::::::::::::
@@ -714,7 +786,7 @@ Channel.of("val1\tval2\tval3\nval4\tval5\tval6\n")
 
 ### More resources
 
-See the operators [documentation](https://www.nextflow.io/docs/latest/operator.html) on the Nextflow web site.
+See the operators [here](https://docs.seqera.io/nextflow/script#operators).
 
 
 

@@ -1,6 +1,3 @@
-//process_input_value.nf
-
-
 process PRINTCHR {
 
   input:
@@ -12,9 +9,9 @@ process PRINTCHR {
   """
 }
 
-chr_ch = Channel.of( 'A' .. 'P' )
-
 workflow {
+
+  chr_ch = channel.of( 'A' .. 'P' )
 
   PRINTCHR(chr_ch)
 }

@@ -178,8 +178,6 @@ workflow {
 }
 
 process PRINT_MESSAGE {
-    echo true
-
     input:
     val my_message
 
@@ -198,10 +196,10 @@ params.message = 'Are you tired?'
 
 What is the outcome of the following commands?
 
-1. `nextflow run print_message.nf`
-2. `nextflow run print_message.nf --message '¿Que tal?'`
-3. `nextflow run print_message.nf -c print_message.config`
-4. `nextflow run print_message.nf -c print_message.config --message '¿Que tal?'`
+1. `nextflow run print_message.nf -process.debug`
+2. `nextflow run print_message.nf --message '¿Que tal?' -process.debug`
+3. `nextflow run print_message.nf -c print_message.config -process.debug`
+4. `nextflow run print_message.nf -c print_message.config --message '¿Que tal?' -process.debug`
 
 :::::::::::::::  solution
 
@@ -290,12 +288,11 @@ directives for all processes individually, especially if directives
 are repeated for groups of processes. A helpful strategy is to annotate
 the processes using the `label` directive (processes can have multiple
 labels). The `withLabel` selector then allows the configuration of all
-processes annotated with a specific label, as shown below:
+processes annotated with a specific label, as shown below.
+
+Put this codeblock into a Nextflow script named configuration_process_labels.nf:
 
 ```groovy
-// configuration_process_labels.nf
-
-
 process P1 {
 
     label "big_mem"
@@ -317,21 +314,58 @@ process P2 {
 }
 
 workflow {
-
     P1()
     P2()
-
 }
 ```
 
+```bash
+$ nextflow run configuration_process_labels.nf -process.debug
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `configuration_process_labels.nf` [nice_engelbart] revision: 6e2ef4392d
+
+executor >  local (2)
+[70/ed9ec8] process > P1 [100%] 1 of 1 ✔
+[2b/25f7e9] process > P2 [100%] 1 of 1 ✔
+P2: Using 1 cpus and null memory.
+
+P1: Using 1 cpus and null memory.
+```
+
+Now generate a config file named configuration_process-labels.config to modify the label in your nextflow script.
+
 ```groovy
-// configuration_process-labels.config
 process {
     withLabel: big_mem {
         cpus = 16
         memory = 64.GB
     }
 }
+```
+
+```bash
+$ nextflow run configuration_process_labels.nf -c configuration_process-labels.config -process.debug
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.1
+
+Launching `configuration_process_labels.nf` [chaotic_meucci] revision: 1d287d1819
+
+executor >  local (2)
+[d8/eb3780] process > P1 [100%] 1 of 1 ✔
+[c9/5d7f73] process > P2 [100%] 1 of 1 ✔
+P2: Using 16 cpus and 64 GB memory.
+
+P1: Using 16 cpus and 64 GB memory.
+
+
 ```
 
 Another strategy is to use process selector expressions. Both
@@ -367,19 +401,10 @@ priority rules are applied (from highest to lowest):
 
 ## Process selectors
 
-Create a Nextflow config, `process-selector.config`, specifying
-different `cpus` and `memory` resources for the two processes
-`P1` (cpus 1 and memory 2.GB) and
-`P2` (cpus 2 and memory 1.GB),
-where `P1` and `P2` are defined as follows:
+Put this codeblock into a Nextflow script named process-selector.nf:
 
 ```groovy 
-// process-selector.nf
-
-
 process P1 {
-    echo true
-
     script:
     """
     echo P1: Using $task.cpus cpus and $task.memory memory.
@@ -387,8 +412,6 @@ process P1 {
 }
 
 process P2 {
-    echo true
-
     script:
     """
     echo P2: Using $task.cpus cpus and $task.memory memory.
@@ -401,12 +424,17 @@ workflow {
 }
 ```
 
+Create a Nextflow config, `process-selector.config`, specifying
+different `cpus` and `memory` resources for the two processes
+`P1` (cpus 1 and memory 2.GB) and
+`P2` (cpus 2 and memory 1.GB),
+where `P1` and `P2` are defined as follows:
+
 :::::::::::::::  solution
 
 ## Solution
 
 ```groovy
-// process-selector.config
 process {
     withName: P1 {
         cpus = 1
@@ -424,16 +452,19 @@ $ nextflow run process-selector.nf -c process-selector.config -process.debug
 ```
 
 ```output
-N E X T F L O W  ~  version 21.04.0
 
-Launching `process-selector.nf` [clever_borg] -
-revision: e765b9e62d
+ N E X T F L O W   ~  version 26.04.1
+
+Launching `process-selector.nf` [insane_fermat] revision: 904efc4c01
+
 executor >  local (2)
-[de/86cef0] process > P1 [100%] 1 of 1 ✔
-[bf/8b332e] process > P2 [100%] 1 of 1 ✔
+[e0/196a2e] process > P1 [100%] 1 of 1 ✔
+[4e/d1cedd] process > P2 [100%] 1 of 1 ✔
+P1: Using 1 cpus and 2 GB memory.
+
 P2: Using 2 cpus and 1 GB memory.
 
-P1: Using 1 cpus and 2 GB memory.
+
 ```
 
 :::::::::::::::::::::::::
@@ -523,7 +554,7 @@ process {
 
 An important feature of Nextflow is the ability to manage
 software using different technologies. It supports the Conda package
-management system, and container engines such as Docker, Singularity,
+management system, and container engines such as Docker, Apptainer,
 Podman, Charliecloud, and Shifter. These technologies
 allow one to package tools and their dependencies into a software environment
 such that the tools will always work as long as the environment can be loaded.
@@ -591,22 +622,19 @@ Each time the `process` is called we are going to run `fastp -A -i ${read} -o ou
 * `2>&1`: This is a shell redirection command, it means that both the regular output and error messages will be sent to the console.
 
 
-1. Create a config file for the Nextflow script `configuration_fastp.nf`.
+1. Create a config file for the Nextflow script `fastp.config`.
 
 2. Add a conda directive for the process name `FASTP` that includes the bioconda package `fastp`, version 0.12.4-0.
 
 **Hint** You can specify the conda packages using the syntax `<channel>::<package_name>=<version>` e.g. `bioconda::salmon=1.5.2`
 
-3. Run the Nextflow script `configure_fastp.nf` with the configuration file using the `-c` option.
+3. Run the Nextflow script `configuration_fastp.nf` with the configuration file using the `-c` option.
 
 ```groovy 
-// configuration_fastp.nf
-nextflow.enable.dsl = 2
-
 params.input = "data/yeast/reads/ref1_1.fq.gz"
 
 workflow {
-    FASTP( Channel.fromPath( params.input ) ).view()
+    FASTP( channel.fromPath( params.input )).view()
 }
 
 process FASTP {
@@ -638,20 +666,20 @@ process {
 ```
 
 ```bash
-nextflow run configure_fastp.nf -c fastp.config
+$ nextflow run configuration_fastp.nf -c fastp.config
 ```
 
 ```output
-N E X T F L O W  ~  version 21.04.0
-Launching `configuration_fastp.nf` [berserk_jepsen] - revision: 28fadd2486
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `configuration_fastp.nf` [gloomy_mestorf] revision: 9ea3cd04ed
+
 executor >  local (1)
-[c1/c207d5] process > FASTP (1) [100%] 1 of 1 ✔
-Creating Conda env: bioconda::fastp=0.12.4-0 [cache /home/training/work/conda/env-a7a3a0d820eb46bc41ebf4f72d955e5f]
-ref1_1.fq.gz 58708
+[a4/49e27f] process > FASTP (1) [100%] 1 of 1 ✔
 Read1 before filtering:
 total reads: 14677
 total bases: 1482377
-
 Q20 bases: 1466210(98.9094%)
 Q30 bases: 1415997(95.5221%)
 
@@ -667,8 +695,13 @@ reads failed due to low quality: 6
 reads failed due to too many N: 0
 reads failed due to too short: 0
 
+Duplication rate (may be overestimated since this is SE data): 0.0204401%
+
 JSON report: fastp.json
 HTML report: fastp.html
+
+fastp -A -i ref1_1.fq.gz -o out.fq 
+fastp v0.23.4, time used: 1 seconds
 ```
 
 :::::::::::::::::::::::::
@@ -706,23 +739,23 @@ docker.enabled = true
 docker.runOptions = '-u $(id -u):$(id -g)'
 ```
 
-### Software configuration using Singularity
+### Software configuration using Apptainer
 
-Singularity is another container technology, commonly used on
+Apptainer (formerly Singularity) is another container technology, commonly used on
 HPC clusters. It is different to Docker in several ways. The
 primary differences are that processes are run as the user,
 and certain directories are automatically "mounted" (made available)
-in the container instance. Singularity also supports building
-Singularity images from Docker images, allowing Docker image paths
+in the container instance. Apptainer also supports building
+Apptainer images from Docker images, allowing Docker image paths
 to be used as values for `process.container`.
 
-Singularity is enabled in a similar manner to Docker.
+Apptainer is enabled in a similar manner to Docker.
 A container image path must be provided using `process.container` and
-singularity enabled using `singularity.enabled = true`.
+apptainer enabled using `apptainer.enabled = true`.
 
 ```groovy 
 process.container = 'https://depot.galaxyproject.org/singularity/salmon:1.5.2--h84f40af_0'
-singularity.enabled = true
+apptainer.enabled = true
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -731,12 +764,12 @@ singularity.enabled = true
 
 The following protocols are supported:
 
-- `docker://`: download the container image from the Docker Hub and convert it to the Singularity format (default).
-- `library://`: download the container image from the Singularity Library service.
-- `shub://`: download the container image from the Singularity Hub.
-- `docker-daemon://`: pull the container image from a local Docker installation and convert it to a Singularity image file.
-- `https://`: download the singularity image from the given URL.
-- `file://`: use a singularity image on local computer storage.
+- `docker://`: download the container image from the Docker Hub and convert it to the Apptainer format (default).
+- `library://`: download the container image from the Apptainer Library service.
+- `shub://`: download the container image from the Apptainer Hub.
+- `docker-daemon://`: pull the container image from a local Docker installation and convert it to a Apptainer image file.
+- `https://`: download the Apptainer image from the given URL.
+- `file://`: use a Apptainer image on local computer storage.
   
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

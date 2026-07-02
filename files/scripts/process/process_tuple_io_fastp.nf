@@ -1,6 +1,3 @@
-//process_tuple_io_fastp.nf
-
-
 process FASTP {
   input:
   tuple val(sample_id), path(reads)
@@ -18,9 +15,9 @@ process FASTP {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
-
 workflow {
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
+
   FASTP(reads_ch)
   FASTP.out.view()
 }

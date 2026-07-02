@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 process COMBINE {
 
     input:
@@ -14,7 +12,7 @@ process COMBINE {
 
 
 workflow {
-    ch_num = Channel.of( 1, 2 )
-    ch_letters = Channel.of( 'a', 'b', 'c', 'd' )
+    ch_num = channel.of( 1, 2 )
+    ch_letters = channel.of( 'a', 'b', 'c', 'd' )
     COMBINE( ch_num, ch_letters )
 }

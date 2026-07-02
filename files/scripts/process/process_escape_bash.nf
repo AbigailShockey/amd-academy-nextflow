@@ -1,6 +1,3 @@
-//process_escape_bash.nf
-
-
 process NUM_IDS {
 
   script:

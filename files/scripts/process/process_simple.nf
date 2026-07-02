@@ -1,5 +1,3 @@
-
-
 process COUNT_BASES {
    
   script:

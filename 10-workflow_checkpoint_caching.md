@@ -26,7 +26,26 @@ Nextflow achieves re-entrancy by automatically keeping track of all the processe
 
 To restart from the last successfully executed process we add the command line option `-resume` to the Nextflow command.
 
-For example, the command below would resume the `word_count.nf` script from the last successful process.
+For example, we can run the `word_count.nf` script as follows.
+
+```bash
+$ nextflow run word_count.nf
+```
+
+And the output appears similar to this
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [high_heyrovsky] revision: 224ebafda1
+
+executor >  local (1)
+[b9/e089cb] NUM_LINES (1) [100%] 1 of 1 ✔
+ref1_1.fq.gz 58708
+
+```
+
+Using the `-resume` flag in the command below would resume the `word_count.nf` script from the last successful process.
 
 ```bash
 $ nextflow run word_count.nf --input 'data/yeast/reads/ref1*.fq.gz' -resume
@@ -35,11 +54,18 @@ $ nextflow run word_count.nf --input 'data/yeast/reads/ref1*.fq.gz' -resume
 We can see in the output that the results from the process `NUM_LINES` has been retrieved from the cache.
 
 ```output
-Launching `word_count.nf` [condescending_dalembert] - revision: fede04a544
-[c9/2597d5] process > NUM_LINES (1) [100%] 2 of 2, cached: 2 ✔
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [agitated_lovelace] revision: 224ebafda1
+
+executor >  local (1)
+[9d/41ee24] process > NUM_LINES (2) [100%] 2 of 2, cached: 1 ✔
 ref1_1.fq.gz 58708
 
 ref1_2.fq.gz 58708
+
+
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge

@@ -1,6 +1,3 @@
-//process_exercise_output_answer.nf
-
-
 process EXTRACT_IDS {
   input:
   path transcriptome
@@ -16,10 +13,10 @@ process EXTRACT_IDS {
   """
 }
 
-transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
-chr_ch = channel.of('A'..'P')
-
 workflow {
+  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
+  chr_ch = channel.of('A'..'P')
+  
   EXTRACT_IDS(transcriptome_ch, chr_ch)
   EXTRACT_IDS.out.view()
 }

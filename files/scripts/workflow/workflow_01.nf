@@ -1,8 +1,4 @@
-//workflow_01.nf
-
-
-
- process FASTQC {
+process FASTQC {
     input:
       tuple(val(sample_id), path(reads))
     output:

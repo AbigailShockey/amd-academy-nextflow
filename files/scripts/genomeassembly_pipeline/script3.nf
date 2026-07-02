@@ -3,18 +3,8 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/*_R{1,2}.fq.gz"
+params.reads = "data/bacteria/reads/*_R{1,2}.fastq.gz"
 params.outdir = "results"
-
-println """\
-         G E N O M E A S S E M B L Y - N F
-         ===================================
-         reads        : ${params.reads}
-         outdir       : ${params.outdir}
-         """
-         .stripIndent()
-
-read_pairs_ch = Channel.fromFilePairs(params.reads)
 
 /*
  * define the `TRIM` process that trims raw reads and emits trimmed reads
@@ -36,7 +26,15 @@ process TRIM {
 }
 
 workflow {
-  read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
+  println """\
+         G E N O M E A S S E M B L Y - N F
+         ===================================
+         reads        : ${params.reads}
+         outdir       : ${params.outdir}
+         """
+         .stripIndent()
+
+  read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   TRIM()
 }

@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 process FASTQC {
@@ -37,6 +35,6 @@ process PARSEZIP {
 }
 
 workflow {
-    read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists: true )
+    read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists: true )
     PARSEZIP( FASTQC( read_pairs_ch ).collect() )
 }

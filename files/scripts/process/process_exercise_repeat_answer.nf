@@ -1,6 +1,3 @@
-//process_exercise_repeat_answer.nf
-
-
 process COMBINE {
   input:
   path transcriptome
@@ -13,9 +10,9 @@ process COMBINE {
   """
 }
 
-transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-chr_ch = channel.of('A'..'P')
-
 workflow {
+  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
+  chr_ch = channel.of('A'..'P')
+
   COMBINE(transcriptome_ch, chr_ch)
 }

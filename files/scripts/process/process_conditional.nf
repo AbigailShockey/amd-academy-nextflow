@@ -1,9 +1,5 @@
-//process_conditional.nf
-
-
 params.method = 'ids'
 params.transcriptome = "$projectDir/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
-
 
 process COUNT {
   script:

@@ -1,6 +1,3 @@
-//process_python_script.nf
-
-
 process PROCESS_READS {
 
   script:

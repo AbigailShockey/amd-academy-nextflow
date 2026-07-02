@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 process INDEX {
 
     input:
@@ -30,8 +28,8 @@ process QUANT {
 }
 
 workflow {
-    transcriptome_ch = Channel.fromPath( 'data/yeast/transcriptome/*.fa.gz' )
-    read_pairs_ch = Channel.fromFilePairs( 'data/yeast/reads/*_{1,2}.fq.gz' )
+    transcriptome_ch = channel.fromPath( 'data/yeast/transcriptome/*.fa.gz' )
+    read_pairs_ch = channel.fromFilePairs( 'data/yeast/reads/*_{1,2}.fq.gz' )
     INDEX( transcriptome_ch )
     QUANT( INDEX.out.salmon_index, read_pairs_ch ).view()
 }
