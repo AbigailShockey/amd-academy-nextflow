@@ -170,7 +170,7 @@ during the course setup. You should copy the script into the current directory
 For example, to copy the script for this lesson episode, run the following command:
 
 ```bash
-$ cp scripts/introduction/word_count.nf .
+$ cp episodes/files/scripts/introduction/word_count.nf .
 ```
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
@@ -191,19 +191,15 @@ params.input = "data/yeast/reads/ref1_1.fq.gz"
 
 /*
 ========================================================================================
-    Input data is received through channels
-========================================================================================
-*/
-
-input_ch = Channel.fromPath(params.input)
-
-/*
-========================================================================================
    Main Workflow
 ========================================================================================
 */
 
 workflow {
+    //  Input data is received through channels.
+
+    input_ch = channel.fromPath(params.input)
+
     //  The script to execute is called by it's process name, and input is provided between brackets.
 
     NUM_LINES(input_ch)
@@ -275,18 +271,22 @@ $ nextflow run word_count.nf
 You should see output similar to the text shown below:
 
 ```output
-N E X T F L O W  ~  version 21.04.3
-Launching `word_count.nf` [fervent_babbage] - revision: c54a707593
-executor >  local (1)
-[21/b259be] process > NUM_LINES (1) [100%] 1 of 1 ✔
 
- ref1_1.fq.gz 58708
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [shrivelled_fourier] revision: 224ebafda1
+
+executor >  local (1)
+[32/366d91] process > NUM_LINES (1) [100%] 1 of 1 ✔
+ref1_1.fq.gz 58708
+
+
 ```
 
 1. The first line shows the Nextflow version number.
-2. The second line shows the run name `fervent_babbage` (adjective and scientist name) and revision id `c54a707593`.
+2. The second line shows the run name `shrivelled_fourier` (adjective and scientist name) and revision id `224ebafda1`.
 3. The third line tells you the process has been executed locally (`executor >  local`).
-4. The next line shows the process id `21/b259be`, process name, number of cpus, percentage task completion, and how many instances of the process have been run.
+4. The next line shows the process id `32/366d91`, process name, number of cpus, percentage task completion, and how many instances of the process have been run.
 5. The final line is the output of the `.view()` operator.
   
   

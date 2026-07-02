@@ -49,10 +49,9 @@ The `val` qualifier allows us to output a value defined in the script.
 
 Because Nextflow processes can only communicate through channels, if we want to share a value output of one process as input to another process, we would need to define that value in the output declaration block as shown in the following example:
 
+Put this codeblock into a Nextflow script named process_output_value.nf:
+
 ```groovy 
-//process_output_value.nf
-
-
 params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
 
 process COUNT_CHR_SEQS {
@@ -67,33 +66,46 @@ process COUNT_CHR_SEQS {
   zgrep -c '^>Y'$chr $params.transcriptome
   """
 }
-// Both 'Channel' and 'channel' keywords work to generate channels.
-// However, it is a good practice to be consistent through the whole pipeline development
-chr_ch = channel.of('A'..'P')
 
 workflow {
+
+  chr_ch = channel.of('A'..'P')
+
   COUNT_CHR_SEQS(chr_ch)
   // use the view operator to display contents of the channel
   COUNT_CHR_SEQS.out.view()
 }
 ```
 
+```bash
+$ nextflow run process_output_value.nf -process.debug
+```
+
 ```output 
-N E X T F L O W  ~  version 21.10.6
-Launching `p1.nf` [jovial_lavoisier] - revision: a652ef75d4
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_output_value.nf` [lonely_wing] revision: b4296b8514
+
 executor >  local (16)
-executor >  local (16)
-[6a/d82669] process > COUNT_CHR_SEQS (16) [100%] 16 of 16 ✔
+[0f/52f20f] process > COUNT_CHR_SEQS (16) [100%] 16 of 16 ✔
 B
-456
-
+D
 A
-118
-
 C
-186
+G
+E
+F
+H
+K
+I
+J
+M
+L
+N
+O
+P
 
-[..truncated..]
 
 ```
 
@@ -102,10 +114,9 @@ C
 If we want to capture a file instead of a value as output we can use the
 `path` qualifier that can capture one or more files produced by the process, over the specified channel.
 
+Put this codeblock into a Nextflow script named process_output_file.nf:
+
 ```groovy 
-//process_output_file.nf
-
-
 params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
 
 process COUNT_CHR_SEQS {
@@ -120,29 +131,44 @@ process COUNT_CHR_SEQS {
   zgrep -c '^>Y'$chr $params.transcriptome > ${chr}_seq_count.txt
   """
 }
-// Both 'Channel' and 'channel' keywords work to generate channels.
-// However, it is a good practice to be consistent through the whole pipeline development
-chr_ch = channel.of('A'..'P')
 
 workflow {
+  chr_ch = channel.of('A'..'P')
   COUNT_CHR_SEQS(chr_ch)
   // use the view operator to display contents of the channel
   COUNT_CHR_SEQS.out.view()
 }
 ```
 
+```bash
+$ nextflow run process_output_file.nf -process.debug
+```
+
+
 ```output 
-N E X T F L O W  ~  version 21.10.6
-Launching `process_output_file.nf` [angry_lichterman] - revision: 6a46c69413
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_output_file.nf` [maniac_kare] revision: f1b64d6957
+
 executor >  local (16)
-[95/ec5d62] process > COUNT_CHR_SEQS (13) [100%] 16 of 16 ✔
-/Users/ggrimes2/Documents/process_wf/work/f2/6d5c44985a15feb0555b7b71c37a9c/J_seq_count.txt
-executor >  local (16)
-[95/ec5d62] process > COUNT_CHR_SEQS (13) [100%] 16 of 16 ✔
-work/f2/6d5c44985a15feb0555b7b71c37a9c/J_seq_count.txt
-work/4f/f810942341d003acc80c2603671177/B_seq_count.txt
-work/23/883ccf187b5357137a9a87d98717c0/I_seq_count.txt
-[..truncated..]
+[de/360d6c] process > COUNT_CHR_SEQS (15) [100%] 16 of 16 ✔
+/home/rstudio/lessons/amd-academy-nextflow/work/7c/8c923395b18eb437967a1dd66cf581/A_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/e9/48fbf0b839fa4af4200053ceb280df/D_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/10/9ba939f2d755e982bf04f63ba83d64/C_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/ad/be9477a0483de424e0b3dcf28a9a8f/B_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/6d/b060098c6fcf16825027e876925cd5/H_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/71/e22a672887045cb91731f9975ce1aa/F_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/05/5219625165b53772c6f5bc0a92486c/E_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/e2/87a9c2784a3d95ba6be5e0933127af/G_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/de/6e42b59a62df6075488f04a0481749/J_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/07/08365a09f460ed90191e39ba691739/K_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/84/d08d9891add8be7d2debb61aac06b0/I_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/c3/97da6d66fe9fd05b77b0460e15e669/L_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/aa/38a477159216bc2c87a529028ee9f9/M_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/44/901992e9c24861c1d79a474f108862/N_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/19/e7c8f814861dca4b19df377d9051ea/P_seq_count.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/de/360d6c80091ca132aee5adff4fe412/O_seq_count.txt
 ```
 
 In the above example the process `COUNT_CHR_SEQS` creates a file named `<chr>_seq_count.txt` in the work directory containing the number of transcripts within that chromosome.
@@ -158,10 +184,9 @@ This allows us to capture multiple files into a list and output them as a one it
 
 For example, here we will capture the files `sequence_ids.txt` and  `sequence.txt` produced as results from SPLIT\_FASTA in the output channel.
 
+Put this codeblock into a Nextflow script named process_output_multiple.nf:
+
 ```groovy 
-//process_output_multiple.nf
-
-
 params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
 
 process SPLIT_FASTA {
@@ -177,11 +202,10 @@ process SPLIT_FASTA {
   zgrep -v '^>' $transcriptome > sequence.txt
   """
 }
-// Both 'Channel' and 'channel' keywords work to generate channels.
-// However, it is a good practice to be consistent through the whole pipeline development
-transcriptome_ch = channel.fromPath(params.transcriptome)
 
 workflow {
+  transcriptome_ch = channel.fromPath(params.transcriptome)
+  
   SPLIT_FASTA(transcriptome_ch)
   // use the view operator to display contents of the channel
   SPLIT_FASTA.out.view()
@@ -193,11 +217,15 @@ $ nextflow run process_output_multiple.nf
 ```
 
 ```output
-N E X T F L O W  ~  version 21.10.6
-Launching `process_output_multiple.nf` [goofy_meitner] - revision: 53cbf7e5a4
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_output_multiple.nf` [hopeful_torvalds] revision: 96f880fc78
+
 executor >  local (1)
-[21/01e6ba] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
-[/work/21/01e6baac41d2f37531f86dc7a57034/sequence.txt, work/21/01e6baac41d2f37531f86dc7a57034/sequence_ids.txt]
+[5a/ff9ff1] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
+[/home/rstudio/lessons/amd-academy-nextflow/work/5a/ff9ff1dce8a9edd0a7e5debc0eb0d6/sequence.txt, /home/rstudio/lessons/amd-academy-nextflow/work/5a/ff9ff1dce8a9edd0a7e5debc0eb0d6/sequence_ids.txt]
+
 
 ```
 
@@ -214,9 +242,6 @@ executor >  local (1)
 Modify the nextflow script `process_exercise_output.nf` to include an output block that captures the different output file `${chr}_seqids.txt`.
 
 ```groovy 
-//process_exercise_output.nf
-
-
 process EXTRACT_IDS {
   input:
   path transcriptome
@@ -230,10 +255,10 @@ process EXTRACT_IDS {
   """
 }
 
-transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
-chr_ch = channel.of('A'..'P')
-
 workflow {
+  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
+  chr_ch = channel.of('A'..'P')
+
   EXTRACT_IDS(transcriptome_ch, chr_ch)
   EXTRACT_IDS.out.view()
 }
@@ -244,9 +269,6 @@ workflow {
 ## Solution
 
 ```groovy 
-//process_exercise_output_answer.nf
-
-
 process EXTRACT_IDS {
   input:
   path transcriptome
@@ -262,13 +284,39 @@ process EXTRACT_IDS {
   """
 }
 
-transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
-chr_ch = channel.of('A'..'P')
-
 workflow {
+  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
+  chr_ch = channel.of('A'..'P')
+  
   EXTRACT_IDS(transcriptome_ch, chr_ch)
   EXTRACT_IDS.out.view()
 }
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_exercise_output_answer.nf` [compassionate_tuckerman] revision: 27bbe6283d
+
+executor >  local (16)
+[31/5ef214] process > EXTRACT_IDS (16) [100%] 16 of 16 ✔
+/home/rstudio/lessons/amd-academy-nextflow/work/8a/14a9d14aa56579bf82a645c2cc36b0/B_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/9a/30bc1ca905bf6377674b8ad960eb4d/D_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/e2/35c156da6ae6ef86d8cd4f6a6df082/A_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/3e/ff4ef6fbd0fe959d4d91e84c224fde/C_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/d5/2b81b1d282ada273cefe765cc4915c/E_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/62/bb065bd8790cc59cbcc2f350581c17/I_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/08/0525016716767cd69a5b2a100b3f97/F_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/12/4e7d6380957c6adf44c8346db750ee/H_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/83/5eb9aa575c6d3a771f6ab01a1d444e/G_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/f1/8d7dae11b125867edafc5534de00d9/K_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/95/c55c3b31acbb8d33b51f29fb842144/J_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/10/dddf9a35137eb0194a21fe3c1f2d65/L_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/18/4fe1d4a0d2926dbfbf89ed745e869c/M_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/d7/eee14e01746ef4514722841b4299d1/O_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/11/c37e15b5970ffbb066e627913c00ca/N_seqids.txt
+/home/rstudio/lessons/amd-academy-nextflow/work/31/5ef2147270ac915a5f6f3e4ba7098b/P_seqids.txt
 ```
 
 :::::::::::::::::::::::::
@@ -287,34 +335,44 @@ In tuples the first item is the grouping key and the second item is the list.
 
 When using channel containing a tuple, such a one created with `.filesFromPairs` factory method, the corresponding input declaration must be declared with a `tuple` qualifier, followed by definition of each item in the tuple.
 
+Put this codeblock into a Nextflow script named process_tuple_input.nf:
+
 ```groovy 
-//process_tuple_input.nf
-
-
 process TUPLEINPUT{
-  input:
-  tuple val(sample_id), path(reads)
 
-  script:
-  """
-  echo $sample_id
-  echo $reads
-  """
+    input:
+    tuple val(sample_id), path(reads)
+
+    script:
+    """
+    echo $sample_id
+    echo $reads
+    """
 }
-
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
 
 workflow {
-  TUPLEINPUT(reads_ch)
+    reads_ch = channel.fromFilePairs( 'data/yeast/reads/ref1_{1,2}.fq.gz' )
+    TUPLEINPUT( reads_ch )
 }
+```
 
+```bash
+nextflow run process_tuple_input.nf  -process.debug
 ```
 
 outputs
 
 ```output 
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_tuple_input.nf` [tender_fourier] revision: 573e8ac965
+
+executor >  local (1)
+[52/43067e] process > TUPLEINPUT (1) [100%] 1 of 1 ✔
 ref1
 ref1_1.fq.gz ref1_2.fq.gz
+
 ```
 
 In the same manner an output channel containing tuple of values can be declared using the `tuple` qualifier following by the definition of each tuple element in the tuple.
@@ -326,12 +384,9 @@ output:
   tuple val(sample_id), path("${sample_id}.fq.gz")
 ```
 
-An example can be seen in this script below.
+Put this codeblock into a Nextflow script named process_tuple_io.nf:
 
 ```groovy 
-//process_tuple_io.nf
-
-
 process COMBINE_FQ {
   input:
   tuple val(sample_id), path(reads)
@@ -345,13 +400,12 @@ process COMBINE_FQ {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
-
 workflow {
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
+
   COMBINE_FQ(reads_ch)
   COMBINE_FQ.out.view()
 }
-
 ```
 
 ```bash 
@@ -361,7 +415,15 @@ nextflow run process_tuple_io.nf
 The output is now a tuple containing the sample id and the combined fastq files.
 
 ```output 
-[ref1, work/2d/a073d34b5b3231b1f57872599bd308/ref1.fq]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_tuple_io.nf` [loquacious_sinoussi] revision: f996b37474
+
+executor >  local (1)
+[d7/363b07] process > COMBINE_FQ (1) [100%] 1 of 1 ✔
+[ref1, /home/rstudio/lessons/amd-academy-nextflow/work/d7/363b07b508064d1c01a43d53ddfef6/ref1.fq.gz]
+
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -389,9 +451,9 @@ process COMBINE_REPS {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*.fq.gz',size:-1)
-
 workflow{
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*.fq.gz',size:-1)
+
   COMBINE_REPS(reads_ch)
   COMBINE_REPS.out.view()
 }
@@ -402,9 +464,6 @@ workflow{
 ## Solution
 
 ```groovy 
-//process_exercise_tuple_answer.nf
-
-
 process COMBINE_REPS {
   input:
   tuple val(sample_id), path(reads)
@@ -419,22 +478,24 @@ process COMBINE_REPS {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref*_{1,2,3}.fq.gz',size:-1)
-
 workflow{
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*.fq.gz',size:-1)
+
   COMBINE_REPS(reads_ch)
   COMBINE_REPS.out.view()
 }
 ```
 
 ```output
-N E X T F L O W  ~  version 21.04.0
-Launching `process_exercise_tuple.nf` [spontaneous_coulomb] - revision: 06ff22f1a9
-executor >  local (3)
-[75/f4a44d] process > COMBINE_REPS (3) [100%] 3 of 3 ✔
-[ref3, work/99/a7d9176e332fdc0988973dbb89df63/ref3_R1.fq.gz, work/99/a7d9176e332fdc0988973dbb89df63/ref3_R2.fq.gz]
-[ref2, /work/53/e3cbd39afa9f0f84a3d9cd060d991a/ref2_R1.fq.gz, /work/53/e3cbd39afa9f0f84a3d9cd060d991a/ref2_R2.fq.gz]
-[ref1, work/75/f4a44d0bc761fa4774c2f23a465766/ref1_R1.fq.gz, work/75/f4a44d0bc761fa4774c2f23a465766/ref1_R2.fq.gz]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_exercise_tuple_answer.nf` [nostalgic_jepsen] revision: b61fdd3487
+
+executor >  local (1)
+[5f/9e3b67] process > COMBINE_REPS (1) [100%] 1 of 1 ✔
+[ref, [/home/rstudio/lessons/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R2.fq.gz]]
+
 ```
 
 :::::::::::::::::::::::::
@@ -449,40 +510,50 @@ It is useful to enable/disable the process execution depending on the state of v
 
 In the example below the process `CONDITIONAL` will only execute when the value of the `chr` variable is less than or equal to 5:
 
+Put this codeblock into a Nextflow script named process_when.nf:
+
 ```groovy 
-//process_when.nf
-
-
 process CONDITIONAL {
-  input:
-  val chr
 
-  when:
-  chr <= 5
+    input:
+    val chr
 
-  script:
-  """
-  echo $chr
-  """
+    when:
+    chr <= 5
+
+    script:
+    """
+    echo $chr
+    """
 }
 
-chr_ch = channel.of(1..22)
-
 workflow {
-  CONDITIONAL(chr_ch)
+    chr_ch = channel.of( 1..22 )
+    CONDITIONAL( chr_ch )
 }
 ```
 
-```output 
-4
+```bash
+nextflow run process_when.nf -process.debug
+```
 
-5
+```output 
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_when.nf` [adoring_venter] revision: 33701a3284
+
+executor >  local (5)
+[35/4b0e70] process > CONDITIONAL (5) [100%] 5 of 5 ✔
+1
 
 2
 
 3
 
-1
+4
+
+5
+
 ```
 
 ## Directives
@@ -495,44 +566,214 @@ They must be entered at the top of the process body, before any other declaratio
 
 Directives are commonly used to define the amount of computing resources to be used or extra information for configuration or logging purpose.
 
-For example:
+Put this codeblock into a Nextflow script named process_directive.nf:
 
 ```groovy 
-//process_directive.nf
-
-
 process PRINTCHR {
-  tag "tagging with chr$chr"
-  cpus 1
-  echo true
 
-  input:
-  val chr
+    tag "tagging with chr$chr"
+    cpus 1
 
-  script:
-  """
-  echo processing chromosome: $chr
-  echo number of cpus $task.cpus
-  """
+    input:
+    val chr
+
+    script:
+    """
+    echo processing chromosome: $chr
+    echo number of cpus $task.cpus
+    """
 }
 
-chr_ch = channel.of(1..22, 'X', 'Y')
-
 workflow {
-  PRINTCHR(chr_ch)
+    chr_ch = channel.of( 1..22, 'X', 'Y' )
+    PRINTCHR( chr_ch )
 }
 ```
 
+```bash
+nextflow run process_directive.nf -process.debug
+```
+
 ```output 
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_directive.nf` [elated_nightingale] revision: 54635450a2
+
+executor >  local (13)
+[96/6d7991] process > PRINTCHR (tagging with chr9) [ 41%] 10 of 24
+processing chromosome: 2
+number of cpus 1
+
+processing chromosome: 4
+number of cpus 1
+
+processing chromosome: 3
+number of cpus 1
+
+processing chromosome: 1
+number of cpus 1
+executor >  local (20)
+[00/e71d43] process > PRINTCHR (tagging with chr17) [ 70%] 17 of 24
+processing chromosome: 2
+number of cpus 1
+
+processing chromosome: 4
+number of cpus 1
+
+processing chromosome: 3
+number of cpus 1
+
 processing chromosome: 1
 number of cpus 1
 
-processing chromosome: 2
+processing chromosome: 5
 number of cpus 1
 
 processing chromosome: 6
 number of cpus 1
-[..truncated..]
+
+processing chromosome: 7
+number of cpus 1
+
+processing chromosome: 8
+number of cpus 1
+
+processing chromosome: 11
+number of cpus 1
+
+processing chromosome: 9
+number of cpus 1
+
+processing chromosome: 10
+number of cpus 1
+executor >  local (24)
+[b1/0c0fe4] process > PRINTCHR (tagging with chrY)  [100%] 24 of 24 ✔
+processing chromosome: 2
+number of cpus 1
+
+processing chromosome: 4
+number of cpus 1
+
+processing chromosome: 3
+number of cpus 1
+
+processing chromosome: 1
+number of cpus 1
+
+processing chromosome: 5
+number of cpus 1
+
+processing chromosome: 6
+number of cpus 1
+
+processing chromosome: 7
+number of cpus 1
+
+processing chromosome: 8
+number of cpus 1
+
+processing chromosome: 11
+number of cpus 1
+
+processing chromosome: 9
+number of cpus 1
+
+processing chromosome: 10
+number of cpus 1
+
+processing chromosome: 12
+number of cpus 1
+
+processing chromosome: 13
+number of cpus 1
+
+processing chromosome: 22
+number of cpus 1
+
+processing chromosome: X
+number of cpus 1
+
+processing chromosome: 15
+number of cpus 1
+
+processing chromosome: 14
+number of cpus 1
+
+processing chromosome: 16
+number of cpus 1
+executor >  local (24)
+[b1/0c0fe4] process > PRINTCHR (tagging with chrY)  [100%] 24 of 24 ✔
+processing chromosome: 2
+number of cpus 1
+
+processing chromosome: 4
+number of cpus 1
+
+processing chromosome: 3
+number of cpus 1
+
+processing chromosome: 1
+number of cpus 1
+
+processing chromosome: 5
+number of cpus 1
+
+processing chromosome: 6
+number of cpus 1
+
+processing chromosome: 7
+number of cpus 1
+
+processing chromosome: 8
+number of cpus 1
+
+processing chromosome: 11
+number of cpus 1
+
+processing chromosome: 9
+number of cpus 1
+
+processing chromosome: 10
+number of cpus 1
+
+processing chromosome: 12
+number of cpus 1
+
+processing chromosome: 13
+number of cpus 1
+
+processing chromosome: 22
+number of cpus 1
+
+processing chromosome: X
+number of cpus 1
+
+processing chromosome: 15
+number of cpus 1
+
+processing chromosome: 14
+number of cpus 1
+
+processing chromosome: 16
+number of cpus 1
+
+processing chromosome: 18
+number of cpus 1
+
+processing chromosome: 17
+number of cpus 1
+
+processing chromosome: 20
+number of cpus 1
+
+processing chromosome: 19
+number of cpus 1
+
+processing chromosome: 21
+number of cpus 1
+
+processing chromosome: Y
+number of cpus 1
 ```
 
 The above process uses the three directives, `tag`, `cpus` and `echo`.
@@ -565,9 +806,6 @@ Modify the Nextflow script `process_exercise_directives.nf`
 3. Change the fastqc `-t` option value to `$task.cpus` in the script directive.
 
 ```groovy 
-//process_exercise_directives.nf
-
-
 process FASTQC {
   //add tag directive
   //add cpu directive
@@ -598,42 +836,48 @@ workflow {
 ## solution
 
 ```groovy 
-//process_directives_answer.nf
-
-
 process FASTQC {
-  tag "$sample_id"
-  cpus 2
-  
-  input:
-  tuple val(sample_id), path(reads)
-  
-  output:
-  tuple val(sample_id), path("fastqc_out")
- 
-  script:
-  """
-  mkdir fastqc_out
-  fastqc $reads -o fastqc_out -t $task.cpus
-  """
+
+    tag "$sample_id"
+    cpus 2
+
+    input:
+    tuple val( sample_id ), path( reads )
+
+    output:
+    tuple val( sample_id ), path( "fastqc_out" )
+
+    script:
+    """
+    mkdir fastqc_out
+    fastqc $reads -o fastqc_out -t $task.cpus
+    """
 }
 
-read_pairs_ch = Channel.fromFilePairs('data/yeast/reads/ref*_{1,2}.fq.gz')
 
 workflow {
-  FASTQC(read_pairs_ch)
-  FASTQC.out.view()
+    read_pairs_ch = channel.fromFilePairs( 'data/yeast/reads/ref*_{1,2}.fq.gz' )
+    FASTQC( read_pairs_ch )
+    FASTQC.out.view()
 }
 ```
 
+```bash
+nextflow run process_exercise_directives_answers.nf
+```
+
 ```output
-N E X T F L O W  ~  version 21.04.0
-Launching `process_exercise_directives.nf` [sad_rosalind] - revision: 2ccbfa4937
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_exercise_directives_answers.nf` [admiring_ekeblad] revision: 3e1c08367f
+
 executor >  local (3)
-[90/de1125] process > FASTQC (ref1) [100%] 3 of 3 ✔
-[ref2, work/ea/9e6a341b88caf8879e8d18b77049c8/fastqc_out]
-[ref3, work/94/d059b816a9ec3d868f2924c26813e7/fastqc_out]
-[ref1, work/90/de11251d362f494d6650789d9f8c1d/fastqc_out]
+[a4/cf32f1] process > FASTQC (ref2) [100%] 3 of 3 ✔
+[ref3, /home/rstudio/lessons/amd-academy-nextflow/work/36/fdd3c30bee58ab1567f1b96a536c76/fastqc_out]
+[ref1, /home/rstudio/lessons/amd-academy-nextflow/work/7d/d0971bc88de08fce6a1d8403aeeb70/fastqc_out]
+[ref2, /home/rstudio/lessons/amd-academy-nextflow/work/a4/cf32f15140b91a2b56be1a37e4e63b/fastqc_out]
+
 ```
 
 :::::::::::::::::::::::::
@@ -660,9 +904,6 @@ For example if we want to capture the results of the `COMBINE_READS` process in 
 need to define the files in the `output` and  specify the location of the results directory in the `publishDir` directive:
 
 ```groovy 
-//process_publishDir.nf
-
-
 process COMBINE_READS {
   publishDir "results/merged_reads"
 
@@ -678,13 +919,11 @@ process COMBINE_READS {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
-
-
 workflow {
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
+  
   COMBINE_READS(reads_ch)
 }
-
 ```
 
 ```bash 
@@ -692,11 +931,13 @@ $ nextflow run process_publishDir.nf
 ```
 
 ```output 
-N E X T F L O W  ~  version 21.04.0
-Launching `process_publishDir.nf` [friendly_pauling] - revision: 9b5c315893
-executor >  local (1)
 
-[a1/5956bd] process > COMBINE_READS (1) [100%] 1 of 1 ✔
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_publishDir.nf` [gigantic_lamport] revision: 5bf45650b3
+
+executor >  local (1)
+[5d/36e9f5] process > COMBINE_READS (1) [100%] 1 of 1 ✔
 ```
 
 We can use the UNIX command `ls -l` to examine the contents of the results directory.
@@ -706,7 +947,7 @@ ls -l results/merged_reads/ref1.merged.fq.gz
 ```
 
 ```output 
-results/merged_reads/ref1.merged.fq.gz -> /Users/nf-user/nf-training/work/a1/5956bd9a92f13694b3ada1941f0d2d/ref1.merged.fq.gz
+lrwxrwxrwx 1 rstudio rstudio 99 Jun 30 23:00 results/merged_reads/ref1.merged.fq.gz -> /home/rstudio/lessons/amd-academy-nextflow/work/3d/88bbfd2b6b7a85ac81d73ffdecc97c/ref1.merged.fq.gz
 ```
 
 In the above example, the `publishDir "results/merged_reads"`,  creates a symbolic link `->` to the output files specified by the process `merged_reads` to the directory path `results/merged_reads`.
@@ -730,7 +971,7 @@ The `publishDir` directive can take optional parameters, for example the `mode` 
 publishDir "results/merged_reads", mode: "copy"
 ```
 
-Full list [here](https://www.nextflow.io/docs/latest/process.html#publishdir).
+Full list [here](https://docs.seqera.io/nextflow/reference/process#publishdir).
 
 ### Manage semantic sub-directories
 
@@ -739,9 +980,6 @@ You can use more than one `publishDir` to keep different outputs in separate dir
 In the example below we will create an output folder structure in the directory results, which contains a separate sub-directory for sequence id file, `pattern:"*_ids.txt"` ,  and a sequence directory, `results/sequence"` for the `sequence.txt` file. Remember, we need to specify the files we want to copy as outputs.
 
 ```groovy 
-//process_publishDir_semantic.nf
-
-
 params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
 
 process SPLIT_FASTA {
@@ -761,11 +999,10 @@ process SPLIT_FASTA {
   zgrep -v '^>' $transcriptome > sequence.txt
   """
 }
-// Both 'Channel' and 'channel' keywords work to generate channels.
-// However, it is a good practice to be consistent through the whole pipeline development
-transcriptome_ch = channel.fromPath(params.transcriptome)
 
 workflow {
+  transcriptome_ch = channel.fromPath(params.transcriptome)
+  
   SPLIT_FASTA(transcriptome_ch)
   // use the view operator to display contents of the channel
   SPLIT_FASTA.out.view()
@@ -777,17 +1014,21 @@ $ nextflow run process_publishDir_semantic.nf
 ```
 
 ```output
-N E X T F L O W  ~  version 21.04.0
-Launching `process_publishDir_semantic.nf` [golden_poisson] - revision: 421a604840
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_publishDir_semantic.nf` [elegant_kay] revision: 902918802f
 
 executor >  local (1)
-[be/950786] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
+[64/219b7c] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
+[/home/rstudio/lessons/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence.txt, /home/rstudio/lessons/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence_ids.txt]
+
 ```
 
 We can now use the `ls results/*` command to examine the results directory.
 
 ```bash 
-$ls results/*
+$ ls results/*
 ```
 
 ```output
@@ -805,9 +1046,6 @@ sequence.txt
 Add a `publishDir` directive to the nextflow script `process_exercise_publishDir.nf` that copies the merged reads  to the results folder merged\_reps.
 
 ```groovy 
-//process_exercise_publishDir.nf
-
-
 params.reads= "data/yeast/reads/ref{1,2,3}*{1,2}.fq.gz"
 
 process MERGE_REPS {
@@ -824,10 +1062,10 @@ process MERGE_REPS {
  cat *2.fq.gz > ${sample_id}.merged.R2.fq.gz
  """
 }
-reads_ch = Channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
 
 workflow {
- MERGE_REPS(reads_ch)
+  reads_ch = channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
+  MERGE_REPS(reads_ch)
 }
 ```
 
@@ -836,9 +1074,6 @@ workflow {
 ## Solution
 
 ```groovy 
-//process_exercise_publishDir_answer.nf
-
-
 params.reads= "data/yeast/reads/ref{1,2,3}*{1,2}.fq.gz"
 
 process MERGE_REPS {
@@ -855,9 +1090,9 @@ process MERGE_REPS {
   """
 }
 
-reads_ch = Channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
-
 workflow {
+  reads_ch = channel.fromFilePairs(params.reads,checkIfExists:true,size:6)
+  
   MERGE_REPS(reads_ch)
 }
 ```
@@ -867,11 +1102,13 @@ $ nextflow run process_exercise_publishDir.nf
 ```
 
 ```output 
-N E X T F L O W  ~  version 21.04.0
-Launching `process_exercise_publishDir.nf` [infallible_becquerel] - revision: 4d865241a8
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `process_exercise_publishDir_answer.nf` [dreamy_pike] revision: 597fabd501
 
 executor >  local (1)
-[22/88aa22] process > MERGE_REPS (1) [100%] 1 of 1 ✔
+[e9/ce2104] process > MERGE_REPS (1) [100%] 1 of 1 ✔
 ```
 
 :::::::::::::::::::::::::

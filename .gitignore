@@ -49,3 +49,8 @@ docs/
 # translation temp files
 po/*~
 
+# nextflow carpentry files
+.nextflow.log*
+work/
+data/
+miniconda.sh

@@ -1,6 +1,3 @@
-//process_tuple_io.nf
-
-
 process COMBINE_FQ {
   input:
   tuple val(sample_id), path(reads)
@@ -14,9 +11,9 @@ process COMBINE_FQ {
   """
 }
 
-reads_ch = Channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
-
 workflow {
+  reads_ch = channel.fromFilePairs('data/yeast/reads/ref1_{1,2}.fq.gz')
+
   COMBINE_FQ(reads_ch)
   COMBINE_FQ.out.view()
 }

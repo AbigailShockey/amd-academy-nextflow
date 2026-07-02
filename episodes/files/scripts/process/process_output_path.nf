@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 process METHOD {
 
     input:
@@ -14,7 +12,7 @@ process METHOD {
 }
 
 workflow {
-    methods_ch = Channel.of( 'salmon', 'kallisto' )
+    methods_ch = channel.of( 'salmon', 'kallisto' )
     METHOD( methods_ch )
     // use the view operator to display contents of the channel
     METHOD.out.view( { "Received: $it" } )

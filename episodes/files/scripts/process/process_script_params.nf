@@ -1,6 +1,3 @@
-//process_script_params.nf
-
-
 params.chr = "A"
 
 process CHR_COUNT {

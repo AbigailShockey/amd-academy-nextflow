@@ -141,7 +141,7 @@ description of Groovy semantics can be found in the [Groovy Documentation](https
 - [A step-by-step usage guide to nf-core pipelines](https://nf-co.re/usage/introduction)
 - [nf-core Troubleshooting guide](https://nf-co.re/usage/troubleshooting)
 - [Example nf-core institutional config file](https://github.com/nf-core/configs/blob/master/conf/eddie.config)
-- If you wanted to check if your institute has nf-core docs (for example a config file), they have a list of the systems [here](https://github.com/nf-coe/configs#documentation)
+- If you wanted to check if your institute has nf-core docs (for example a config file), they have a list of the systems [here](https://github.com/nf-core/configs#documentation)
 - Example of how you can usefully use `log.info` [here](https://github.com/nextflow-io/rnaseq-nf/blob/3b5b49f/main.nf#L41-L48_)
 - [Nextflow have a slack space](https://www.nextflow.io/blog/2022/nextflow-is-moving-to-slack.html)
 - [nf-core slack](https://nf-co.re/join)

@@ -52,11 +52,16 @@ $ nextflow run word_count.nf --input 'data/yeast/reads/ref2_2.fq.gz'
 ```
 
 ``` output
-N E X T F L O W  ~  version 21.04.0
-Launching `word_count.nf` [gigantic_woese] - revision: 8acb5cb9b0
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [serene_solvay] revision: 224ebafda1
+
 executor >  local (1)
-[26/3cf986] process > NUM_LINES (1) [100%] 1 of 1 ✔
+[2b/738be1] process > NUM_LINES (1) [100%] 1 of 1 ✔
 ref2_2.fq.gz 81720
+
+
 ```
 
 We can also use wild cards to specify multiple input files (This will be
@@ -72,13 +77,18 @@ $ nextflow run word_count.nf --input 'data/yeast/reads/ref2_*.fq.gz'
 This runs the process NUM_LINES twice, once for each file it matches.
 
 ``` output
-N E X T F L O W  ~  version 21.04.0
-Launching `word_count.nf` [tender_lumiere] - revision: 8acb5cb9b0
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [amazing_turing] revision: 224ebafda1
+
 executor >  local (2)
-[cc/b6f793] process > NUM_LINES (1) [100%] 2 of 2 ✔
+[04/5a871f] process > NUM_LINES (2) [100%] 2 of 2 ✔
 ref2_2.fq.gz 81720
 
 ref2_1.fq.gz 81720
+
+
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -101,21 +111,25 @@ The string specified on the command line will override the default value
 of the parameter in the script. The output will look like this:
 
 ``` output
-N E X T F L O W  ~  version 20.10.0
-Launching `word_count.nf` [soggy_miescher] - revision: c54a707593
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `word_count.nf` [naughty_perlman] revision: 224ebafda1
+
 executor >  local (6)
-[d3/9ca185] process > NUM_LINES (2) [100%] 6 of 6 ✔
+[2b/f481db] process > NUM_LINES (5) [100%] 6 of 6 ✔
 ref3_2.fq.gz 52592
 
 ref2_2.fq.gz 81720
 
 ref1_1.fq.gz 58708
 
-ref1_2.fq.gz 58708
-
 ref3_1.fq.gz 52592
 
+ref1_2.fq.gz 58708
+
 ref2_1.fq.gz 81720
+
 ```
 
 :::::::::::::::::::::::::
@@ -165,7 +179,7 @@ We can now change the sleep parameter from the command line, For
 Example:
 
 ``` bash
-nextflow run wc-params.nf --sleep 10
+$ nextflow run wc-params.nf --sleep 10
 ```
 
 
@@ -245,7 +259,7 @@ and `input` in JSON format.
 }
 ```
 
-Create a file called `wc-params.json` with the above contents.
+Create a file called `wc-params.json` with the above contents. In the VS Code Explorer panel on the left, click the New File icon. Name it "wc-params.json" and add the above contents.
 
 To run the `wc-params.nf` script using these parameters we add the
 option `-params-file` and pass the file `wc-params.json`:
@@ -257,13 +271,18 @@ $ nextflow run wc-params.nf -params-file wc-params.json
 
 
 ```output         
-N E X T F L O W  ~  version 21.04.0
-Launching `wc-params.nf` [nostalgic_northcutt] - revision: 2f86c9ac7e
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `wc-params.nf` [golden_colden] revision: 527e45d396
+
 executor >  local (2)
-[b4/747eaa] process > NUM_LINES (1) [100%] 2 of 2 ✔
+[00/e01dcc] process > NUM_LINES (1) [100%] 2 of 2 ✔
+etoh60_1_1.fq.gz 87348
+
 etoh60_1_2.fq.gz 87348
 
-etoh60_1_1.fq.gz 87348
+
 ```
 
 
@@ -293,10 +312,16 @@ $ nextflow run wc-params.nf -params-file params.json
 ```
 
 ```output
-N E X T F L O W 
- version 21.04.0 Launching `wc-params.nf` [small_wiles] - revision:
-f5ef7b7a01 executor \> local (1) [f3/4fa480] process \> NUM_LINES
-(1) [100%] 1 of 1 ✔ ref3_1.fq.gz 52592 
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `wc-params.nf` [chaotic_davinci] revision: 527e45d396
+
+executor >  local (1)
+[81/48e6e7] process > NUM_LINES (1) [100%] 1 of 1 ✔
+ref3_1.fq.gz 52592
+
+
 ```
 :::::::::::::::::::::::::
 

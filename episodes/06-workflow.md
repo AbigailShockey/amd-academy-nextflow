@@ -47,14 +47,10 @@ As seen previously, a `process` is invoked as a function in the `workflow` scope
 
 To combined multiple processes invoke them in the order they would appear in a workflow. When invoking a process with multiple inputs, provide them in the same order in which they are declared in the `input` block of the process.
 
-For example:
+Put this codeblock into a Nextflow script named workflow_01.nf:
 
 ```groovy 
-//workflow_01.nf
-
-
-
- process FASTQC {
+process FASTQC {
     input:
       tuple(val(sample_id), path(reads))
     output:
@@ -91,6 +87,21 @@ workflow {
 }
 ```
 
+```bash
+nextflow run workflow_01.nf
+```
+
+```output
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `workflow_01.nf` [cheeky_wiles] revision: 497e7a4004
+
+executor >  local (10)
+[89/e2def5] process > FASTQC (8) [100%] 9 of 9 ✔
+[0f/0bb6c3] process > MULTIQC    [100%] 1 of 1 ✔
+[/home/rstudio/lessons/amd-academy-nextflow/work/0f/0bb6c3c6a0aa4609619aa4480339f1/multiqc_data, /home/rstudio/lessons/amd-academy-nextflow/work/0f/0bb6c3c6a0aa4609619aa4480339f1/multiqc_report.html]
+```
+
 ### Process outputs
 
 In the previous example we assigned the process output to a Nextflow variable `fastqc_obj`.
@@ -125,43 +136,68 @@ The process `output` definition allows the use of the `emit:` option to define a
 For example in the script below we name the output from the `FASTQC` process as `fastqc_results` using the `emit:` option. We can then reference the output as
 `FASTQC.out.fastqc_results` in the workflow scope.
 
+Put this codeblock into a Nextflow script named workflow_02.nf:
+
 ```groovy 
-//workflow_02.nf
+process INDEX {
 
-
- process FASTQC {
     input:
-      tuple val(sample_id), path(reads)
+    path transcriptome
+
     output:
-      path "fastqc_${sample_id}_logs", emit: fastqc_results
+    path 'index', emit: salmon_index
+
     script:
-      """
-      mkdir fastqc_${sample_id}_logs
-      fastqc -o fastqc_${sample_id}_logs ${reads}
-      """
+    """
+    salmon index -t $transcriptome -i index
+    """
 }
 
-process MULTIQC {
-    publishDir "results/mqc"
+process QUANT {
+
     input:
-      path fastqc_results
+    each path(index)
+    tuple( val(pair_id), path(reads) )
+
     output:
-      path "*"
+    path pair_id
+
     script:
-      """
-      multiqc .
-      """
+    """
+    salmon quant --threads $task.cpus --libType=U -i $index -1 ${reads[0]} -2 ${reads[1]} -o $pair_id
+    """
 }
 
 workflow {
-    read_pairs_ch = channel.fromFilePairs('data/yeast/reads/ref*_{1,2}.fq.gz',checkIfExists: true)
-    
-    //FASTQC process takes 1 input channel as a argument
-    FASTQC(read_pairs_ch)
-
-    //MULTIQC channel takes 1 input channels as arguments
-    MULTIQC(FASTQC.out.fastqc_results.collect()).view()
+    transcriptome_ch = channel.fromPath( 'data/yeast/transcriptome/*.fa.gz' )
+    read_pairs_ch = channel.fromFilePairs( 'data/yeast/reads/*_{1,2}.fq.gz' )
+    INDEX( transcriptome_ch )
+    QUANT( INDEX.out.salmon_index, read_pairs_ch ).view()
 }
+```
+
+```bash
+nextflow run workflow_02.nf
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `workflow_02.nf` [condescending_chandrasekhar] revision: b0ee782bf5
+
+executor >  local (10)
+[0a/5547af] process > INDEX (1) [100%] 1 of 1 ✔
+[d6/912c73] process > QUANT (8) [100%] 9 of 9 ✔
+/home/rstudio/lessons/amd-academy-nextflow/work/7c/a87dd3c8ae3e62232b9f3bbd4c1bb7/temp33_2
+/home/rstudio/lessons/amd-academy-nextflow/work/5f/56abbb324ffa8f762e56fdf2147283/ref3
+/home/rstudio/lessons/amd-academy-nextflow/work/7b/1aac0f170af3418fdc44a9aa378981/temp33_1
+/home/rstudio/lessons/amd-academy-nextflow/work/4c/da7bf9ff9436f7f15b9d96195fd3e5/etoh60_1
+/home/rstudio/lessons/amd-academy-nextflow/work/28/616a546d544176d5f27aff61d95c22/ref2
+/home/rstudio/lessons/amd-academy-nextflow/work/57/10768e5d9a5833b83d363024bc6d29/temp33_3
+/home/rstudio/lessons/amd-academy-nextflow/work/b3/29a0274dd65606e5896619ecb38f40/etoh60_2
+/home/rstudio/lessons/amd-academy-nextflow/work/8c/1942d1382e6986ad57b95e84478b1b/etoh60_3
+/home/rstudio/lessons/amd-academy-nextflow/work/d6/912c7357c2a82908c04f3df9834b45/ref1
 ```
 
 ### Accessing script parameters
@@ -195,8 +231,6 @@ Connect the output of the process `FASTQC` to `PARSEZIP` in the Nextflow script 
 **Note:** You will need to pass the `read_pairs_ch` as an argument to FASTQC and you will need to use the `collect` operator to gather the items in the FASTQC channel output to a single List item.
 
 ```groovy 
-//workflow_exercise.nf
-
 params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 process FASTQC {
@@ -226,9 +260,9 @@ process PARSEZIP {
  for zip in *.zip; do zipgrep 'Basic Statistics' \$zip|grep 'summary.txt'; done > pass_basic.txt
  """
 }
-read_pairs_ch = channel.fromFilePairs(params.reads,checkIfExists: true)
 
 workflow {
+  read_pairs_ch = channel.fromFilePairs(params.reads,checkIfExists: true)
 //connect process FASTQC and PARSEZIP
 // remember to use the collect operator on the FASTQC output
 }
@@ -239,44 +273,45 @@ workflow {
 ## Solution
 
 ```groovy 
-//workflow_exercise.nf
-
-
-
 params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 process FASTQC {
-  input:
-  tuple val(sample_id), path(reads)
+    input:
+    tuple val(sample_id), path(reads)
 
-  output:
-  path "fastqc_${sample_id}_logs/*.zip"
+    output:
+    path "fastqc_${sample_id}_logs/*.zip"
 
-  script:
-  """
-  mkdir fastqc_${sample_id}_logs
-  fastqc -o fastqc_${sample_id}_logs  ${reads}
-  """
+    script:
+    //flagstat simple stats on bam file
+    """
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
+    """
 }
 
 process PARSEZIP {
-  publishDir "results/fqpass", mode:"copy"
-  input:
-  path fastqc_logs
 
-  output:
-  path 'pass_basic.txt'
+    publishDir "results/fqpass", mode:"copy"
 
-  script:
-  """
-  for zip in *.zip; do zipgrep 'Basic Statistics' \$zip|grep 'summary.txt'; done > pass_basic.txt
-  """
+    input:
+    path flagstats
+
+    output:
+    path 'pass_basic.txt'
+
+    script:
+    """
+    for zip in *.zip; do
+        zipgrep 'Basic Statistics' \$zip \\
+        | grep 'summary.txt'
+    done > pass_basic.txt
+    """
 }
 
-read_pairs_ch = channel.fromFilePairs(params.reads,checkIfExists: true)
-
 workflow {
-  PARSEZIP(FASTQC(read_pairs_ch).collect())
+    read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists: true )
+    PARSEZIP( FASTQC( read_pairs_ch ).collect() )
 }
 ```
 
@@ -284,12 +319,23 @@ workflow {
 $ nextflow run workflow_exercise.nf
 ```
 
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `workflow_exercise_answer.nf` [cheeky_liskov] revision: 9f90e3ccf8
+
+executor >  local (10)
+[b4/45ff59] process > FASTQC (9) [100%] 9 of 9 ✔
+[09/033786] process > PARSEZIP   [100%] 1 of 1 ✔
+```
+
 ```bash 
 $ wc -l  results/fqpass/pass_basic.txt
 ```
 
 ```output 
-18
+18 results/fqpass/pass_basic.txt
 ```
 
 The file `results/fqpass/pass_basic.txt` should have 18 lines.

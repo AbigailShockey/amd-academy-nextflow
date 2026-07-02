@@ -1,4 +1,4 @@
-bam_ch = Channel.fromPath("data/yeast/bams/*.bam")
+bam_ch = channel.fromPath("data/yeast/bams/*.bam")
 
 process index {
 

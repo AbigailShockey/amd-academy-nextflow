@@ -47,7 +47,7 @@ Nextflow distinguishes between two different kinds of channels: **queue** channe
 Queue channels are a type of channel in which data is consumed (used up) to make input for a process/operator. Queue channels can be created in two ways:
 
 1. As the outputs of a process.
-2. Explicitly using channel factory methods such as [Channel.of](https://www.nextflow.io/docs/latest/channel.html#of) or [Channel.fromPath](https://www.nextflow.io/docs/latest/channel.html#frompath).
+2. Explicitly using channel factory methods such as [channel.of](https://docs.seqera.io/nextflow/workflow#entry-workflow) or [channel.fromPath](https://docs.seqera.io/nextflow/workflow#factories).
 
 ### Value channels
 
@@ -84,12 +84,6 @@ Create a nextflow script called to `channel.nf` for the following examples.
 Explain that as you are just setting up channels you do not need to add any processes 
 or a workflow block.
 
-Run using:
-
-```bash
-$ nextflow run channel.nf
-```
-
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Creating Channels using Channel factories
@@ -112,9 +106,9 @@ Values are put inside  parentheses `()`  to assign them to a channel.
 For example:
 
 ```groovy 
-ch1 = Channel.value( 'GRCh38' )
-ch2 = Channel.value( ['chr1', 'chr2', 'chr3', 'chr4', 'chr5'] )
-ch3 = Channel.value( ['chr1' : 248956422, 'chr2' : 242193529, 'chr3' : 198295559] )
+ch1 = channel.value( 'GRCh38' )
+ch2 = channel.value( ['chr1', 'chr2', 'chr3', 'chr4', 'chr5'] )
+ch3 = channel.value( ['chr1' : 248956422, 'chr2' : 242193529, 'chr3' : 198295559] )
 ```
 
 1. Creates a value channel and binds a string to it.
@@ -138,17 +132,28 @@ We will learn more about channel operators in a later episode.
 
 
 ```groovy
-ch1 = Channel.value( 'GRCh38' )
-ch2 = Channel.value( ['chr1', 'chr2', 'chr3', 'chr4', 'chr5'] )
-ch3 = Channel.value( ['chr1' : 248956422, 'chr2' : 242193529, 'chr3' : 198295559] )
+ch1 = channel.value( 'GRCh38' )
+ch2 = channel.value( ['chr1', 'chr2', 'chr3', 'chr4', 'chr5'] )
+ch3 = channel.value( ['chr1' : 248956422, 'chr2' : 242193529, 'chr3' : 198295559] )
 ch1.view()
 ch2.view()
 ch3.view()
 ```
 
+Run using:
+
+```bash
+$ nextflow run channel.nf
+```
+
 Each item in the channel is printed on a separate line.
 
 ```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [soggy_morse] revision: d76f25bda4
+
 GRCh38
 [chr1, chr2, chr3, chr4, chr5]
 [chr1:248956422, chr2:242193529, chr3:198295559]
@@ -158,22 +163,26 @@ GRCh38
 
 Queue (consumable) channels can be created using the following channel factory methods.
 
-- `Channel.of`
-- `Channel.fromList`
-- `Channel.fromPath`
-- `Channel.fromFilePairs`
-- `Channel.fromSRA`
+- `channel.of`
+- `channel.fromList`
+- `channel.fromPath`
+- `channel.fromFilePairs`
 
 ### The **of** Channel factory
 
-When you want to create a channel containing multiple values you can use the channel factory `Channel.of`. `Channel.of` allows the creation of a `queue` channel with the values specified as arguments, separated by a `,`.
+When you want to create a channel containing multiple values you can use the channel factory `channel.of`. `channel.of` allows the creation of a `queue` channel with the values specified as arguments, separated by a `,`.
 
 ```groovy 
-chromosome_ch = Channel.of( 'chr1', 'chr3', 'chr5', 'chr7' )
+chromosome_ch = channel.of( 'chr1', 'chr3', 'chr5', 'chr7' )
 chromosome_ch.view()
 ```
 
 ```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [lethal_lumiere] revision: 257bf43795
+
 chr1
 chr3
 chr5
@@ -186,24 +195,56 @@ You can specify a range of numbers as a single argument using the Groovy range o
 More information on the range operator can be found [here](https://www.logicbig.com/tutorials/misc/groovy/range-operator.html).
 
 ```groovy 
-chromosome_ch = Channel.of(1..22, 'X', 'Y')
+chromosome_ch = channel.of(1..22, 'X', 'Y')
 chromosome_ch.view()
+```
+
+```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [marvelous_panini] revision: e1a1a1a324
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+X
+Y
 ```
 
 Arguments passed to the `of` method can be of varying types e.g., combinations of numbers, strings, or objects. In the above examples we have examples of both string and number data types.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Channel.from
+## channel.from
 
-You may see the method `Channel.from` in older nextflow scripts. This performs a similar function but is now deprecated (no longer used), and so `Channel.of` should be used instead.
+You may see the method `channel.from` in older nextflow scripts. This performs a similar function but is now deprecated (no longer used), and so `channel.of` should be used instead.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Create a value and Queue and view Channel contents
+## Create a value and Queue and view channel contents
 
 1. Create a Nextflow script file called `channel.nf` .
 2. Create a Value channel `ch_vl` containing the String `'GRCh38'`.
@@ -220,20 +261,23 @@ $ nextflow run channel.nf
 ## Solution
 
 ```groovy 
-ch_vl = Channel.value('GRCh38')
-ch_qu = Channel.of(1,2,3,4)
+ch_vl = channel.value('GRCh38')
+ch_qu = channel.of(1,2,3,4)
 ch_vl.view()
 ch_qu.view()
 ```
 
 ```output
- N E X T F L O W  ~  version 21.04.0
- Launching `channel.nf` [condescending_dalembert] - revision: c80908867b
- GRCh38
- 1
- 2
- 3
- 4
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [soggy_rutherford] revision: 93cf4876dd
+
+1
+GRCh38
+2
+3
+4
 ```
 
 :::::::::::::::::::::::::
@@ -242,12 +286,12 @@ ch_qu.view()
 
 ### The **fromList** Channel factory
 
-You can use the `Channel.fromList` method to create a queue channel from a list object.
+You can use the `channel.fromList` method to create a queue channel from a list object.
 
 ```groovy 
 aligner_list = ['salmon', 'kallisto']
 
-aligner_ch = Channel.fromList(aligner_list)
+aligner_ch = channel.fromList(aligner_list)
 
 aligner_ch.view()
 ```
@@ -255,15 +299,20 @@ aligner_ch.view()
 This would produce two lines.
 
 ```output
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [hungry_allen] revision: af24d2e8c3
+
 salmon
 kallisto
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
-## Channel.fromList vs Channel.of
+## channel.fromList vs channel.of
 
-In the above example, the channel has two elements. If you has used the Channel.of(aligner\_list) it would have  contained only 1 element `[salmon, kallisto]` and any operator or process using the channel would run once.
+In the above example, the channel has two elements. If you has used the channel.of(aligner\_list) it would have  contained only 1 element `[salmon, kallisto]` and any operator or process using the channel would run once.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -282,7 +331,7 @@ ids = ['ERR908507', 'ERR908506', 'ERR908505']
 Then print the contents of the channels using the `view` operator.
 How many lines does the queue and value channel print?
 
-**Hint:** Use the `fromList()` and `value()` Channel factory methods.
+**Hint:** Use the `fromList()` and `value()` channel factory methods.
 
 :::::::::::::::  solution
 
@@ -291,15 +340,18 @@ How many lines does the queue and value channel print?
 ```groovy 
 ids = ['ERR908507', 'ERR908506', 'ERR908505']
 
-queue_ch = Channel.fromList(ids)
-value_ch = Channel.value(ids)
+queue_ch = channel.fromList(ids)
+value_ch = channel.value(ids)
 queue_ch.view()
 value_ch.view()
 ```
 
 ```output 
-N E X T F L O W  ~  version 21.04.0
-Launching `channel_fromList.nf` [wise_hodgkin] - revision: 22d76be151
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [fervent_dalembert] revision: 09be822d7b
+
 ERR908507
 ERR908506
 ERR908505
@@ -316,7 +368,7 @@ The value channel `value_ch` will print one line.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### The **fromPath** Channel factory
+### The **fromPath** channel factory
 
 The previous channel factory methods dealt with sending general values in a channel. A special channel factory method `fromPath` is used when wanting to pass files.
 
@@ -329,13 +381,20 @@ The file path can be a relative path (path to the file from the current director
 The script below creates a queue channel with a single file as its content.
 
 ```groovy 
-read_ch = Channel.fromPath( 'data/yeast/reads/ref1_2.fq.gz' )
+read_ch = channel.fromPath( 'data/yeast/reads/ref1_2.fq.gz' )
 read_ch.view()
 ```
 
 ```output
-data/yeast/reads/ref1_2.fq.gz
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [scruffy_boyd] revision: 38c9d0106a
+
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
 ```
+
+Please note that the output path will be different depending on the environment.
 
 You can also use  glob syntax to specify pattern-matching behaviour for files.
 A glob pattern is specified as a string and is matched against directory or file names.
@@ -348,23 +407,39 @@ A glob pattern is specified as a string and is matched against directory or file
 For example the script below uses the `*.fq.gz` pattern to create a queue channel that contains as many items as there are files with `.fq.gz` extension in the `data/yeast/reads` folder.
 
 ```groovy 
-read_ch = Channel.fromPath( 'data/yeast/reads/*.fq.gz' )
+read_ch = channel.fromPath( 'data/yeast/reads/*.fq.gz' )
 read_ch.view()
 ```
 
 ```output
-data/yeast/reads/ref1_2.fq.gz
-data/yeast/reads/etoh60_3_2.fq.gz
-data/yeast/reads/temp33_1_2.fq.gz
-data/yeast/reads/temp33_2_1.fq.gz
-data/yeast/reads/ref2_1.fq.gz
-data/yeast/reads/temp33_3_1.fq.gz
-[..truncated..]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [sleepy_goldwasser] revision: 8c9ff2e3b8
+
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
 ```
 
 **Note** The pattern must contain at least a star wildcard character.
 
-You can change the behaviour of `Channel.fromPath` method by changing its options. A list of `.fromPath` options is shown below.
+You can change the behaviour of `channel.fromPath` method by changing its options. A list of `.fromPath` options is shown below.
 
 Available fromPath options:
 
@@ -383,37 +458,44 @@ We can change the default options for the `fromPath` method to give an error if 
 If we execute a Nextflow script with the contents below, it will run and not produce an output, or an error message that the file does not exist. This is likely not what we want.
 
 ```groovy 
-read_ch = Channel.fromPath( 'data/chicken/reads/*.fq.gz' )
+read_ch = channel.fromPath( 'data/chicken/reads/*.fq.gz' )
 read_ch.view()
 ```
 
 ```output
-N E X T F L O W   ~  version 20.10.0
 
-Launching `channels.nf` [scruffy_swartz] DSL2 - revision: 2c8f18ab48
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [grave_montalcini] revision: d97baf9fbc
+
 ```
 
 Add the argument `checkIfExists` with the value `true`.
 
 ```groovy
-read_ch = Channel.fromPath( 'data/chicken/reads/*.fq.gz', checkIfExists: true )
+read_ch = channel.fromPath( 'data/chicken/reads/*.fq.gz', checkIfExists: true )
 read_ch.view()
 ```
 
 This will give an error as there is no data/chicken directory.
 
 ```output
-N E X T F L O W  ~  version 20.10.0
-Launching `channels.nf` [intergalactic_mcclintock] - revision: d2c138894b
-No files match pattern `*.fq.gz` at path: data/chicken/reads/
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [determined_lalande] revision: a2ca8c5954
+
+ERROR ~ No files match pattern `*.fq.gz` at path: data/chicken/reads/
+
+ -- Check '.nextflow.log' file for details
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Using Channel.fromPath
+## Using channel.fromPath
 
 1. Create a Nextflow script `channel_fromPath.nf`
-2. Use the `Channel.fromPath` method to create a channel containing all files in the `data/yeast/` directory, including the subdirectories.
+2. Use the `channel.fromPath` method to create a channel containing all files in the `data/yeast/` directory, including the subdirectories.
 3. Add the parameter to include any hidden files.
 4. Then print all file names using the `view` operator.
 
@@ -424,25 +506,54 @@ No files match pattern `*.fq.gz` at path: data/chicken/reads/
 ## Solution
 
 ```groovy 
-all_files_ch = Channel.fromPath('data/yeast/**', hidden: true)
+all_files_ch = channel.fromPath('data/yeast/**', hidden: true)
 all_files_ch.view()
 ```
 
 ```output 
-N E X T F L O W  ~  version 21.04.0
-Launching `channel_fromPath.nf` [reverent_mclean] - revision: cf02269bcb
-data/yeast/samples.csv
-data/yeast/reads/etoh60_3_2.fq.gz
-data/yeast/reads/temp33_1_2.fq.gz
-data/yeast/reads/temp33_2_1.fq.gz
-[..truncated..]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [small_galileo] revision: e7478b2ac9
+
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref1.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref2.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref3.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/samples.csv
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
+/home/rstudio/lessons/amd-academy-nextflow/data/yeast/.hidden_file.txt
 ```
 
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### The **fromFilePairs** Channel factory
+### The **fromFilePairs** channel factory
 
 We have seen how to process files individually using `fromPath`. In Bioinformatics we often want to process files in pairs or larger groups, such as read pairs in sequencing.
 
@@ -468,20 +579,25 @@ A `tuple` is a grouping of data, represented as a Groovy List.
 2. The second element is the list of files matching the remaining part of the glob pattern (i.e., the `<string>_{1,2}.fq.gz` pattern). This will include any files ending `_1.fq.gz` or `_2.fq.gz`.
 
 ```groovy 
-read_pair_ch = Channel.fromFilePairs('data/yeast/reads/*_{1,2}.fq.gz')
+read_pair_ch = channel.fromFilePairs('data/yeast/reads/*_{1,2}.fq.gz')
 read_pair_ch.view()
 ```
 
 ```output
-[etoh60_3, [data/yeast/reads/etoh60_3_1.fq.gz, data/yeast/reads/etoh60_3_2.fq.gz]]
-[temp33_1, [data/yeast/reads/temp33_1_1.fq.gz, data/yeast/reads/temp33_1_2.fq.gz]]
-[ref1, [data/yeast/reads/ref1_1.fq.gz, data/yeast/reads/ref1_2.fq.gz]]
-[ref2, [data/yeast/reads/ref2_1.fq.gz, data/yeast/reads/ref2_2.fq.gz]]
-[temp33_2, [data/yeast/reads/temp33_2_1.fq.gz, data/yeast/reads/temp33_2_2.fq.gz]]
-[ref3, [data/yeast/reads/ref3_1.fq.gz, data/yeast/reads/ref3_2.fq.gz]]
-[temp33_3, [data/yeast/reads/temp33_3_1.fq.gz, data/yeast/reads/temp33_3_2.fq.gz]]
-[etoh60_1, [data/yeast/reads/etoh60_1_1.fq.gz, data/yeast/reads/etoh60_1_2.fq.gz]]
-[etoh60_2, [data/yeast/reads/etoh60_2_1.fq.gz, data/yeast/reads/etoh60_2_2.fq.gz]]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [spontaneous_austin] revision: f316adcbf0
+
+[ref3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[etoh60_1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz]]
+[temp33_1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz]]
+[temp33_2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz]]
+[ref2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz]]
+[etoh60_2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz]]
+[temp33_3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz]]
+[ref1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
+[etoh60_3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
 ```
 
 This will produce a queue channel, `read_pair_ch` , containing nine elements.
@@ -501,17 +617,22 @@ For example in the directory `data/yeast/reads` there are six files with the pre
 If we want to group (create a tuple) for all of these files we could write;
 
 ```groovy 
-read_group_ch = Channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*',size:6)
+read_group_ch = channel.fromFilePairs('data/yeast/reads/ref{1,2,3}*',size:6)
 read_group_ch.view()
 ```
 
 The code above will create a queue channel containing one element. The element is a tuple of which contains a string value, that is the pattern **ref**, and a list of six files matching the pattern.
 
 ```output
-[ref, [data/yeast/reads/ref1_1.fq.gz, data/yeast/reads/ref1_2.fq.gz, data/yeast/reads/ref2_1.fq.gz, data/yeast/reads/ref2_2.fq.gz, data/yeast/reads/ref3_1.fq.gz, data/yeast/reads/ref3_2.fq.gz]]
+
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `channel.nf` [serene_mccarthy] revision: c16078569d
+
+[ref, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
 ```
 
-See more information about the channel factory `fromFilePairs` [here](https://www.nextflow.io/docs/latest/channel.html#fromfilepairs)
+See more information about the channel factory `fromFilePairs` [here](https://docs.seqera.io/nextflow/reference/channel#fromfilepairs)
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -534,7 +655,7 @@ If you need to match more complex patterns you should create a sample sheet spec
 ## Solution
 
 ```groovy 
-pairs_ch = Channel.fromFilePairs('data/yeast/reads/temp33*_{1,2}.fq.gz')
+pairs_ch = channel.fromFilePairs('data/yeast/reads/temp33*_{1,2}.fq.gz')
 pairs_ch.view()
 ```
 
@@ -556,7 +677,7 @@ Launching `channels.nf` [stupefied_lumiere] - revision: a3741edde2
 - Nextflow has two different kinds of channels: queue channels and value channels.
 - Data in value channels can be used multiple times in workflow.
 - Data in queue channels are consumed when they are used by a process or an operator.
-- Channel factory methods, such as `Channel.of`, are used to create channels.
+- Channel factory methods, such as `channel.of`, are used to create channels.
 - Channel factory methods have optional parameters e.g., `checkIfExists`, that can be used to alter the creation and behaviour of a channel.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

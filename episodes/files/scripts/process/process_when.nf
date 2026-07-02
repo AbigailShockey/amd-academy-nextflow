@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 process CONDITIONAL {
 
     input:
@@ -15,6 +13,6 @@ process CONDITIONAL {
 }
 
 workflow {
-    chr_ch = Channel.of( 1..22 )
+    chr_ch = channel.of( 1..22 )
     CONDITIONAL( chr_ch )
 }
