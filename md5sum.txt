@@ -23,5 +23,5 @@
 "episodes/17-some_nfcore_pipeline.md" "5c9074e83ba42e2f1a9f0592abb3ab3e" "site/built/17-some_nfcore_pipeline.md" "2026-06-17"
 "instructors/instructor-notes.md" "d0744ec106f1e1a32bf6cb06ea486081" "site/built/instructor-notes.md" "2026-05-29"
 "learners/reference.md" "3a056ec85a7cfae8ea0152b18acebd4a" "site/built/reference.md" "2026-07-02"
-"learners/setup.md" "87b744425ffcd88e6a70ec8e8f38036a" "site/built/setup.md" "2026-06-17"
+"learners/setup.md" "eceaa293d9201d5c074f739cc40e7239" "site/built/setup.md" "2026-07-06"
 "profiles/learner-profiles.md" "60b93493cf1da06dfd63255d73854461" "site/built/learner-profiles.md" "2022-04-22"
