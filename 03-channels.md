@@ -26,7 +26,7 @@ exercises: 10
 
 ## Channels
 
-Earlier we learnt that channels are the way in which Nextflow sends data around a workflow. Channels connect processes via their inputs and outputs. Channels can store multiple items, such as files (e.g., fastq files) or values. The number of items a channel stores determines how many times a process will run using that channel as input.  
+Earlier we learned that channels are the way in which Nextflow sends data around a workflow. Channels connect processes via their inputs and outputs. Channels can store multiple items, such as files (e.g., fastq files) or values. The number of items a channel stores determines how many times a process will run using that channel as input.  
 *Note:* When the process runs using one item from the input channel, we will call that run a `task`.
 
 ## Why use Channels?
@@ -164,7 +164,7 @@ GRCh38
 Queue (consumable) channels can be created using the following channel factory methods.
 
 - `channel.of`
-- `channel.fromList`
+- `channel.fromList` (not discussed here)
 - `channel.fromPath`
 - `channel.fromFilePairs`
 
@@ -191,47 +191,7 @@ chr7
 
 The first line in this example creates a variable `chromosome_ch`. `chromosome_ch` is a queue channel containing the four values specified as arguments in the `of` method. The `view` operator will print one line per item in a list. Therefore the `view` operator on the second line will print four lines, one for each element in the channel:
 
-You can specify a range of numbers as a single argument using the Groovy range operator `..`. This creates each value in the range (including the start and end values) as a value in the channel. The Groovy range operator can also produce ranges of dates, letters, or time.
-More information on the range operator can be found [here](https://www.logicbig.com/tutorials/misc/groovy/range-operator.html).
-
-```groovy 
-chromosome_ch = channel.of(1..22, 'X', 'Y')
-chromosome_ch.view()
-```
-
-```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `channel.nf` [marvelous_panini] revision: e1a1a1a324
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-X
-Y
-```
-
-Arguments passed to the `of` method can be of varying types e.g., combinations of numbers, strings, or objects. In the above examples we have examples of both string and number data types.
+Arguments passed to the `of` method can be of varying types e.g., combinations of numbers, strings, or objects.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -284,89 +244,6 @@ GRCh38
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### The **fromList** Channel factory
-
-You can use the `channel.fromList` method to create a queue channel from a list object.
-
-```groovy 
-aligner_list = ['salmon', 'kallisto']
-
-aligner_ch = channel.fromList(aligner_list)
-
-aligner_ch.view()
-```
-
-This would produce two lines.
-
-```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `channel.nf` [hungry_allen] revision: af24d2e8c3
-
-salmon
-kallisto
-```
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-## channel.fromList vs channel.of
-
-In the above example, the channel has two elements. If you has used the channel.of(aligner\_list) it would have  contained only 1 element `[salmon, kallisto]` and any operator or process using the channel would run once.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Creating channels from a list
-
-Write a Nextflow script that creates both a `queue` and `value` channel
-for the list
-
-```groovy 
-ids = ['ERR908507', 'ERR908506', 'ERR908505']
-```
-
-Then print the contents of the channels using the `view` operator.
-How many lines does the queue and value channel print?
-
-**Hint:** Use the `fromList()` and `value()` channel factory methods.
-
-:::::::::::::::  solution
-
-## Solution
-
-```groovy 
-ids = ['ERR908507', 'ERR908506', 'ERR908505']
-
-queue_ch = channel.fromList(ids)
-value_ch = channel.value(ids)
-queue_ch.view()
-value_ch.view()
-```
-
-```output 
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `channel.nf` [fervent_dalembert] revision: 09be822d7b
-
-ERR908507
-ERR908506
-ERR908505
-[ERR908507, ERR908506, ERR908505]
-```
-
-The queue channel `queue_ch` will print three lines.
-
-The value channel `value_ch` will print one line.
-
-
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### The **fromPath** channel factory
 
@@ -391,7 +268,7 @@ read_ch.view()
 
 Launching `channel.nf` [scruffy_boyd] revision: 38c9d0106a
 
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
 ```
 
 Please note that the output path will be different depending on the environment.
@@ -417,24 +294,24 @@ read_ch.view()
 
 Launching `channel.nf` [sleepy_goldwasser] revision: 8c9ff2e3b8
 
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
 ```
 
 **Note** The pattern must contain at least a star wildcard character.
@@ -516,37 +393,37 @@ all_files_ch.view()
 
 Launching `channel.nf` [small_galileo] revision: e7478b2ac9
 
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref1.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref2.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/ref3.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/samples.csv
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
-/home/rstudio/lessons/amd-academy-nextflow/data/yeast/.hidden_file.txt
+/home/user/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+/home/user/amd-academy-nextflow/data/yeast/bams/ref1.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
+/home/user/amd-academy-nextflow/data/yeast/bams/ref2.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/ref3.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
+/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
+/home/user/amd-academy-nextflow/data/yeast/samples.csv
+/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
+/home/user/amd-academy-nextflow/data/yeast/.hidden_file.txt
 ```
 
 :::::::::::::::::::::::::
@@ -589,15 +466,15 @@ read_pair_ch.view()
 
 Launching `channel.nf` [spontaneous_austin] revision: f316adcbf0
 
-[ref3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
-[etoh60_1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz]]
-[temp33_1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz]]
-[temp33_2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz]]
-[ref2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz]]
-[etoh60_2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz]]
-[temp33_3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz]]
-[ref1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
-[etoh60_3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
+[ref3, [/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[etoh60_1, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz]]
+[temp33_1, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz]]
+[temp33_2, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz]]
+[ref2, [/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz]]
+[etoh60_2, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz]]
+[temp33_3, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz]]
+[ref1, [/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
+[etoh60_3, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
 ```
 
 This will produce a queue channel, `read_pair_ch` , containing nine elements.
@@ -629,7 +506,7 @@ The code above will create a queue channel containing one element. The element i
 
 Launching `channel.nf` [serene_mccarthy] revision: c16078569d
 
-[ref, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[ref, [/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
 ```
 
 See more information about the channel factory `fromFilePairs` [here](https://docs.seqera.io/nextflow/reference/channel#fromfilepairs)
