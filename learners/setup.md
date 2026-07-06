@@ -42,15 +42,15 @@ The simplest way to install the software for this course is using conda.
 
 To install conda see [here](https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/setup/).
 
-An environment file is provided here [environment.yml](https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml)
+An environment file is provided here [environment.yml](https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/data/environment.yml)
 
 ```bash
 # You can use either wget or curl to download content from the web via the command line.
 # wget
-wget https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml
+wget https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/data/environment.yml
 
 # curl 
-curl -L -o environment.yml https://raw.githubusercontent.com/carpentries-incubator/workflows-nextflow/main/episodes/data/environment.yml
+curl -L -o environment.yml https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/data/environment.yml
 ```
 
 To create the training environment run:
@@ -67,8 +67,7 @@ conda activate nf-training
 
 ## Training scripts
 
-To aid in the delivery of the lesson, the scripts mentioned in each episode, can be found in the respective episode folders in the github repository.
-[https://github.com/carpentries-incubator/workflows-nextflow/tree/main/episodes/files/scripts](https://github.com/carpentries-incubator/workflows-nextflow/tree/gh-pages/files/scripts)
+To aid in the delivery of the lesson, the scripts mentioned in each episode, can be found in the respective episode folders in the [lesson GitHub repository](https://github.com/AbigailShockey/amd-academy-nextflow/tree/main/episodes/files/scripts) or the [supplemental files GitHub repository](https://github.com/AbigailShockey/amd-academy-nf-files).
 
 To get the scripts associated with each episode you will need to download the scripts folder from the github repository.
 
