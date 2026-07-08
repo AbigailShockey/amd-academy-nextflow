@@ -4,12 +4,10 @@ process COMBINE {
 
  script:
  """
- zgrep -c ">Y${chr}" ${transcriptome}
+ zgrep -c "cov=${cov}." ${fasta}
  """
 }
 
-transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-chr_ch = channel.of("A")
 
 workflow {
 
