@@ -1,14 +1,14 @@
-params.chr = "A"
+params.cov = 10
 
-process CHR_COUNT {
+process CONTIG_COV {
 
   script:
   """
-  printf  'Number of sequences for chromosome '${params.chr}':'
-  zgrep  -c '^>Y'${params.chr} ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+  printf 'Number of contigs with coverage '${params.cov}':'
+  zgrep -c 'cov=${params.cov}.' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz
   """
 }
 
 workflow {
-  CHR_COUNT()
+  CONTIG_COV()
 }

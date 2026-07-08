@@ -1,18 +1,19 @@
 params.method = 'ids'
-params.transcriptome = "$projectDir/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.fasta = "$projectDir/data/bacteria/assemblies/Sample01.contigs.fa.gz"
+
 
 process COUNT {
   script:
   if( params.method == 'ids' ) {
     """
-    echo Number of sequences in transciptome
-    zgrep -c "^>" $params.transcriptome
+    echo Number of sequences in fasta
+    zgrep -c "^>" $params.fasta
     """
   }  
   else if( params.method == 'bases' ) {
     """
-    echo Number of bases in transciptome
-    zgrep -v "^>" $params.transcriptome|grep -o "."|wc -l
+    echo Number of bases in fasta
+    zgrep -v "^>" $params.fasta|grep -o "."|wc -l
     """
   }  
   else {

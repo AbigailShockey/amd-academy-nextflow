@@ -1,18 +1,17 @@
 process COMBINE {
   input:
-  path transcriptome
-  each chr
- 
+  path fasta
+  each cov
+
   script:
   """
-  printf "Number of sequences for chromosome $chr: "
-  zgrep -c "^>Y${chr}" ${transcriptome}
+  printf "Number of contigs with coverage $cov: "
+  zgrep -c "cov=${cov}." ${fasta}
   """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-  chr_ch = channel.of('A'..'P')
-
-  COMBINE(transcriptome_ch, chr_ch)
+  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
+  cov_ch = channel.of(10..20)
+  COMBINE(fasta_ch, cov_ch) 
 }

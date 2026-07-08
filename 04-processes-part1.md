@@ -35,9 +35,9 @@ For example, below is the command you would run to count the number of sequence 
 ### FASTA format
 FASTA format is a text-based format for representing either nucleotide sequences or peptide sequences. A sequence in FASTA format begins with a single-line description, followed by lines of sequence data. The description line is distinguished from the sequence data by a greater-than (">") symbol in the first column.
 ```bash
->YBR024W_mRNA cdna chromosome:R64-1-1:II:289445:290350:1 gene:YBR024W gene_biotype:protein_coding transcript_biotype:protein_coding gene_symbol:SCO2 description:Protein anchored to mitochondrial inner membrane; may have a redundant function with Sco1p in delivery of copper to cytochrome c oxidase; interacts with Cox2p; SCO2 has a paralog, SCO1, that arose from the whole genome duplication [Source:SGD;Acc:S000000228]
-ATGTTGAATAGTTCAAGAAAATATGCTTGTCGTTCCCTATTCAGACAAGCGAACGTCTCA
-ATAAAAGGACTCTTTTATAATGGAGGCGCATATCGAAGAGGGTTTTCAACGGGATGTTGT
+>contig00001 len=364787 cov=17.0 corr=0 origname=NODE_1_length_364787_cov_17.006532_pilon sw=shovill-spades/1.1.0 date=20260702
+CATTACTCACCCGTCCGCCGCTAGGTCCAGTAGCAAGCTACCTTCCCCCGCTCGACTTGC
+ATGTGTTAAGCCTGCCGCCAGCGTTCAATCTGAGCCATGATCAAACTCTTCAGTTAAAAT
 ```
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -45,16 +45,16 @@ ATAAAAGGACTCTTTTATAATGGAGGCGCATATCGAAGAGGGTTTTCAACGGGATGTTGT
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ### zgrep -c '^>'
-The command `zgrep -c '^>' data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz` is used in Unix-like systems for a specific purpose: it counts the number of sequences in a compressed FASTA file. The tool `zgrep` combines the functionalities of 'grep' for pattern searching and 'gzip' for handling compressed files. The `-c` option modifies this command to count the occurrences of lines matching the pattern, instead of displaying them. The pattern `'^>'` is designed to find lines that start with '>', which in FASTA files, denotes the beginning of a new sequence. Thus, this command efficiently counts how many sequences are contained within the specified compressed FASTA file.
+The command `zgrep -c '^>' data/bacteria/assemblies/Sample01.contigs.fa.gz` is used in Unix-like systems for a specific purpose: it counts the number of sequences in a compressed FASTA file. The tool `zgrep` combines the functionalities of 'grep' for pattern searching and 'gzip' for handling compressed files. The `-c` option modifies this command to count the occurrences of lines matching the pattern, instead of displaying them. The pattern `'^>'` is designed to find lines that start with '>', which in FASTA files, denotes the beginning of a new sequence. Thus, this command efficiently counts how many sequences are contained within the specified compressed FASTA file.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ```bash
-$ zgrep -c '^>' data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+$ zgrep -c '^>' data/bacteria/assemblies/Sample01.contigs.fa.gz
 ```
 
 ```output
-6612
+131
 ```
 
 Now we will show how to convert this into a simple Nextflow process.
@@ -66,7 +66,7 @@ The process definition starts with keyword `process`, followed by process name, 
 ```groovy
 process NUMSEQ {
   script:
-  "zgrep -c '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+  "zgrep -c '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 }
 ```
 
@@ -89,7 +89,7 @@ Put this codeblock into a Nextflow script named process_01.nf:
 ```groovy
 process NUMSEQ {
   script:
-  "zgrep -c '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+  "zgrep -c '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 }
 
 workflow {
@@ -106,16 +106,13 @@ $ nextflow run process_01.nf -process.debug
  **Note** We need to add the Nextflow run option `-process.debug` to print the output to the terminal.
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process.nf` [goofy_shockley] revision: 0398eaa799
+Launching `process_01.nf` [backstabbing_leibniz] revision: 2de03f9245
 
 executor >  local (1)
-[6e/1de921] process > NUMSEQ [100%] 1 of 1 ✔
-6612
-
-
+[1d/373f53] process > NUMSEQ [100%] 1 of 1 ✔
+131
 ```
 
 
@@ -125,7 +122,7 @@ executor >  local (1)
 
 Create a Nextflow script `simple_process.nf` that has one process `COUNT_BASES` that runs the command.
 ```bash
-zgrep -v '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz|tr -d '\n'|wc -m
+zgrep -v '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|tr -d '\n'|wc -m
 ```
 
 :::::::::::::::  solution
@@ -136,7 +133,7 @@ process COUNT_BASES {
    
 script:
 """
-zgrep -v '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz|tr -d '\n'|wc -m
+zgrep -v '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|tr -d '\n'|wc -m
 """
 }
 
@@ -150,16 +147,13 @@ $ nextflow run simple_process.nf -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `simple_process.nf` [extravagant_stone] revision: 32d6563a6f
+Launching `process_exercise_simple_process.nf` [reverent_yonath] revision: d71685d57b
 
 executor >  local (1)
-[7b/656df5] process > COUNT_BASES [100%] 1 of 1 ✔
-8772368
-
-
+[fd/6098d1] COUNT_BASES [100%] 1 of 1 ✔
+4059459
 ```
 
 :::::::::::::::::::::::::
@@ -208,7 +202,7 @@ The `script` block can be a simple one line string in quotes e.g.
 ```groovy
 process NUMSEQ {
     script:
-    "zgrep -c '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+    "zgrep -c '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 }
 
 workflow {
@@ -221,16 +215,16 @@ Or, for commands that span multiple lines you can encase the command in  triple 
 Put this codeblock into a Nextflow script named process_multi_line.nf:
 
 ```groovy
-process NUMSEQ_CHR {
+process NUMSEQ_COV {
     script:
     """
-    zgrep  '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz > ids.txt
-    zgrep -c '>YA' ids.txt
+    zgrep '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz > ids.txt
+    zgrep -c 'cov=10.' ids.txt
     """
 }
 
 workflow {
-  NUMSEQ_CHR()
+  NUMSEQ_COV()
 }
 ```
 
@@ -239,77 +233,18 @@ $ nextflow run process_multi_line.nf -process.debug
 ```
 
 ```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_multi_line.nf` [lethal_ekeblad] revision: a618bad4fd
-
-executor >  local (1)
-[a9/931152] process > NUMSEQ_CHR [100%] 1 of 1 ✔
-118
-
-
-```
-
-::::::::::::::::::::::::::::::::::::: instructor
-
-The following section on python is meant to be run by the instructor not the learners. 
-It is meant to be a demonstration of the different ways to run a process.
-This can be skipped for time.
-
-:::::::::::::::::::::::::::::::::::::::::::::::::
-
-By default the process command is interpreted as a **Bash** script. However, any other scripting language can be used just simply starting the script with the corresponding [Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) declaration. 
-
-Put this codeblock into a Nextflow script named process_python.nf:
-
-```groovy
-process PROCESS_READS {
-  script:
-  """
-  #!/usr/bin/env python
-  import gzip
-
-  reads = 0
-  bases = 0
-
-  with gzip.open('${projectDir}/data/yeast/reads/ref1_1.fq.gz', 'rb') as read:
-      for id in read:
-          seq = next(read)
-          reads += 1
-          bases += len(seq.strip())
-          next(read)
-          next(read)
-
-  print("reads", reads)
-  print("bases", bases)
-  """
+process NUMSEQ_COV {
+    script:
+    """
+    zgrep '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz > ids.txt
+    zgrep -c 'cov=10.' ids.txt
+    """
 }
 
 workflow {
-  PROCESS_READS()
+  NUMSEQ_COV()
 }
 ```
-
-```bash
-$ nextflow run process_python.nf -process.debug
-```
-
-```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_python.nf` [focused_mayer] revision: 265e013d19
-
-executor >  local (1)
-[a1/397f9d] process > PROCESS_READS [100%] 1 of 1 ✔
-reads 14677
-bases 1482377
-
-
-```
-
-This allows the use of a different programming languages which may better fit a particular job. However, for large chunks of code it is suggested to save them into separate files and invoke them from the process script.
 
 ## Associated scripts
 
@@ -366,17 +301,14 @@ $ nextflow run process_python_script.nf -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_python_script.nf` [special_elion] revision: e4cb2dd30e
+Launching `process_python.nf` [focused_mayer] revision: 265e013d19
 
 executor >  local (1)
-[d7/1d1fdd] process > PROCESS_READS [100%] 1 of 1 ✔
+[a1/397f9d] process > PROCESS_READS [100%] 1 of 1 ✔
 reads 14677
 bases 1482377
-
-
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -403,62 +335,41 @@ Similar to bash scripting Nextflow uses the `$` character to introduce variable 
 
 We saw in the parameter episode the use of a special Nextflow variable `params` that can be used to assign values from the command line. You would do this by adding a key name to the params variable and specifying a value, like `params.keyname = value`
 
-In the example below we define the variable `params.chr` with a default value of `A`.
+In the example below we define the variable `params.cov` with a default value of `10`.
 
 Put this codeblock into a Nextflow script named process_script_params.nf:
 
 ```groovy
-params.chr = "A"
+params.cov = 10
 
-process CHR_COUNT {
+process CONTIG_COV {
 
   script:
   """
-  printf  'Number of sequences for chromosome '${params.chr}':'
-  zgrep  -c '^>Y'${params.chr} ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+  printf 'Number of contigs with coverage '${params.cov}':'
+  zgrep -c 'cov=${params.cov}.' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz
   """
 }
 
 workflow {
-  CHR_COUNT()
+  CONTIG_COV()
 }
 ```
 
-Params can be adjusted with a params file or on the command line. The following will adjust the "chr" param to the value of "B" instead of the default of "A".
+Params can be adjusted with a params file or on the command line. The following will adjust the "cov" param to the value of "15" instead of the default of 10.
 
 ```bash
-$ nextflow run process_script_params.nf --chr B -process.debug
+$ nextflow run process_script_params.nf --cov 15 -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_script_params.nf` [distracted_noyce] revision: 54bbe634dd
+Launching `process_script_params.nf` [deadly_goodall] revision: 1c5444d01b
 
 executor >  local (1)
-[c8/384365] process > CHR_COUNT [100%] 1 of 1 ✔
-Number of sequences for chromosome A:118
-
-```
-
-Remember, we can change the default value of `chr` to a different value such as `B`, by running the Nextflow script using the command below. **Note:** parameters to the workflow have two hyphens `--`.
-
-```bash
-$ nextflow run process_script_params.nf --chr B -process.debug
-```
-
-```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_script_params.nf` [zen_dijkstra] revision: 54bbe634dd
-
-executor >  local (1)
-[76/a201e1] process > CHR_COUNT [100%] 1 of 1 ✔
-Number of sequences for chromosome B:456
-
-
+[77/02bff9] CONTIG_COV [100%] 1 of 1 ✔
+Number of contigs with coverage 10:7
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -472,7 +383,7 @@ process COUNT_BASES {
 
 script:
 """
-zgrep -v  '^>'   ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz|grep -o A|wc -l   
+zgrep -v  '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|grep -o A|wc -l   
 """
 }
 
@@ -496,17 +407,17 @@ $ nextflow run process_script_params.nf --base <some value> -process.debug
 
 ## Solution
 ```groovy
- params.base='A'
+params.base='A'
 
- process COUNT_BASES {
-  
- script:
-  """
-  zgrep -v  '^>'   ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz|grep -o ${params.base}|wc -l   
-  """
- }
+process COUNT_BASES {
 
- workflow {
+script:
+"""
+zgrep -v  '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|grep -o ${params.base}|wc -l   
+"""
+}
+
+workflow {
    COUNT_BASES()
  }
 ```
@@ -516,16 +427,13 @@ $ nextflow run process_script_params.nf --base C -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_script_params.nf` [gigantic_rosalind] revision: 2381d414f0
+Launching `process_exercise_script_params.nf` [hungry_bartik] revision: 951e348b58
 
 executor >  local (1)
-[f1/431b27] process > COUNT_BASES [100%] 1 of 1 ✔
-1677188
-
-
+[71/0de865] COUNT_BASES [100%] 1 of 1 ✔
+795309
 ```
 
 :::::::::::::::::::::::::
@@ -547,14 +455,14 @@ process NUM_IDS {
   script:
   """
   #set bash variable NUMIDS
-  NUMIDS=`zgrep -c '^>' $params.transcriptome`
+  NUMIDS=`zgrep -c '^>' $params.fasta`
 
   echo 'Number of sequences'
   printf "%'d\n" \$NUMIDS
   """
 }
 
-params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
 workflow {
   NUM_IDS()
@@ -566,16 +474,14 @@ $ nextflow run process_escape_bash.nf -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_escape_bash.nf` [adoring_liskov] revision: 70e2da485d
+Launching `process_shell.nf` [chaotic_bassi] revision: d3fc993072
 
 executor >  local (1)
-[e9/764954] process > NUM_IDS [100%] 1 of 1 ✔
+[d1/3401f2] NUM_IDS [100%] 1 of 1 ✔
 Number of sequences
-6,612
-
+131
 ```
 
 
@@ -594,14 +500,14 @@ process NUM_IDS {
   //Shell script definition requires the use of single-quote ' delimited strings
   '''
   #set bash variable NUMIDS
-  NUMIDS=`zgrep -c '^>' !{params.transcriptome}`
+  NUMIDS=`zgrep -c '^>' !{params.fasta}`
 
   echo 'Number of sequences'
-  printf  $NUMIDS
+  printf $NUMIDS
   '''
 }
 
-params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
 workflow {
   NUM_IDS()
@@ -613,16 +519,14 @@ $ nextflow run process_shell.nf -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_shell.nf` [reverent_perlman] revision: 73f7935286
+Launching `process_shell.nf` [chaotic_bassi] revision: d3fc993072
 
 executor >  local (1)
-[31/698eaf] process > NUM_IDS [100%] 1 of 1 ✔
+[d1/3401f2] NUM_IDS [100%] 1 of 1 ✔
 Number of sequences
-6612
-
+131
 ```
 
 
@@ -653,21 +557,21 @@ Put this codeblock into a Nextflow script named process_conditional.nf:
 
 ```groovy
 params.method = 'ids'
-params.transcriptome = "$projectDir/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.fasta = "$projectDir/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
 
 process COUNT {
   script:
   if( params.method == 'ids' ) {
     """
-    echo Number of sequences in transciptome
-    zgrep -c "^>" $params.transcriptome
+    echo Number of sequences in fasta
+    zgrep -c "^>" $params.fasta
     """
   }  
   else if( params.method == 'bases' ) {
     """
-    echo Number of bases in transciptome
-    zgrep -v "^>" $params.transcriptome|grep -o "."|wc -l
+    echo Number of bases in fasta
+    zgrep -v "^>" $params.fasta|grep -o "."|wc -l
     """
   }  
   else {
@@ -687,17 +591,14 @@ $ nextflow run process_conditional.nf -process.debug --method ids
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_conditional.nf` [admiring_jepsen] revision: 065168944c
+Launching `process_conditional.nf` [mad_moriondo] revision: c2c8fff4a9
 
 executor >  local (1)
-[36/57a5ad] process > COUNT [100%] 1 of 1 ✔
-Number of sequences in transciptome
-6612
-
-
+[56/c2e3bb] COUNT [100%] 1 of 1 ✔
+Number of sequences in fasta
+131
 ```
 
 Adjusting params.method to a different value will adjust how the process `COUNT` is run.
@@ -707,17 +608,14 @@ $ nextflow run process_conditional.nf -process.debug --method bases
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_conditional.nf` [angry_mcclintock] revision: 065168944c
+Launching `process_conditional.nf` [confident_morse] revision: c2c8fff4a9
 
 executor >  local (1)
-[e3/a7ca37] process > COUNT [100%] 1 of 1 ✔
-Number of bases in transciptome
-8772368
-
-
+[cf/d7dce8] COUNT [100%] 1 of 1 ✔
+Number of bases in fasta
+4059459
 ```
 
 ## Inputs
@@ -966,28 +864,29 @@ When a process declares an input file, the corresponding channel elements must b
 ## Add input channel
 For the script `process_exercise_input.nf`:
 
-1. Define a Channel using `fromPath` for the transcriptome `params.transcriptome`.  
-2. Add an input channel that takes the transcriptome channel as a file input.
-3. Replace `params.transcriptome` in the `script:` block with the input variable you defined in the `input:` definition.
+1. Define a Channel using `fromPath` for the transcriptome `params.fasta`.  
+2. Add an input channel that takes the fasta channel as a file input.
+3. Replace `params.fasta` in the `script:` block with the input variable you defined in the `input:` definition.
 
 ```groovy
-params.chr = "A"
-params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
-process CHR_COUNT {
+params.cov = 10
+params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
-script:
-"""
-printf  'Number of sequences for chromosome '${params.chr}':'
-zgrep  -c '^>Y'${params.chr} ${params.transcriptome}
-"""
+process CONTIG_COV {
+
+ script:
+ """
+ printf 'Number of contigs with coverage '${params.cov}':'
+ zgrep -c 'cov=${params.cov}.' ${params.fasta}
+ """
 }
 
 workflow {
-  CHR_COUNT()
+ CONTIG_COV()
 }
 ```
 
-Then run your script using
+Then run your script using:
 
 ```bash
 $ nextflow run process_exercise_input.nf -process.debug
@@ -997,42 +896,36 @@ $ nextflow run process_exercise_input.nf -process.debug
 ## Solution
 
 ```groovy
-params.chr = "A"
-params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.cov = 10
+params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
-process CHR_COUNT {
-  input:
-  path transcriptome
+process CONTIG_COV {
 
-  script:
-  """
-  printf  'Number of sequences for chromosome '${params.chr}':'
-  zgrep  -c '^>Y'${params.chr} ${transcriptome}
-  """
+ script:
+ """
+ printf 'Number of contigs with coverage '${params.cov}':'
+ zgrep -c 'cov=${params.cov}.' ${params.fasta}
+ """
 }
 
 workflow {
 
-  transcriptome_ch = channel.fromPath(params.transcriptome)
+  fasta_ch = channel.fromPath(params.fasta)
   
-  CHR_COUNT(transcriptome_ch)
+  CONTIG_COV(fasta_ch)
  
 }
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_exercise_input.nf` [determined_raman] revision: 2e4a6e755c
+Launching `process_exercise_input.nf` [exotic_goldwasser] revision: 9c68884cb6
 
 executor >  local (1)
-[e3/75dc58] process > CHR_COUNT (1) [100%] 1 of 1 ✔
-Number of sequences for chromosome A:118
-
-
+[3f/561f75] CONTIG_COV [100%] 1 of 1 ✔
+Number of contigs with coverage 10:7
 ```
-
 
 :::::::::::::::::::::::::
 
@@ -1194,8 +1087,8 @@ executor >  local (3)
 Write a nextflow script `process_exercise_combine.nf` that combines two input channels
  
 ```groovy
- transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
- chr_ch = channel.of('A')
+ fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz')
+ cov_ch = channel.value(10)
 ```
 
 And include the command below in the script directive
@@ -1203,7 +1096,7 @@ And include the command below in the script directive
 ```groovy
   script:
   """
-  zgrep -c ">Y${chr}" ${transcriptome}
+  zgrep -c "cov=${cov}." ${fasta}
   """
 ```
 :::::::::::::::  solution
@@ -1211,20 +1104,20 @@ And include the command below in the script directive
 ## Solution
 ```groovy
 process COMBINE {
-  input:
-  path transcriptome
-  val chr
+ input:
+ path fasta
+ val cov
 
-  script:
-  """
-  zgrep -c ">Y${chr}" ${transcriptome}
-  """
+ script:
+ """
+ zgrep -c "cov=${cov}." ${fasta}
+ """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-  chr_ch = channel.of("A")
-  COMBINE(transcriptome_ch, chr_ch)
+  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
+  cov_ch = channel.value(10)
+  COMBINE(fasta_ch, cov_ch) 
 }
 ```
 
@@ -1233,16 +1126,13 @@ $ nextflow run process_exercise_combine.nf -process.debug
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_exercise_combine.nf` [stupefied_fourier] revision: be08913f84
+Launching `process_exercise_combine_answer.nf` [confident_raman] revision: 9b2916fd5e
 
 executor >  local (1)
-[b2/dbb4c5] process > COMBINE (1) [100%] 1 of 1 ✔
-118
-
-
+[8d/f5e792] COMBINE (1) [100%] 1 of 1 ✔
+7
 ```
 
 :::::::::::::::::::::::::
@@ -1313,26 +1203,25 @@ executor >  local (8)
 
 ## Input repeaters
 
-Extend the script `process_exercise_repeat.nf` by adding more values to the `chr` queue channel e.g. A to P and running the process for each value.
+Extend the script `process_exercise_repeat.nf` by adding more values to the `cov` queue channel e.g. 10 to 20 and running the process for each value.
 
 ```groovy
 process COMBINE {
-    input:
-    path transcriptome
-    val chr
-   
-    script:
-    """
-     printf "Number of sequences for chromosome $chr: "
-    zgrep -c "^>Y${chr}" ${transcriptome}
-    """
+  input:
+  path fasta
+  val cov
+
+  script:
+  """
+  printf "Number of contigs with coverage $chr: "
+  zgrep -c "cov=${cov}." ${fasta}
+  """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-  chr_ch = channel.of('A')
-
-  COMBINE(transcriptome_ch, chr_ch)
+  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
+  cov_ch = channel.value(10)
+  COMBINE(fasta_ch, cov_ch) 
 }
 ```
 
@@ -1344,22 +1233,21 @@ How many times does this process run?
 
 ```groovy
 process COMBINE {
-   input:
-   path transcriptome
-   each chr
-  
-   script:
-   """
-   printf "Number of sequences for chromosome $chr: "
-   zgrep -c "^>Y${chr}" ${transcriptome}
-   """
+  input:
+  path fasta
+  each cov
+
+  script:
+  """
+  printf "Number of contigs with coverage $cov: "
+  zgrep -c "cov=${cov}." ${fasta}
+  """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz', checkIfExists: true)
-  chr_ch = channel.of('A'..'P')
-
-  COMBINE(transcriptome_ch, chr_ch)
+  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
+  cov_ch = channel.of(10..20)
+  COMBINE(fasta_ch, cov_ch) 
 }
 ```
 
@@ -1372,78 +1260,33 @@ $ nextflow run process_exercise_repeat.nf -process.debug
 This process runs 16 times.
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `process_exercise_repeat.nf` [small_goodall] revision: b983791c13
+Launching `process_exercise_repeat_answer.nf` [nostalgic_wegener] revision: cdb2d7beed
 
-executor >  local (12)
-executor >  local (15)
-[7b/27c5be] process > COMBINE (15) [ 68%] 11 of 16
-Number of sequences for chromosome D: 836
+executor >  local (11)
+[d6/73de20] COMBINE (3) [100%] 11 of 11 ✔
+Number of contigs with coverage 18: 8
 
-Number of sequences for chromosome C: 186
-executor >  local (16)
-[e2/e0ebca] process > COMBINE (14) [ 87%] 14 of 16
-Number of sequences for chromosome D: 836
+Number of contigs with coverage 20: 1
 
-Number of sequences for chromosome C: 186
+Number of contigs with coverage 17: 6
 
-Number of sequences for chromosome A: 118
+Number of contigs with coverage 15: 6
 
-Number of sequences for chromosome B: 456
+Number of contigs with coverage 11: 8
 
-Number of sequences for chromosome E: 323
-executor >  local (16)
-[30/5ffc01] process > COMBINE (16) [100%] 16 of 16 ✔
-Number of sequences for chromosome D: 836
+Number of contigs with coverage 10: 7
 
-Number of sequences for chromosome C: 186
+Number of contigs with coverage 19: 1
 
-Number of sequences for chromosome A: 118
+Number of contigs with coverage 14: 8
 
-Number of sequences for chromosome B: 456
+Number of contigs with coverage 16: 4
 
-Number of sequences for chromosome E: 323
+Number of contigs with coverage 13: 10
 
-Number of sequences for chromosome F: 140
-
-Number of sequences for chromosome I: 245
-executor >  local (16)
-[30/5ffc01] process > COMBINE (16) [100%] 16 of 16 ✔
-Number of sequences for chromosome D: 836
-
-Number of sequences for chromosome C: 186
-
-Number of sequences for chromosome A: 118
-
-Number of sequences for chromosome B: 456
-
-Number of sequences for chromosome E: 323
-
-Number of sequences for chromosome F: 140
-
-Number of sequences for chromosome I: 245
-
-Number of sequences for chromosome G: 583
-
-Number of sequences for chromosome H: 321
-
-Number of sequences for chromosome L: 580
-
-Number of sequences for chromosome J: 398
-
-Number of sequences for chromosome K: 348
-
-Number of sequences for chromosome M: 505
-
-Number of sequences for chromosome N: 435
-
-Number of sequences for chromosome O: 597
-
-Number of sequences for chromosome P: 513
-
-
+Number of contigs with coverage 12: 10
 ```
 
 :::::::::::::::::::::::::

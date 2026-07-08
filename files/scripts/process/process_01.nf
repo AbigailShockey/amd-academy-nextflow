@@ -1,8 +1,7 @@
 process NUMSEQ {
   script:
-  "zgrep -c '^>' ${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+  "zgrep -c '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 }
-
 workflow {
   //process is called like a function in the workflow block
   NUMSEQ()
