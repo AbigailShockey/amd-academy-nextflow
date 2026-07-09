@@ -1,38 +1,36 @@
-process INDEX {
-
+process FASTQC {
     input:
-    path transcriptome
-
+      tuple(val(sample_id), path(reads))
     output:
-    path 'index', emit: salmon_index
-
+      path "fastqc_${sample_id}_logs"
     script:
-    """
-    salmon index -t $transcriptome -i index
-    """
+      """
+      mkdir fastqc_${sample_id}_logs
+      fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads}
+      """
 }
 
-process QUANT {
-
+process MULTIQC {
+    publishDir "results/mqc"
     input:
-    each path(index)
-    tuple( val(pair_id), path(reads) )
-
+      path transcriptome
     output:
-    path pair_id
-
+      path "*"
     script:
-    """
-    salmon quant --threads $task.cpus --libType=U -i $index -1 ${reads[0]} -2 ${reads[1]} -o $pair_id
-    """
+      """
+      multiqc .
+      """
 }
 
-params.transcriptome = 'data/yeast/transcriptome/*.fa.gz'
-params.reads= 'data/yeast/reads/ref1*_{1,2}.fq.gz'
+params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 workflow {
-  transcriptome_ch = channel.fromPath(params.transcriptome)
-  read_pairs_ch = channel.fromFilePairs(params.reads)
-  INDEX(transcriptome_ch)
-  QUANT(INDEX.out.salmon_index,read_pairs_ch).view()
+
+    read_pairs_ch = channel.fromFilePairs(params.reads)
+
+    //assign process output to Nextflow variable fastqc_obj
+    fastqc_obj = FASTQC(read_pairs_ch)
+
+    //We use the collect operator to gather multiple channel items into a single item
+    MULTIQC(fastqc_obj.collect()).view()
 }
