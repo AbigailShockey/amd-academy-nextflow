@@ -1,24 +1,22 @@
-//process_output_file.nf
+params.fasta="${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
-
-params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
-
-process COUNT_CHR_SEQS {
+process COUNT_COV {
   input:
-  val chr
+  val cov
 
   output:
-  path "${chr}_seq_count.txt"
+  path "contigs_cov_${cov}.txt"
 
   script:
   """
-  zgrep -c '^>Y'$chr $params.transcriptome > ${chr}_seq_count.txt
+  zgrep -c "cov=${cov}." $params.fasta > contigs_cov_${cov}.txt
   """
 }
 
 workflow {
-  chr_ch = channel.of('A'..'P')
-  COUNT_CHR_SEQS(chr_ch)
+  cov_ch = channel.of(10..20)
+  
+  COUNT_COV(cov_ch)
   // use the view operator to display contents of the channel
-  COUNT_CHR_SEQS.out.view()
+  COUNT_COV.out.view()
 }

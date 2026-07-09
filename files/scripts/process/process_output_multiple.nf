@@ -1,23 +1,23 @@
-params.transcriptome="${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"
+params.fasta="${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
 process SPLIT_FASTA {
   input:
-  path transcriptome
+  path fasta
 
   output:
   path "*"
 
   script:
   """
-  zgrep  '^>' $transcriptome > sequence_ids.txt
-  zgrep -v '^>' $transcriptome > sequence.txt
+  zgrep '^>' $fasta > sequence_ids.txt
+  zgrep -v '^>' $fasta > sequence.txt
   """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath(params.transcriptome)
+  fasta_ch = channel.fromPath(params.fasta)
   
-  SPLIT_FASTA(transcriptome_ch)
+  SPLIT_FASTA(fasta_ch)
   // use the view operator to display contents of the channel
   SPLIT_FASTA.out.view()
 }
