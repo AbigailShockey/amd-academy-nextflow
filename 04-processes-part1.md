@@ -84,7 +84,12 @@ A full list of implicit variables can be found [here](https://www.nextflow.io/do
 
 To add the process to a workflow add a `workflow` block, and call the process like a function. We will learn more about the `workflow` block in the workflow episode.
 
-Put this codeblock into a Nextflow script named process_01.nf:
+
+From the scripts directory, copy the `process_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_01.nf .
+```
 
 ```groovy
 process NUMSEQ {
@@ -212,7 +217,11 @@ workflow {
 
 Or, for commands that span multiple lines you can encase the command in  triple quotes `"""`.
 
-Put this codeblock into a Nextflow script named process_multi_line.nf:
+From the scripts directory, copy the `process_multi_line.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+
+```bash
+$ cp /home/user/scripts/process/process_multi_line.nf .
+```
 
 ```groovy
 process NUMSEQ_COV {
@@ -280,7 +289,11 @@ mv process_reads.py bin
 chmod 755 bin/process_reads.py
 ```
 
-Put this codeblock into a Nextflow script named process_python_script.nf:
+From the scripts directory, copy the `process_python_script.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+
+```bash
+$ cp /home/user/scripts/process/process_python_script.nf .
+```
 
 ```groovy
 process PROCESS_READS {
@@ -335,9 +348,11 @@ Similar to bash scripting Nextflow uses the `$` character to introduce variable 
 
 We saw in the parameter episode the use of a special Nextflow variable `params` that can be used to assign values from the command line. You would do this by adding a key name to the params variable and specifying a value, like `params.keyname = value`
 
-In the example below we define the variable `params.cov` with a default value of `10`.
+From the scripts directory, copy the `process_script_params.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
 
-Put this codeblock into a Nextflow script named process_script_params.nf:
+```bash
+$ cp /home/user/scripts/process/process_script_params.nf .
+```
 
 ```groovy
 params.cov = 10
@@ -355,6 +370,8 @@ workflow {
   CONTIG_COV()
 }
 ```
+
+In this example we define the variable `params.cov` with a default value of `10`.
 
 Params can be adjusted with a params file or on the command line. The following will adjust the "cov" param to the value of "15" instead of the default of 10.
 
@@ -447,7 +464,11 @@ However, Bash variables need to be escaped using `\` character in front of `\$va
 
 In the example below we will set a bash variable `NUMIDS` then echo the value of `NUMIDS`.
 
-Put this codeblock into a Nextflow script named process_escape_bash.nf:
+From the scripts directory, copy the `process_escape_bash.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+
+```bash
+$ cp /home/user/scripts/process/process_escape_bash.nf .
+```
 
 ```groovy
 process NUM_IDS {
@@ -484,14 +505,17 @@ Number of sequences
 131
 ```
 
-
 ### Shell
 
 Another alternative is to use a `shell` block definition instead of `script`.
 When using the `shell` statement Bash variables are referenced in the normal way `$my_bash_variable`;
 However, the `shell` statement uses a different syntax for Nextflow variable substitutions: `!{nextflow_variable}`, which is needed to use both Nextflow and Bash variables in the same script.
 
-For example in the script below that uses the `shell` statement we reference the Nextflow variables as `!{projectDir}` , and the Bash variable as `${NUMCHAR}` and `${NUMLINES}`. Name this script process_shell.nf.
+From the scripts directory, copy the `process_shell.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
+
+```bash
+$ cp /home/user/scripts/process/process_shell.nf .
+```
 
 ```groovy
 process NUM_IDS {
@@ -514,6 +538,9 @@ workflow {
 }
 ```
 
+This script uses the `shell` statement we reference the Nextflow variables as `!{projectDir}` , and the Bash variable as `${NUMCHAR}` and `${NUMLINES}`. Now run the pipeline.
+
+
 ```bash
 $ nextflow run process_shell.nf -process.debug
 ```
@@ -528,7 +555,6 @@ executor >  local (1)
 Number of sequences
 131
 ```
-
 
 ### Conditional script execution
 
@@ -550,10 +576,11 @@ else {
 }
 ```
 
+From the scripts directory, copy the `process_conditional.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
-For example, the Nextflow script below will use the `if` statement to change what the COUNT process counts depending on the Nextflow variable `params.method`.
-
-Put this codeblock into a Nextflow script named process_conditional.nf:
+```bash
+$ cp /home/user/scripts/process/process_conditional.nf .
+```
 
 ```groovy
 params.method = 'ids'
@@ -586,6 +613,9 @@ workflow {
 }
 ```
 
+This Nextflow script below will use the `if` statement to change what the COUNT process counts depending on the Nextflow variable `params.method`. Run the pipeline with `--method ids`.
+
+
 ```bash
 $ nextflow run process_conditional.nf -process.debug --method ids
 ```
@@ -601,7 +631,7 @@ Number of sequences in fasta
 131
 ```
 
-Adjusting params.method to a different value will adjust how the process `COUNT` is run.
+Adjusting params.method to a different value will adjust how the process `COUNT` is run. This time run the pipeline with `--method bases`.
 
 ```bash
 $ nextflow run process_conditional.nf -process.debug --method bases
@@ -654,7 +684,11 @@ A complete list of inputs can be found [here](https://www.nextflow.io/docs/lates
 
 The `val` qualifier allows you to receive value data as input. It can be accessed in the process script by using the specified input name.
 
-Put this codeblock into a Nextflow script named process_input_value.nf:
+From the scripts directory, copy the `process_input_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_input_value.nf .
+```
 
 ```groovy
 process PRINTCHR {
@@ -675,6 +709,8 @@ workflow {
   PRINTCHR(chr_ch)
 }
 ```
+
+In this example the process will be executed 16 times; each time a value is received from the queue channel `chr_ch` it is used to run the process. Now run the pipeline.
 
 ```bash
 $ nextflow run process_input_value.nf -process.debug
@@ -729,8 +765,6 @@ processing chromosome P
 processing chromosome N
 ```
 
-In the above example the process is executed 16 times; each time a value is received from the queue channel `chr_ch` it is used to run the process.
-
 :::::::::::::::::::::::::::::::::::::::::  callout
 
 ## Channel order
@@ -746,9 +780,11 @@ When you need to handle files as input, you need the `path` qualifier. Using the
 
 The input file name can be defined dynamically by defining the input name as a Nextflow variable and referenced in the script using the  `$variable_name` syntax.
 
-For example, we assign the variable name `read` to the input files using the `path` qualifier. The file is referenced using the variable substitution syntax `${read}`.
+From the scripts directory, copy the `process_input_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
-Put this codeblock into a Nextflow script named process_input_file.nf:
+```bash
+$ cp /home/user/scripts/process/process_input_file.nf .
+```
 
 ```groovy
 process NUMLINES {
@@ -770,6 +806,8 @@ workflow {
 }
 
 ```
+
+In this example, we assign the variable name `read` to the input files using the `path` qualifier. The file is referenced using the variable substitution syntax `${read}`. Now run the pipeline.
 
 ```bash
 $ nextflow run process_input_file.nf -process.debug
@@ -800,9 +838,12 @@ ref2_1.fq.gz 81720
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 The input name can also be defined as a user-specified filename inside quotes.
-For example, in the codeblock below, the name of the file is specified as `'sample.fq.gz'` in the input definition and can be referenced by that name in the script block.
 
-Put this codeblock into a Nextflow script named process_input_file_02.nf:
+From the scripts directory, copy the `process_input_file_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_input_file_02.nf .
+```
 
 ```groovy
 process NUMLINES {
@@ -824,6 +865,8 @@ workflow {
 }
 
 ```
+
+In this example, the name of the file is specified as `'sample.fq.gz'` in the input definition and can be referenced by that name in the script block. Now run the pipeline.
 
 ```bash
 $ nextflow run process_input_file_02.nf -process.debug
@@ -936,7 +979,12 @@ Number of contigs with coverage 10:7
 A key feature of processes is the ability to handle inputs from multiple channels.
 However, it’s important to understand how the number of items within the multiple channels affect the execution of a process.
 
-Put this codeblock into a Nextflow script named process_combine.nf:
+
+From the scripts directory, copy the `process_combine.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_combine.nf .
+```
 
 ```groovy
 process COMBINE {
@@ -958,11 +1006,11 @@ workflow {
 }
 ```
 
+Both channels contain three elements, therefore the process is executed three times, each time with a different pair. Now run the pipeline.
+
 ```bash
 $ nextflow run process_combine.nf -process.debug
 ```
-
-Both channels contain three elements, therefore the process is executed three times, each time with a different pair:
 
 ```output
 
@@ -987,7 +1035,11 @@ When this condition is verified, it uses up the input values coming from the res
 
 What happens when not all channels have the same number of elements?
 
-Put this codeblock into a Nextflow script named process_combine_02.nf:
+From the scripts directory, copy the `process_combine_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_combine_02.nf .
+```
 
 ```groovy
 process COMBINE {
@@ -1008,11 +1060,11 @@ workflow {
 }
 ```
 
+In this example the process is executed only two times, because when a queue channel has no more data to be processed it stops the process execution. Now run the pipeline.
+
 ```bash
 $ nextflow run process_combine_02.nf -process.debug
 ```
-
-In the above example the process is executed only two times, because when a queue channel has no more data to be processed it stops the process execution.
 
 ```output
 
@@ -1026,7 +1078,6 @@ executor >  local (2)
 
 1 and a
 
-
 ```
 
 ### Value channels and process termination
@@ -1035,8 +1086,11 @@ executor >  local (2)
 
 To better understand this behaviour compare the previous example with the following one:
 
-Put this codeblock into a Nextflow script named process_combine_03.nf:
+From the scripts directory, copy the `process_combine_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
+```bash
+$ cp /home/user/scripts/process/process_combine_03.nf .
+```
 
 ```groovy
 process COMBINE {
@@ -1058,11 +1112,11 @@ workflow {
 }
 ```
 
+In this example the process is run three times. Now run the pipeline.
+
 ```bash
 $ nextflow run process_combine_03.nf -process.debug
 ```
-
-In this example the process is run three times.
 
 ```output
 
@@ -1145,7 +1199,11 @@ We saw previously that by default the number of times a process runs is defined 
 
 For example if we can fix the previous example by using the input qualifer `each` for the letters queue channel:
 
-Put this codeblock into a Nextflow script named process_repeat.nf:
+From the scripts directory, copy the `process_repeat.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/process/process_repeat.nf .
+```
 
 ```groovy
 process COMBINE {
@@ -1167,11 +1225,12 @@ workflow {
 }
 ```
 
+This process will run eight times. Now run the pipeline.
+
+
 ```bash
 $ nextflow run process_repeat.nf -process.debug
 ```
-
-The process will run eight times.
 
 ```output
 
