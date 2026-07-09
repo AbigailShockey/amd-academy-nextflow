@@ -47,7 +47,11 @@ As seen previously, a `process` is invoked as a function in the `workflow` scope
 
 To combined multiple processes invoke them in the order they would appear in a workflow. When invoking a process with multiple inputs, provide them in the same order in which they are declared in the `input` block of the process.
 
-Put this codeblock into a Nextflow script named workflow_01.nf:
+From the scripts directory, copy the `workflow_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+
+```bash
+$ cp /home/user/scripts/workflow/workflow_01.nf .
+```
 
 ```groovy 
 process FASTQC {
@@ -77,11 +81,9 @@ process MULTIQC {
 workflow {
     read_pairs_ch = channel.fromFilePairs('data/yeast/reads/*_{1,2}.fq.gz',checkIfExists: true)
 
-    //index process takes 1 input channel as a argument
     //assign process output to Nextflow variable fastqc_obj
     fastqc_obj = FASTQC(read_pairs_ch)
 
-    //quant channel takes 1 input channel as an argument
     //We use the collect operator to gather multiple channel items into a single item
     MULTIQC(fastqc_obj.collect()).view()
 }
@@ -136,43 +138,50 @@ The process `output` definition allows the use of the `emit:` option to define a
 For example in the script below we name the output from the `FASTQC` process as `fastqc_results` using the `emit:` option. We can then reference the output as
 `FASTQC.out.fastqc_results` in the workflow scope.
 
-Put this codeblock into a Nextflow script named workflow_02.nf:
+From the scripts directory, copy the `workflow_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+
+```bash
+$ cp /home/user/scripts/workflow/workflow_02.nf .
+```
 
 ```groovy 
-process INDEX {
+process TRIM {
 
     input:
-    path transcriptome
+    tuple val(sample_id), path(reads)
 
     output:
-    path 'index', emit: salmon_index
+    tuple val(sample_id), path('*trimmed*'), emit: trimmed_reads
 
     script:
     """
-    salmon index -t $transcriptome -i index
+    seqtk trimfq ${reads[0]} > ${sample_id}_trimmed_R1.fastq
+    seqtk trimfq ${reads[1]} > ${sample_id}_trimmed_R2.fastq
+    gzip *.fastq
     """
 }
 
-process QUANT {
+process FASTQC {
+
+    cpus 1
 
     input:
-    each path(index)
-    tuple( val(pair_id), path(reads) )
+    tuple val(sample_id), path(reads)
 
     output:
-    path pair_id
+    path("fastqc_${sample_id}_logs")
 
     script:
     """
-    salmon quant --threads $task.cpus --libType=U -i $index -1 ${reads[0]} -2 ${reads[1]} -o $pair_id
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
     """
 }
-
 workflow {
-    transcriptome_ch = channel.fromPath( 'data/yeast/transcriptome/*.fa.gz' )
-    read_pairs_ch = channel.fromFilePairs( 'data/yeast/reads/*_{1,2}.fq.gz' )
-    INDEX( transcriptome_ch )
-    QUANT( INDEX.out.salmon_index, read_pairs_ch ).view()
+  read_pairs_ch = channel.fromFilePairs( 'data/bacteria/reads/Sample01_R{1,2}.fastq.gz',checkIfExists: true)
+
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  fastqc_ch=FASTQC(trimmed_reads_ch)
 }
 ```
 
@@ -181,42 +190,39 @@ nextflow run workflow_02.nf
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `workflow_02.nf` [condescending_chandrasekhar] revision: b0ee782bf5
+Launching `workflow_02.nf` [small_raman] revision: 505f269b8f
 
-executor >  local (10)
-[0a/5547af] process > INDEX (1) [100%] 1 of 1 ✔
-[d6/912c73] process > QUANT (8) [100%] 9 of 9 ✔
-/home/rstudio/lessons/amd-academy-nextflow/work/7c/a87dd3c8ae3e62232b9f3bbd4c1bb7/temp33_2
-/home/rstudio/lessons/amd-academy-nextflow/work/5f/56abbb324ffa8f762e56fdf2147283/ref3
-/home/rstudio/lessons/amd-academy-nextflow/work/7b/1aac0f170af3418fdc44a9aa378981/temp33_1
-/home/rstudio/lessons/amd-academy-nextflow/work/4c/da7bf9ff9436f7f15b9d96195fd3e5/etoh60_1
-/home/rstudio/lessons/amd-academy-nextflow/work/28/616a546d544176d5f27aff61d95c22/ref2
-/home/rstudio/lessons/amd-academy-nextflow/work/57/10768e5d9a5833b83d363024bc6d29/temp33_3
-/home/rstudio/lessons/amd-academy-nextflow/work/b3/29a0274dd65606e5896619ecb38f40/etoh60_2
-/home/rstudio/lessons/amd-academy-nextflow/work/8c/1942d1382e6986ad57b95e84478b1b/etoh60_3
-/home/rstudio/lessons/amd-academy-nextflow/work/d6/912c7357c2a82908c04f3df9834b45/ref1
+executor >  local (2)
+[01/9e51cc] process > TRIM (1)   [100%] 1 of 1 ✔
+[65/8feb93] process > FASTQC (1) [100%] 1 of 1 ✔
 ```
 
 ### Accessing script parameters
 
-A workflow component can access any variable and parameter defined in the outer scope:
+A workflow component can access any variable and parameter defined in the outer scope.
 
-For example:
+From the scripts directory, copy the `workflow_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+
+```bash
+$ cp /home/user/scripts/workflow/workflow_03.nf .
+```
 
 ```groovy 
-//workflow_03.nf
 [..truncated..]
 
 params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 workflow {
 
-  reads_ch_ = channel.fromFilePairs(params.reads)
-  FASTQC(reads_ch_)
-  MULTIQC(FASTQC.out.fastqc_results.collect()).view()
+    read_pairs_ch = channel.fromFilePairs(params.reads)
+
+    //assign process output to Nextflow variable fastqc_obj
+    fastqc_obj = FASTQC(read_pairs_ch)
+
+    //We use the collect operator to gather multiple channel items into a single item
+    MULTIQC(fastqc_obj.collect()).view()
 }
 ```
 
