@@ -14,6 +14,6 @@ process PRINTCHR {
 }
 
 workflow {
-    chr_ch = channel.of( 1..22, 'X', 'Y' )
+    chr_ch = channel.of( 1..5 )
     PRINTCHR( chr_ch )
 }
