@@ -1,35 +1,38 @@
-process INDEX {
+process TRIM {
 
     input:
-    path transcriptome
+    tuple val(sample_id), path(reads)
 
     output:
-    path 'index', emit: salmon_index
+    tuple val(sample_id), path('*trimmed*'), emit: trimmed_reads
 
     script:
     """
-    salmon index -t $transcriptome -i index
+    seqtk trimfq ${reads[0]} > ${sample_id}_trimmed_R1.fastq
+    seqtk trimfq ${reads[1]} > ${sample_id}_trimmed_R2.fastq
+    gzip *.fastq
     """
 }
 
-process QUANT {
+process FASTQC {
+
+    cpus 1
 
     input:
-    each path(index)
-    tuple( val(pair_id), path(reads) )
+    tuple val(sample_id), path(reads)
 
     output:
-    path pair_id
+    path("fastqc_${sample_id}_logs")
 
     script:
     """
-    salmon quant --threads $task.cpus --libType=U -i $index -1 ${reads[0]} -2 ${reads[1]} -o $pair_id
+    mkdir fastqc_${sample_id}_logs
+    fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
     """
 }
-
 workflow {
-    transcriptome_ch = channel.fromPath( 'data/yeast/transcriptome/*.fa.gz' )
-    read_pairs_ch = channel.fromFilePairs( 'data/yeast/reads/*_{1,2}.fq.gz' )
-    INDEX( transcriptome_ch )
-    QUANT( INDEX.out.salmon_index, read_pairs_ch ).view()
+  read_pairs_ch = channel.fromFilePairs( 'data/bacteria/reads/Sample01_R{1,2}.fastq.gz',checkIfExists: true)
+
+  trimmed_reads_ch=TRIM(read_pairs_ch)
+  fastqc_ch=FASTQC(trimmed_reads_ch)
 }
