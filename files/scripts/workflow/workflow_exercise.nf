@@ -8,7 +8,6 @@ process FASTQC {
     path "fastqc_${sample_id}_logs/*.zip"
 
     script:
-    //flagstat simple stats on bam file
     """
     mkdir fastqc_${sample_id}_logs
     fastqc -o fastqc_${sample_id}_logs -f fastq -q ${reads} -t ${task.cpus}
