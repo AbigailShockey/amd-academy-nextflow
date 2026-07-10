@@ -8,7 +8,6 @@ exercises: 5
 
 - View Nextflow pipeline run logs.
 - Use `nextflow log` to view more information about a specific run.
-- Create an HTML report from a pipeline run.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -16,7 +15,6 @@ exercises: 5
 
 - How do I get information about my pipeline run?
 - How can I see what commands I ran?
-- How can I create a report from my run?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -229,82 +227,9 @@ $ nextflow log elegant_descartes -f name,hash,process,status -F 'process =~ /mul
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Templates
-
-The `-t` option allows a template (string or file) to be specified. This makes it possible to create a custom report in any text based format.
-
-For example you could save this markdown snippet to a file e.g. `my-template.md`:
-
-```markdown 
-## $name
-
-script:
-
-    $script
-
-exist status: $exit
-task status: $status
-task folder: $workdir
-```
-
-Then, the following `log` command will output a markdown file containing the `script`, `exit status` and `folder` of all executed tasks:
-
-```bash 
-$ nextflow log elegant_descartes -t my-template.md > execution-report.md
-```
-
-Or, the template file can also be written in HTML.
-
-For example:
-
-```html 
-<div>
-<h2>${name}</h2>
-<div>
-Script:
-<pre>${script}</pre>
-</div>
-
-<ul>
-    <li>Exit: ${exit}</li>
-    <li>Status: ${status}</li>
-    <li>Work dir: ${workdir}</li>
-    <li>Container: ${container}</li>
-</ul>
-</div>
-```
-
-By saving the above snippet in a file named `template.html`, you can run the following command:
-
-```bash 
-$ nextflow log elegant_descartes -t template.html > provenance.html
-```
-
-To view the report open it in a browser.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Generate an HTML run report
-
-Generate an HTML report for a run using the `-t` option and the template.html file.
-
-::::::::::::::  solution
-
-## Solution
-
-```bash 
-$ nextflow log elegant_descartes -t template.html > provenance.html
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Nextflow can produce a custom execution report with run information using the `log` command.
 - You can generate a report using the `-t` option specifying a template file.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
