@@ -422,7 +422,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Simple nf-core pipeline</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-07-13 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/17-some_nfcore_pipeline.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -524,7 +524,7 @@ Shovill, FastQC, and FASTQC_TRIMMED, module paths to the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -638,49 +638,47 @@ processes.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co">//genomeassembler-2.nf</span></span>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="st">/*</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="st">/*</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="st">*/</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="st">*/</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
 <span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    take<span class="op">:</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a>    multiqc_config</span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a>    multiqc_logo</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>    outdir</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    take<span class="op">:</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    multiqc_config</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    multiqc_logo</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a>    outdir</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>    main<span class="op">:</span></span>
 <span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a>    main<span class="op">:</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a>    <span class="co">//</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a>    <span class="co">// MODULE: seqtk trim</span></span>
 <span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a>    <span class="co">//</span></span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1" aria-label="code-block-8-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1" aria-label="code-block-8-26"></a>    <span class="co">//</span></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1" aria-label="code-block-8-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1" aria-label="code-block-8-28"></a></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1" aria-label="code-block-8-25"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1" aria-label="code-block-8-26"></a></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1" aria-label="code-block-8-27"></a>    <span class="co">//</span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1" aria-label="code-block-8-28"></a>    <span class="co">// MODULE: shovill</span></span>
 <span id="cb8-29"><a href="#cb8-29" tabindex="-1" aria-label="code-block-8-29"></a>    <span class="co">//</span></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1" aria-label="code-block-8-30"></a>    <span class="co">// MODULE: shovill</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1" aria-label="code-block-8-30"></a></span>
 <span id="cb8-31"><a href="#cb8-31" tabindex="-1" aria-label="code-block-8-31"></a>    <span class="co">//</span></span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1" aria-label="code-block-8-32"></a></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1" aria-label="code-block-8-32"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb8-33"><a href="#cb8-33" tabindex="-1" aria-label="code-block-8-33"></a>    <span class="co">//</span></span>
-<span id="cb8-34"><a href="#cb8-34" tabindex="-1" aria-label="code-block-8-34"></a>    <span class="co">// MODULE: fastqc</span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1" aria-label="code-block-8-34"></a></span>
 <span id="cb8-35"><a href="#cb8-35" tabindex="-1" aria-label="code-block-8-35"></a>    <span class="co">//</span></span>
-<span id="cb8-36"><a href="#cb8-36" tabindex="-1" aria-label="code-block-8-36"></a></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1" aria-label="code-block-8-36"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
 <span id="cb8-37"><a href="#cb8-37" tabindex="-1" aria-label="code-block-8-37"></a>    <span class="co">//</span></span>
-<span id="cb8-38"><a href="#cb8-38" tabindex="-1" aria-label="code-block-8-38"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
-<span id="cb8-39"><a href="#cb8-39" tabindex="-1" aria-label="code-block-8-39"></a>    <span class="co">//</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1" aria-label="code-block-8-38"></a></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1" aria-label="code-block-8-39"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb8-40"><a href="#cb8-40" tabindex="-1" aria-label="code-block-8-40"></a></span>
-<span id="cb8-41"><a href="#cb8-41" tabindex="-1" aria-label="code-block-8-41"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb8-42"><a href="#cb8-42" tabindex="-1" aria-label="code-block-8-42"></a></span>
-<span id="cb8-43"><a href="#cb8-43" tabindex="-1" aria-label="code-block-8-43"></a><span class="op">}</span></span></code></pre>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1" aria-label="code-block-8-41"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="adding-the-remaining-processes" class="callout challenge">
 <div class="callout-square">
@@ -701,7 +699,7 @@ section. Do not add their inputs, we’ll add those later.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -814,56 +812,54 @@ Shovill</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="co">//genomeassembler-3.nf</span></span>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="st">/*</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="st">/*</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a><span class="st">*/</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="st">*/</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1" aria-label="code-block-12-13"></a>    take<span class="op">:</span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1" aria-label="code-block-12-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1" aria-label="code-block-12-15"></a>    multiqc_config</span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1" aria-label="code-block-12-16"></a>    multiqc_logo</span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1" aria-label="code-block-12-17"></a>    outdir</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a>    take<span class="op">:</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1" aria-label="code-block-12-13"></a>    multiqc_config</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1" aria-label="code-block-12-14"></a>    multiqc_logo</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1" aria-label="code-block-12-15"></a>    outdir</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1" aria-label="code-block-12-16"></a></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1" aria-label="code-block-12-17"></a>    main<span class="op">:</span></span>
 <span id="cb12-18"><a href="#cb12-18" tabindex="-1" aria-label="code-block-12-18"></a></span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1" aria-label="code-block-12-19"></a>    main<span class="op">:</span></span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1" aria-label="code-block-12-20"></a></span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1" aria-label="code-block-12-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb12-22"><a href="#cb12-22" tabindex="-1" aria-label="code-block-12-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1" aria-label="code-block-12-23"></a></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1" aria-label="code-block-12-19"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1" aria-label="code-block-12-20"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1" aria-label="code-block-12-21"></a></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1" aria-label="code-block-12-22"></a>    <span class="co">//</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1" aria-label="code-block-12-23"></a>    <span class="co">// MODULE: seqtk trim</span></span>
 <span id="cb12-24"><a href="#cb12-24" tabindex="-1" aria-label="code-block-12-24"></a>    <span class="co">//</span></span>
-<span id="cb12-25"><a href="#cb12-25" tabindex="-1" aria-label="code-block-12-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb12-26"><a href="#cb12-26" tabindex="-1" aria-label="code-block-12-26"></a>    <span class="co">//</span></span>
-<span id="cb12-27"><a href="#cb12-27" tabindex="-1" aria-label="code-block-12-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb12-28"><a href="#cb12-28" tabindex="-1" aria-label="code-block-12-28"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
-<span id="cb12-29"><a href="#cb12-29" tabindex="-1" aria-label="code-block-12-29"></a></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1" aria-label="code-block-12-25"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1" aria-label="code-block-12-26"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1" aria-label="code-block-12-27"></a></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1" aria-label="code-block-12-28"></a>    <span class="co">//</span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1" aria-label="code-block-12-29"></a>    <span class="co">// MODULE: shovill</span></span>
 <span id="cb12-30"><a href="#cb12-30" tabindex="-1" aria-label="code-block-12-30"></a>    <span class="co">//</span></span>
-<span id="cb12-31"><a href="#cb12-31" tabindex="-1" aria-label="code-block-12-31"></a>    <span class="co">// MODULE: shovill</span></span>
-<span id="cb12-32"><a href="#cb12-32" tabindex="-1" aria-label="code-block-12-32"></a>    <span class="co">//</span></span>
-<span id="cb12-33"><a href="#cb12-33" tabindex="-1" aria-label="code-block-12-33"></a>    <span class="fu">SHOVILL</span><span class="op">()</span></span>
-<span id="cb12-34"><a href="#cb12-34" tabindex="-1" aria-label="code-block-12-34"></a>    ch_assemblies <span class="op">=</span> </span>
-<span id="cb12-35"><a href="#cb12-35" tabindex="-1" aria-label="code-block-12-35"></a></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1" aria-label="code-block-12-31"></a>    <span class="fu">SHOVILL</span><span class="op">()</span></span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1" aria-label="code-block-12-32"></a>    ch_assemblies <span class="op">=</span> </span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1" aria-label="code-block-12-33"></a></span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1" aria-label="code-block-12-34"></a>    <span class="co">//</span></span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1" aria-label="code-block-12-35"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb12-36"><a href="#cb12-36" tabindex="-1" aria-label="code-block-12-36"></a>    <span class="co">//</span></span>
-<span id="cb12-37"><a href="#cb12-37" tabindex="-1" aria-label="code-block-12-37"></a>    <span class="co">// MODULE: fastqc</span></span>
-<span id="cb12-38"><a href="#cb12-38" tabindex="-1" aria-label="code-block-12-38"></a>    <span class="co">//</span></span>
-<span id="cb12-39"><a href="#cb12-39" tabindex="-1" aria-label="code-block-12-39"></a>    <span class="fu">FASTQC</span><span class="op">()</span></span>
-<span id="cb12-40"><a href="#cb12-40" tabindex="-1" aria-label="code-block-12-40"></a>    ch_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb12-41"><a href="#cb12-41" tabindex="-1" aria-label="code-block-12-41"></a></span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1" aria-label="code-block-12-37"></a>    <span class="fu">FASTQC</span><span class="op">()</span></span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1" aria-label="code-block-12-38"></a>    ch_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1" aria-label="code-block-12-39"></a></span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1" aria-label="code-block-12-40"></a>    <span class="co">//</span></span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1" aria-label="code-block-12-41"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
 <span id="cb12-42"><a href="#cb12-42" tabindex="-1" aria-label="code-block-12-42"></a>    <span class="co">//</span></span>
-<span id="cb12-43"><a href="#cb12-43" tabindex="-1" aria-label="code-block-12-43"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
-<span id="cb12-44"><a href="#cb12-44" tabindex="-1" aria-label="code-block-12-44"></a>    <span class="co">//</span></span>
-<span id="cb12-45"><a href="#cb12-45" tabindex="-1" aria-label="code-block-12-45"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">()</span></span>
-<span id="cb12-46"><a href="#cb12-46" tabindex="-1" aria-label="code-block-12-46"></a>    ch_trimmed_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1" aria-label="code-block-12-43"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">()</span></span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1" aria-label="code-block-12-44"></a>    ch_trimmed_read_qc <span class="op">=</span> <span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb12-45"><a href="#cb12-45" tabindex="-1" aria-label="code-block-12-45"></a></span>
+<span id="cb12-46"><a href="#cb12-46" tabindex="-1" aria-label="code-block-12-46"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb12-47"><a href="#cb12-47" tabindex="-1" aria-label="code-block-12-47"></a></span>
-<span id="cb12-48"><a href="#cb12-48" tabindex="-1" aria-label="code-block-12-48"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb12-49"><a href="#cb12-49" tabindex="-1" aria-label="code-block-12-49"></a></span>
-<span id="cb12-50"><a href="#cb12-50" tabindex="-1" aria-label="code-block-12-50"></a><span class="op">}</span></span></code></pre>
+<span id="cb12-48"><a href="#cb12-48" tabindex="-1" aria-label="code-block-12-48"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="add-inputs-and-assign-outputs" class="callout challenge">
 <div class="callout-square">
@@ -909,7 +905,7 @@ a later section.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1100,58 +1096,56 @@ process.</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="co">//genomeassembler-4.nf</span></span>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1" aria-label="code-block-19-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1" aria-label="code-block-19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1" aria-label="code-block-19-5"></a><span class="st">/*</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1" aria-label="code-block-19-3"></a><span class="st">/*</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1" aria-label="code-block-19-4"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1" aria-label="code-block-19-5"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1" aria-label="code-block-19-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1" aria-label="code-block-19-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1" aria-label="code-block-19-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1" aria-label="code-block-19-9"></a><span class="st">*/</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1" aria-label="code-block-19-7"></a><span class="st">*/</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1" aria-label="code-block-19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1" aria-label="code-block-19-9"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
 <span id="cb19-10"><a href="#cb19-10" tabindex="-1" aria-label="code-block-19-10"></a></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1" aria-label="code-block-19-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1" aria-label="code-block-19-12"></a></span>
-<span id="cb19-13"><a href="#cb19-13" tabindex="-1" aria-label="code-block-19-13"></a>    take<span class="op">:</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1" aria-label="code-block-19-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
-<span id="cb19-15"><a href="#cb19-15" tabindex="-1" aria-label="code-block-19-15"></a>    multiqc_config</span>
-<span id="cb19-16"><a href="#cb19-16" tabindex="-1" aria-label="code-block-19-16"></a>    multiqc_logo</span>
-<span id="cb19-17"><a href="#cb19-17" tabindex="-1" aria-label="code-block-19-17"></a>    outdir</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1" aria-label="code-block-19-11"></a>    take<span class="op">:</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1" aria-label="code-block-19-12"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1" aria-label="code-block-19-13"></a>    multiqc_config</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1" aria-label="code-block-19-14"></a>    multiqc_logo</span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1" aria-label="code-block-19-15"></a>    outdir</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1" aria-label="code-block-19-16"></a></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1" aria-label="code-block-19-17"></a>    main<span class="op">:</span></span>
 <span id="cb19-18"><a href="#cb19-18" tabindex="-1" aria-label="code-block-19-18"></a></span>
-<span id="cb19-19"><a href="#cb19-19" tabindex="-1" aria-label="code-block-19-19"></a>    main<span class="op">:</span></span>
-<span id="cb19-20"><a href="#cb19-20" tabindex="-1" aria-label="code-block-19-20"></a></span>
-<span id="cb19-21"><a href="#cb19-21" tabindex="-1" aria-label="code-block-19-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb19-22"><a href="#cb19-22" tabindex="-1" aria-label="code-block-19-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb19-23"><a href="#cb19-23" tabindex="-1" aria-label="code-block-19-23"></a></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1" aria-label="code-block-19-19"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1" aria-label="code-block-19-20"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1" aria-label="code-block-19-21"></a></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1" aria-label="code-block-19-22"></a>    <span class="co">//</span></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1" aria-label="code-block-19-23"></a>    <span class="co">// MODULE: seqtk trim</span></span>
 <span id="cb19-24"><a href="#cb19-24" tabindex="-1" aria-label="code-block-19-24"></a>    <span class="co">//</span></span>
-<span id="cb19-25"><a href="#cb19-25" tabindex="-1" aria-label="code-block-19-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb19-26"><a href="#cb19-26" tabindex="-1" aria-label="code-block-19-26"></a>    <span class="co">//</span></span>
-<span id="cb19-27"><a href="#cb19-27" tabindex="-1" aria-label="code-block-19-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb19-28"><a href="#cb19-28" tabindex="-1" aria-label="code-block-19-28"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
-<span id="cb19-29"><a href="#cb19-29" tabindex="-1" aria-label="code-block-19-29"></a></span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1" aria-label="code-block-19-25"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1" aria-label="code-block-19-26"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1" aria-label="code-block-19-27"></a></span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1" aria-label="code-block-19-28"></a>    <span class="co">//</span></span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1" aria-label="code-block-19-29"></a>    <span class="co">// MODULE: shovill</span></span>
 <span id="cb19-30"><a href="#cb19-30" tabindex="-1" aria-label="code-block-19-30"></a>    <span class="co">//</span></span>
-<span id="cb19-31"><a href="#cb19-31" tabindex="-1" aria-label="code-block-19-31"></a>    <span class="co">// MODULE: shovill</span></span>
-<span id="cb19-32"><a href="#cb19-32" tabindex="-1" aria-label="code-block-19-32"></a>    <span class="co">//</span></span>
-<span id="cb19-33"><a href="#cb19-33" tabindex="-1" aria-label="code-block-19-33"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
-<span id="cb19-34"><a href="#cb19-34" tabindex="-1" aria-label="code-block-19-34"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
-<span id="cb19-35"><a href="#cb19-35" tabindex="-1" aria-label="code-block-19-35"></a></span>
+<span id="cb19-31"><a href="#cb19-31" tabindex="-1" aria-label="code-block-19-31"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb19-32"><a href="#cb19-32" tabindex="-1" aria-label="code-block-19-32"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
+<span id="cb19-33"><a href="#cb19-33" tabindex="-1" aria-label="code-block-19-33"></a></span>
+<span id="cb19-34"><a href="#cb19-34" tabindex="-1" aria-label="code-block-19-34"></a>    <span class="co">//</span></span>
+<span id="cb19-35"><a href="#cb19-35" tabindex="-1" aria-label="code-block-19-35"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb19-36"><a href="#cb19-36" tabindex="-1" aria-label="code-block-19-36"></a>    <span class="co">//</span></span>
-<span id="cb19-37"><a href="#cb19-37" tabindex="-1" aria-label="code-block-19-37"></a>    <span class="co">// MODULE: fastqc</span></span>
-<span id="cb19-38"><a href="#cb19-38" tabindex="-1" aria-label="code-block-19-38"></a>    <span class="co">//</span></span>
-<span id="cb19-39"><a href="#cb19-39" tabindex="-1" aria-label="code-block-19-39"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb19-40"><a href="#cb19-40" tabindex="-1" aria-label="code-block-19-40"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span><span class="op">()</span></span>
-<span id="cb19-41"><a href="#cb19-41" tabindex="-1" aria-label="code-block-19-41"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
-<span id="cb19-42"><a href="#cb19-42" tabindex="-1" aria-label="code-block-19-42"></a></span>
+<span id="cb19-37"><a href="#cb19-37" tabindex="-1" aria-label="code-block-19-37"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb19-38"><a href="#cb19-38" tabindex="-1" aria-label="code-block-19-38"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span><span class="op">()</span></span>
+<span id="cb19-39"><a href="#cb19-39" tabindex="-1" aria-label="code-block-19-39"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
+<span id="cb19-40"><a href="#cb19-40" tabindex="-1" aria-label="code-block-19-40"></a></span>
+<span id="cb19-41"><a href="#cb19-41" tabindex="-1" aria-label="code-block-19-41"></a>    <span class="co">//</span></span>
+<span id="cb19-42"><a href="#cb19-42" tabindex="-1" aria-label="code-block-19-42"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
 <span id="cb19-43"><a href="#cb19-43" tabindex="-1" aria-label="code-block-19-43"></a>    <span class="co">//</span></span>
-<span id="cb19-44"><a href="#cb19-44" tabindex="-1" aria-label="code-block-19-44"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
-<span id="cb19-45"><a href="#cb19-45" tabindex="-1" aria-label="code-block-19-45"></a>    <span class="co">//</span></span>
-<span id="cb19-46"><a href="#cb19-46" tabindex="-1" aria-label="code-block-19-46"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
-<span id="cb19-47"><a href="#cb19-47" tabindex="-1" aria-label="code-block-19-47"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb19-48"><a href="#cb19-48" tabindex="-1" aria-label="code-block-19-48"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
+<span id="cb19-44"><a href="#cb19-44" tabindex="-1" aria-label="code-block-19-44"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb19-45"><a href="#cb19-45" tabindex="-1" aria-label="code-block-19-45"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb19-46"><a href="#cb19-46" tabindex="-1" aria-label="code-block-19-46"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">()</span></span>
+<span id="cb19-47"><a href="#cb19-47" tabindex="-1" aria-label="code-block-19-47"></a></span>
+<span id="cb19-48"><a href="#cb19-48" tabindex="-1" aria-label="code-block-19-48"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb19-49"><a href="#cb19-49" tabindex="-1" aria-label="code-block-19-49"></a></span>
-<span id="cb19-50"><a href="#cb19-50" tabindex="-1" aria-label="code-block-19-50"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb19-51"><a href="#cb19-51" tabindex="-1" aria-label="code-block-19-51"></a></span>
-<span id="cb19-52"><a href="#cb19-52" tabindex="-1" aria-label="code-block-19-52"></a><span class="op">}</span></span></code></pre>
+<span id="cb19-50"><a href="#cb19-50" tabindex="-1" aria-label="code-block-19-50"></a><span class="op">}</span></span></code></pre>
 </div>
 <div id="add-the-mix-operator" class="callout challenge">
 <div class="callout-square">
@@ -1173,7 +1167,7 @@ operator to combine the <code>ch_read_qc</code> and
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1392,64 +1386,62 @@ workflow.</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="co">//genomeassembler-5.nf</span></span>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1" aria-label="code-block-25-4"></a></span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1" aria-label="code-block-25-5"></a><span class="st">/*</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a><span class="st">/*</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1" aria-label="code-block-25-4"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1" aria-label="code-block-25-5"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
 <span id="cb25-6"><a href="#cb25-6" tabindex="-1" aria-label="code-block-25-6"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1" aria-label="code-block-25-7"></a><span class="st">    RUN MAIN WORKFLOW</span></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1" aria-label="code-block-25-8"></a><span class="st">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1" aria-label="code-block-25-9"></a><span class="st">*/</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1" aria-label="code-block-25-7"></a><span class="st">*/</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1" aria-label="code-block-25-8"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1" aria-label="code-block-25-9"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
 <span id="cb25-10"><a href="#cb25-10" tabindex="-1" aria-label="code-block-25-10"></a></span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1" aria-label="code-block-25-11"></a>workflow GENOMEASSEMBLER <span class="op">{</span></span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1" aria-label="code-block-25-12"></a></span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1" aria-label="code-block-25-13"></a>    take<span class="op">:</span></span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1" aria-label="code-block-25-14"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1" aria-label="code-block-25-15"></a>    multiqc_config</span>
-<span id="cb25-16"><a href="#cb25-16" tabindex="-1" aria-label="code-block-25-16"></a>    multiqc_logo</span>
-<span id="cb25-17"><a href="#cb25-17" tabindex="-1" aria-label="code-block-25-17"></a>    outdir</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1" aria-label="code-block-25-11"></a>    take<span class="op">:</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1" aria-label="code-block-25-12"></a>    ch_samplesheet <span class="co">// channel: samplesheet read in from --input</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1" aria-label="code-block-25-13"></a>    multiqc_config</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1" aria-label="code-block-25-14"></a>    multiqc_logo</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1" aria-label="code-block-25-15"></a>    outdir</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1" aria-label="code-block-25-16"></a></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1" aria-label="code-block-25-17"></a>    main<span class="op">:</span></span>
 <span id="cb25-18"><a href="#cb25-18" tabindex="-1" aria-label="code-block-25-18"></a></span>
-<span id="cb25-19"><a href="#cb25-19" tabindex="-1" aria-label="code-block-25-19"></a>    main<span class="op">:</span></span>
-<span id="cb25-20"><a href="#cb25-20" tabindex="-1" aria-label="code-block-25-20"></a></span>
-<span id="cb25-21"><a href="#cb25-21" tabindex="-1" aria-label="code-block-25-21"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb25-22"><a href="#cb25-22" tabindex="-1" aria-label="code-block-25-22"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
-<span id="cb25-23"><a href="#cb25-23" tabindex="-1" aria-label="code-block-25-23"></a></span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1" aria-label="code-block-25-19"></a>    <span class="dt">def</span> ch_versions <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1" aria-label="code-block-25-20"></a>    <span class="dt">def</span> ch_multiqc_files <span class="op">=</span> channel<span class="op">.</span><span class="fu">empty</span><span class="op">()</span></span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1" aria-label="code-block-25-21"></a></span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1" aria-label="code-block-25-22"></a>    <span class="co">//</span></span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1" aria-label="code-block-25-23"></a>    <span class="co">// MODULE: seqtk trim</span></span>
 <span id="cb25-24"><a href="#cb25-24" tabindex="-1" aria-label="code-block-25-24"></a>    <span class="co">//</span></span>
-<span id="cb25-25"><a href="#cb25-25" tabindex="-1" aria-label="code-block-25-25"></a>    <span class="co">// MODULE: seqtk trim</span></span>
-<span id="cb25-26"><a href="#cb25-26" tabindex="-1" aria-label="code-block-25-26"></a>    <span class="co">//</span></span>
-<span id="cb25-27"><a href="#cb25-27" tabindex="-1" aria-label="code-block-25-27"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb25-28"><a href="#cb25-28" tabindex="-1" aria-label="code-block-25-28"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
-<span id="cb25-29"><a href="#cb25-29" tabindex="-1" aria-label="code-block-25-29"></a>    </span>
-<span id="cb25-30"><a href="#cb25-30" tabindex="-1" aria-label="code-block-25-30"></a>    <span class="co">// update meta.id with '_trimmed'</span></span>
-<span id="cb25-31"><a href="#cb25-31" tabindex="-1" aria-label="code-block-25-31"></a>    ch_trimmed_reads</span>
-<span id="cb25-32"><a href="#cb25-32" tabindex="-1" aria-label="code-block-25-32"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> meta<span class="op">,</span> reads <span class="op">-&gt;</span> <span class="op">[[</span>id<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">_trimmed"</span><span class="op">,</span> single_end<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>single_end<span class="ss">}</span><span class="st">"</span><span class="op">],</span> reads<span class="op">]</span></span>
-<span id="cb25-33"><a href="#cb25-33" tabindex="-1" aria-label="code-block-25-33"></a>    <span class="op">}</span></span>
-<span id="cb25-34"><a href="#cb25-34" tabindex="-1" aria-label="code-block-25-34"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> ch_trimmed_reads_fastqc <span class="op">}</span></span>
-<span id="cb25-35"><a href="#cb25-35" tabindex="-1" aria-label="code-block-25-35"></a></span>
+<span id="cb25-25"><a href="#cb25-25" tabindex="-1" aria-label="code-block-25-25"></a>    <span class="fu">SEQTK_TRIM</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb25-26"><a href="#cb25-26" tabindex="-1" aria-label="code-block-25-26"></a>    ch_trimmed_reads <span class="op">=</span> SEQTK_TRIM<span class="op">.</span>out<span class="op">.</span>reads</span>
+<span id="cb25-27"><a href="#cb25-27" tabindex="-1" aria-label="code-block-25-27"></a>    </span>
+<span id="cb25-28"><a href="#cb25-28" tabindex="-1" aria-label="code-block-25-28"></a>    <span class="co">// update meta.id with '_trimmed'</span></span>
+<span id="cb25-29"><a href="#cb25-29" tabindex="-1" aria-label="code-block-25-29"></a>    ch_trimmed_reads</span>
+<span id="cb25-30"><a href="#cb25-30" tabindex="-1" aria-label="code-block-25-30"></a>    <span class="op">.</span><span class="fu">map</span> <span class="op">{</span> meta<span class="op">,</span> reads <span class="op">-&gt;</span> <span class="op">[[</span>id<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>id<span class="ss">}</span><span class="st">_trimmed"</span><span class="op">,</span> single_end<span class="op">:</span> <span class="st">"</span><span class="ss">${</span>meta<span class="op">.</span>single_end<span class="ss">}</span><span class="st">"</span><span class="op">],</span> reads<span class="op">]</span></span>
+<span id="cb25-31"><a href="#cb25-31" tabindex="-1" aria-label="code-block-25-31"></a>    <span class="op">}</span></span>
+<span id="cb25-32"><a href="#cb25-32" tabindex="-1" aria-label="code-block-25-32"></a>    <span class="op">.</span><span class="fu">set</span> <span class="op">{</span> ch_trimmed_reads_fastqc <span class="op">}</span></span>
+<span id="cb25-33"><a href="#cb25-33" tabindex="-1" aria-label="code-block-25-33"></a></span>
+<span id="cb25-34"><a href="#cb25-34" tabindex="-1" aria-label="code-block-25-34"></a>    <span class="co">//</span></span>
+<span id="cb25-35"><a href="#cb25-35" tabindex="-1" aria-label="code-block-25-35"></a>    <span class="co">// MODULE: shovill</span></span>
 <span id="cb25-36"><a href="#cb25-36" tabindex="-1" aria-label="code-block-25-36"></a>    <span class="co">//</span></span>
-<span id="cb25-37"><a href="#cb25-37" tabindex="-1" aria-label="code-block-25-37"></a>    <span class="co">// MODULE: shovill</span></span>
-<span id="cb25-38"><a href="#cb25-38" tabindex="-1" aria-label="code-block-25-38"></a>    <span class="co">//</span></span>
-<span id="cb25-39"><a href="#cb25-39" tabindex="-1" aria-label="code-block-25-39"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
-<span id="cb25-40"><a href="#cb25-40" tabindex="-1" aria-label="code-block-25-40"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
-<span id="cb25-41"><a href="#cb25-41" tabindex="-1" aria-label="code-block-25-41"></a></span>
+<span id="cb25-37"><a href="#cb25-37" tabindex="-1" aria-label="code-block-25-37"></a>    <span class="fu">SHOVILL</span><span class="op">(</span>ch_trimmed_reads<span class="op">)</span></span>
+<span id="cb25-38"><a href="#cb25-38" tabindex="-1" aria-label="code-block-25-38"></a>    ch_assemblies <span class="op">=</span> SHOVILL<span class="op">.</span>out<span class="op">.</span>contigs</span>
+<span id="cb25-39"><a href="#cb25-39" tabindex="-1" aria-label="code-block-25-39"></a></span>
+<span id="cb25-40"><a href="#cb25-40" tabindex="-1" aria-label="code-block-25-40"></a>    <span class="co">//</span></span>
+<span id="cb25-41"><a href="#cb25-41" tabindex="-1" aria-label="code-block-25-41"></a>    <span class="co">// MODULE: fastqc</span></span>
 <span id="cb25-42"><a href="#cb25-42" tabindex="-1" aria-label="code-block-25-42"></a>    <span class="co">//</span></span>
-<span id="cb25-43"><a href="#cb25-43" tabindex="-1" aria-label="code-block-25-43"></a>    <span class="co">// MODULE: fastqc</span></span>
-<span id="cb25-44"><a href="#cb25-44" tabindex="-1" aria-label="code-block-25-44"></a>    <span class="co">//</span></span>
-<span id="cb25-45"><a href="#cb25-45" tabindex="-1" aria-label="code-block-25-45"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
-<span id="cb25-46"><a href="#cb25-46" tabindex="-1" aria-label="code-block-25-46"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb25-47"><a href="#cb25-47" tabindex="-1" aria-label="code-block-25-47"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
-<span id="cb25-48"><a href="#cb25-48" tabindex="-1" aria-label="code-block-25-48"></a></span>
+<span id="cb25-43"><a href="#cb25-43" tabindex="-1" aria-label="code-block-25-43"></a>    <span class="fu">FASTQC</span><span class="op">(</span>ch_samplesheet<span class="op">)</span></span>
+<span id="cb25-44"><a href="#cb25-44" tabindex="-1" aria-label="code-block-25-44"></a>    ch_read_qc <span class="op">=</span> FASTQC<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb25-45"><a href="#cb25-45" tabindex="-1" aria-label="code-block-25-45"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_read_qc<span class="op">)</span></span>
+<span id="cb25-46"><a href="#cb25-46" tabindex="-1" aria-label="code-block-25-46"></a></span>
+<span id="cb25-47"><a href="#cb25-47" tabindex="-1" aria-label="code-block-25-47"></a>    <span class="co">//</span></span>
+<span id="cb25-48"><a href="#cb25-48" tabindex="-1" aria-label="code-block-25-48"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
 <span id="cb25-49"><a href="#cb25-49" tabindex="-1" aria-label="code-block-25-49"></a>    <span class="co">//</span></span>
-<span id="cb25-50"><a href="#cb25-50" tabindex="-1" aria-label="code-block-25-50"></a>    <span class="co">// MODULE: fastqc trimmed</span></span>
-<span id="cb25-51"><a href="#cb25-51" tabindex="-1" aria-label="code-block-25-51"></a>    <span class="co">//</span></span>
-<span id="cb25-52"><a href="#cb25-52" tabindex="-1" aria-label="code-block-25-52"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads_fastqc<span class="op">)</span></span>
-<span id="cb25-53"><a href="#cb25-53" tabindex="-1" aria-label="code-block-25-53"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
-<span id="cb25-54"><a href="#cb25-54" tabindex="-1" aria-label="code-block-25-54"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_trimmed_read_qc<span class="op">)</span></span>
+<span id="cb25-50"><a href="#cb25-50" tabindex="-1" aria-label="code-block-25-50"></a>    <span class="fu">FASTQC_TRIMMED</span><span class="op">(</span>ch_trimmed_reads_fastqc<span class="op">)</span></span>
+<span id="cb25-51"><a href="#cb25-51" tabindex="-1" aria-label="code-block-25-51"></a>    ch_trimmed_read_qc <span class="op">=</span> FASTQC_TRIMMED<span class="op">.</span>out<span class="op">.</span>zip<span class="op">.</span><span class="fu">collect</span> <span class="op">{</span> it<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">}</span></span>
+<span id="cb25-52"><a href="#cb25-52" tabindex="-1" aria-label="code-block-25-52"></a>    ch_multiqc_files <span class="op">=</span> ch_multiqc_files<span class="op">.</span><span class="fu">mix</span><span class="op">(</span>ch_trimmed_read_qc<span class="op">)</span></span>
+<span id="cb25-53"><a href="#cb25-53" tabindex="-1" aria-label="code-block-25-53"></a></span>
+<span id="cb25-54"><a href="#cb25-54" tabindex="-1" aria-label="code-block-25-54"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
 <span id="cb25-55"><a href="#cb25-55" tabindex="-1" aria-label="code-block-25-55"></a></span>
-<span id="cb25-56"><a href="#cb25-56" tabindex="-1" aria-label="code-block-25-56"></a><span class="op">[..</span>truncated<span class="op">..]</span> </span>
-<span id="cb25-57"><a href="#cb25-57" tabindex="-1" aria-label="code-block-25-57"></a></span>
-<span id="cb25-58"><a href="#cb25-58" tabindex="-1" aria-label="code-block-25-58"></a><span class="op">}</span></span></code></pre>
+<span id="cb25-56"><a href="#cb25-56" tabindex="-1" aria-label="code-block-25-56"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Copy the modified <code>genomeassembler-5.nf</code> script to the
 <code>workflows/</code> directory, renaming it to
@@ -1679,7 +1671,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/17-some_nfcore_pipeline.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/17-some_nfcore_pipeline.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-06-17",
+  "dateModified": "2026-07-13",
   "datePublished": "2026-07-13"
 }
 
