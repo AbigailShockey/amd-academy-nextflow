@@ -423,7 +423,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Processes</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-13 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/04-processes-part1.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -564,9 +564,9 @@ directory. A full list of implicit variables can be found <a href="https://www.n
 <p>To add the process to a workflow add a <code>workflow</code> block,
 and call the process like a function. We will learn more about the
 <code>workflow</code> block in the workflow episode.</p>
-<p>From the scripts directory, copy the <code>process_01.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_01.nf</code> script to the current directory and open it
+using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -617,7 +617,7 @@ process <code>COUNT_BASES</code> that runs the command.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="fu">zgrep</span> <span class="at">-v</span> <span class="st">'^&gt;'</span> <span class="va">${projectDir}</span>/data/bacteria/assemblies/Sample01.contigs.fa.gz<span class="kw">|</span><span class="fu">tr</span> <span class="at">-d</span> <span class="st">'\n'</span><span class="kw">|</span><span class="fu">wc</span> <span class="at">-m</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">$</span> zgrep <span class="at">-v</span> <span class="st">'^&gt;'</span> <span class="va">${projectDir}</span>/data/bacteria/assemblies/Sample01.contigs.fa.gz<span class="kw">|</span><span class="fu">tr</span> <span class="at">-d</span> <span class="st">'\n'</span><span class="kw">|</span><span class="fu">wc</span> <span class="at">-m</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -627,7 +627,7 @@ process <code>COUNT_BASES</code> that runs the command.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -732,7 +732,7 @@ quotes e.g.</p>
 </div>
 <p>Or, for commands that span multiple lines you can encase the command
 in triple quotes <code>"""</code>.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_multi_line.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -813,11 +813,11 @@ to the bin directory. More information about bin can be found <a href="https://d
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="fu">mkdir</span> bin</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="fu">mv</span> process_reads.py bin</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a><span class="fu">chmod</span> 755 bin/process_reads.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">$</span> mkdir bin</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="ex">$</span> mv process_reads.py bin</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a><span class="ex">$</span> chmod 755 bin/process_reads.py</span></code></pre>
 </div>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_python_script.nf</code> script to the current directory
 and open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -911,7 +911,7 @@ variable <code>params</code> that can be used to assign values from the
 command line. You would do this by adding a key name to the params
 variable and specifying a value, like
 <code>params.keyname = value</code></p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_script_params.nf</code> script to the current directory
 and open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb25">
@@ -1003,7 +1003,7 @@ terminal.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1051,7 +1051,7 @@ escaped using <code>\</code> character in front of
 <code>\$variable</code> name.</p>
 <p>In the example below we will set a bash variable <code>NUMIDS</code>
 then echo the value of <code>NUMIDS</code>.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_escape_bash.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -1108,9 +1108,9 @@ statement Bash variables are referenced in the normal way
 statement uses a different syntax for Nextflow variable substitutions:
 <code>!{nextflow_variable}</code>, which is needed to use both Nextflow
 and Bash variables in the same script.</p>
-<p>From the scripts directory, copy the <code>process_shell.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_shell.nf</code> script to the current directory and open
+it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1184,7 +1184,7 @@ programming languages such Java, C, JavaScript, etc.</p>
 <span id="cb42-8"><a href="#cb42-8" tabindex="-1" aria-label="code-block-42-8"></a>    <span class="co">// false branch</span></span>
 <span id="cb42-9"><a href="#cb42-9" tabindex="-1" aria-label="code-block-42-9"></a><span class="op">}</span></span></code></pre>
 </div>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_conditional.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb43">
@@ -1319,7 +1319,7 @@ the input collection. A complete list of inputs can be found <a href="https://ww
 <p>The <code>val</code> qualifier allows you to receive value data as
 input. It can be accessed in the process script by using the specified
 input name.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_input_value.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb50">
@@ -1432,7 +1432,7 @@ declaration.</p>
 <p>The input file name can be defined dynamically by defining the input
 name as a Nextflow variable and referenced in the script using the
 <code>$variable_name</code> syntax.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_input_file.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb54">
@@ -1503,7 +1503,7 @@ ref2_1.fq.gz 81720
 <div class="callout-content">
 <p>The input name can also be defined as a user-specified filename
 inside quotes.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_input_file_02.nf</code> script to the current directory
 and open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb58">
@@ -1632,7 +1632,7 @@ definition.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb64">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1679,9 +1679,9 @@ Number of contigs with coverage 10:7</code></pre>
 multiple channels. However, it’s important to understand how the number
 of items within the multiple channels affect the execution of a
 process.</p>
-<p>From the scripts directory, copy the <code>process_combine.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_combine.nf</code> script to the current directory and open
+it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb66">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1742,7 +1742,7 @@ until one or more queue channels have no more content. The process then
 stops.</p>
 <p>What happens when not all channels have the same number of
 elements?</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_combine_02.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb70">
@@ -1800,7 +1800,7 @@ executor &gt;  local (2)
 <code>channel.value</code>, do not affect the process termination.</p>
 <p>To better understand this behaviour compare the previous example with
 the following one:</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_combine_03.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb74">
@@ -1887,7 +1887,7 @@ combines two input channels</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb80">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1938,9 +1938,9 @@ process for each item in a list or a queue channel, every time new data
 is received.</p>
 <p>For example if we can fix the previous example by using the input
 qualifer <code>each</code> for the letters queue channel:</p>
-<p>From the scripts directory, copy the <code>process_repeat.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_repeat.nf</code> script to the current directory and open
+it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb83">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -2041,7 +2041,7 @@ running the process for each value.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb88">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2189,7 +2189,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/04-processes-part1.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/04-processes-part1.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-10",
+  "dateModified": "2026-07-13",
   "datePublished": "2026-07-13"
 }
 
