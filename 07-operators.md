@@ -550,11 +550,11 @@ $ nextflow run operators_exercise_grouptuple.nf
 
 Launching `operators_exercise_grouptuple_answer.nf` [magical_fermi] revision: 7169b2f3cf
 
-[ref1, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
-[ref3, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
-[etoh60, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
-[temp33, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz]]
-[ref2, [/home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/rstudio/lessons/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz]]
+[ref1, [/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
+[ref3, [/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[etoh60, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
+[temp33, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz]]
+[ref2, [/home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz]]
 ```
 
 :::::::::::::::::::::::::
