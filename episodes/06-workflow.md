@@ -90,7 +90,7 @@ workflow {
 ```
 
 ```bash
-nextflow run workflow_01.nf
+$ nextflow run workflow_01.nf
 ```
 
 ```output
@@ -186,7 +186,7 @@ workflow {
 ```
 
 ```bash
-nextflow run workflow_02.nf
+$ nextflow run workflow_02.nf
 ```
 
 ```output
