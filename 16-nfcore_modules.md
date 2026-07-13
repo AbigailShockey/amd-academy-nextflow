@@ -244,7 +244,7 @@ Assembling trimmed reads with Shovill will be the next step you add to your pipe
 
 ## Meta maps and sample metadata
 
-You may have noticed that the metadata associated with the input file(s) of a module are listed in that module's inputs. This is because nf-core pipelines use something call ‘meta maps’ to carry sample metadata alongside files throughout the pipeline.
+You may have noticed that the metadata associated with the input file(s) of a module are listed in that module's inputs. This is because nf-core pipelines use something call "meta maps" to carry sample metadata alongside files throughout the pipeline.
 
 Meta maps are used for recording IDs or names, tracking pipeline-generated metadata, grouping or splitting operations, and specifying per-sample tool arguments. 
 
@@ -507,7 +507,7 @@ params {
     config_profile_description = 'Minimal test dataset to demo the pipeline'
 
     // Input data
-    input = 'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'
+    input = 'https://raw.githubusercontent.com/AbigailShockey/amd-academy-nf-files/refs/heads/main/data/bacteria/samplesheets/test_full.csv'
 }
 ```
 
