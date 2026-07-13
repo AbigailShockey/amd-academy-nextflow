@@ -49,7 +49,7 @@ The `val` qualifier allows us to output a value defined in the script.
 
 Because Nextflow processes can only communicate through channels, if we want to share a value output of one process as input to another process, we would need to define that value in the output declaration block as shown in the following example:
 
-From the scripts directory, copy the `process_output_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_output_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_output_value.nf .
@@ -108,7 +108,7 @@ executor >  local (11)
 
 If we want to capture a file instead of a value as output we can use the `path` qualifier that can capture one or more files produced by the process, over the specified channel.
 
-From the scripts directory, copy the `process_output_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_output_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_output_file.nf .
@@ -179,7 +179,7 @@ This allows us to capture multiple files into a list and output them as a one it
 
 For example, here we will capture the files `sequence_ids.txt` and  `sequence.txt` produced as results from SPLIT\_FASTA in the output channel.
 
-From the scripts directory, copy the `process_output_multiple.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_output_multiple.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_output_file.nf .
@@ -327,7 +327,7 @@ In tuples the first item is the grouping key and the second item is the list.
 
 When using channel containing a tuple, such a one created with `.filesFromPairs` factory method, the corresponding input declaration must be declared with a `tuple` qualifier, followed by definition of each item in the tuple.
 
-From the scripts directory, copy the `process_tuple_input.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_tuple_input.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_tuple_input.nf .
@@ -353,7 +353,7 @@ workflow {
 ```
 
 ```bash
-nextflow run process_tuple_input.nf  -process.debug
+$ nextflow run process_tuple_input.nf  -process.debug
 ```
 
 outputs
@@ -380,7 +380,7 @@ output:
   tuple val(sample_id), path("${sample_id}.fq.gz")
 ```
 
-From the scripts directory, copy the `process_tuple_io.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_tuple_io.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_tuple_io.nf .
@@ -409,7 +409,7 @@ workflow {
 ```
 
 ```bash 
-nextflow run process_tuple_io.nf
+$ nextflow run process_tuple_io.nf
 ```
 
 The output is now a tuple containing the sample id and the combined fastq files.
@@ -510,7 +510,7 @@ It is useful to enable/disable the process execution depending on the state of v
 
 In the example below the process `CONDITIONAL` will only execute when the value of the `chr` variable is less than or equal to 5:
 
-From the scripts directory, copy the `process_when.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_when.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_when.nf .
@@ -538,7 +538,7 @@ workflow {
 ```
 
 ```bash
-nextflow run process_when.nf -process.debug
+$ nextflow run process_when.nf -process.debug
 ```
 
 ```output 
@@ -570,7 +570,7 @@ They must be entered at the top of the process body, before any other declaratio
 
 Directives are commonly used to define the amount of computing resources to be used or extra information for configuration or logging purpose.
 
-From the scripts directory, copy the `process_directive.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_directive.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_directive.nf .
@@ -599,7 +599,7 @@ workflow {
 ```
 
 ```bash
-nextflow run process_directive.nf -process.debug
+$ nextflow run process_directive.nf -process.debug
 ```
 
 ```output 
@@ -711,7 +711,7 @@ workflow {
 ```
 
 ```bash
-nextflow run process_exercise_directives_answers.nf
+$ nextflow run process_exercise_directives_answers.nf
 ```
 
 ```output
@@ -748,7 +748,7 @@ The files you want the workflow to return as results need to be defined in the `
 publishDir <directory>, parameter: value, parameter2: value ...
 ```
 
-From the scripts directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_publishDir.nf .
@@ -799,7 +799,7 @@ executor >  local (1)
 We can use the UNIX command `ls -l` to examine the contents of the results directory.
 
 ```bash 
-ls -l results/merged_reads/ref1.merged.fq.gz
+$ ls -l results/merged_reads/ref1.merged.fq.gz
 ```
 
 ```output 
@@ -833,7 +833,7 @@ Full list [here](https://docs.seqera.io/nextflow/reference/process#publishdir).
 
 You can use more than one `publishDir` to keep different outputs in separate directories. To specify which files to put in which output directory use the parameter `pattern` with the a glob pattern that selects which files to publish from the overall set of output files.
 
-From the scripts directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_publishDir.nf .
