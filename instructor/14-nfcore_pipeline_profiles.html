@@ -411,7 +411,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing nf-core pipelines with profiles</h1>
-        <p>Last updated on 2026-06-01 |
+        <p>Last updated on 2026-07-13 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/14-nfcore_pipeline_profiles.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -484,17 +484,18 @@ active internet connection at run time - pipeline files, configuration
 profiles and software containers are all dynamically fetched when the
 pipeline is launched. This can be a problem for people using secure
 computing resources that do not have connections to the internet.</p>
-<p>To help with this, the <code>nf-core download</code> command
-automates the fetching of required files for running nf-core pipelines
-offline. The command can download a specific release of a pipeline with
-<code>-r</code>/<code>--release</code> .<br>
+<p>To help with this, the <code>nf-core pipelines download</code>
+command automates the fetching of required files for running nf-core
+pipelines offline. The command can download a specific release of a
+pipeline with <code>-r</code>/<code>--release</code> .<br>
 By default, the pipeline will download the pipeline code and the
 institutional nf-core/configs files.</p>
-<p>If you specify the flag <code>--singularity</code>, it will also
-download any singularity image files that are required (this needs
-Singularity to be installed). All files are saved to a single directory,
-ready to be transferred to the cluster where the pipeline will be
-executed.</p>
+<p>If you specify the flag
+<code>--container-system [singularity|docker]</code>, it will also
+download any singularity or docker image files that are required (this
+needs Singularity or Docker to be installed). All files are saved to a
+single directory, ready to be transferred to the cluster where the
+pipeline will be executed.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -547,7 +548,7 @@ FASTQC and multiqc.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -736,7 +737,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/14-nfcore_pipeline_profiles.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/14-nfcore_pipeline_profiles.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-06-01",
+  "dateModified": "2026-07-13",
   "datePublished": "2026-07-13"
 }
 
