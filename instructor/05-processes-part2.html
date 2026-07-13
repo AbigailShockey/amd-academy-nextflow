@@ -421,7 +421,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Processes Part 2</h1>
-        <p>Last updated on 2026-07-09 |
+        <p>Last updated on 2026-07-13 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/05-processes-part2.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -495,7 +495,7 @@ the script.</p>
 we want to share a value output of one process as input to another
 process, we would need to define that value in the output declaration
 block as shown in the following example:</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_output_value.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -562,7 +562,7 @@ executor &gt;  local (11)
 <p>If we want to capture a file instead of a value as output we can use
 the <code>path</code> qualifier that can capture one or more files
 produced by the process, over the specified channel.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_output_file.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -644,7 +644,7 @@ channel.</p>
 <p>For example, here we will capture the files
 <code>sequence_ids.txt</code> and <code>sequence.txt</code> produced as
 results from SPLIT_FASTA in the output channel.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_output_multiple.nf</code> script to the current directory
 and open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -748,7 +748,7 @@ include an output block that captures the different output file
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -815,7 +815,7 @@ the list.</p>
 <code>.filesFromPairs</code> factory method, the corresponding input
 declaration must be declared with a <code>tuple</code> qualifier,
 followed by definition of each item in the tuple.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_tuple_input.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -847,7 +847,7 @@ pipeline.</p>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">nextflow</span> run process_tuple_input.nf  <span class="at">-process.debug</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">$</span> nextflow run process_tuple_input.nf  <span class="at">-process.debug</span></span></code></pre>
 </div>
 <p>outputs</p>
 <div class="codewrapper">
@@ -877,9 +877,10 @@ following pattern <code>"${sample_id}.fq.gz"</code>.</p>
 <pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a>output<span class="op">:</span></span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a>  tuple <span class="fu">val</span><span class="op">(</span>sample_id<span class="op">),</span> <span class="fu">path</span><span class="op">(</span><span class="st">"</span><span class="ss">${</span>sample_id<span class="ss">}</span><span class="st">.fq.gz"</span><span class="op">)</span></span></code></pre>
 </div>
-<p>From the scripts directory, copy the <code>process_tuple_io.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left. Then run the pipeline.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_tuple_io.nf</code> script to the current directory and
+open it using the VS Code Explorer panel on the left. Then run the
+pipeline.</p>
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -911,7 +912,7 @@ panel on the left. Then run the pipeline.</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="ex">nextflow</span> run process_tuple_io.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="ex">$</span> nextflow run process_tuple_io.nf</span></code></pre>
 </div>
 <p>The output is now a tuple containing the sample id and the combined
 fastq files.</p>
@@ -974,7 +975,7 @@ output for the COMBINE_REPS process.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1028,9 +1029,9 @@ state of various inputs and parameters.</p>
 <p>In the example below the process <code>CONDITIONAL</code> will only
 execute when the value of the <code>chr</code> variable is less than or
 equal to 5:</p>
-<p>From the scripts directory, copy the <code>process_when.nf</code>
-script to the current directory and open it using the VS Code Explorer
-panel on the left. Then run the pipeline.</p>
+<p>From the <code>scripts/process</code> directory, copy the
+<code>process_when.nf</code> script to the current directory and open it
+using the VS Code Explorer panel on the left. Then run the pipeline.</p>
 <div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1061,7 +1062,7 @@ panel on the left. Then run the pipeline.</p>
 <div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="ex">nextflow</span> run process_when.nf <span class="at">-process.debug</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="ex">$</span> nextflow run process_when.nf <span class="at">-process.debug</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1096,7 +1097,7 @@ value to a directive.</p>
 <p>Directives are commonly used to define the amount of computing
 resources to be used or extra information for configuration or logging
 purpose.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_directive.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left. Then run the
 pipeline.</p>
@@ -1131,7 +1132,7 @@ pipeline.</p>
 <div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" tabindex="-1" aria-label="code-block-36-1"></a><span class="ex">nextflow</span> run process_directive.nf <span class="at">-process.debug</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" tabindex="-1" aria-label="code-block-36-1"></a><span class="ex">$</span> nextflow run process_directive.nf <span class="at">-process.debug</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1233,7 +1234,7 @@ execution output.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1266,7 +1267,7 @@ execution output.</li>
 <div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a><span class="ex">nextflow</span> run process_exercise_directives_answers.nf</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a><span class="ex">$</span> nextflow run process_exercise_directives_answers.nf</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1305,7 +1306,7 @@ directory in the <code>publishDir</code> directive while forgetting to
 specify the files you want to include in the <code>output</code>
 block.</p>
 <pre><code>publishDir &lt;directory&gt;, parameter: value, parameter2: value ...</code></pre>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_publishDir.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb43">
@@ -1364,7 +1365,7 @@ contents of the results directory.</p>
 <div class="codewrapper sourceCode" id="cb47">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1" aria-label="code-block-47-1"></a><span class="fu">ls</span> <span class="at">-l</span> results/merged_reads/ref1.merged.fq.gz</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" tabindex="-1" aria-label="code-block-47-1"></a><span class="ex">$</span> ls <span class="at">-l</span> results/merged_reads/ref1.merged.fq.gz</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1420,7 +1421,7 @@ outputs in separate directories. To specify which files to put in which
 output directory use the parameter <code>pattern</code> with the a glob
 pattern that selects which files to publish from the overall set of
 output files.</p>
-<p>From the scripts directory, copy the
+<p>From the <code>scripts/process</code> directory, copy the
 <code>process_publishDir.nf</code> script to the current directory and
 open it using the VS Code Explorer panel on the left.</p>
 <div class="codewrapper sourceCode" id="cb50">
@@ -1541,7 +1542,7 @@ to the results folder merged_reps.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb57">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1686,7 +1687,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/05-processes-part2.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/05-processes-part2.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-09",
+  "dateModified": "2026-07-13",
   "datePublished": "2026-07-13"
 }
 
