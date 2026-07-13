@@ -40,11 +40,11 @@ Running with the test profile is a great way to confirm that you have Nextflow c
 
 Many of the techniques and resources described above require an active internet connection at run time - pipeline files, configuration profiles and software containers are all dynamically fetched when the pipeline is launched. This can be a problem for people using secure computing resources that do not have connections to the internet.
 
-To help with this, the `nf-core download` command automates the fetching of required files for running nf-core pipelines offline.
+To help with this, the `nf-core pipelines download` command automates the fetching of required files for running nf-core pipelines offline.
 The command can download a specific release of a pipeline with `-r`/`--release` .  
 By default, the pipeline will download the pipeline code and the institutional nf-core/configs files.
 
-If you specify the flag `--singularity`, it will also download any singularity image files that are required (this needs Singularity to be installed). All files are saved to a single directory, ready to be transferred to the cluster where the pipeline will be executed.
+If you specify the flag `--container-system [singularity|docker]`, it will also download any singularity or docker image files that are required (this needs Singularity or Docker to be installed). All files are saved to a single directory, ready to be transferred to the cluster where the pipeline will be executed.
 
 ```bash
 nf-core pipelines download nf-core/rnaseq -r 3.14.0
