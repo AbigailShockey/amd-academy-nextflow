@@ -335,7 +335,7 @@ We can change the default options for the `fromPath` method to give an error if 
 If we execute a Nextflow script with the contents below, it will run and not produce an output, or an error message that the file does not exist. This is likely not what we want.
 
 ```groovy 
-read_ch = channel.fromPath( 'data/chicken/reads/*.fq.gz' )
+read_ch = channel.fromPath( 'data/virus/reads/*.fq.gz' )
 read_ch.view()
 ```
 
@@ -350,11 +350,11 @@ Launching `channel.nf` [grave_montalcini] revision: d97baf9fbc
 Add the argument `checkIfExists` with the value `true`.
 
 ```groovy
-read_ch = channel.fromPath( 'data/chicken/reads/*.fq.gz', checkIfExists: true )
+read_ch = channel.fromPath( 'data/virus/reads/*.fq.gz', checkIfExists: true )
 read_ch.view()
 ```
 
-This will give an error as there is no data/chicken directory.
+This will give an error as there is no data/virus directory.
 
 ```output
 
@@ -362,7 +362,7 @@ This will give an error as there is no data/chicken directory.
 
 Launching `channel.nf` [determined_lalande] revision: a2ca8c5954
 
-ERROR ~ No files match pattern `*.fq.gz` at path: data/chicken/reads/
+ERROR ~ No files match pattern `*.fq.gz` at path: data/virus/reads/
 
  -- Check '.nextflow.log' file for details
 ```
