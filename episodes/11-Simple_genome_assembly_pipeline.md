@@ -138,8 +138,9 @@ It can be useful to print the pipeline parameters to the screen. This can be don
 ```groovy 
 workflow {
   println """\
+        G E N O M E A S S E M B L Y - N F   P I P E L I N E    
+        ===================================
         reads: ${params.reads}
-        outdir: ${params.outdir}
         """
         .stripIndent()
 }
@@ -149,7 +150,7 @@ workflow {
 
 ## println
 
-Modify the `script1.nf` to print all the pipeline parameters by using a single `println` 
+Modify the `script1.nf` to print the pipeline name (as seen above) and all the pipeline parameters by using a single `println` 
 command and a multiline string statement.
 
 See an example [here](https://github.com/nextflow-io/rnaseq-nf/blob/7d4a2cd/main.nf#L26-L32).
@@ -191,7 +192,6 @@ This step shows how to match **read** files into pairs, so they can be trimmed b
 The script `script2.nf` adds a line to create a channel, `read_pairs_ch`, containing fastq read pair files using the `fromFilePairs` channel factory.
 
 ```groovy 
-//script2.nf
 nextflow.enable.dsl = 2
 
 /*
@@ -225,7 +225,7 @@ Now if we execute it with the following command:
 $ nextflow run script2.nf
 ```
 
-It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/sample1_R{1,2}.fastq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
+It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/Sample01_R{1,2}.fastq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
 
 ```output 
 Launching `script2.nf` [prickly_cray] revision: 50c9628d41
@@ -235,8 +235,9 @@ G E N O M E A S S E M B L Y - N F
 reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-[sample1, [/home/eriny/data/bacteria/reads/sample1_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample1_R2.fastq.gz]]
-[sample2, [/home/eriny/data/bacteria/reads/sample2_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample2_R2.fastq.gz]]
+[Sample01, [/home/user/data/bacteria/reads/Sample01_R1.fastq.gz, /home/user/data/bacteria/reads/Sample01_R2.fastq.gz]]
+[Sample02, [/home/user/data/bacteria/reads/Sample02_R1.fastq.gz, /home/user/data/bacteria/reads/Sample02_R2.fastq.gz]]
+[Sample03, [/home/user/data/bacteria/reads/Sample03_R1.fastq.gz, /home/user/data/bacteria/reads/Sample03_R2.fastq.gz]]
 ```
 
 To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line.
@@ -246,7 +247,6 @@ To read in other read pairs  we can specify a different glob pattern in the `par
 We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` channel factory to return an message if the file doesn't exist.
 
 ```groovy 
-//script2.nf
 [..truncated..]
 read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists: true )
 ```
@@ -306,8 +306,9 @@ G E N O M E A S S E M B L Y - N F
 reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-[sample1, [/home/eriny/data/bacteria/reads/sample1_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample1_R2.fastq.gz]]
-[sample2, [/home/eriny/data/bacteria/reads/sample2_R1.fastq.gz, /home/eriny/data/bacteria/reads/sample2_R2.fastq.gz]]
+[Sample01, [/home/user/data/bacteria/reads/Sample01_R1.fastq.gz, /home/user/data/bacteria/reads/Sample01_R2.fastq.gz]]
+[Sample02, [/home/user/data/bacteria/reads/Sample02_R1.fastq.gz, /home/user/data/bacteria/reads/Sample02_R2.fastq.gz]]
+[Sample03, [/home/user/data/bacteria/reads/Sample03_R1.fastq.gz, /home/user/data/bacteria/reads/Sample03_R2.fastq.gz]]
 ```
 
 :::::::::::::::::::::::::
@@ -318,7 +319,7 @@ outdir       : results
 
 Remember, Nextflow allows the execution of any command or user script by using a `process` definition.
 
-For example,
+For example:
 
 ```bash
 $ seqtk trimfq ${reads[0]} > ${sample_id}_trimmed_R1.fastq
@@ -339,7 +340,6 @@ Add the process `TRIM` to `script3.nf`:
 3. Finally the script adds a `workflow` definition block which calls the `TRIM` process.
 
 ```groovy 
-//script3.nf
 [..truncated..]
 
 /*
@@ -392,7 +392,7 @@ ERROR ~ Script compilation failed
 
 The execution will fail because the program the process, `TRIM` , has not been passed any input channel.
 
-Add the `reads_ch` channel to the `TRIM` process call.
+Add the channel `reads_ch` to the `TRIM` process call.
 
 ```groovy
 [..truncated..]
@@ -423,7 +423,7 @@ reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (2)
-[22/3db789] TRIM (1) | 2 of 2 ✔
+[22/3db789] TRIM (1) | 3 of 3 ✔
 
 ```
 
@@ -520,8 +520,8 @@ reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (4)
-[22/e853e5] TRIM (1)     | 2 of 2 ✔
-[f4/0ede60] ASSEMBLE (2) | 2 of 2 ✔
+[22/e853e5] TRIM (1)     | 3 of 3 ✔
+[f4/0ede60] ASSEMBLE (3) | 3 of 3 ✔
 Completed at: 01-Jul-2026 13:08:44
 Duration    : 1m 59s
 CPU hours   : 0.1
@@ -529,7 +529,7 @@ Succeeded   : 4
 
 ```
 
-Re run the command using the `-resume` option
+Re-run the command using the `-resume` option
 
 ```bash
 $ nextflow run script4.nf -resume
@@ -546,8 +546,8 @@ G E N O M E A S S E M B L Y - N F
 reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-[22/e853e5] TRIM (1)     | 2 of 2, cached: 2 ✔
-[fb/b534ed] ASSEMBLE (1) | 2 of 2, cached: 2 ✔
+[22/e853e5] TRIM (1)     | 3 of 3, cached: 3 ✔
+[fb/b534ed] ASSEMBLE (1) | 3 of 3, cached: 3 ✔
 
 ```
 
@@ -570,8 +570,8 @@ G E N O M E A S S E M B L Y - N F
 reads        : data/bacteria/reads/sample*_R{1,2}.fastq.gz
 outdir       : results
 
-[39/fe43e6] TRIM (2)     | 2 of 2, cached: 2 ✔
-[fb/b534ed] ASSEMBLE (2) | 2 of 2, cached: 2 ✔
+[39/fe43e6] TRIM (3)     | 3 of 3, cached: 3 ✔
+[fb/b534ed] ASSEMBLE (3) | 3 of 3, cached: 3 ✔
 
 ```
 
@@ -674,8 +674,8 @@ G E N O M E A S S E M B L Y - N F
 reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
-[22/e853e5] TRIM (Trim on sample1)         | 2 of 2, cached: 2 ✔
-[fb/b534ed] ASSEMBLE (Assemble on sample2) | 2 of 2, cached: 2 ✔
+[22/e853e5] TRIM (Trim on Sample01)         | 3 of 3, cached: 3 ✔
+[fb/b534ed] ASSEMBLE (Assemble on Sample03) | 3 of 3, cached: 3 ✔
 
 ```
 
@@ -746,7 +746,7 @@ create the required input for the `MULTIQC` process.
 
 ```groovy
 [..truncated..]
-//script6.nf
+
 /*
  * define the `MultiQC` process to combine FastQC results into one report
  */
@@ -794,10 +794,10 @@ reads        : data/bacteria/reads/*_R{1,2}.fastq.gz
 outdir       : results
 
 executor >  local (9)
-[02/3742cf] process > TRIM                              [100%] 1 of 1, cached: 1 ✔
-[9a/be3483] process > ASSEMBLE (assembly on sample1)    [100%] 3 of 3, cached: 3 ✔
-[1f/b7b30a] process > FASTQC (FastQC on sample1)        [100%] 3 of 3, cached: 1 ✔
-[1f/b7b30a] process > FASTQC_TRIMMED (FastQC on trimmed sample1)        [100%] 3 of 3, cached: 1 ✔
+[02/3742cf] process > TRIM                              [100%] 3 of 3, cached: 1 ✔
+[9a/be3483] process > ASSEMBLE (assembly on Sample01)    [100%] 3 of 3, cached: 3 ✔
+[1f/b7b30a] process > FASTQC (FastQC on Sample01)        [100%] 3 of 3, cached: 1 ✔
+[1f/b7b30a] process > FASTQC_TRIMMED (FastQC on trimmed Sample01)        [100%] 3 of 3, cached: 1 ✔
 [2c/206fef] process > MULTIQC                           [100%] 1 of 1 ✔
 ```
 
