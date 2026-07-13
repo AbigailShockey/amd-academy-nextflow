@@ -85,7 +85,7 @@ A full list of implicit variables can be found [here](https://www.nextflow.io/do
 To add the process to a workflow add a `workflow` block, and call the process like a function. We will learn more about the `workflow` block in the workflow episode.
 
 
-From the scripts directory, copy the `process_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_01.nf .
@@ -127,7 +127,7 @@ executor >  local (1)
 
 Create a Nextflow script `simple_process.nf` that has one process `COUNT_BASES` that runs the command.
 ```bash
-zgrep -v '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|tr -d '\n'|wc -m
+$ zgrep -v '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz|tr -d '\n'|wc -m
 ```
 
 :::::::::::::::  solution
@@ -217,7 +217,7 @@ workflow {
 
 Or, for commands that span multiple lines you can encase the command in  triple quotes `"""`.
 
-From the scripts directory, copy the `process_multi_line.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_multi_line.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_multi_line.nf .
@@ -284,12 +284,12 @@ print("bases", bases)
 Once the python script has been created, best practice is to move it to the bin directory. More information about bin can be found [here](https://docs.seqera.io/nextflow/sharing#the-bin-directory).
 
 ```bash
-mkdir bin
-mv process_reads.py bin
-chmod 755 bin/process_reads.py
+$ mkdir bin
+$ mv process_reads.py bin
+$ chmod 755 bin/process_reads.py
 ```
 
-From the scripts directory, copy the `process_python_script.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_python_script.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_python_script.nf .
@@ -348,7 +348,7 @@ Similar to bash scripting Nextflow uses the `$` character to introduce variable 
 
 We saw in the parameter episode the use of a special Nextflow variable `params` that can be used to assign values from the command line. You would do this by adding a key name to the params variable and specifying a value, like `params.keyname = value`
 
-From the scripts directory, copy the `process_script_params.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
+From the `scripts/process` directory, copy the `process_script_params.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
 
 ```bash
 $ cp /home/user/scripts/process/process_script_params.nf .
@@ -464,7 +464,7 @@ However, Bash variables need to be escaped using `\` character in front of `\$va
 
 In the example below we will set a bash variable `NUMIDS` then echo the value of `NUMIDS`.
 
-From the scripts directory, copy the `process_escape_bash.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/process` directory, copy the `process_escape_bash.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp /home/user/scripts/process/process_escape_bash.nf .
@@ -511,7 +511,7 @@ Another alternative is to use a `shell` block definition instead of `script`.
 When using the `shell` statement Bash variables are referenced in the normal way `$my_bash_variable`;
 However, the `shell` statement uses a different syntax for Nextflow variable substitutions: `!{nextflow_variable}`, which is needed to use both Nextflow and Bash variables in the same script.
 
-From the scripts directory, copy the `process_shell.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
+From the `scripts/process` directory, copy the `process_shell.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
 
 ```bash
 $ cp /home/user/scripts/process/process_shell.nf .
@@ -576,7 +576,7 @@ else {
 }
 ```
 
-From the scripts directory, copy the `process_conditional.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_conditional.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_conditional.nf .
@@ -684,7 +684,7 @@ A complete list of inputs can be found [here](https://www.nextflow.io/docs/lates
 
 The `val` qualifier allows you to receive value data as input. It can be accessed in the process script by using the specified input name.
 
-From the scripts directory, copy the `process_input_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_input_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_input_value.nf .
@@ -780,7 +780,7 @@ When you need to handle files as input, you need the `path` qualifier. Using the
 
 The input file name can be defined dynamically by defining the input name as a Nextflow variable and referenced in the script using the  `$variable_name` syntax.
 
-From the scripts directory, copy the `process_input_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_input_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_input_file.nf .
@@ -839,7 +839,7 @@ ref2_1.fq.gz 81720
 :::::::::::::::::::::::::::::::::::::::::  callout
 The input name can also be defined as a user-specified filename inside quotes.
 
-From the scripts directory, copy the `process_input_file_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_input_file_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_input_file_02.nf .
@@ -980,7 +980,7 @@ A key feature of processes is the ability to handle inputs from multiple channel
 However, it’s important to understand how the number of items within the multiple channels affect the execution of a process.
 
 
-From the scripts directory, copy the `process_combine.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_combine.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_combine.nf .
@@ -1035,7 +1035,7 @@ When this condition is verified, it uses up the input values coming from the res
 
 What happens when not all channels have the same number of elements?
 
-From the scripts directory, copy the `process_combine_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_combine_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_combine_02.nf .
@@ -1086,7 +1086,7 @@ executor >  local (2)
 
 To better understand this behaviour compare the previous example with the following one:
 
-From the scripts directory, copy the `process_combine_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_combine_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_combine_03.nf .
@@ -1199,7 +1199,7 @@ We saw previously that by default the number of times a process runs is defined 
 
 For example if we can fix the previous example by using the input qualifer `each` for the letters queue channel:
 
-From the scripts directory, copy the `process_repeat.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_repeat.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp /home/user/scripts/process/process_repeat.nf .
