@@ -174,8 +174,6 @@ results
 Next we want to add the modules we just included in the `IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS` section to the `RUN MAIN WORKFLOW` section within the workflow definition as processes.
 
 ```groovy 
-//genomeassembler-2.nf
-
 [..truncated..] 
 
 /*
@@ -332,8 +330,6 @@ Next we will add inputs to the processes we previously added to the `RUN MAIN WO
 - The input of FASTQC_TRIMMED will be the `contigs` output from Shovill
 
 ```groovy 
-//genomeassembler-3.nf
-
 [..truncated..] 
 
 /*
@@ -579,8 +575,6 @@ Notably, there are only results for one instance of FastQC, even though the pipe
 Next we will use the `mix` operator to combine the `ch_read_qc` and `ch_assembly_qc` channels with the prexisting, empty `ch_multiqc_files` channel, so the results of FASTQC and FASTQC_TRIMMED can be passed to the MULTIQC process.
 
 ```groovy 
-//genomeassembler-4.nf
-
 [..truncated..] 
 
 /*
@@ -833,8 +827,6 @@ The `map` operator operator transforms items in a channel, and the `set` operato
 This code block goes after the SEQTK_TRIM process in the workflow.
 
 ```groovy 
-//genomeassembler-5.nf
-
 [..truncated..] 
 
 /*
