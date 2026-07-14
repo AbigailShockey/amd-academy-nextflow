@@ -31,7 +31,7 @@ Analysing data involves a sequence of tasks, including gathering, cleaning, and 
 
 <br>
 <center>
-    <img src="https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/fig/amd_genome_assembly_workflow.png">
+    <img src="https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/fig/amd_genome_assembly_workflowII.png">
     <br>
     <em> An example of a simple bioinformatics genome assembly pipeline. </em>
 </center>
