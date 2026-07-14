@@ -31,7 +31,7 @@ Analysing data involves a sequence of tasks, including gathering, cleaning, and 
 
 <br>
 <center>
-    <img src="https://github.com/AbigailShockey/amd-academy-nextflow/blob/main/episodes/fig/amd_genome_assembly_workflow.png" width="200" alt="Flowchart illustrating a simple bioinformatics RNA-Seq pipeline for transcript expression quantification. The process begins with inputs at the top: 'Fastq' files, a 'Reference sequence', and 'Grch38 Ensembl 91' annotations. The first step is 'quality control', using 'fastQC' software version 0.11.9. The second step is 'index creation' with 'Salmon' software version 1.3.0 using the '-i' option. The third step is 'quantification', again with 'Salmon' version 1.3.0, this time using the '-l A' option. There are two outputs from this process: 'Output 1' is a 'QC report' and 'Output 2' is 'Transcript expression' data.">
+    <img src="https://raw.githubusercontent.com/AbigailShockey/amd-academy-nextflow/refs/heads/main/episodes/fig/amd_genome_assembly_workflow.png" width="200" alt="Flowchart illustrating a simple bioinformatics RNA-Seq pipeline for transcript expression quantification. The process begins with inputs at the top: 'Fastq' files, a 'Reference sequence', and 'Grch38 Ensembl 91' annotations. The first step is 'quality control', using 'fastQC' software version 0.11.9. The second step is 'index creation' with 'Salmon' software version 1.3.0 using the '-i' option. The third step is 'quantification', again with 'Salmon' version 1.3.0, this time using the '-l A' option. There are two outputs from this process: 'Output 1' is a 'QC report' and 'Output 2' is 'Transcript expression' data.">
     <br>
     <em> An example of a simple bioinformatics genome assembly pipeline. </em>
 </center>
