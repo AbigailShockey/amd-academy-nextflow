@@ -52,7 +52,7 @@ Because Nextflow processes can only communicate through channels, if we want to 
 From the `scripts/process` directory, copy the `process_output_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_output_value.nf .
+$ cp scripts/process/process_output_value.nf .
 ```
 
 ```groovy 
@@ -111,7 +111,7 @@ If we want to capture a file instead of a value as output we can use the `path` 
 From the `scripts/process` directory, copy the `process_output_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_output_file.nf .
+$ cp scripts/process/process_output_file.nf .
 ```
 
 ```groovy 
@@ -159,17 +159,17 @@ Launching `process_output_file.nf` [gloomy_noyce] revision: dad85f58cb
 
 executor >  local (11)
 [f8/f9907c] process > COUNT_COV (2)  [100%] 11 of 11 ✔
-/home/user/amd-academy-nextflow/work/fa/f6c534e8639dfc43cf285729a25a55/contigs_cov_10.txt
-/home/user/amd-academy-nextflow/work/33/179ccfbbae1d01944b72b976f73e2a/contigs_cov_14.txt
-/home/user/amd-academy-nextflow/work/be/4620c07783ab80acbf71a11dc8773c/contigs_cov_16.txt
-/home/user/amd-academy-nextflow/work/a2/9c0730e91f86eaf11965a99ae622b1/contigs_cov_18.txt
-/home/user/amd-academy-nextflow/work/f0/fa91cbc0469a807c4d7ac7ac0260d1/contigs_cov_19.txt
-/home/user/amd-academy-nextflow/work/7e/8606989b63cb62e8eeb1b8ab54f1c3/contigs_cov_13.txt
-/home/user/amd-academy-nextflow/work/d1/41cb1b97f959b0119c605030b795f8/contigs_cov_15.txt
-/home/user/amd-academy-nextflow/work/d9/ffb1295327303a5d6981c8e3d72fe1/contigs_cov_20.txt
-/home/user/amd-academy-nextflow/work/e2/c86ea2c219bfaafce94e57efe49204/contigs_cov_17.txt
-/home/user/amd-academy-nextflow/work/20/cb2cf84d651c0bd0381a8aff88d6ec/contigs_cov_12.txt
-/home/user/amd-academy-nextflow/work/f8/f9907cf4861acde8d2c6b94809c1d1/contigs_cov_11.txt
+/home/workspace/amd-academy-nextflow/work/fa/f6c534e8639dfc43cf285729a25a55/contigs_cov_10.txt
+/home/workspace/amd-academy-nextflow/work/33/179ccfbbae1d01944b72b976f73e2a/contigs_cov_14.txt
+/home/workspace/amd-academy-nextflow/work/be/4620c07783ab80acbf71a11dc8773c/contigs_cov_16.txt
+/home/workspace/amd-academy-nextflow/work/a2/9c0730e91f86eaf11965a99ae622b1/contigs_cov_18.txt
+/home/workspace/amd-academy-nextflow/work/f0/fa91cbc0469a807c4d7ac7ac0260d1/contigs_cov_19.txt
+/home/workspace/amd-academy-nextflow/work/7e/8606989b63cb62e8eeb1b8ab54f1c3/contigs_cov_13.txt
+/home/workspace/amd-academy-nextflow/work/d1/41cb1b97f959b0119c605030b795f8/contigs_cov_15.txt
+/home/workspace/amd-academy-nextflow/work/d9/ffb1295327303a5d6981c8e3d72fe1/contigs_cov_20.txt
+/home/workspace/amd-academy-nextflow/work/e2/c86ea2c219bfaafce94e57efe49204/contigs_cov_17.txt
+/home/workspace/amd-academy-nextflow/work/20/cb2cf84d651c0bd0381a8aff88d6ec/contigs_cov_12.txt
+/home/workspace/amd-academy-nextflow/work/f8/f9907cf4861acde8d2c6b94809c1d1/contigs_cov_11.txt
 ```
 
 ### Multiple output files
@@ -182,7 +182,7 @@ For example, here we will capture the files `sequence_ids.txt` and  `sequence.tx
 From the `scripts/process` directory, copy the `process_output_multiple.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_output_file.nf .
+$ cp scripts/process/process_output_multiple.nf .
 ```
 
 ```groovy 
@@ -224,7 +224,7 @@ Launching `process_output_multiple.nf` [serene_legentil] revision: 099d5fe1df
 
 executor >  local (1)
 [72/5bce13] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
-[/home/user/amd-academy-nextflow/work/72/5bce13f434d3de4f78501bb2a0d2a6/sequence.txt, /home/user/amd-academy-nextflow/work/72/5bce13f434d3de4f78501bb2a0d2a6/sequence_ids.txt]
+[/home/workspace/amd-academy-nextflow/work/72/5bce13f434d3de4f78501bb2a0d2a6/sequence.txt, /home/workspace/amd-academy-nextflow/work/72/5bce13f434d3de4f78501bb2a0d2a6/sequence_ids.txt]
 ```
 
 **Note:** There are some caveats on glob pattern behaviour:
@@ -237,7 +237,7 @@ executor >  local (1)
 
 ## Output channels
 
-Modify the nextflow script `process_exercise_output.nf` to include an output block that captures the different output file `${chr}_seqids.txt`.
+From the `scripts/process` directory, copy the `process_exercise_output.nf` script to the current directory and modify it to include an output block that captures the different output file `contigs_cov_${cov}_seqids.txt`.
 
 ```groovy 
 process EXTRACT_IDS {
@@ -298,17 +298,17 @@ Launching `process_exercise_output.nf` [prickly_nightingale] revision: bd3f39f7a
 
 executor >  local (11)
 [2a/a8f9c8] process > EXTRACT_IDS (5) [100%] 11 of 11 ✔
-/home/user/amd-academy-nextflow/work/f3/8be649e9072fe3037cba931418b226/contigs_cov_17.txt
-/home/user/amd-academy-nextflow/work/39/c565b72bd126f6d5cc722a854f28b9/contigs_cov_16.txt
-/home/user/amd-academy-nextflow/work/4e/26f5606cd343c8f828ce0db11f4be1/contigs_cov_19.txt
-/home/user/amd-academy-nextflow/work/4a/eaf3f6fabd6c1643fc96950aa57cca/contigs_cov_11.txt
-/home/user/amd-academy-nextflow/work/d2/2f2c17565a2576d07d676fca1c8dac/contigs_cov_12.txt
-/home/user/amd-academy-nextflow/work/95/790ab22f4bd7c662847cbc24ae1b53/contigs_cov_15.txt
-/home/user/amd-academy-nextflow/work/53/400f374f2691acebb90874c4fac11e/contigs_cov_18.txt
-/home/user/amd-academy-nextflow/work/90/e5c7a838bef5f169272eb15c023dcb/contigs_cov_13.txt
-/home/user/amd-academy-nextflow/work/39/0ceb5e90e40ec66ff0134220278bc1/contigs_cov_20.txt
-/home/user/amd-academy-nextflow/work/d5/1414bb9558bbafab9981e0cee649ab/contigs_cov_10.txt
-/home/user/amd-academy-nextflow/work/2a/a8f9c85c746c2e43090e1ed2ffc1f6/contigs_cov_14.txt
+/home/workspace/amd-academy-nextflow/work/f3/8be649e9072fe3037cba931418b226/contigs_cov_17.txt
+/home/workspace/amd-academy-nextflow/work/39/c565b72bd126f6d5cc722a854f28b9/contigs_cov_16.txt
+/home/workspace/amd-academy-nextflow/work/4e/26f5606cd343c8f828ce0db11f4be1/contigs_cov_19.txt
+/home/workspace/amd-academy-nextflow/work/4a/eaf3f6fabd6c1643fc96950aa57cca/contigs_cov_11.txt
+/home/workspace/amd-academy-nextflow/work/d2/2f2c17565a2576d07d676fca1c8dac/contigs_cov_12.txt
+/home/workspace/amd-academy-nextflow/work/95/790ab22f4bd7c662847cbc24ae1b53/contigs_cov_15.txt
+/home/workspace/amd-academy-nextflow/work/53/400f374f2691acebb90874c4fac11e/contigs_cov_18.txt
+/home/workspace/amd-academy-nextflow/work/90/e5c7a838bef5f169272eb15c023dcb/contigs_cov_13.txt
+/home/workspace/amd-academy-nextflow/work/39/0ceb5e90e40ec66ff0134220278bc1/contigs_cov_20.txt
+/home/workspace/amd-academy-nextflow/work/d5/1414bb9558bbafab9981e0cee649ab/contigs_cov_10.txt
+/home/workspace/amd-academy-nextflow/work/2a/a8f9c85c746c2e43090e1ed2ffc1f6/contigs_cov_14.txt
 ```
 
 :::::::::::::::::::::::::
@@ -330,7 +330,7 @@ When using channel containing a tuple, such a one created with `.filesFromPairs`
 From the `scripts/process` directory, copy the `process_tuple_input.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_tuple_input.nf .
+$ cp scripts/process/process_tuple_input.nf .
 ```
 
 ```groovy 
@@ -356,7 +356,7 @@ workflow {
 $ nextflow run process_tuple_input.nf  -process.debug
 ```
 
-outputs
+This outputs: 
 
 ```output 
 
@@ -383,7 +383,7 @@ output:
 From the `scripts/process` directory, copy the `process_tuple_io.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_tuple_io.nf .
+$ cp scripts/process/process_tuple_io.nf .
 ```
 
 ```groovy 
@@ -422,7 +422,7 @@ Launching `process_tuple_io.nf` [loquacious_sinoussi] revision: f996b37474
 
 executor >  local (1)
 [d7/363b07] process > COMBINE_FQ (1) [100%] 1 of 1 ✔
-[ref1, /home/user/amd-academy-nextflow/work/d7/363b07b508064d1c01a43d53ddfef6/ref1.fq.gz]
+[ref1, /home/workspace/amd-academy-nextflow/work/d7/363b07b508064d1c01a43d53ddfef6/ref1.fq.gz]
 
 ```
 
@@ -494,7 +494,7 @@ Launching `process_exercise_tuple_answer.nf` [nostalgic_jepsen] revision: b61fdd
 
 executor >  local (1)
 [5f/9e3b67] process > COMBINE_REPS (1) [100%] 1 of 1 ✔
-[ref, [/home/user/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R1.fq.gz, /home/user/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R2.fq.gz]]
+[ref, [/home/workspace/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R1.fq.gz, /home/workspace/amd-academy-nextflow/work/5f/9e3b6706fcc36a8992ad0a55036f4e/ref_R2.fq.gz]]
 
 ```
 
@@ -513,7 +513,7 @@ In the example below the process `CONDITIONAL` will only execute when the value 
 From the `scripts/process` directory, copy the `process_when.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_when.nf .
+$ cp scripts/process/process_when.nf .
 ```
 
 ```groovy 
@@ -573,7 +573,7 @@ Directives are commonly used to define the amount of computing resources to be u
 From the `scripts/process` directory, copy the `process_directive.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_directive.nf .
+$ cp scripts/process/process_directive.nf .
 ```
 
 ```groovy 
@@ -647,7 +647,8 @@ Many software tools allow users to configure the number of CPU threads used, opt
 
 In this exercise, we will use the bioinformatics tool [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) to assess the quality of high-throughput sequencing read data. FastQC generates an HTML report along with a directory containing detailed analysis results. We can specify the number of CPU threads for FastQC to use with the -t option, followed by the desired number of threads.
 
-Modify the Nextflow script `process_exercise_directives.nf`
+
+From the `scripts/process` directory, copy the `process_exercise_directives.nf` script to the current directory and modify it accordingly:
 
 1. Add a `tag` directive logging the sample_id in the execution output.
 2. Add a `cpus` directive to specify the number of cpus as 2.
@@ -722,9 +723,9 @@ Launching `process_exercise_directives_answers.nf` [admiring_ekeblad] revision: 
 
 executor >  local (3)
 [a4/cf32f1] process > FASTQC (ref2) [100%] 3 of 3 ✔
-[ref3, /home/user/amd-academy-nextflow/work/36/fdd3c30bee58ab1567f1b96a536c76/fastqc_out]
-[ref1, /home/user/amd-academy-nextflow/work/7d/d0971bc88de08fce6a1d8403aeeb70/fastqc_out]
-[ref2, /home/user/amd-academy-nextflow/work/a4/cf32f15140b91a2b56be1a37e4e63b/fastqc_out]
+[ref3, /home/workspace/amd-academy-nextflow/work/36/fdd3c30bee58ab1567f1b96a536c76/fastqc_out]
+[ref1, /home/workspace/amd-academy-nextflow/work/7d/d0971bc88de08fce6a1d8403aeeb70/fastqc_out]
+[ref2, /home/workspace/amd-academy-nextflow/work/a4/cf32f15140b91a2b56be1a37e4e63b/fastqc_out]
 
 ```
 
@@ -751,7 +752,7 @@ publishDir <directory>, parameter: value, parameter2: value ...
 From the `scripts/process` directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_publishDir.nf .
+$ cp scripts/process/process_publishDir.nf .
 ```
 
 For example if we want to capture the results of the `COMBINE_READS` process in a `results/merged_reads` output directory we
@@ -803,7 +804,7 @@ $ ls -l results/merged_reads/ref1.merged.fq.gz
 ```
 
 ```output 
-lrwxrwxrwx 1 user user 99 Jun 30 23:00 results/merged_reads/ref1.merged.fq.gz -> /home/user/amd-academy-nextflow/work/3d/88bbfd2b6b7a85ac81d73ffdecc97c/ref1.merged.fq.gz
+lrwxrwxrwx 1 user user 99 Jun 30 23:00 results/merged_reads/ref1.merged.fq.gz -> /home/workspace/amd-academy-nextflow/work/3d/88bbfd2b6b7a85ac81d73ffdecc97c/ref1.merged.fq.gz
 ```
 
 In the above example, the `publishDir "results/merged_reads"`,  creates a symbolic link `->` to the output files specified by the process `merged_reads` to the directory path `results/merged_reads`.
@@ -833,10 +834,10 @@ Full list [here](https://docs.seqera.io/nextflow/reference/process#publishdir).
 
 You can use more than one `publishDir` to keep different outputs in separate directories. To specify which files to put in which output directory use the parameter `pattern` with the a glob pattern that selects which files to publish from the overall set of output files.
 
-From the `scripts/process` directory, copy the `process_publishDir.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/process` directory, copy the `process_publishDir_semantic.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_publishDir.nf .
+$ cp scripts/process/process_publishDir_semantic.nf .
 ```
 
 ```groovy 
@@ -882,7 +883,7 @@ Launching `process_publishDir_semantic.nf` [elegant_kay] revision: 902918802f
 
 executor >  local (1)
 [64/219b7c] process > SPLIT_FASTA (1) [100%] 1 of 1 ✔
-[/home/user/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence.txt, /home/user/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence_ids.txt]
+[/home/workspace/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence.txt, /home/workspace/amd-academy-nextflow/work/64/219b7c2bdaee1bf645440b085145df/sequence_ids.txt]
 
 ```
 
@@ -904,7 +905,9 @@ sequence.txt
 
 ## Publishing results
 
-Add a `publishDir` directive to the nextflow script `process_exercise_publishDir.nf` that copies the merged reads  to the results folder merged\_reps.
+
+
+From the `scripts/process` directory, copy the `process_exercise_publishDir.nf` script to the current directory and add a `publishDir` directive to the script that copies the merged reads to the results folder merged_reps.
 
 ```groovy 
 params.reads= "data/yeast/reads/ref{1,2,3}*{1,2}.fq.gz"

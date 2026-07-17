@@ -88,7 +88,7 @@ To add the process to a workflow add a `workflow` block, and call the process li
 From the `scripts/process` directory, copy the `process_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_01.nf .
+$ cp scripts/process/process_01.nf .
 ```
 
 ```groovy
@@ -220,7 +220,7 @@ Or, for commands that span multiple lines you can encase the command in  triple 
 From the `scripts/process` directory, copy the `process_multi_line.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_multi_line.nf .
+$ cp scripts/process/process_multi_line.nf .
 ```
 
 ```groovy
@@ -242,17 +242,13 @@ $ nextflow run process_multi_line.nf -process.debug
 ```
 
 ```output
-process NUMSEQ_COV {
-    script:
-    """
-    zgrep '^>' ${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz > ids.txt
-    zgrep -c 'cov=10.' ids.txt
-    """
-}
+ N E X T F L O W   ~  version 26.04.4
 
-workflow {
-  NUMSEQ_COV()
-}
+Launching `process_multi_line.nf` [marvelous_brattain] revision: 250146646a
+
+executor >  local (1)
+[a8/51b300] NUMSEQ_COV [100%] 1 of 1 ✔
+7
 ```
 
 ## Associated scripts
@@ -285,14 +281,14 @@ Once the python script has been created, best practice is to move it to the bin 
 
 ```bash
 $ mkdir bin
-$ mv process_reads.py bin
+$ cp scripts/process/process_reads.py bin
 $ chmod 755 bin/process_reads.py
 ```
 
 From the `scripts/process` directory, copy the `process_python_script.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_python_script.nf .
+$ cp scripts/process/process_python_script.nf .
 ```
 
 ```groovy
@@ -351,7 +347,7 @@ We saw in the parameter episode the use of a special Nextflow variable `params` 
 From the `scripts/process` directory, copy the `process_script_params.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
 
 ```bash
-$ cp /home/user/scripts/process/process_script_params.nf .
+$ cp scripts/process/process_script_params.nf .
 ```
 
 ```groovy
@@ -393,7 +389,7 @@ Number of contigs with coverage 10:7
 
 ## Script parameters
 
-Create a Nextflow script named process_exercise_script_params.nf with the code block below.
+Copy the `process_exercise_script_params.nf` script from `scripts/process` to the current directory.
 
 ```groovy
 process COUNT_BASES {
@@ -413,7 +409,7 @@ Add a parameter `params.base` to the script and uses the variable `${param.base}
 Run the pipeline using a base value of `C` using the `--base` command line option.
 
 ```bash
-$ nextflow run process_script_params.nf --base <some value> -process.debug
+$ nextflow run process_exercise_script_params.nf --base <some value> -process.debug
 ```
 
 **Note:** The Nextflow option `-process.debug` will print the process' stdout to the terminal.
@@ -440,7 +436,7 @@ workflow {
 ```
 
 ```bash
-$ nextflow run process_script_params.nf --base C -process.debug
+$ nextflow run process_exercise_script_params.nf --base C -process.debug
 ```
 
 ```output
@@ -467,7 +463,7 @@ In the example below we will set a bash variable `NUMIDS` then echo the value of
 From the `scripts/process` directory, copy the `process_escape_bash.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/process/process_escape_bash.nf .
+$ cp scripts/process/process_escape_bash.nf .
 ```
 
 ```groovy
@@ -511,51 +507,6 @@ Another alternative is to use a `shell` block definition instead of `script`.
 When using the `shell` statement Bash variables are referenced in the normal way `$my_bash_variable`;
 However, the `shell` statement uses a different syntax for Nextflow variable substitutions: `!{nextflow_variable}`, which is needed to use both Nextflow and Bash variables in the same script.
 
-From the `scripts/process` directory, copy the `process_shell.nf` script to the current directory and open it using the VS Code Explorer panel on the left. 
-
-```bash
-$ cp /home/user/scripts/process/process_shell.nf .
-```
-
-```groovy
-process NUM_IDS {
-
-  shell:
-  //Shell script definition requires the use of single-quote ' delimited strings
-  '''
-  #set bash variable NUMIDS
-  NUMIDS=`zgrep -c '^>' !{params.fasta}`
-
-  echo 'Number of sequences'
-  printf $NUMIDS
-  '''
-}
-
-params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
-
-workflow {
-  NUM_IDS()
-}
-```
-
-This script uses the `shell` statement we reference the Nextflow variables as `!{projectDir}` , and the Bash variable as `${NUMCHAR}` and `${NUMLINES}`. Now run the pipeline.
-
-
-```bash
-$ nextflow run process_shell.nf -process.debug
-```
-
-```output
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_shell.nf` [chaotic_bassi] revision: d3fc993072
-
-executor >  local (1)
-[d1/3401f2] NUM_IDS [100%] 1 of 1 ✔
-Number of sequences
-131
-```
-
 ### Conditional script execution
 
 Sometimes you want to change how a process is run depending on some condition. In Nextflow scripts we can use conditional statements such as the `if` statement or any other expression evaluating to boolean value `true` or `false`.
@@ -579,7 +530,7 @@ else {
 From the `scripts/process` directory, copy the `process_conditional.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_conditional.nf .
+$ cp scripts/process/process_conditional.nf .
 ```
 
 ```groovy
@@ -687,7 +638,7 @@ The `val` qualifier allows you to receive value data as input. It can be accesse
 From the `scripts/process` directory, copy the `process_input_value.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_input_value.nf .
+$ cp scripts/process/process_input_value.nf .
 ```
 
 ```groovy
@@ -783,7 +734,7 @@ The input file name can be defined dynamically by defining the input name as a N
 From the `scripts/process` directory, copy the `process_input_file.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_input_file.nf .
+$ cp scripts/process/process_input_file.nf .
 ```
 
 ```groovy
@@ -842,7 +793,7 @@ The input name can also be defined as a user-specified filename inside quotes.
 From the `scripts/process` directory, copy the `process_input_file_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_input_file_02.nf .
+$ cp scripts/process/process_input_file_02.nf .
 ```
 
 ```groovy
@@ -866,34 +817,8 @@ workflow {
 
 ```
 
-In this example, the name of the file is specified as `'sample.fq.gz'` in the input definition and can be referenced by that name in the script block. Now run the pipeline.
+In this example, the name of the file is specified as `'sample.fq.gz'` in the input definition and can be referenced by that name in the script block.
 
-```bash
-$ nextflow run process_input_file_02.nf -process.debug
-```
-
-```output
-
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_input_file_02.nf` [insane_solvay] revision: cad2f1aede
-
-executor >  local (6)
-[13/c47a82] process > NUMLINES (5) [100%] 6 of 6 ✔
-sample.fq.gz 52592
-
-sample.fq.gz 52592
-
-sample.fq.gz 81720
-
-sample.fq.gz 58708
-
-sample.fq.gz 58708
-
-sample.fq.gz 81720
-
-
-```
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -905,7 +830,8 @@ When a process declares an input file, the corresponding channel elements must b
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 ## Add input channel
-For the script `process_exercise_input.nf`:
+
+Copy the `process_exercise_input.nf` script from `scripts/process` to the current directory.
 
 1. Define a Channel using `fromPath` for the transcriptome `params.fasta`.  
 2. Add an input channel that takes the fasta channel as a file input.
@@ -943,20 +869,22 @@ params.cov = 10
 params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
 process CONTIG_COV {
+  input:
+  path fasta
 
- script:
- """
- printf 'Number of contigs with coverage '${params.cov}':'
- zgrep -c 'cov=${params.cov}.' ${params.fasta}
- """
+  script:
+  """
+  printf 'Number of contigs with coverage '${params.cov}':'
+  zgrep -c 'cov=${params.cov}.' ${fasta}
+  """
 }
 
 workflow {
-
+    
   fasta_ch = channel.fromPath(params.fasta)
-  
+
   CONTIG_COV(fasta_ch)
- 
+
 }
 ```
 
@@ -983,7 +911,7 @@ However, it’s important to understand how the number of items within the multi
 From the `scripts/process` directory, copy the `process_combine.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_combine.nf .
+$ cp scripts/process/process_combine.nf .
 ```
 
 ```groovy
@@ -1038,7 +966,7 @@ What happens when not all channels have the same number of elements?
 From the `scripts/process` directory, copy the `process_combine_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_combine_02.nf .
+$ cp scripts/process/process_combine_02.nf .
 ```
 
 ```groovy
@@ -1089,7 +1017,7 @@ To better understand this behaviour compare the previous example with the follow
 From the `scripts/process` directory, copy the `process_combine_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_combine_03.nf .
+$ cp scripts/process/process_combine_03.nf .
 ```
 
 ```groovy
@@ -1138,6 +1066,7 @@ executor >  local (3)
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ##  Combining input channels
+
 Write a nextflow script `process_exercise_combine.nf` that combines two input channels
  
 ```groovy
@@ -1202,7 +1131,7 @@ For example if we can fix the previous example by using the input qualifer `each
 From the `scripts/process` directory, copy the `process_repeat.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/process/process_repeat.nf .
+$ cp scripts/process/process_repeat.nf .
 ```
 
 ```groovy
@@ -1257,100 +1186,6 @@ executor >  local (8)
 2 and d
 
 ```
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Input repeaters
-
-Extend the script `process_exercise_repeat.nf` by adding more values to the `cov` queue channel e.g. 10 to 20 and running the process for each value.
-
-```groovy
-process COMBINE {
-  input:
-  path fasta
-  val cov
-
-  script:
-  """
-  printf "Number of contigs with coverage $chr: "
-  zgrep -c "cov=${cov}." ${fasta}
-  """
-}
-
-workflow {
-  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
-  cov_ch = channel.value(10)
-  COMBINE(fasta_ch, cov_ch) 
-}
-```
-
-How many times does this process run?
-
-:::::::::::::::  solution
-
-## Solution
-
-```groovy
-process COMBINE {
-  input:
-  path fasta
-  each cov
-
-  script:
-  """
-  printf "Number of contigs with coverage $cov: "
-  zgrep -c "cov=${cov}." ${fasta}
-  """
-}
-
-workflow {
-  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz', checkIfExists: true)
-  cov_ch = channel.of(10..20)
-  COMBINE(fasta_ch, cov_ch) 
-}
-```
-
-Then run the script.
-
-```bash
-$ nextflow run process_exercise_repeat.nf -process.debug
-```
-
-This process runs 16 times.
-
-```output
- N E X T F L O W   ~  version 26.04.4
-
-Launching `process_exercise_repeat_answer.nf` [nostalgic_wegener] revision: cdb2d7beed
-
-executor >  local (11)
-[d6/73de20] COMBINE (3) [100%] 11 of 11 ✔
-Number of contigs with coverage 18: 8
-
-Number of contigs with coverage 20: 1
-
-Number of contigs with coverage 17: 6
-
-Number of contigs with coverage 15: 6
-
-Number of contigs with coverage 11: 8
-
-Number of contigs with coverage 10: 7
-
-Number of contigs with coverage 19: 1
-
-Number of contigs with coverage 14: 8
-
-Number of contigs with coverage 16: 4
-
-Number of contigs with coverage 13: 10
-
-Number of contigs with coverage 12: 10
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 

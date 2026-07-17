@@ -252,7 +252,7 @@ script.
 For example, from the scripts directory, copy the `wc-params.json` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/parameters/wc-params.json .
+$ cp scripts/parameters/wc-params.json .
 ```
 
 The `wc-params.json` contains the parameters `sleep`
