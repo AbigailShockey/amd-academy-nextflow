@@ -1,22 +1,22 @@
 process EXTRACT_IDS {
   input:
-  path transcriptome
-  each chr
+  path fasta
+  each cov
 
-  //add output block here to capture the file "${chr}_seqids.txt"
+  //add output block here to capture the file "contigs_cov_${cov}_seqids.txt"
   output:
-  path "${chr}_seqids.txt"
+  path "contigs_cov_${cov}.txt"
 
   script:
   """
-  zgrep '^>Y'$chr $transcriptome > ${chr}_seqids.txt
+  zgrep "cov=${cov}." ${fasta} > contigs_cov_${cov}.txt
   """
 }
 
 workflow {
-  transcriptome_ch = channel.fromPath('data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz')
-  chr_ch = channel.of('A'..'P')
-  
-  EXTRACT_IDS(transcriptome_ch, chr_ch)
+  fasta_ch = channel.fromPath('data/bacteria/assemblies/Sample01.contigs.fa.gz')
+  cov_ch = channel.of(10..20)
+
+  EXTRACT_IDS(fasta_ch, cov_ch)
   EXTRACT_IDS.out.view()
 }
