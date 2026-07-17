@@ -268,7 +268,7 @@ read_ch.view()
 
 Launching `channel.nf` [scruffy_boyd] revision: 38c9d0106a
 
-/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
 ```
 
 Please note that the output path will be different depending on the environment.
@@ -294,24 +294,24 @@ read_ch.view()
 
 Launching `channel.nf` [sleepy_goldwasser] revision: 8c9ff2e3b8
 
-/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
 ```
 
 **Note** The pattern must contain at least a star wildcard character.
@@ -393,37 +393,37 @@ all_files_ch.view()
 
 Launching `channel.nf` [small_galileo] revision: e7478b2ac9
 
-/home/user/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-/home/user/amd-academy-nextflow/data/yeast/bams/ref1.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
-/home/user/amd-academy-nextflow/data/yeast/bams/ref2.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/ref3.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
-/home/user/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
-/home/user/amd-academy-nextflow/data/yeast/samples.csv
-/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
-/home/user/amd-academy-nextflow/data/yeast/.hidden_file.txt
+/home/workspace/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
+/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
+/home/workspace/amd-academy-nextflow/data/yeast/bams/ref2.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/ref3.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
+/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
+/home/workspace/amd-academy-nextflow/data/yeast/samples.csv
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
+/home/workspace/amd-academy-nextflow/data/yeast/.hidden_file.txt
 ```
 
 :::::::::::::::::::::::::
@@ -466,15 +466,15 @@ read_pair_ch.view()
 
 Launching `channel.nf` [spontaneous_austin] revision: f316adcbf0
 
-[ref3, [/home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
-[etoh60_1, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz]]
-[temp33_1, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz]]
-[temp33_2, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz]]
-[ref2, [/home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz]]
-[etoh60_2, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz]]
-[temp33_3, [/home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz]]
-[ref1, [/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
-[etoh60_3, [/home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
+[ref3, [/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[etoh60_1, [/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz]]
+[temp33_1, [/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz]]
+[temp33_2, [/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz]]
+[ref2, [/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz]]
+[etoh60_2, [/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz]]
+[temp33_3, [/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz]]
+[ref1, [/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz]]
+[etoh60_3, [/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz]]
 ```
 
 This will produce a queue channel, `read_pair_ch` , containing nine elements.
@@ -506,7 +506,7 @@ The code above will create a queue channel containing one element. The element i
 
 Launching `channel.nf` [serene_mccarthy] revision: c16078569d
 
-[ref, [/home/user/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/user/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
+[ref, [/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz, /home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz]]
 ```
 
 See more information about the channel factory `fromFilePairs` [here](https://docs.seqera.io/nextflow/reference/channel#fromfilepairs)
