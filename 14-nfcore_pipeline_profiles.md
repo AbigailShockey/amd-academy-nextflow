@@ -12,10 +12,99 @@ exercises: 3
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
+- How do I download an nf-core pipeline for offline use?
 - How do I test if an nf-core pipeline works?
 - How do I reference nf-core pipelines?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Using nf-core pipelines offline
+
+Many of the techniques and resources described above require an active internet connection at run time - pipeline files, configuration profiles and software containers are all dynamically fetched when the pipeline is launched. This can be a problem for people using secure computing resources that do not have connections to the internet.
+
+To help with this, the `nf-core pipelines download` command automates the fetching of required files for running nf-core pipelines offline.
+The command can download a specific release of a pipeline with `-r`/`--release` .  
+By default, the pipeline will download the pipeline code and the institutional nf-core/configs files.
+
+If you specify the flag `--container-system [singularity|docker]`, it will also download any singularity or docker image files that are required (this needs Singularity or Docker to be installed). All files are saved to a single directory, ready to be transferred to the cluster where the pipeline will be executed.
+
+```bash
+nf-core pipelines download nf-core/viralrecon -r 3.0.0
+```
+
+```output
+
+                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\ 
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+WARNING  Could not find GitHub authentication token. Some API requests may fail.                                                                                                
+
+In addition to the pipeline code, this tool can download software containers.
+? Download software container images: (Use arrow keys)
+ » none
+   singularity
+   docker
+```
+
+```output
+                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\ 
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+WARNING  Could not find GitHub authentication token. Some API requests may fail.                                                                                                
+
+In addition to the pipeline code, this tool can download software containers.
+? Download software container images: none
+
+If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
+? Choose compression type: (Use arrow keys)
+   none
+ » tar.gz
+   tar.bz2
+   zip
+```
+
+
+```output
+                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\ 
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+WARNING  Could not find GitHub authentication token. Some API requests may fail.                                                                                                
+
+In addition to the pipeline code, this tool can download software containers.
+? Download software container images: none
+
+If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
+? Choose compression type: tar.gz
+INFO     Saving 'nf-core/viralrecon'                                                                                                                                            
+         Pipeline revision: '3.0.0'                                                                                                                                             
+         Use containers: 'none'                                                                                                                                                 
+         Container library: 'quay.io'                                                                                                                                           
+         Output file: 'nf-core-viralrecon_3.0.0.tar.gz'                                                                                                                         
+         Include default institutional configuration: 'False'                                                                                                                   
+INFO     Downloading workflow                                                                                                                                                   
+INFO     Downloading workflow files from GitHub                                                                                                                                 
+INFO     Compressing output into archive                                                                                                                                        
+INFO     Command to extract files: tar -xzf nf-core-viralrecon_3.0.0.tar.gz                                                                                                     
+INFO     MD5 checksum for 'nf-core-viralrecon_3.0.0.tar.gz': 0c2e93de11a93355ce14b36e3e131860  
+```
 
 ### Running nf-core pipelines with test data
 
@@ -36,108 +125,91 @@ Running with the test profile is a great way to confirm that you have Nextflow c
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Using nf-core pipelines offline
-
-Many of the techniques and resources described above require an active internet connection at run time - pipeline files, configuration profiles and software containers are all dynamically fetched when the pipeline is launched. This can be a problem for people using secure computing resources that do not have connections to the internet.
-
-To help with this, the `nf-core pipelines download` command automates the fetching of required files for running nf-core pipelines offline.
-The command can download a specific release of a pipeline with `-r`/`--release` .  
-By default, the pipeline will download the pipeline code and the institutional nf-core/configs files.
-
-If you specify the flag `--container-system [singularity|docker]`, it will also download any singularity or docker image files that are required (this needs Singularity or Docker to be installed). All files are saved to a single directory, ready to be transferred to the cluster where the pipeline will be executed.
-
-```bash
-nf-core pipelines download nf-core/rnaseq -r 3.14.0
-```
-
-```output
-                                          ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\ 
-    |\ | |__  __ /  ` /  \ |__) |__         }  {
-    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
-                                          `._,._,'
-
-    nf-core/tools version 4.0.2 - https://nf-co.re
-
-
-WARNING  Could not find GitHub authentication token. Some API requests may fail.                                                                  
-
-In addition to the pipeline code, this tool can download software containers.
-? Download software container images: (Use arrow keys)
- » none
-   singularity
-   docker
-```
-
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ### Exercise  Run a demo nf-core pipeline
 
-Run the `nf-core/demo` pipeline release 1.0.0  with the provided test data using the profile `test` and parameter `--outdir` `results`.
+Run the `nf-core/demo` pipeline release 1.2.0  with the provided test data using the profile `test` and parameter `--outdir` `results`.
 
 ```bash
-$ nextflow run nf-core/demo -r 1.0.0 --outdir results -profile test
+$ export NXF_SYNTAX_PARSER=v2
+$ nextflow run nf-core/demo -r 1.2.0 --outdir results -profile test,conda
 ```
 
-The `nf-core/demo` pipleine is a simple nf-core style bioinformatics pipeline for workshops and demonstrations that runs FASTQC and multiqc.
+The `nf-core/demo` pipleine is a simple nf-core style bioinformatics pipeline for workshops and demonstrations that runs FastQC, Seqtk trim, COWPY, and MultiQC.
 
 :::::::::::::::  solution
 
 ### Solution
 
 ```output
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `https://github.com/nf-core/demo` [intergalactic_mirzakhani] revision: 32893afef8 [master]
+
+WARN: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    There is a problem with your Conda configuration!
+    You will need to set-up the conda-forge and bioconda channels correctly.
+    Please refer to https://bioconda.github.io/
+    The observed channel order is
+    [defaults]
+    but the following channel order is required:
+    [conda-forge, bioconda]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+
 ------------------------------------------------------
                                         ,--./,-.
         ___     __   __   __   ___     /,-._.--~'
   |\ | |__  __ /  ` /  \ |__) |__         }  {
   | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                         `._,._,'
-  nf-core/demo v1.0.0-g705f18e
+  nf-core/demo 1.2.0
 ------------------------------------------------------
-Core Nextflow options
-  revision                  : 1.0.0
-  runName                   : spontaneous_lamarr
-  containerEngine           : docker
-  launchDir                 : /home/user/trainings/amd-academy-nextflow
-  workDir                   : /home/user/trainings/amd-academy-nextflow/work
-  projectDir                : /home/user/.nextflow/assets/nf-core/demo
-  userName                  : user
-  profile                   : test,docker
-  configFiles               : 
 
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
-  outdir                    : out
+  outdir                    : results
 
 Institutional config options
   config_profile_name       : Test profile
   config_profile_description: Minimal test dataset to check pipeline function
 
-Max job request options
-  max_cpus                  : 2
-  max_memory                : 6.GB
-  max_time                  : 6.h
+Generic options
+  trace_report_suffix       : 2026-07-20_21-33-09
+
+Core Nextflow options
+  revision                  : master
+  runName                   : intergalactic_mirzakhani
+  launchDir                 : /home/workspace/amd-academy-nextflow
+  workDir                   : /home/workspace/amd-academy-nextflow/work
+  projectDir                : /home/workspace/.nextflow/assets/.repos/nf-core/demo/clones/32893afef8076a03a2767a020b3f0cab2e0b40b2
+  userName                  : user
+  profile                   : test,conda
+  configFiles               : /home/workspace/.nextflow/assets/.repos/nf-core/demo/clones/32893afef8076a03a2767a020b3f0cab2e0b40b2/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
-If you use nf-core/demo for your analysis please cite:
 
 * The pipeline
+    https://doi.org/10.5281/zenodo.12192442
 
 * The nf-core framework
-  https://doi.org/10.1038/s41587-020-0439-x
+    https://doi.org/10.1038/s41587-020-0439-x
 
 * Software dependencies
-  https://github.com/nf-core/demo/blob/master/CITATIONS.md
-------------------------------------------------------
-executor >  local (7)
-[73/a7c6df] NFCORE_DEMO:DEMO:FASTQC (SAMPLE1_PE)     [100%] 3 of 3 ✔
-[0f/99ae5f] NFCORE_DEMO:DEMO:MULTIQC                 [100%] 1 of 1 ✔
+    https://github.com/nf-core/demo/blob/master/CITATIONS.md
+
+executor >  local (8)
+[70/86fc1a] NFCORE_DEMO:DEMO:FASTQC (SAMPLE2_PE)     [100%] 3 of 3 ✔
+[db/67e19e] NFCORE_DEMO:DEMO:SEQTK_TRIM (SAMPLE1_PE) [100%] 3 of 3 ✔
+[1d/94860f] NFCORE_DEMO:DEMO:COWPY                   [100%] 1 of 1 ✔
+[3f/900e10] NFCORE_DEMO:DEMO:MULTIQC (demo)          [100%] 1 of 1 ✔
 -[nf-core/demo] Pipeline completed successfully-
-Completed at: 19-May-2026 11:57:42
-Duration    : 1m 9s
+Completed at: 20-Jul-2026 21:35:15
+Duration    : 2m 5s
 CPU hours   : (a few seconds)
-Succeeded   : 7
+Succeeded   : 8
 ```
 
 :::::::::::::::::::::::::
