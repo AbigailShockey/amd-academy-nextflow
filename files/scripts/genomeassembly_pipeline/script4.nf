@@ -3,7 +3,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/*_R{1,2}.fastq.gz"
+params.reads = "data/bacteria/reads/Sample*_R{1,2}.fastq.gz"
 params.outdir = "results"
 
 /*
@@ -60,7 +60,7 @@ workflow {
          .stripIndent()
 
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
-
+  
   trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  //Add the ASSEMBLE process here, using the trimmed_reads_ch as input
 }
