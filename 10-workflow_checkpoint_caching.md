@@ -213,7 +213,7 @@ work/
 │       ├── .command.run
 │       ├── .command.sh
 │       ├── .exitcode
-│       └── temp33_1_2.fq.gz -> /home/training/data/yeast/reads/temp33_1_2.fq.gz
+│       └── temp33_1_2.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
 ├── 3b
 │   └── a3fb24ad3242e4cc8e5aa0c24d174b
 │       ├── .command.begin
@@ -223,7 +223,7 @@ work/
 │       ├── .command.run
 │       ├── .command.sh
 │       ├── .exitcode
-│       └── temp33_2_1.fq.gz -> /home/training/data/yeast/reads/temp33_2_1.fq.gz
+│       └── temp33_2_1.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
 ├── 4c
 │   └── 125b5e5a5ee144fa25dd9bccd467e9
 │       ├── .command.begin
@@ -233,7 +233,7 @@ work/
 │       ├── .command.run
 │       ├── .command.sh
 │       ├── .exitcode
-│       └── temp33_3_1.fq.gz -> /home/training/data/yeast/reads/temp33_3_1.fq.gz
+│       └── temp33_3_1.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
 ├── 54
 │   └── eb9d72e9ac24af8183de569ab0b977
 │       ├── .command.begin
@@ -243,7 +243,7 @@ work/
 │       ├── .command.run
 │       ├── .command.sh
 │       ├── .exitcode
-│       └── temp33_2_2.fq.gz -> /home/training/data/yeast/reads/temp33_2_2.fq.gz
+│       └── temp33_2_2.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
 ├── e9
 │   └── 31f28c291481342cc45d4e176a200a
 │       ├── .command.begin
@@ -253,7 +253,7 @@ work/
 │       ├── .command.run
 │       ├── .command.sh
 │       ├── .exitcode
-│       └── temp33_1_1.fq.gz -> /home/training/data/yeast/reads/temp33_1_1.fq.gz
+│       └── temp33_1_1.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
 └── fa
     └── cd3e49b63eadd6248aa357083763c1
         ├── .command.begin
@@ -263,7 +263,7 @@ work/
         ├── .command.run
         ├── .command.sh
         ├── .exitcode
-        └── temp33_3_2.fq.gz -> /home/training/data/yeast/reads/temp33_3_2.fq.gz
+        └── temp33_3_2.fq.gz -> /home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
 ```
 
 ### Task execution directory
