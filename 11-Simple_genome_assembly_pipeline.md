@@ -245,7 +245,7 @@ If we now run the script with the `--reads` parameter `data/bacteria/reads/*_1,2
 $ nextflow run script2.nf --reads 'data/bacteria/reads/*_R1,2}.fastq.gz'
 ```
 
-it will return the message .
+it will return the message:
 
 ```output 
 
