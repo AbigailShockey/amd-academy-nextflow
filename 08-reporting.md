@@ -68,16 +68,12 @@ If we want to get more information about an individual run we can add the run na
 For example:
 
 ```bash 
-$ nextflow log tiny_fermat
+$ nextflow log sharp_mahavira
 ```
 
 ```bash 
-/data/.../work/7b/3753ff13b1fa5348d2d9b6f512153a
-/data/.../work/c1/56a36d8f498c99ac6cba31e85b3e0c
-/data/.../work/f7/659c65ef60582d9713252bcfbcc310
-/data/.../work/82/ba67e3175bd9e6479d4310e5a92f99
-/data/.../work/e5/2816b9d4e7b402bfdd6597c2c2403d
-/data/.../work/3b/3485d00b0115f89e4c202eacf82eba
+/home/workspace/amd-academy-nextflow/work/23/a8b488c02a46e763be40b6044c3c2a
+/home/workspace/amd-academy-nextflow/work/d8/4cd0032e5fc524f71f2b5a00bec1e0
 ```
 
 This will list the work directory for each process.
@@ -86,7 +82,7 @@ This will list the work directory for each process.
 
 ## Task ID
 
-The task ID is a a 32 hexadecimal digit,e.g. `3b3485d00b0115f89e4c202eacf82eba`.
+The task ID is a a 32 hexadecimal digit,e.g. `a8b488c02a46e763be40b6044c3c2a`.
 A task's unique ID is generated as a 128-bit hash number obtained from a composition of the task's:
 
 - Inputs values
@@ -108,18 +104,14 @@ This can be composed to track the provenance of a workflow result.
 For example:
 
 ```bash 
-$ nextflow log tiny_fermat -f 'process,exit,hash,duration'
+$ nextflow log sharp_mahavira -f 'process,exit,hash,duration'
 ```
 
-Will output the process name, exit status, hash and duration of the process for the `tiny_fermat` run to the terminal.
+Will output the process name, exit status, hash and duration of the process for the `sharp_mahavira` run to the terminal.
 
 ```output
-index	0	7b/3753ff	2s
-fastqc	0	c1/56a36d	9.3s
-fastqc	0	f7/659c65	9.1s
-quant	0	82/ba67e3	2.7s
-quant	0	e5/2816b9	3.2s
-multiqc	0	3b/3485d0	6.3s
+TRIM    0       23/a8b488       40.2s
+FASTQC  0       d8/4cd003       9.2s
 ```
 
 The complete list of available fields can be retrieved with the command:
@@ -183,15 +175,14 @@ field. It is important to note that the resultant output can not be used to run 
 
 The output from the `log` command can be very long. We can subset the output using the option `-F` (filter) specifying  the filtering criteria.  This will print only those tasks matching a pattern using the syntax `=~/<pattern>/`.
 
-For example to filter for process with the name `fastqc` we would run:
+For example to filter for process with the name `FASTQC` we would run:
 
 ```bash 
-$ nextflow log tiny_fermat -F 'process =~ /fastqc/'
+$ nextflow log sharp_mahavira -F 'process =~ /FASTQC/'
 ```
 
 ```output 
-/data/.../work/c1/56a36d8f498c99ac6cba31e85b3e0c
-/data/.../work/f7/659c65ef60582d9713252bcfbcc310
+/home/workspace/amd-academy-nextflow/work/d8/4cd0032e5fc524f71f2b5a00bec1e0
 ```
 
 This can be useful to locate specific tasks work directories.
