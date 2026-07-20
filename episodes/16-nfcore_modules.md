@@ -73,34 +73,30 @@ $ nf-core modules list remote
 This command lists all the modules available in nf-core's [GitHub repository](https://github.com/nf-core/modules.git).
 
 ```output
-
-
-
                                           ,--./,-.
           ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 3.2.0 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
 
-INFO     Modules available from https://github.com/nf-core/modules.git (master):                                                                                                                   
-                                                                                                                                                                                                   
+INFO     Modules available from https://github.com/nf-core/modules.git (master):                                                                                                
+                                                                                                                                                                                
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ Module Name                                           ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ aardvark/compare                                      │
+│ aardvark/merge                                        │
 │ abacas                                                │
+│ abra2                                                 │
 │ abricate/run                                          │
 │ abricate/summary                                      │
-│ abritamr/run                                          │
-│ adapterremoval                                        │
-│ adapterremovalfixprefix                               │
 
 [..truncated..]                                                                                
 
-│ xeniumranger/rename                                   │
 │ xeniumranger/resegment                                │
 │ xz/compress                                           │
 │ xz/decompress                                         │
@@ -108,6 +104,7 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 │ yak/count                                             │
 │ yara/index                                            │
 │ yara/mapper                                           │
+│ yte                                                   │
 │ zip                                                   │
 └───────────────────────────────────────────────────────┘
 ```
@@ -115,7 +112,7 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 The information (inputs, outputs, and installation command) associated with each module can be found using the `modules info` options. The first step in your pipeline will be read trimming with the [seqtk trim](https://nf-co.re/modules/seqtk_trim/) module, so we'll start with that.
 
 ```bash
-nf-core modules info seqtk/trim
+$ nf-core modules info seqtk/trim
 ```
 
 ```output
@@ -507,7 +504,7 @@ params {
     config_profile_description = 'Minimal test dataset to demo the pipeline'
 
     // Input data
-    input = 'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'
+    input = 'https://raw.githubusercontent.com/AbigailShockey/amd-academy-nf-files/refs/heads/main/data/bacteria/samplesheets/test_full.csv'
 }
 ```
 
@@ -528,36 +525,44 @@ nextflow run . -profile demo --outdir demo_results
 If the pipeline finishes successfully, you should see something like the following:
 
 ```output
- N E X T F L O W   ~  version 25.10.0
+Nextflow 26.04.6 is available - Please consider updating your version to it
 
-Launching `main.nf` [dreamy_meninsky] DSL2 - revision: 883bd10359
+ N E X T F L O W   ~  version 26.04.4
 
+Launching `./main.nf` [high_ekeblad] revision: 27a6d188dd
+
+WARN: Unrecognized config option 'validation.defaultIgnoreParams'
+WARN: Unrecognized config option 'validation.monochromeLogs'
 Input/output options
-  input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
-  outdir                    : demo_outdir
+  input                     : https://raw.githubusercontent.com/AbigailShockey/amd-academy-nf-files/refs/heads/main/data/bacteria/samplesheets/test_full.csv
+  outdir                    : demo_results
 
 Institutional config options
-  config_profile_name       : Full test profile
-  config_profile_description: Full test dataset to check pipeline function
+  config_profile_name       : Demo profile
+  config_profile_description: Minimal test dataset to demo the pipeline
 
 Generic options
-  trace_report_suffix       : 2025-04-30_13-53-50
+  trace_report_suffix       : 2026-07-20_22-55-57
 
 Core Nextflow options
-  runName                   : dreamy_meninsky
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  runName                   : high_ekeblad
+  launchDir                 : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
-  profile                   : demo,conda
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  profile                   : demo
+  configFiles               : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (4)
-[66/2d7219] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
-[7f/776766] process > MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC               [100%] 1 of 1 ✔
+[da/2e0ba1] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
+[56/6976a0] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
+Completed at: 20-Jul-2026 22:58:26
+Duration    : 2m 28s
+CPU hours   : 0.1
+Succeeded   : 4
 ```
 
 This time the pipeline ran two processes, `MULTIQC` and the newly added `SEQTK_TRIM`, the results of which can be found in the `demo_results` directory.
