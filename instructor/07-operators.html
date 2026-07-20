@@ -419,7 +419,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Operators</h1>
-        <p>Last updated on 2026-07-13 |
+        <p>Last updated on 2026-07-20 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/07-operators.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -766,7 +766,7 @@ the remainder of a division.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -915,7 +915,7 @@ filename. Finally <code>view</code> the channel contents.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1101,7 +1101,7 @@ of the channel.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1236,196 +1236,6 @@ source channel. For example:</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="splitting-items-in-a-channel">Splitting items in a channel<a class="anchor" aria-label="anchor" href="#splitting-items-in-a-channel"></a></h3>
-<p>Sometimes you want to split the content of a individual item in a
-channel, like a file or string, into smaller chunks that can be
-processed by downstream operators or processes e.g. items stored in a
-CSV file.</p>
-<p>Nextflow has a number of splitting operators that can achieve
-this:</p>
-<ul><li>
-<a href="https://www.nextflow.io/docs/latest/operator.html#splitcsv" class="external-link">splitCsv</a>:
-The splitCsv operator allows you to parse text items emitted by a
-channel, that are formatted using the CSV format, and split them into
-records or group them into list of records with a specified length.</li>
-<li>
-<a href="https://www.nextflow.io/docs/latest/operator.html#splitfasta" class="external-link">splitFasta</a>:
-The splitFasta operator allows you to split the entries emitted by a
-channel, that are formatted using the FASTA format. It returns a channel
-which emits a text item for each sequence in the received FASTA
-content.</li>
-<li>
-<a href="https://www.nextflow.io/docs/latest/operator.html#splitfastq" class="external-link">splitFastq</a>:
-The splitFastq operator allows you to split the entries emitted by a
-channel, that are formatted using the FASTQ format. It returns a channel
-which emits a text chunk for each sequence in the received item.</li>
-<li>
-<a href="https://www.nextflow.io/docs/latest/operator.html#splittext" class="external-link">splitText</a>:
-The splitText operator allows you to split multi-line strings or text
-file items, emitted by a source channel into chunks containing n lines,
-which will be emitted by the resulting channel.</li>
-</ul><div class="section level4">
-<h4 id="splitcsv">splitCsv<a class="anchor" aria-label="anchor" href="#splitcsv"></a></h4>
-<p>The <code>splitCsv</code> operator allows you to parse text items
-emitted by a channel, that are formatted using the CSV format, and split
-them into records or group them into list of records with a specified
-length. This is useful when you want to use a sample sheet.</p>
-<p>In the simplest case just apply the <code>splitCsv</code> operator to
-a channel emitting a CSV formatted text files or text entries. For
-example:</p>
-<p>For the CSV file <code>samples.csv</code>.</p>
-<div class="codewrapper sourceCode" id="cb55">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" tabindex="-1" aria-label="code-block-55-1"></a><span class="fu">cat</span> data/yeast/samples.csv</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>sample_id,fastq_1,fastq_2
-ref1,data/yeast/reads/ref1_1.fq.gz,data/yeast/reads/ref1_2.fq.gz
-ref2,data/yeast/reads/ref2_1.fq.gz,data/yeast/reads/ref2_2.fq.gz</code></pre>
-</div>
-<p>We can use the <code>splitCsv()</code> operator to split the channel
-contaning a CSV file into three elements.</p>
-<div class="codewrapper sourceCode" id="cb57">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb57-1"><a href="#cb57-1" tabindex="-1" aria-label="code-block-57-1"></a>csv_ch<span class="op">=</span>channel</span>
-<span id="cb57-2"><a href="#cb57-2" tabindex="-1" aria-label="code-block-57-2"></a>    <span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/samples.csv'</span><span class="op">)</span></span>
-<span id="cb57-3"><a href="#cb57-3" tabindex="-1" aria-label="code-block-57-3"></a>    <span class="op">.</span><span class="fu">splitCsv</span><span class="op">()</span></span>
-<span id="cb57-4"><a href="#cb57-4" tabindex="-1" aria-label="code-block-57-4"></a>csv_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[sample_id, fastq_1, fastq_2]
-[ref1, data/yeast/reads/ref1_1.fq.gz, data/yeast/reads/ref1_2.fq.gz]
-[ref2, data/yeast/reads/ref2_1.fq.gz, data/yeast/reads/ref2_2.fq.gz]</code></pre>
-</div>
-<p>The above example shows hows the CSV file <code>samples.csv</code> is
-parsed and is split into three elements.</p>
-<div class="section level5">
-<h5 id="accessing-values">Accessing values<a class="anchor" aria-label="anchor" href="#accessing-values"></a></h5>
-<p>Values can be accessed by their positional indexes using the square
-brackets syntax<code>[index]</code>. So to access the first column you
-would use <code>[0]</code> as shown in the following example:</p>
-<div class="codewrapper sourceCode" id="cb59">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb59-1"><a href="#cb59-1" tabindex="-1" aria-label="code-block-59-1"></a>csv_ch<span class="op">=</span>channel</span>
-<span id="cb59-2"><a href="#cb59-2" tabindex="-1" aria-label="code-block-59-2"></a>    <span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/samples.csv'</span><span class="op">)</span></span>
-<span id="cb59-3"><a href="#cb59-3" tabindex="-1" aria-label="code-block-59-3"></a>    <span class="op">.</span><span class="fu">splitCsv</span><span class="op">()</span></span>
-<span id="cb59-4"><a href="#cb59-4" tabindex="-1" aria-label="code-block-59-4"></a>csv_ch</span>
-<span id="cb59-5"><a href="#cb59-5" tabindex="-1" aria-label="code-block-59-5"></a>  <span class="op">.</span><span class="fu">view</span><span class="op">({</span>it<span class="op">[</span><span class="dv">0</span><span class="op">]})</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code><span><span class="va">sample_id</span></span>
-<span><span class="va">ref1</span></span>
-<span><span class="va">ref2</span></span></code></pre>
-</div>
-</div>
-<div class="section level5">
-<h5 id="column-headers">Column headers<a class="anchor" aria-label="anchor" href="#column-headers"></a></h5>
-<p>When the CSV begins with a header line defining the column names, you
-can specify the parameter <code>header: true</code> which allows you to
-reference each value by its name, as shown in the following example:</p>
-<div class="codewrapper sourceCode" id="cb61">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb61-1"><a href="#cb61-1" tabindex="-1" aria-label="code-block-61-1"></a>csv_ch<span class="op">=</span>channel</span>
-<span id="cb61-2"><a href="#cb61-2" tabindex="-1" aria-label="code-block-61-2"></a>    <span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/samples.csv'</span><span class="op">)</span></span>
-<span id="cb61-3"><a href="#cb61-3" tabindex="-1" aria-label="code-block-61-3"></a>    <span class="op">.</span><span class="fu">splitCsv</span><span class="op">(</span>header<span class="op">:</span><span class="kw">true</span><span class="op">)</span></span>
-<span id="cb61-4"><a href="#cb61-4" tabindex="-1" aria-label="code-block-61-4"></a>csv_ch<span class="op">.</span><span class="fu">view</span><span class="op">({</span>it<span class="op">.</span>fastq_1<span class="op">})</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code><span><span class="va">data</span><span class="op">/</span><span class="va">yeast</span><span class="op">/</span><span class="va">reads</span><span class="op">/</span><span class="va">ref1_1.fq.gz</span></span>
-<span><span class="va">data</span><span class="op">/</span><span class="va">yeast</span><span class="op">/</span><span class="va">reads</span><span class="op">/</span><span class="va">ref2_1.fq.gz</span></span></code></pre>
-</div>
-<div id="parse-a-csv-file" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="parse-a-csv-file" class="callout-inner">
-<h3 class="callout-title">Parse a CSV file</h3>
-<div class="callout-content">
-<p>Create a nextflow script named operators_exercise_parse-csv.nf.
-Modify the Nextflow script to print the first column
-<code>sample_id</code>.</p>
-<div class="codewrapper sourceCode" id="cb63">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb63-1"><a href="#cb63-1" tabindex="-1" aria-label="code-block-63-1"></a>csv_ch<span class="op">=</span>channel</span>
-<span id="cb63-2"><a href="#cb63-2" tabindex="-1" aria-label="code-block-63-2"></a>  <span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/samples.csv'</span><span class="op">)</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
-</button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb64">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb64-1"><a href="#cb64-1" tabindex="-1" aria-label="code-block-64-1"></a> csv_ch<span class="op">=</span>channel</span>
-<span id="cb64-2"><a href="#cb64-2" tabindex="-1" aria-label="code-block-64-2"></a>        <span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/samples.csv'</span><span class="op">)</span></span>
-<span id="cb64-3"><a href="#cb64-3" tabindex="-1" aria-label="code-block-64-3"></a>        <span class="op">.</span><span class="fu">splitCsv</span><span class="op">(</span>header<span class="op">:</span><span class="kw">true</span><span class="op">)</span></span>
-<span id="cb64-4"><a href="#cb64-4" tabindex="-1" aria-label="code-block-64-4"></a></span>
-<span id="cb64-5"><a href="#cb64-5" tabindex="-1" aria-label="code-block-64-5"></a>csv_ch<span class="op">.</span><span class="fu">view</span><span class="op">({</span>it<span class="op">.</span>sample_id<span class="op">})</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb65">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" tabindex="-1" aria-label="code-block-65-1"></a><span class="ex">$</span> nextflow run operators_exercise_parse-csv.nf</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>
- N E X T F L O W   ~  version 26.04.4
-
-Launching `operators_exercise_parse-csv_answer.nf` [big_dubinsky] revision: 1aeee4a9e3
-
-ref1
-ref2</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="section level4">
-<h4 id="tab-delimited-files">Tab delimited files<a class="anchor" aria-label="anchor" href="#tab-delimited-files"></a></h4>
-<p>If you want to split a <code>tab</code> delimited file or file
-separated by another character use the <code>sep</code> parameter of the
-split <code>splitCsv</code> operator.</p>
-<p>For examples,</p>
-<div class="codewrapper sourceCode" id="cb67">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb67-1"><a href="#cb67-1" tabindex="-1" aria-label="code-block-67-1"></a><span class="bu">Channel</span><span class="op">.</span><span class="fu">of</span><span class="op">(</span><span class="st">"val1</span><span class="sc">\t</span><span class="st">val2</span><span class="sc">\t</span><span class="st">val3</span><span class="sc">\n</span><span class="st">val4</span><span class="sc">\t</span><span class="st">val5</span><span class="sc">\t</span><span class="st">val6</span><span class="sc">\n</span><span class="st">"</span><span class="op">)</span></span>
-<span id="cb67-2"><a href="#cb67-2" tabindex="-1" aria-label="code-block-67-2"></a>  <span class="op">.</span><span class="fu">splitCsv</span><span class="op">(</span>sep<span class="op">:</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span><span class="op">)</span></span>
-<span id="cb67-3"><a href="#cb67-3" tabindex="-1" aria-label="code-block-67-3"></a>  <span class="op">.</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[val1, val2, val3]
-[val4, val5, val6]</code></pre>
-</div>
-</div>
-</div>
-<div class="section level3">
 <h3 id="more-resources">More resources<a class="anchor" aria-label="anchor" href="#more-resources"></a></h3>
 <p>See the operators <a href="https://docs.seqera.io/nextflow/script#operators" class="external-link">here</a>.</p>
 <div id="keypoints1" class="callout keypoints">
@@ -1511,7 +1321,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/07-operators.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/07-operators.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-13",
+  "dateModified": "2026-07-20",
   "datePublished": "2026-07-20"
 }
 

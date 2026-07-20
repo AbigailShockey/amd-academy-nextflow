@@ -420,7 +420,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reporting</h1>
-        <p>Last updated on 2026-07-10 |
+        <p>Last updated on 2026-07-20 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/08-reporting.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -523,17 +523,13 @@ the run name or session ID to the <code>log</code> command.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> nextflow log tiny_fermat</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">$</span> nextflow log sharp_mahavira</span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">/data/.../work/7b/3753ff13b1fa5348d2d9b6f512153a</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">/data/.../work/c1/56a36d8f498c99ac6cba31e85b3e0c</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">/data/.../work/f7/659c65ef60582d9713252bcfbcc310</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">/data/.../work/82/ba67e3175bd9e6479d4310e5a92f99</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="ex">/data/.../work/e5/2816b9d4e7b402bfdd6597c2c2403d</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="ex">/data/.../work/3b/3485d00b0115f89e4c202eacf82eba</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">/home/workspace/amd-academy-nextflow/work/23/a8b488c02a46e763be40b6044c3c2a</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">/home/workspace/amd-academy-nextflow/work/d8/4cd0032e5fc524f71f2b5a00bec1e0</span></span></code></pre>
 </div>
 <p>This will list the work directory for each process.</p>
 <div id="task-id" class="callout">
@@ -545,9 +541,9 @@ the run name or session ID to the <code>log</code> command.</p>
 <h3 class="callout-title">Task ID</h3>
 <div class="callout-content">
 <p>The task ID is a a 32 hexadecimal
-digit,e.g. <code>3b3485d00b0115f89e4c202eacf82eba</code>. A task’s
-unique ID is generated as a 128-bit hash number obtained from a
-composition of the task’s:</p>
+digit,e.g. <code>a8b488c02a46e763be40b6044c3c2a</code>. A task’s unique
+ID is generated as a 128-bit hash number obtained from a composition of
+the task’s:</p>
 <ul><li>Inputs values</li>
 <li>Input files</li>
 <li>Command line string</li>
@@ -567,19 +563,15 @@ of a workflow result.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">$</span> nextflow log tiny_fermat <span class="at">-f</span> <span class="st">'process,exit,hash,duration'</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">$</span> nextflow log sharp_mahavira <span class="at">-f</span> <span class="st">'process,exit,hash,duration'</span></span></code></pre>
 </div>
 <p>Will output the process name, exit status, hash and duration of the
-process for the <code>tiny_fermat</code> run to the terminal.</p>
+process for the <code>sharp_mahavira</code> run to the terminal.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>index	0	7b/3753ff	2s
-fastqc	0	c1/56a36d	9.3s
-fastqc	0	f7/659c65	9.1s
-quant	0	82/ba67e3	2.7s
-quant	0	e5/2816b9	3.2s
-multiqc	0	3b/3485d0	6.3s</code></pre>
+<pre class="output" tabindex="0"><code>TRIM    0       23/a8b488       40.2s
+FASTQC  0       d8/4cd003       9.2s</code></pre>
 </div>
 <p>The complete list of available fields can be retrieved with the
 command:</p>
@@ -647,18 +639,17 @@ resultant output can not be used to run the pipeline steps.</p>
 subset the output using the option <code>-F</code> (filter) specifying
 the filtering criteria. This will print only those tasks matching a
 pattern using the syntax <code>=~/&lt;pattern&gt;/</code>.</p>
-<p>For example to filter for process with the name <code>fastqc</code>
+<p>For example to filter for process with the name <code>FASTQC</code>
 we would run:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">$</span> nextflow log tiny_fermat <span class="at">-F</span> <span class="st">'process =~ /fastqc/'</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">$</span> nextflow log sharp_mahavira <span class="at">-F</span> <span class="st">'process =~ /FASTQC/'</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>/data/.../work/c1/56a36d8f498c99ac6cba31e85b3e0c
-/data/.../work/f7/659c65ef60582d9713252bcfbcc310</code></pre>
+<pre class="output" tabindex="0"><code>/home/workspace/amd-academy-nextflow/work/d8/4cd0032e5fc524f71f2b5a00bec1e0</code></pre>
 </div>
 <p>This can be useful to locate specific tasks work directories.</p>
 <div id="view-run-log" class="callout challenge">
@@ -799,7 +790,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/08-reporting.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/08-reporting.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-10",
+  "dateModified": "2026-07-20",
   "datePublished": "2026-07-20"
 }
 

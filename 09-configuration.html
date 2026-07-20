@@ -424,7 +424,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Nextflow configuration</h1>
-        <p>Last updated on 2026-07-02 |
+        <p>Last updated on 2026-07-20 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/09-configuration.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -673,7 +673,7 @@ script <code>print_message.nf</code>:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li>‘hello’ - Workflow script uses the value in
 <code>print_message.nf</code>
@@ -931,7 +931,7 @@ for the two processes <code>P1</code> (cpus 1 and memory 2.GB) and
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1103,139 +1103,6 @@ control the creation of a Conda environment by the Conda package
 manager. For example, <code>conda.cacheDir</code> specifies the path
 where the Conda environments are stored. By default this is in
 <code>conda</code> folder of the <code>work</code> directory.</p>
-
-<div id="define-a-software-requirement-in-the-configuration-file-using-conda" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="define-a-software-requirement-in-the-configuration-file-using-conda" class="callout-inner">
-<h3 class="callout-title">Define a software requirement in the
-configuration file using conda</h3>
-<div class="callout-content">
-<p>We are going to define a software requirement using the “conda”
-directive.</p>
-<p>The software we are going to uses is <code>fastp</code>, a tool used
-for fast processing of next-generation sequencing data (like RNA or DNA
-sequences).</p>
-<p>Each time the <code>process</code> is called we are going to run
-<code>fastp -A -i ${read} -o out.fq 2&gt;&amp;1</code></p>
-<ul><li>
-<code>fastp</code> is the main command that invokes the fastp
-program.</li>
-<li>-A: option tells fastp to automatically detect and trim adapters.
-Adapters are short, artificially added sequences used in sequencing that
-are not part of the target DNA or RNA. -i ${read}:</li>
-<li>The <code>-i</code> flag specifies the input file.
-<code>${read}</code> represents a nextflow variable that contains the
-path to the sequencing reads.</li>
-<li>
-<code>-o</code>: The <code>-o</code> flag specifies the output file.
-In this case, the processed sequencing data will be written to a file
-named <code>out.fq</code>.</li>
-<li>
-<code>2&gt;&amp;1</code>: This is a shell redirection command, it
-means that both the regular output and error messages will be sent to
-the console.</li>
-</ul><ol style="list-style-type: decimal"><li><p>Create a config file for the Nextflow script
-<code>fastp.config</code>.</p></li>
-<li><p>Add a conda directive for the process name <code>FASTP</code>
-that includes the bioconda package <code>fastp</code>, version
-0.12.4-0.</p></li>
-</ol><p><strong>Hint</strong> You can specify the conda packages using the
-syntax
-<code>&lt;channel&gt;::&lt;package_name&gt;=&lt;version&gt;</code>
-e.g. <code>bioconda::salmon=1.5.2</code></p>
-<ol start="3" style="list-style-type: decimal"><li>Run the Nextflow script <code>configuration_fastp.nf</code> with the
-configuration file using the <code>-c</code> option.</li>
-</ol><div class="codewrapper sourceCode" id="cb26">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a>params<span class="op">.</span>input <span class="op">=</span> <span class="st">"data/yeast/reads/ref1_1.fq.gz"</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a>workflow <span class="op">{</span></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1" aria-label="code-block-26-4"></a>    <span class="fu">FASTP</span><span class="op">(</span> channel<span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span> params<span class="op">.</span>input <span class="op">)).</span><span class="fu">view</span><span class="op">()</span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1" aria-label="code-block-26-5"></a><span class="op">}</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1" aria-label="code-block-26-6"></a></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1" aria-label="code-block-26-7"></a>process FASTP <span class="op">{</span></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1" aria-label="code-block-26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1" aria-label="code-block-26-9"></a>   input<span class="op">:</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1" aria-label="code-block-26-10"></a>   path read</span>
-<span id="cb26-11"><a href="#cb26-11" tabindex="-1" aria-label="code-block-26-11"></a></span>
-<span id="cb26-12"><a href="#cb26-12" tabindex="-1" aria-label="code-block-26-12"></a>   output<span class="op">:</span></span>
-<span id="cb26-13"><a href="#cb26-13" tabindex="-1" aria-label="code-block-26-13"></a>   stdout</span>
-<span id="cb26-14"><a href="#cb26-14" tabindex="-1" aria-label="code-block-26-14"></a></span>
-<span id="cb26-15"><a href="#cb26-15" tabindex="-1" aria-label="code-block-26-15"></a>   script<span class="op">:</span></span>
-<span id="cb26-16"><a href="#cb26-16" tabindex="-1" aria-label="code-block-26-16"></a>   <span class="st">"""</span></span>
-<span id="cb26-17"><a href="#cb26-17" tabindex="-1" aria-label="code-block-26-17"></a><span class="st">   fastp -A -i </span><span class="ss">${</span>read<span class="ss">}</span><span class="st"> -o out.fq 2&gt;&amp;1</span></span>
-<span id="cb26-18"><a href="#cb26-18" tabindex="-1" aria-label="code-block-26-18"></a><span class="st">   """</span></span>
-<span id="cb26-19"><a href="#cb26-19" tabindex="-1" aria-label="code-block-26-19"></a><span class="op">}</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="co">// fastp.config</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a>process <span class="op">{</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1" aria-label="code-block-27-3"></a>    withName<span class="op">:</span> <span class="st">'FASTP'</span> <span class="op">{</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1" aria-label="code-block-27-4"></a>        conda <span class="op">=</span> <span class="st">"bioconda::fastp=0.12.4-0"</span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1" aria-label="code-block-27-5"></a>    <span class="op">}</span></span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1" aria-label="code-block-27-6"></a><span class="op">}</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb28">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="ex">$</span> nextflow run configuration_fastp.nf <span class="at">-c</span> fastp.config</span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>
- N E X T F L O W   ~  version 26.04.4
-
-Launching `configuration_fastp.nf` [gloomy_mestorf] revision: 9ea3cd04ed
-
-executor &gt;  local (1)
-[a4/49e27f] process &gt; FASTP (1) [100%] 1 of 1 ✔
-Read1 before filtering:
-total reads: 14677
-total bases: 1482377
-Q20 bases: 1466210(98.9094%)
-Q30 bases: 1415997(95.5221%)
-
-Read1 after filtering:
-total reads: 14671
-total bases: 1481771
-Q20 bases: 1465900(98.9289%)
-Q30 bases: 1415769(95.5457%)
-
-Filtering result:
-reads passed filter: 14671
-reads failed due to low quality: 6
-reads failed due to too many N: 0
-reads failed due to too short: 0
-
-Duplication rate (may be overestimated since this is SE data): 0.0204401%
-
-JSON report: fastp.json
-HTML report: fastp.html
-
-fastp -A -i ref1_1.fq.gz -o out.fq
-fastp v0.23.4, time used: 1 seconds</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="section level3">
 <h3 id="software-configuration-using-docker">Software configuration using Docker<a class="anchor" aria-label="anchor" href="#software-configuration-using-docker"></a></h3>
@@ -1261,12 +1128,12 @@ specify the user and group IDs (UID and GID) that the container should
 use when running. This option ensures that the processes inside the
 container run with the same UID and GID as the user executing the Docker
 command on the host system.</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a>process<span class="op">.</span>container <span class="op">=</span> <span class="st">'quay.io/biocontainers/salmon:1.5.2--h84f40af_0'</span></span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a>docker<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a>docker<span class="op">.</span>runOptions <span class="op">=</span> <span class="st">'-u $(id -u):$(id -g)'</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a>process<span class="op">.</span>container <span class="op">=</span> <span class="st">'quay.io/biocontainers/salmon:1.5.2--h84f40af_0'</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a>docker<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a>docker<span class="op">.</span>runOptions <span class="op">=</span> <span class="st">'-u $(id -u):$(id -g)'</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1281,11 +1148,11 @@ values for <code>process.container</code>.</p>
 <p>Apptainer is enabled in a similar manner to Docker. A container image
 path must be provided using <code>process.container</code> and apptainer
 enabled using <code>apptainer.enabled = true</code>.</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb31-1"><a href="#cb31-1" tabindex="-1" aria-label="code-block-31-1"></a>process<span class="op">.</span>container <span class="op">=</span> <span class="st">'https://depot.galaxyproject.org/singularity/salmon:1.5.2--h84f40af_0'</span></span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1" aria-label="code-block-31-2"></a>apptainer<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a>process<span class="op">.</span>container <span class="op">=</span> <span class="st">'https://depot.galaxyproject.org/singularity/salmon:1.5.2--h84f40af_0'</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a>apptainer<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span></code></pre>
 </div>
 <div id="container-protocols" class="callout">
 <div class="callout-square">
@@ -1327,33 +1194,33 @@ called with a short invocation,
 <p>Configuration profiles are defined in the <code>profiles</code>
 scope, which group the attributes that belong to the same profile using
 a common prefix.</p>
-<div class="codewrapper sourceCode" id="cb32">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="co">//configuration_profiles.config</span></span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1" aria-label="code-block-32-2"></a>profiles <span class="op">{</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1" aria-label="code-block-32-3"></a></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1" aria-label="code-block-32-4"></a>    standard <span class="op">{</span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1" aria-label="code-block-32-5"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/local/path/ref.fasta'</span></span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1" aria-label="code-block-32-6"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'local'</span></span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1" aria-label="code-block-32-7"></a>    <span class="op">}</span></span>
-<span id="cb32-8"><a href="#cb32-8" tabindex="-1" aria-label="code-block-32-8"></a></span>
-<span id="cb32-9"><a href="#cb32-9" tabindex="-1" aria-label="code-block-32-9"></a>    cluster <span class="op">{</span></span>
-<span id="cb32-10"><a href="#cb32-10" tabindex="-1" aria-label="code-block-32-10"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/data/stared/ref.fasta'</span></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1" aria-label="code-block-32-11"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'sge'</span></span>
-<span id="cb32-12"><a href="#cb32-12" tabindex="-1" aria-label="code-block-32-12"></a>        process<span class="op">.</span>queue <span class="op">=</span> <span class="st">'long'</span></span>
-<span id="cb32-13"><a href="#cb32-13" tabindex="-1" aria-label="code-block-32-13"></a>        process<span class="op">.</span>memory <span class="op">=</span> <span class="st">'10GB'</span></span>
-<span id="cb32-14"><a href="#cb32-14" tabindex="-1" aria-label="code-block-32-14"></a>        process<span class="op">.</span>conda <span class="op">=</span> <span class="st">'/some/path/env.yml'</span></span>
-<span id="cb32-15"><a href="#cb32-15" tabindex="-1" aria-label="code-block-32-15"></a>    <span class="op">}</span></span>
-<span id="cb32-16"><a href="#cb32-16" tabindex="-1" aria-label="code-block-32-16"></a></span>
-<span id="cb32-17"><a href="#cb32-17" tabindex="-1" aria-label="code-block-32-17"></a>    cloud <span class="op">{</span></span>
-<span id="cb32-18"><a href="#cb32-18" tabindex="-1" aria-label="code-block-32-18"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/data/stared/ref.fasta'</span></span>
-<span id="cb32-19"><a href="#cb32-19" tabindex="-1" aria-label="code-block-32-19"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'awsbatch'</span></span>
-<span id="cb32-20"><a href="#cb32-20" tabindex="-1" aria-label="code-block-32-20"></a>        process<span class="op">.</span>container <span class="op">=</span> <span class="st">'cbcrg/imagex'</span></span>
-<span id="cb32-21"><a href="#cb32-21" tabindex="-1" aria-label="code-block-32-21"></a>        docker<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span>
-<span id="cb32-22"><a href="#cb32-22" tabindex="-1" aria-label="code-block-32-22"></a>    <span class="op">}</span></span>
-<span id="cb32-23"><a href="#cb32-23" tabindex="-1" aria-label="code-block-32-23"></a></span>
-<span id="cb32-24"><a href="#cb32-24" tabindex="-1" aria-label="code-block-32-24"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="co">//configuration_profiles.config</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1" aria-label="code-block-28-2"></a>profiles <span class="op">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1" aria-label="code-block-28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1" aria-label="code-block-28-4"></a>    standard <span class="op">{</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1" aria-label="code-block-28-5"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/local/path/ref.fasta'</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1" aria-label="code-block-28-6"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'local'</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1" aria-label="code-block-28-7"></a>    <span class="op">}</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1" aria-label="code-block-28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1" aria-label="code-block-28-9"></a>    cluster <span class="op">{</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1" aria-label="code-block-28-10"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/data/stared/ref.fasta'</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1" aria-label="code-block-28-11"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'sge'</span></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1" aria-label="code-block-28-12"></a>        process<span class="op">.</span>queue <span class="op">=</span> <span class="st">'long'</span></span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1" aria-label="code-block-28-13"></a>        process<span class="op">.</span>memory <span class="op">=</span> <span class="st">'10GB'</span></span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1" aria-label="code-block-28-14"></a>        process<span class="op">.</span>conda <span class="op">=</span> <span class="st">'/some/path/env.yml'</span></span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1" aria-label="code-block-28-15"></a>    <span class="op">}</span></span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1" aria-label="code-block-28-16"></a></span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1" aria-label="code-block-28-17"></a>    cloud <span class="op">{</span></span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1" aria-label="code-block-28-18"></a>        params<span class="op">.</span>genome <span class="op">=</span> <span class="st">'/data/stared/ref.fasta'</span></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1" aria-label="code-block-28-19"></a>        process<span class="op">.</span>executor <span class="op">=</span> <span class="st">'awsbatch'</span></span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1" aria-label="code-block-28-20"></a>        process<span class="op">.</span>container <span class="op">=</span> <span class="st">'cbcrg/imagex'</span></span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1" aria-label="code-block-28-21"></a>        docker<span class="op">.</span>enabled <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb28-22"><a href="#cb28-22" tabindex="-1" aria-label="code-block-28-22"></a>    <span class="op">}</span></span>
+<span id="cb28-23"><a href="#cb28-23" tabindex="-1" aria-label="code-block-28-23"></a></span>
+<span id="cb28-24"><a href="#cb28-24" tabindex="-1" aria-label="code-block-28-24"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>This configuration defines three different profiles:
 <code>standard</code>, <code>cluster</code> and <code>cloud</code> that
@@ -1362,10 +1229,10 @@ execution platform. By convention the standard profile is implicitly
 used when no other profile is specified by the user. To enable a
 specific profile use <code>-profile</code> option followed by the
 profile name:</p>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>your script<span class="op">&gt;</span> -profile cluster</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1" aria-label="code-block-29-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>your script<span class="op">&gt;</span> -profile cluster</span></code></pre>
 </div>
 <div id="configuration-order" class="callout">
 <div class="callout-square">
@@ -1385,16 +1252,16 @@ This is because the setting is evaluated before Nextflow knows about the
 moved to after the <code>profiles</code> scope, then
 <code>publishDir</code> will use the correct value of
 <code>params.results</code>.</p>
-<div class="codewrapper sourceCode" id="cb34">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a>params<span class="op">.</span>results <span class="op">=</span> <span class="st">'results'</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1" aria-label="code-block-34-2"></a>process<span class="op">.</span>publishDir <span class="op">=</span> params<span class="op">.</span>results</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1" aria-label="code-block-34-3"></a>profiles <span class="op">{</span></span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1" aria-label="code-block-34-4"></a>    hpc <span class="op">{</span></span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1" aria-label="code-block-34-5"></a>        params<span class="op">.</span>results <span class="op">=</span> <span class="st">'/long/term/storage/results'</span></span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1" aria-label="code-block-34-6"></a>    <span class="op">}</span></span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1" aria-label="code-block-34-7"></a><span class="op">}</span></span></code></pre>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a>params<span class="op">.</span>results <span class="op">=</span> <span class="st">'results'</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a>process<span class="op">.</span>publishDir <span class="op">=</span> params<span class="op">.</span>results</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a>profiles <span class="op">{</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1" aria-label="code-block-30-4"></a>    hpc <span class="op">{</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1" aria-label="code-block-30-5"></a>        params<span class="op">.</span>results <span class="op">=</span> <span class="st">'/long/term/storage/results'</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1" aria-label="code-block-30-6"></a>    <span class="op">}</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1" aria-label="code-block-30-7"></a><span class="op">}</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1487,7 +1354,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/09-configuration.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/09-configuration.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-02",
+  "dateModified": "2026-07-20",
   "datePublished": "2026-07-20"
 }
 
