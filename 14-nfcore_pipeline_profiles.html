@@ -411,7 +411,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing nf-core pipelines with profiles</h1>
-        <p>Last updated on 2026-07-13 |
+        <p>Last updated on 2026-07-20 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/14-nfcore_pipeline_profiles.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -430,7 +430,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do I test if an nf-core pipeline works?</li>
+<ul><li>How do I download an nf-core pipeline for offline use?</li>
+<li>How do I test if an nf-core pipeline works?</li>
 <li>How do I reference nf-core pipelines?</li>
 </ul></div>
 </div>
@@ -441,36 +442,6 @@
 <h3 class="card-title">Objectives</h3>
 <ul><li>Run a small demo nf-core pipeline using a test dataset.</li>
 </ul></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section level3">
-<h3 id="running-nf-core-pipelines-with-test-data">Running nf-core pipelines with test data<a class="anchor" aria-label="anchor" href="#running-nf-core-pipelines-with-test-data"></a></h3>
-<p>The nf-core config profile <code>test</code> is special profile,
-which defines a minimal data set and configuration, that runs quickly
-and tests the workflow from beginning to end. Since the data is minimal,
-the output is often nonsense. Real world example output are instead
-linked on the nf-core pipeline web page, where the workflow has been run
-with a full size data set:</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline_name<span class="op">&gt;</span> -profile test</span></code></pre>
-</div>
-<div id="software-configuration-profile" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="software-configuration-profile" class="callout-inner">
-<h3 class="callout-title">Software configuration profile</h3>
-<div class="callout-content">
-<p>Note that you will typically still need to combine this with a
-software configuration profile for your system - e.g.
-<code>-profile test,conda</code>. Running with the test profile is a
-great way to confirm that you have Nextflow configured properly for your
-system before attempting to run with real data</p>
 </div>
 </div>
 </div>
@@ -494,15 +465,16 @@ download any singularity or docker image files that are required (this
 needs Singularity or Docker to be installed). All files are saved to a
 single directory, ready to be transferred to the cluster where the
 pipeline will be executed.</p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nf-core</span> pipelines download nf-core/rnaseq <span class="at">-r</span> 3.14.0</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">nf-core</span> pipelines download nf-core/viralrecon <span class="at">-r</span> 3.0.0</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>                                          ,--./,-.
+<pre class="output" tabindex="0"><code>
+                                          ,--./,-.
           ___     __   __   __   ___     /,-._.--~\
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
@@ -519,6 +491,91 @@ In addition to the pipeline code, this tool can download software containers.
    singularity
    docker</code></pre>
 </div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+WARNING  Could not find GitHub authentication token. Some API requests may fail.
+
+In addition to the pipeline code, this tool can download software containers.
+? Download software container images: none
+
+If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
+? Choose compression type: (Use arrow keys)
+   none
+ » tar.gz
+   tar.bz2
+   zip</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>                                          ,--./,-.
+          ___     __   __   __   ___     /,-._.--~\
+    |\ | |__  __ /  ` /  \ |__) |__         }  {
+    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                          `._,._,'
+
+    nf-core/tools version 4.0.2 - https://nf-co.re
+
+
+WARNING  Could not find GitHub authentication token. Some API requests may fail.
+
+In addition to the pipeline code, this tool can download software containers.
+? Download software container images: none
+
+If transferring the downloaded files to another system, it can be convenient to have everything compressed in a single file.
+? Choose compression type: tar.gz
+INFO     Saving 'nf-core/viralrecon'
+         Pipeline revision: '3.0.0'
+         Use containers: 'none'
+         Container library: 'quay.io'
+         Output file: 'nf-core-viralrecon_3.0.0.tar.gz'
+         Include default institutional configuration: 'False'
+INFO     Downloading workflow
+INFO     Downloading workflow files from GitHub
+INFO     Compressing output into archive
+INFO     Command to extract files: tar -xzf nf-core-viralrecon_3.0.0.tar.gz
+INFO     MD5 checksum for 'nf-core-viralrecon_3.0.0.tar.gz': 0c2e93de11a93355ce14b36e3e131860  </code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="running-nf-core-pipelines-with-test-data">Running nf-core pipelines with test data<a class="anchor" aria-label="anchor" href="#running-nf-core-pipelines-with-test-data"></a></h3>
+<p>The nf-core config profile <code>test</code> is special profile,
+which defines a minimal data set and configuration, that runs quickly
+and tests the workflow from beginning to end. Since the data is minimal,
+the output is often nonsense. Real world example output are instead
+linked on the nf-core pipeline web page, where the workflow has been run
+with a full size data set:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">nextflow</span> run nf-core/<span class="op">&lt;</span>pipeline_name<span class="op">&gt;</span> -profile test</span></code></pre>
+</div>
+<div id="software-configuration-profile" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="software-configuration-profile" class="callout-inner">
+<h3 class="callout-title">Software configuration profile</h3>
+<div class="callout-content">
+<p>Note that you will typically still need to combine this with a
+software configuration profile for your system - e.g.
+<code>-profile test,conda</code>. Running with the test profile is a
+great way to confirm that you have Nextflow configured properly for your
+system before attempting to run with real data</p>
+</div>
+</div>
+</div>
 <div id="exercise-run-a-demo-nf-core-pipeline" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -527,17 +584,18 @@ In addition to the pipeline code, this tool can download software containers.
 <div id="exercise-run-a-demo-nf-core-pipeline" class="callout-inner">
 <h3 class="callout-title">Exercise Run a demo nf-core pipeline</h3>
 <div class="callout-content">
-<p>Run the <code>nf-core/demo</code> pipeline release 1.0.0 with the
+<p>Run the <code>nf-core/demo</code> pipeline release 1.2.0 with the
 provided test data using the profile <code>test</code> and parameter
 <code>--outdir</code> <code>results</code>.</p>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> nextflow run nf-core/demo <span class="at">-r</span> 1.0.0 <span class="at">--outdir</span> results <span class="at">-profile</span> test</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">$</span> export NXF_SYNTAX_PARSER=v2</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">$</span> nextflow run nf-core/demo <span class="at">-r</span> 1.2.0 <span class="at">--outdir</span> results <span class="at">-profile</span> test,conda</span></code></pre>
 </div>
 <p>The <code>nf-core/demo</code> pipleine is a simple nf-core style
 bioinformatics pipeline for workshops and demonstrations that runs
-FASTQC and multiqc.</p>
+FastQC, Seqtk trim, COWPY, and MultiQC.</p>
 </div>
 </div>
 </div>
@@ -546,63 +604,78 @@ FASTQC and multiqc.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>------------------------------------------------------
+<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 26.04.4
+
+Launching `https://github.com/nf-core/demo` [intergalactic_mirzakhani] revision: 32893afef8 [master]
+
+WARN: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    There is a problem with your Conda configuration!
+    You will need to set-up the conda-forge and bioconda channels correctly.
+    Please refer to https://bioconda.github.io/
+    The observed channel order is
+    [defaults]
+    but the following channel order is required:
+    [conda-forge, bioconda]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+
+------------------------------------------------------
                                         ,--./,-.
         ___     __   __   __   ___     /,-._.--~'
   |\ | |__  __ /  ` /  \ |__) |__         }  {
   | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                         `._,._,'
-  nf-core/demo v1.0.0-g705f18e
+  nf-core/demo 1.2.0
 ------------------------------------------------------
-Core Nextflow options
-  revision                  : 1.0.0
-  runName                   : spontaneous_lamarr
-  containerEngine           : docker
-  launchDir                 : /home/user/trainings/amd-academy-nextflow
-  workDir                   : /home/user/trainings/amd-academy-nextflow/work
-  projectDir                : /home/user/.nextflow/assets/nf-core/demo
-  userName                  : user
-  profile                   : test,docker
-  configFiles               :
 
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
-  outdir                    : out
+  outdir                    : results
 
 Institutional config options
   config_profile_name       : Test profile
   config_profile_description: Minimal test dataset to check pipeline function
 
-Max job request options
-  max_cpus                  : 2
-  max_memory                : 6.GB
-  max_time                  : 6.h
+Generic options
+  trace_report_suffix       : 2026-07-20_21-33-09
+
+Core Nextflow options
+  revision                  : master
+  runName                   : intergalactic_mirzakhani
+  launchDir                 : /home/workspace/amd-academy-nextflow
+  workDir                   : /home/workspace/amd-academy-nextflow/work
+  projectDir                : /home/workspace/.nextflow/assets/.repos/nf-core/demo/clones/32893afef8076a03a2767a020b3f0cab2e0b40b2
+  userName                  : user
+  profile                   : test,conda
+  configFiles               : /home/workspace/.nextflow/assets/.repos/nf-core/demo/clones/32893afef8076a03a2767a020b3f0cab2e0b40b2/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
-If you use nf-core/demo for your analysis please cite:
 
 * The pipeline
+    https://doi.org/10.5281/zenodo.12192442
 
 * The nf-core framework
-  https://doi.org/10.1038/s41587-020-0439-x
+    https://doi.org/10.1038/s41587-020-0439-x
 
 * Software dependencies
-  https://github.com/nf-core/demo/blob/master/CITATIONS.md
-------------------------------------------------------
-executor &gt;  local (7)
-[73/a7c6df] NFCORE_DEMO:DEMO:FASTQC (SAMPLE1_PE)     [100%] 3 of 3 ✔
-[0f/99ae5f] NFCORE_DEMO:DEMO:MULTIQC                 [100%] 1 of 1 ✔
+    https://github.com/nf-core/demo/blob/master/CITATIONS.md
+
+executor &gt;  local (8)
+[70/86fc1a] NFCORE_DEMO:DEMO:FASTQC (SAMPLE2_PE)     [100%] 3 of 3 ✔
+[db/67e19e] NFCORE_DEMO:DEMO:SEQTK_TRIM (SAMPLE1_PE) [100%] 3 of 3 ✔
+[1d/94860f] NFCORE_DEMO:DEMO:COWPY                   [100%] 1 of 1 ✔
+[3f/900e10] NFCORE_DEMO:DEMO:MULTIQC (demo)          [100%] 1 of 1 ✔
 -[nf-core/demo] Pipeline completed successfully-
-Completed at: 19-May-2026 11:57:42
-Duration    : 1m 9s
+Completed at: 20-Jul-2026 21:35:15
+Duration    : 2m 5s
 CPU hours   : (a few seconds)
-Succeeded   : 7</code></pre>
+Succeeded   : 8</code></pre>
 </div>
 </div>
 </div>
@@ -735,7 +808,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/14-nfcore_pipeline_profiles.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/14-nfcore_pipeline_profiles.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-13",
+  "dateModified": "2026-07-20",
   "datePublished": "2026-07-20"
 }
 
