@@ -51,46 +51,42 @@ nf-core --help
 ```
 
 ```output
+
+
                                           ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\
+          ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
- nf-core/tools version 2.14.1 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
-
- Usage: nf-core [OPTIONS] COMMAND [ARGS]...
-
- nf-core/tools provides a set of helper tools for use with nf-core Nextflow pipelines.
- It is designed for both end-users running pipelines and also developers creating new pipelines.
-
-╭─ Options ────────────────────────────────────────────────────────────────────────────────────────╮
-│ --version                        Show the version and exit.                                      │
-│ --verbose        -v              Print verbose output to the console.                            │
-│ --hide-progress                  Don't show progress bars.                                       │
-│ --log-file       -l  <filename>  Save a verbose log to a file.                                   │
-│ --help           -h              Show this message and exit.                                     │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Commands for users ─────────────────────────────────────────────────────────────────────────────╮
-│ list                  List available nf-core pipelines with local info.                          │
-│ launch                Launch a pipeline using a web GUI or command line prompts.                 │
-│ create-params-file    Build a parameter file for a pipeline.                                     │
-│ download              Download a pipeline, nf-core/configs and pipeline singularity images.      │
-│ licences              List software licences for a given workflow (DSL1 only).                   │
-│ tui                   Open Textual TUI.                                                          │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Commands for developers ────────────────────────────────────────────────────────────────────────╮
-│ create            Create a new pipeline using the nf-core template.                              │
-│ lint              Check pipeline code against nf-core guidelines.                                │
-│ modules           Commands to manage Nextflow DSL2 modules (tool wrappers).                      │
-│ subworkflows      Commands to manage Nextflow DSL2 subworkflows (tool wrappers).                 │
-│ schema            Suite of tools for developers to manage pipeline schema.                       │
-│ create-logo       Generate a logo with the nf-core logo template.                                │
-│ bump-version      Update nf-core pipeline version number.                                        │
-│ sync              Sync a pipeline TEMPLATE branch with the nf-core template.                     │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ Usage: nf-core [OPTIONS] COMMAND [ARGS]...                           
+                                                                      
+ nf-core/tools provides a set of helper tools for use with nf-core    
+ Nextflow pipelines.                                                  
+ It is designed for both end-users running pipelines and also         
+ developers creating new pipelines.                                   
+                                                                      
+ ═ Commands ═════════════════════════════════════════════════════════ 
+ interface                              Launch the nf-core interface  
+ modules        m,module                Commands to manage Nextflow   
+                                        DSL2 modules (tool wrappers). 
+ pipelines      p,pipeline              Commands to manage nf-core    
+                                        pipelines.                    
+ subworkflows   s,swf,subworkflow       Commands to manage Nextflow   
+                                        DSL2 subworkflows (tool       
+                                        wrappers).                    
+ test-datasets  t,td,tds,test-datasets  Commands to manage nf-core    
+                                        test datasets.                
+                                                                      
+ ═ Options ══════════════════════════════════════════════════════════ 
+ --version            Show the version and exit.                      
+ --verbose        -v  Print verbose output to the console.            
+ --hide-progress      Don't show progress bars.                       
+ --log-file       -l  Save a verbose log to a file. [<filename>]      
+ --help           -h  Show this message and exit. 
 ```
 
 ### Listing available nf-core pipelines
@@ -103,36 +99,44 @@ If the pipeline has been pulled locally using Nextflow, it tells you when that w
 Run the command below.
 
 ```bash
-nf-core pipelines list
+$ nf-core pipelines list
 ```
 
 An example of the output from the command is as follows:
 
 ```output
-
-
                                           ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\
+          ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 2.14.1 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Pipeline Name             ┃ Stars ┃ Latest Release ┃      Released ┃ Last Pulled ┃ Have latest release? ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
-│ mcmicro                   │     4 │            dev │    2 days ago │           - │ -                    │
-│ fastquorum                │    13 │          1.0.0 │  2 months ago │           - │ -                    │
-│ rnaseq                    │   821 │         3.14.0 │  6 months ago │           - │ -                    │
-│ crisprseq                 │    22 │          2.2.0 │  1 months ago │           - │ -                    │
-│ funcscan                  │    62 │          1.1.6 │   2 weeks ago │           - │ -                    │
-│ pairgenomealign           │     0 │            dev │    3 days ago │           - │ -                    │
-│ multiplesequencealign     │    11 │            dev │    3 days ago │           - │ -                    │
-│ denovotranscript          │     0 │            dev │    3 days ago │           - │ -                    │
-│ demo                      │     1 │          1.0.0 │  1 months ago │           - │ -                    │
-│ demultiplex               │    37 │          1.4.1 │  5 months ago │           - │ -                    │
+┏━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃           ┃       ┃           ┃           ┃           ┃ Have       ┃
+┃ Pipeline  ┃       ┃    Latest ┃           ┃      Last ┃ latest     ┃
+┃ Name      ┃ Stars ┃   Release ┃  Released ┃    Pulled ┃ release?   ┃
+┡━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ variantb… │    50 │     1.5.0 │  3 months │         - │ -          │
+│           │       │           │       ago │           │            │
+│ deepmuts… │     5 │       dev │  11 hours │         - │ -          │
+│           │       │           │       ago │           │            │
+│ mhcquant  │    49 │     3.2.0 │  2 months │         - │ -          │
+│           │       │           │       ago │           │            │
+│ proteinf… │   108 │     2.0.0 │  4 months │         - │ -          │
+│           │       │           │       ago │           │            │
+│ methylseq │   197 │     4.2.0 │  7 months │         - │ -          │
+│           │       │           │       ago │           │            │
+│ rnastruc… │     1 │       dev │ yesterday │         - │ -          │
+│ datasync  │    10 │       dev │    2 days │         - │ -          │
+│           │       │           │       ago │           │            │
+│ raredise… │   122 │     3.1.2 │   2 weeks │         - │ -          │
+│           │       │           │       ago │           │            │
+│ rnasplice │    68 │     1.0.4 │   2 years │         - │ -          │
+│           │       │           │       ago │           │            │
+│ sarek     │   583 │     3.9.0 │   3 weeks │         - │ -          │
 [..truncated..]
 ```
 
@@ -144,7 +148,7 @@ If you supply additional keywords after the `pipelines list` sub-command, the li
 Here we filter on the keywords **genome** and **assembly**.
 
 ```bash
-nf-core pipelines list genome assembly
+$ nf-core pipelines list genome assembly
 ```
 
 ```output
@@ -160,13 +164,13 @@ nf-core pipelines list genome assembly
 ┏━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ Pipeline Name   ┃ Stars ┃ Latest Release ┃      Released ┃ Last Pulled ┃ Have latest release? ┃
 ┡━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
-│ mag             │   296 │          5.4.2 │  2 months ago │           - │ -                    │
-│ bacass          │    87 │          2.6.0 │   2 weeks ago │           - │ -                    │
-│ genomeqc        │    20 │            dev │   2 weeks ago │           - │ -                    │
-│ funcscan        │   109 │          3.0.0 │  8 months ago │           - │ -                    │
-│ genomeassembler │    33 │          1.1.0 │ 10 months ago │           - │ -                    │
+│ mag             │   308 │          5.4.2 │  4 months ago │           - │ -                    │
+│ bacass          │    91 │          2.6.0 │  3 months ago │           - │ -                    │
+│ genomeqc        │    24 │            dev │   1 weeks ago │           - │ -                    │
+│ genomeassembler │    33 │          1.1.0 │ 12 months ago │           - │ -                    │
+│ funcscan        │   117 │          4.0.0 │   3 weeks ago │           - │ -                    │
 │ genomeskim      │     4 │            dev │   4 years ago │           - │ -                    │
-│ genomeannotator │    37 │            dev │   4 years ago │           - │ -                    │
+│ genomeannotator │    38 │            dev │   4 years ago │           - │ -                    │
 └─────────────────┴───────┴────────────────┴───────────────┴─────────────┴──────────────────────┘
 ```
 
@@ -176,10 +180,11 @@ You can sort the results by adding the option `--sort` followed by a keyword.
 For example, latest release (`--sort release`), when you last pulled a local copy (`--sort pulled`), alphabetically (`--sort name`), or number of GitHub stars (`--sort stars`).
 
 ```bash
-nf-core pipelines list genome assembly --sort stars
+$ nf-core pipelines list genome assembly --sort stars
 ```
 
 ```output
+                                          ,--./,-.
           ___     __   __   __   ___     /,-._.--~\ 
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
@@ -191,12 +196,12 @@ nf-core pipelines list genome assembly --sort stars
 ┏━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ Pipeline Name   ┃ Stars ┃ Latest Release ┃      Released ┃ Last Pulled ┃ Have latest release? ┃
 ┡━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
-│ mag             │   296 │          5.4.2 │  2 months ago │           - │ -                    │
-│ funcscan        │   109 │          3.0.0 │  8 months ago │           - │ -                    │
-│ bacass          │    87 │          2.6.0 │   2 weeks ago │           - │ -                    │
-│ genomeannotator │    37 │            dev │   4 years ago │           - │ -                    │
-│ genomeassembler │    33 │          1.1.0 │ 10 months ago │           - │ -                    │
-│ genomeqc        │    20 │            dev │   2 weeks ago │           - │ -                    │
+│ mag             │   308 │          5.4.2 │  4 months ago │           - │ -                    │
+│ funcscan        │   117 │          4.0.0 │   3 weeks ago │           - │ -                    │
+│ bacass          │    91 │          2.6.0 │  3 months ago │           - │ -                    │
+│ genomeannotator │    38 │            dev │   4 years ago │           - │ -                    │
+│ genomeassembler │    33 │          1.1.0 │ 12 months ago │           - │ -                    │
+│ genomeqc        │    24 │            dev │   1 weeks ago │           - │ -                    │
 │ genomeskim      │     4 │            dev │   4 years ago │           - │ -                    │
 └─────────────────┴───────┴────────────────┴───────────────┴─────────────┴──────────────────────┘
 ```
@@ -268,16 +273,37 @@ $ nextflow pull nf-core/<PIPELINE>
 
 For the best reproducibility, it is good to explicitly reference the pipeline version number that you wish to use with the `-revision`/`-r` flag.
 
-In the example below we are pulling the viralrecon pipeline version 2.6.0
+In the example below we are pulling the viralrecon pipeline version 3.0.0. Viralrecon is not yet upated to strict config parsing, a change implemented in v26 of Nextflow (the version installed in the working environment) that we will not discuss as part of this training. We need to export the `NXF_SYNTAX_PARSER` param equal to `v1` to run viralrecon without an error.
 
 ```bash
-nextflow pull nf-core/viralrecon -revision 2.6.0
+$ export NXF_SYNTAX_PARSER=v1
+$ nextflow run nf-core/viralrecon -revision 3.0.0
 ```
 
-We can check the pipeline has been pulled using the `nf-core list` command.
+```output
+Checking nf-core/viralrecon:3.0.0 ...
+ downloaded from https://github.com/nf-core/viralrecon.git - revision: 395079f1d2 [3.0.0]
+```
+
+
+
+#### Fetching pipeline code
+
+Unless you are actively developing pipeline code, you should use Nextflow's [built-in functionality](https://www.nextflow.io/docs/latest/sharing.html) to fetch nf-core pipelines. Nextflow will automatically fetch the pipeline code when you use `nextflow run nf-core/<PIPELINE>` command.
+
+For the best reproducibility, it is good to explicitly reference the pipeline version number that you wish to use with the `-revision`/`-r` flag.
+
+
 
 ```bash
-nf-core pipelines list virus -s pulled
+$ nextflow run nf-core/viralrecon 
+$ nextflow run nf-core/viralrecon -r 3.0.0 --outdir viralrecon_test -profile test,conda
+
+
+We can check the pipeline has been pulled using the `nf-core pipelines list` command.
+
+```bash
+$ nf-core pipelines list virus -s pulled
 ```
 
 We can see from the output we have the latest release.
