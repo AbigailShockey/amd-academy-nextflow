@@ -33,6 +33,6 @@ process FASTQC {
 workflow {
   read_pairs_ch = channel.fromFilePairs( 'data/bacteria/reads/Sample01_R{1,2}.fastq.gz',checkIfExists: true)
 
-  trimmed_reads_ch=TRIM(read_pairs_ch)
-  fastqc_ch=FASTQC(trimmed_reads_ch)
+  TRIM(read_pairs_ch)
+  fastqc_ch=FASTQC(TRIM.out.trimmed_reads)
 }

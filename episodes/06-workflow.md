@@ -50,7 +50,7 @@ To combined multiple processes invoke them in the order they would appear in a w
 From the scripts directory, copy the `workflow_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/workflow/workflow_01.nf .
+$ cp scripts/workflow/workflow_01.nf .
 ```
 
 ```groovy 
@@ -96,12 +96,12 @@ $ nextflow run workflow_01.nf
 ```output
  N E X T F L O W   ~  version 26.04.4
 
-Launching `workflow_01.nf` [cheeky_wiles] revision: 497e7a4004
+Launching `workflow_01.nf` [jolly_picasso] revision: 14c6ded2ee
 
 executor >  local (10)
-[89/e2def5] process > FASTQC (8) [100%] 9 of 9 ✔
-[0f/0bb6c3] process > MULTIQC    [100%] 1 of 1 ✔
-[/home/rstudio/lessons/amd-academy-nextflow/work/0f/0bb6c3c6a0aa4609619aa4480339f1/multiqc_data, /home/rstudio/lessons/amd-academy-nextflow/work/0f/0bb6c3c6a0aa4609619aa4480339f1/multiqc_report.html]
+[63/276dcc] FASTQC (3) | 9 of 9 ✔
+[c1/6a8ab9] MULTIQC    | 1 of 1 ✔
+[/home/workspace/amd-academy-nextflow/work/c1/6a8ab9a0fb4348f0a54323d0f0a5e9/multiqc_data, /home/workspace/amd-academy-nextflow/work/c1/6a8ab9a0fb4348f0a54323d0f0a5e9/multiqc_report.html]
 ```
 
 ### Process outputs
@@ -135,13 +135,13 @@ It can be useful to name the output of a process, especially if there are multip
 
 The process `output` definition allows the use of the `emit:` option to define a named identifier that can be used to reference the channel in the external scope.
 
-For example in the script below we name the output from the `FASTQC` process as `fastqc_results` using the `emit:` option. We can then reference the output as
-`FASTQC.out.fastqc_results` in the workflow scope.
+For example in the script below we name the output from the `TRIM` process as `trimmed_reads` using the `emit:` option. We can then reference the output as
+`TRIM.out.trimmed_reads` in the workflow scope.
 
 From the scripts directory, copy the `workflow_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
-$ cp /home/user/scripts/workflow/workflow_02.nf .
+$ cp scripts/workflow/workflow_02.nf .
 ```
 
 ```groovy 
@@ -180,8 +180,8 @@ process FASTQC {
 workflow {
   read_pairs_ch = channel.fromFilePairs( 'data/bacteria/reads/Sample01_R{1,2}.fastq.gz',checkIfExists: true)
 
-  trimmed_reads_ch=TRIM(read_pairs_ch)
-  fastqc_ch=FASTQC(trimmed_reads_ch)
+  TRIM(read_pairs_ch)
+  fastqc_ch=FASTQC(TRIM.out.trimmed_reads)
 }
 ```
 
@@ -206,12 +206,13 @@ A workflow component can access any variable and parameter defined in the outer 
 From the scripts directory, copy the `workflow_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
-$ cp /home/user/scripts/workflow/workflow_03.nf .
+$ cp scripts/workflow/workflow_03.nf .
 ```
 
 ```groovy 
 [..truncated..]
 
+//reads defined outside workflow scope
 params.reads = 'data/yeast/reads/*_{1,2}.fq.gz'
 
 workflow {
@@ -232,7 +233,8 @@ In this example `params.reads`, defined outside the workflow scope, can be acces
 
 ## Workflow
 
-Connect the output of the process `FASTQC` to `PARSEZIP` in the Nextflow script `workflow_exercise.nf`.
+
+From the `scripts/workflow` directory, copy the `workflow_exercise.nf` script to the current directory and connect the output of the process `FASTQC` to `PARSEZIP`.
 
 **Note:** You will need to pass the `read_pairs_ch` as an argument to FASTQC and you will need to use the `collect` operator to gather the items in the FASTQC channel output to a single List item.
 
