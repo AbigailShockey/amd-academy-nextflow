@@ -117,19 +117,21 @@ Follow the steps below to start setting up your pipeline:
 Once your pipeline has been set up, you can change to its directory and test it using the `nextflow run` command and the `test` profile.
 
 ```bash
-cd myorg-genomeassembler
-nextflow run . -profile test --outdir results
+$ cd myorg-genomeassembler
+$ nextflow run . -profile test --outdir results
 ```
 
 If the pipeline ran successfully, you should see the following:
 
 ```output
-Nextflow 26.04.1 is available - Please consider updating your version to it
+Nextflow 26.04.6 is available - Please consider updating your version to it
 
- N E X T F L O W   ~  version 25.10.4
+ N E X T F L O W   ~  version 26.04.4
 
-Launching `./main.nf` [angry_visvesvaraya] DSL2 - revision: 27a6d188dd
+Launching `./main.nf` [stupefied_bhabha] revision: 27a6d188dd
 
+WARN: Unrecognized config option 'validation.defaultIgnoreParams'
+WARN: Unrecognized config option 'validation.monochromeLogs'
 Input/output options
   input                     : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv
   outdir                    : results
@@ -139,21 +141,21 @@ Institutional config options
   config_profile_description: Minimal test dataset to check pipeline function
 
 Generic options
-  trace_report_suffix       : 2026-05-15_15-06-31
+  trace_report_suffix       : 2026-07-20_22-43-44
 
 Core Nextflow options
-  runName                   : angry_visvesvaraya
-  launchDir                 : /home/user/training/myorg-genomeassembler
-  workDir                   : /home/user/training/myorg-genomeassembler/work
-  projectDir                : /home/user/training/myorg-genomeassembler
+  runName                   : stupefied_bhabha
+  launchDir                 : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : test
-  configFiles               : /home/user/training/myorg-genomeassembler/nextflow.config
+  configFiles               : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor >  local (1)
-[b6/042941] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+[fb/646941] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
 -[myorg/genomeassembler] Pipeline completed successfully-
 ```
 
