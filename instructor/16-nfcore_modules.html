@@ -424,7 +424,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>nf-core modules</h1>
-        <p>Last updated on 2026-07-13 |
+        <p>Last updated on 2026-07-21 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/16-nfcore_modules.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -542,16 +542,13 @@ the <code>modules</code> nf-core command with the
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>
-
-
-                                          ,--./,-.
+<pre class="output" tabindex="0"><code>                                          ,--./,-.
           ___     __   __   __   ___     /,-._.--~\
     |\ | |__  __ /  ` /  \ |__) |__         }  {
     | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                           `._,._,'
 
-    nf-core/tools version 3.2.0 - https://nf-co.re
+    nf-core/tools version 4.0.2 - https://nf-co.re
 
 
 
@@ -560,16 +557,15 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃ Module Name                                           ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ aardvark/compare                                      │
+│ aardvark/merge                                        │
 │ abacas                                                │
+│ abra2                                                 │
 │ abricate/run                                          │
 │ abricate/summary                                      │
-│ abritamr/run                                          │
-│ adapterremoval                                        │
-│ adapterremovalfixprefix                               │
 
 [..truncated..]
 
-│ xeniumranger/rename                                   │
 │ xeniumranger/resegment                                │
 │ xz/compress                                           │
 │ xz/decompress                                         │
@@ -577,6 +573,7 @@ INFO     Modules available from https://github.com/nf-core/modules.git (master):
 │ yak/count                                             │
 │ yara/index                                            │
 │ yara/mapper                                           │
+│ yte                                                   │
 │ zip                                                   │
 └───────────────────────────────────────────────────────┘</code></pre>
 </div>
@@ -588,7 +585,7 @@ we’ll start with that.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">nf-core</span> modules info seqtk/trim</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">$</span> nf-core modules info seqtk/trim</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1066,7 +1063,7 @@ following changes:</p>
 <span id="cb22-14"><a href="#cb22-14" tabindex="-1" aria-label="code-block-22-14"></a><span class="co">    config_profile_description = 'Minimal test dataset to demo the pipeline'</span></span>
 <span id="cb22-15"><a href="#cb22-15" tabindex="-1" aria-label="code-block-22-15"></a></span>
 <span id="cb22-16"><a href="#cb22-16" tabindex="-1" aria-label="code-block-22-16"></a><span class="co">    // Input data</span></span>
-<span id="cb22-17"><a href="#cb22-17" tabindex="-1" aria-label="code-block-22-17"></a><span class="co">    input = 'https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv'</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1" aria-label="code-block-22-17"></a><span class="co">    input = 'https://raw.githubusercontent.com/AbigailShockey/amd-academy-nf-files/refs/heads/main/data/bacteria/samplesheets/test_full.csv'</span></span>
 <span id="cb22-18"><a href="#cb22-18" tabindex="-1" aria-label="code-block-22-18"></a><span class="co">}</span></span></code></pre>
 </div>
 <p>This profile uses a different publicly available data set as input
@@ -1097,36 +1094,44 @@ the following:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code> N E X T F L O W   ~  version 25.10.0
+<pre class="output" tabindex="0"><code>Nextflow 26.04.6 is available - Please consider updating your version to it
 
-Launching `main.nf` [dreamy_meninsky] DSL2 - revision: 883bd10359
+ N E X T F L O W   ~  version 26.04.4
 
+Launching `./main.nf` [high_ekeblad] revision: 27a6d188dd
+
+WARN: Unrecognized config option 'validation.defaultIgnoreParams'
+WARN: Unrecognized config option 'validation.monochromeLogs'
 Input/output options
-  input                     : https://raw.githubusercontent.com/wslh-bio/spriggan/main/samplesheets/test_full.csv
-  outdir                    : demo_outdir
+  input                     : https://raw.githubusercontent.com/AbigailShockey/amd-academy-nf-files/refs/heads/main/data/bacteria/samplesheets/test_full.csv
+  outdir                    : demo_results
 
 Institutional config options
-  config_profile_name       : Full test profile
-  config_profile_description: Full test dataset to check pipeline function
+  config_profile_name       : Demo profile
+  config_profile_description: Minimal test dataset to demo the pipeline
 
 Generic options
-  trace_report_suffix       : 2025-04-30_13-53-50
+  trace_report_suffix       : 2026-07-20_22-55-57
 
 Core Nextflow options
-  runName                   : dreamy_meninsky
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  runName                   : high_ekeblad
+  launchDir                 : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
-  profile                   : demo,conda
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  profile                   : demo
+  configFiles               : /home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
 executor &gt;  local (4)
-[66/2d7219] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02) [100%] 3 of 3 ✔
-[7f/776766] process &gt; MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC               [100%] 1 of 1 ✔
--[myorg/genomeassembler] Pipeline completed successfully-</code></pre>
+[da/2e0ba1] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:SEQTK_TRIM (Sample02)     [100%] 3 of 3 ✔
+[56/6976a0] MYORG_GENOMEASSEMBLER:GENOMEASSEMBLER:MULTIQC (genomeassembler) [100%] 1 of 1 ✔
+-[myorg/genomeassembler] Pipeline completed successfully-
+Completed at: 20-Jul-2026 22:58:26
+Duration    : 2m 28s
+CPU hours   : 0.1
+Succeeded   : 4</code></pre>
 </div>
 <p>This time the pipeline ran two processes, <code>MULTIQC</code> and
 the newly added <code>SEQTK_TRIM</code>, the results of which can be
@@ -1213,7 +1218,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/16-nfcore_modules.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/16-nfcore_modules.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-13",
+  "dateModified": "2026-07-21",
   "datePublished": "2026-07-21"
 }
 
