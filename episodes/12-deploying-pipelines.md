@@ -6,28 +6,17 @@ exercises: 15
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand what nf-core is and how it relates to Nextflow.
-- Use the nf-core helper tool to find nf-core pipelines.
-- Understand how to configuration nf-core pipelines.
-- Run a small demo nf-core pipeline using a test dataset.
+- Use the nf-core helper tool to find and pull nf-core pipelines.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - Where can I find best-practice Nextflow bioinformatic pipelines?
-- How do I run nf-core pipelines?
-- How do I configure nf-core pipelines to use my data?
-- How do I reference nf-core pipelines?
+- How do I pull an nf-core pipelines?
+- How do I run an nf-core pipelines?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
-
-### What is nf-core?
-
-nf-core is a community-led project to develop a set of best-practice pipelines built using Nextflow workflow management system.
-Pipelines are governed by a set of guidelines, enforced by community code reviews and automatic code testing.
-
-![A diagram showcasing the key aspects of nf-core, a community effort to provide best-practice analysis pipelines. The diagram is divided into three sections: Deploy, Participate, and Develop. The Deploy section includes features like Stable pipelines, Centralized configs, List and update pipelines, and Download for offline use. The Participate section highlights Documentation, Slack workspace, Twitter updates, and Hackathons. The Develop section emphasizes the Starter template, Code guidelines, CI code linting and tests, and Helper tools.](fig/nf-core.png 'nf-core')
 
 In this episode we will covering finding, deploying and configuring nf-core pipelines.
 
@@ -302,7 +291,6 @@ nextflow run -r 3.0.0 nf-core/viralrecon --help -profile test
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- nf-core is a community-led project to develop a set of best-practice pipelines built using the Nextflow workflow management system.
 - The nf-core tool (`nf-core`) is a suite of helper tools that aims to help people run and develop nf-core pipelines.
 - nf-core pipelines can be found using `nf-core pipelines list`, or by checking the nf-core website.
 - An nf-core workflow is run using `nextflow run nf-core/<pipeline>` syntax.
