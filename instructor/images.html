@@ -309,7 +309,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="07-operators.html">7. Operators</a>
+        <a href="07-reporting.html">7. Reporting</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -321,7 +321,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-reporting.html">8. Reporting</a>
+        <a href="08-configuration.html">8. Nextflow configuration</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -333,7 +333,7 @@
 <div class="accordion accordion-flush" id="accordionFlush10">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading10">
-        <a href="09-configuration.html">9. Nextflow configuration</a>
+        <a href="09-workflow_checkpoint_caching.html">9. Workflow caching and checkpointing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -345,7 +345,7 @@
 <div class="accordion accordion-flush" id="accordionFlush11">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading11">
-        <a href="10-workflow_checkpoint_caching.html">10. Workflow caching and checkpointing</a>
+        <a href="10-Simple_genome_assembly_pipeline.html">10. Simple Nextflow pipeline</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -357,7 +357,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple Nextflow pipeline</a>
+        <a href="11-nfcore.html">11. Getting started with nf-core</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -369,7 +369,7 @@
 <div class="accordion accordion-flush" id="accordionFlush13">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading13">
-        <a href="12-nfcore.html">12. Deploying nf-core pipelines</a>
+        <a href="12-deploying-pipelines.html">12. Deploying nf-core pipelines</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -540,11 +540,10 @@ Methods 18, 1161–1168 (2021). <a href="https://doi.org/10.1038/s41592-021-0125
 <figure><img src="../fig/channel-process.png" alt="Process Flow" class="figure mx-auto d-block"><div class="figcaption">Process Flow</div>
 </figure><hr></section><section id="05-processes-part2"><h2 class="section-heading"><a href="05-processes-part2.html">Processes Part 2</a></h2>
 <hr class="half-width"></section><section id="06-workflow"><h2 class="section-heading"><a href="06-workflow.html">Workflow</a></h2>
-<hr class="half-width"></section><section id="07-operators"><h2 class="section-heading"><a href="07-operators.html">Operators</a></h2>
-<hr class="half-width"></section><section id="08-reporting"><h2 class="section-heading"><a href="08-reporting.html">Reporting</a></h2>
-<hr class="half-width"></section><section id="09-configuration"><h2 class="section-heading"><a href="09-configuration.html">Nextflow configuration</a></h2>
+<hr class="half-width"></section><section id="07-reporting"><h2 class="section-heading"><a href="07-reporting.html">Reporting</a></h2>
+<hr class="half-width"></section><section id="08-configuration"><h2 class="section-heading"><a href="08-configuration.html">Nextflow configuration</a></h2>
 <hr class="half-width">
-<h3 id="09-configuration-figure-1">Figure 1</h3>
+<h3 id="08-configuration-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘A diagram illustrating the different executors available in Nextflow. The diagram shows a configuration file feeding into Nextflow, which has both local and grid executors. The local executor connects to the Local OS and a standalone computer, while the grid executor connects to a batch scheduler and NFS, which further connects to various computing resources such as UNIVA, SLURM, Platform Computing, PBS Works, Kubernetes, and Amazon Web Services.’</p>
 <figure><img src="../fig/nf-executors.png" title="digram of different nextflow-executors" alt="A diagram illustrating the different executors available in Nextflow. The diagram shows a configuration file feeding into Nextflow, which has both local and grid executors. The local executor connects to the Local OS and a standalone computer, while the grid executor connects to a batch scheduler and NFS, which further connects to various computing resources such as UNIVA, SLURM, Platform Computing, PBS Works, Kubernetes, and Amazon Web Services." class="figure mx-auto d-block"><div class="figcaption">A diagram illustrating the different executors
 available in Nextflow. The diagram shows a configuration file feeding
@@ -553,18 +552,18 @@ executor connects to the Local OS and a standalone computer, while the
 grid executor connects to a batch scheduler and NFS, which further
 connects to various computing resources such as UNIVA, SLURM, Platform
 Computing, PBS Works, Kubernetes, and Amazon Web Services.</div>
-</figure><hr></section><section id="10-workflow_checkpoint_caching"><h2 class="section-heading"><a href="10-workflow_checkpoint_caching.html">Workflow caching and checkpointing</a></h2>
-<hr class="half-width"></section><section id="11-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="11-Simple_genome_assembly_pipeline.html">Simple Nextflow pipeline</a></h2>
+</figure><hr></section><section id="09-workflow_checkpoint_caching"><h2 class="section-heading"><a href="09-workflow_checkpoint_caching.html">Workflow caching and checkpointing</a></h2>
+<hr class="half-width"></section><section id="10-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="10-Simple_genome_assembly_pipeline.html">Simple Nextflow pipeline</a></h2>
 <hr class="half-width">
-<h3 id="11-Simple_genome_assembly_pipeline-figure-1">Figure 1</h3>
+<h3 id="10-Simple_genome_assembly_pipeline-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘dag’</p>
 <p>The <code>ASSEMBLE</code> process should be the longest running
 process. dag.png <img src="../fig/dag.png" alt="dag" class="figure"> The vertices in the
 graph represent the pipeline’s processes and operators, while the edges
 represent the data connections (i.e. channels) between them.</p>
-<hr></section><section id="12-nfcore"><h2 class="section-heading"><a href="12-nfcore.html">Deploying nf-core pipelines</a></h2>
+<hr></section><section id="11-nfcore"><h2 class="section-heading"><a href="11-nfcore.html">Getting started with nf-core</a></h2>
 <hr class="half-width">
-<h3 id="12-nfcore-figure-1">Figure 1</h3>
+<h3 id="11-nfcore-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘A diagram showcasing the key aspects of nf-core, a community effort to provide best-practice analysis pipelines. The diagram is divided into three sections: Deploy, Participate, and Develop. The Deploy section includes features like Stable pipelines, Centralized configs, List and update pipelines, and Download for offline use. The Participate section highlights Documentation, Slack workspace, Twitter updates, and Hackathons. The Develop section emphasizes the Starter template, Code guidelines, CI code linting and tests, and Helper tools.’</p>
 <figure><img src="../fig/nf-core.png" title="nf-core" alt="A diagram showcasing the key aspects of nf-core, a community effort to provide best-practice analysis pipelines. The diagram is divided into three sections: Deploy, Participate, and Develop. The Deploy section includes features like Stable pipelines, Centralized configs, List and update pipelines, and Download for offline use. The Participate section highlights Documentation, Slack workspace, Twitter updates, and Hackathons. The Develop section emphasizes the Starter template, Code guidelines, CI code linting and tests, and Helper tools." class="figure mx-auto d-block"><div class="figcaption">A diagram showcasing the key aspects of nf-core,
 a community effort to provide best-practice analysis pipelines. The
@@ -575,7 +574,8 @@ use. The Participate section highlights Documentation, Slack workspace,
 Twitter updates, and Hackathons. The Develop section emphasizes the
 Starter template, Code guidelines, CI code linting and tests, and Helper
 tools.</div>
-</figure><hr></section><section id="13-nfcore_pipeline_configuration"><h2 class="section-heading"><a href="13-nfcore_pipeline_configuration.html">nf-core pipeline configuraton</a></h2>
+</figure><hr></section><section id="12-deploying-pipelines"><h2 class="section-heading"><a href="12-deploying-pipelines.html">Deploying nf-core pipelines</a></h2>
+<hr class="half-width"></section><section id="13-nfcore_pipeline_configuration"><h2 class="section-heading"><a href="13-nfcore_pipeline_configuration.html">nf-core pipeline configuraton</a></h2>
 <hr class="half-width">
 <h3 id="13-nfcore_pipeline_configuration-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘A diagram explaining the structure and hierarchy of nextflow.config files. The diagram shows that the default ‘base’ config is always loaded. It also includes core profiles, such as docker, conda, and test, and server profiles from nf-core/config. Additionally, it highlights that your local config files, located in $HOME/.nextflow/config or specified with -c custom.config, are also considered.’</p>

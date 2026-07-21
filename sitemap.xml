@@ -25,10 +25,22 @@
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/07-operators.html</loc>
   </url>
   <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/07-reporting.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/08-configuration.html</loc>
+  </url>
+  <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/08-reporting.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/09-configuration.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/09-workflow_checkpoint_caching.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/10-Simple_genome_assembly_pipeline.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/10-workflow_checkpoint_caching.html</loc>
@@ -38,6 +50,12 @@
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/11-Simple_genome_assembly_pipeline.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/11-nfcore.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/12-deploying-pipelines.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/12-nfcore.html</loc>
@@ -103,10 +121,22 @@
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/07-operators.html</loc>
   </url>
   <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/07-reporting.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/08-configuration.html</loc>
+  </url>
+  <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/08-reporting.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/09-configuration.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/09-workflow_checkpoint_caching.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/10-Simple_genome_assembly_pipeline.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/10-workflow_checkpoint_caching.html</loc>
@@ -116,6 +146,12 @@
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-Simple_genome_assembly_pipeline.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/11-nfcore.html</loc>
+  </url>
+  <url>
+    <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/12-deploying-pipelines.html</loc>
   </url>
   <url>
     <loc>https://AbigailShockey.github.io/amd-academy-nextflow/instructor/12-nfcore.html</loc>

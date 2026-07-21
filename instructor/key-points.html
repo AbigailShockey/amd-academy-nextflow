@@ -309,7 +309,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="07-operators.html">7. Operators</a>
+        <a href="07-reporting.html">7. Reporting</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -321,7 +321,7 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="08-reporting.html">8. Reporting</a>
+        <a href="08-configuration.html">8. Nextflow configuration</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -333,7 +333,7 @@
 <div class="accordion accordion-flush" id="accordionFlush10">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading10">
-        <a href="09-configuration.html">9. Nextflow configuration</a>
+        <a href="09-workflow_checkpoint_caching.html">9. Workflow caching and checkpointing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -345,7 +345,7 @@
 <div class="accordion accordion-flush" id="accordionFlush11">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading11">
-        <a href="10-workflow_checkpoint_caching.html">10. Workflow caching and checkpointing</a>
+        <a href="10-Simple_genome_assembly_pipeline.html">10. Simple Nextflow pipeline</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -357,7 +357,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="11-Simple_genome_assembly_pipeline.html">11. Simple Nextflow pipeline</a>
+        <a href="11-nfcore.html">11. Getting started with nf-core</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -369,7 +369,7 @@
 <div class="accordion accordion-flush" id="accordionFlush13">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading13">
-        <a href="12-nfcore.html">12. Deploying nf-core pipelines</a>
+        <a href="12-deploying-pipelines.html">12. Deploying nf-core pipelines</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -566,25 +566,14 @@ to a Nextflow variable.</li>
 <li>Multiple outputs from a single process can be accessed using the
 list syntax <code>[]</code> and it’s index or by referencing the a named
 process output .</li>
-</ul></section><section id="07-operators"><h2 class="section-heading"><a href="07-operators.html">Operators</a></h2>
-<hr class="half-width">
-<ul>
-<li>Nextflow <em>operators</em> are methods that allow you to modify,
-set or view channels.</li>
-<li>Operators can be separated in to several groups; filtering ,
-transforming , splitting , combining , forking and Maths operators</li>
-<li>To use an operator use the dot notation after the Channel object
-e.g. <code>my_ch.view()</code>.</li>
-<li>You can parse text items emitted by a channel, that are formatted
-using the CSV format, using the <code>splitCsv</code> operator.</li>
-</ul></section><section id="08-reporting"><h2 class="section-heading"><a href="08-reporting.html">Reporting</a></h2>
+</ul></section><section id="07-reporting"><h2 class="section-heading"><a href="07-reporting.html">Reporting</a></h2>
 <hr class="half-width">
 <ul>
 <li>Nextflow can produce a custom execution report with run information
 using the <code>log</code> command.</li>
 <li>You can generate a report using the <code>-t</code> option
 specifying a template file.</li>
-</ul></section><section id="09-configuration"><h2 class="section-heading"><a href="09-configuration.html">Nextflow configuration</a></h2>
+</ul></section><section id="08-configuration"><h2 class="section-heading"><a href="08-configuration.html">Nextflow configuration</a></h2>
 <hr class="half-width">
 <ul>
 <li>Nextflow configuration can be managed using a Nextflow configuration
@@ -601,7 +590,7 @@ launching a pipeline execution by using the <code>-profile</code>
 command-line option</li>
 <li>Nextflow configuration settings are evaluated in the order they are
 read-in.</li>
-</ul></section><section id="10-workflow_checkpoint_caching"><h2 class="section-heading"><a href="10-workflow_checkpoint_caching.html">Workflow caching and checkpointing</a></h2>
+</ul></section><section id="09-workflow_checkpoint_caching"><h2 class="section-heading"><a href="09-workflow_checkpoint_caching.html">Workflow caching and checkpointing</a></h2>
 <hr class="half-width">
 <ul>
 <li>Nextflow automatically keeps track of all the processes executed in
@@ -612,7 +601,7 @@ work directory.</li>
 workflow after a pipeline error or using new data, skipping steps that
 have been successfully executed.</li>
 <li>Re-entrancy is enabled using the <code>-resume</code> option.</li>
-</ul></section><section id="11-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="11-Simple_genome_assembly_pipeline.html">Simple Nextflow pipeline</a></h2>
+</ul></section><section id="10-Simple_genome_assembly_pipeline"><h2 class="section-heading"><a href="10-Simple_genome_assembly_pipeline.html">Simple Nextflow pipeline</a></h2>
 <hr class="half-width">
 <ul>
 <li>Nextflow can combined tasks (processes) and manage data flows using
@@ -634,11 +623,16 @@ several runtime metrics and execution information using the command line
 options <code>-with-report</code>, <code>-with-trace</code>,
 <code>-with-timeline</code> and produce a graph using
 <code>-with-dag</code>.</li>
-</ul></section><section id="12-nfcore"><h2 class="section-heading"><a href="12-nfcore.html">Deploying nf-core pipelines</a></h2>
+</ul></section><section id="11-nfcore"><h2 class="section-heading"><a href="11-nfcore.html">Getting started with nf-core</a></h2>
 <hr class="half-width">
 <ul>
 <li>nf-core is a community-led project to develop a set of best-practice
 pipelines built using the Nextflow workflow management system.</li>
+<li>nf-core is portable, reproducible, and standardized, making it an
+ideal framework for workflow design</li>
+</ul></section><section id="12-deploying-pipelines"><h2 class="section-heading"><a href="12-deploying-pipelines.html">Deploying nf-core pipelines</a></h2>
+<hr class="half-width">
+<ul>
 <li>The nf-core tool (<code>nf-core</code>) is a suite of helper tools
 that aims to help people run and develop nf-core pipelines.</li>
 <li>nf-core pipelines can be found using
