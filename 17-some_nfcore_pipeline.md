@@ -99,7 +99,7 @@ Copy the modified `genomeassembler-1.nf` script to the `workflows/` directory, r
 
 ```bash
 $ cp bin/genomeassembler-1.nf workflows/genomeassembler.nf
-$ nextflow run main.nf --outdir results --profile demo
+$ nextflow run main.nf --outdir demo_results --profile demo
 ```
 
 ```output
@@ -120,12 +120,12 @@ Generic options
 
 Core Nextflow options
   runName                   : cranky_legentil
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  launchDir                 : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : demo
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -283,7 +283,7 @@ Copy the modified `genomeassembler-2.nf` script to the `workflows/` directory, r
 
 ```bash
 $ cp bin/genomeassembler-2.nf workflows/genomeassembler.nf
-$ nextflow run main.nf --outdir results --profile demo -resume
+$ nextflow run main.nf --outdir demo_results --profile demo -resume
 ```
 ```output
  N E X T F L O W   ~  version 25.10.4
@@ -303,12 +303,12 @@ Generic options
 
 Core Nextflow options
   runName                   : voluminous_mestorf
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  launchDir                 : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : demo
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -463,7 +463,7 @@ Copy the modified `genomeassembler-3.nf` script to the `workflows/` directory, r
 
 ```bash
 $ cp bin/genomeassembler-3.nf workflows/genomeassembler.nf
-$ nextflow run main.nf --outdir results --profile demo -resume
+$ nextflow run main.nf --outdir demo_results --profile demo -resume
 ```
 
 ```output
@@ -484,12 +484,12 @@ Generic options
 
 Core Nextflow options
   runName                   : special_mayer
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  launchDir                 : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : demo
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -699,7 +699,7 @@ Copy the modified `genomeassembler-4.nf` script to the `workflows/` directory, r
 
 ```bash
 $ cp bin/genomeassembler-4.nf workflows/genomeassembler.nf
-$ nextflow run main.nf --outdir results --profile demo -resume
+$ nextflow run main.nf --outdir demo_results --profile demo -resume
 ```
 
 ```output
@@ -720,12 +720,12 @@ Generic options
 
 Core Nextflow options
   runName                   : cheesy_banach
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  launchDir                 : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : demo
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -889,7 +889,7 @@ Copy the modified `genomeassembler-5.nf` script to the `workflows/` directory, r
 
 ```bash
 $ cp bin/genomeassembler-5.nf workflows/genomeassembler.nf
-$ nextflow run main.nf --outdir results --profile demo -resume
+$ nextflow run main.nf --outdir demo_results --profile demo -resume
 ```
 
 ```output
@@ -910,12 +910,12 @@ Generic options
 
 Core Nextflow options
   runName                   : cranky_euclid
-  launchDir                 : /home/user/nfcore-pipeline/myorg-genomeassembler
-  workDir                   : /home/user/nfcore-pipeline/myorg-genomeassembler/work
-  projectDir                : /home/user/nfcore-pipeline/myorg-genomeassembler
+  launchDir                 : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
+  workDir                   : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/work
+  projectDir                : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler
   userName                  : user
   profile                   : demo
-  configFiles               : /home/user/nfcore-pipeline/myorg-genomeassembler/nextflow.config
+  configFiles               : home/workspace/amd-academy-nextflow/nfcore-pipeline/myorg-genomeassembler/nextflow.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
