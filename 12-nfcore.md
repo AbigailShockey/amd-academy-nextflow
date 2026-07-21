@@ -277,93 +277,13 @@ In the example below we are pulling the viralrecon pipeline version 3.0.0. Viral
 
 ```bash
 $ export NXF_SYNTAX_PARSER=v1
-$ nextflow run nf-core/viralrecon -revision 3.0.0
+$ nextflow pull nf-core/viralrecon -revision 3.0.0
 ```
 
 ```output
 Checking nf-core/viralrecon:3.0.0 ...
  downloaded from https://github.com/nf-core/viralrecon.git - revision: 395079f1d2 [3.0.0]
 ```
-
-
-
-#### Fetching pipeline code
-
-Unless you are actively developing pipeline code, you should use Nextflow's [built-in functionality](https://www.nextflow.io/docs/latest/sharing.html) to fetch nf-core pipelines. Nextflow will automatically fetch the pipeline code when you use `nextflow run nf-core/<PIPELINE>` command.
-
-For the best reproducibility, it is good to explicitly reference the pipeline version number that you wish to use with the `-revision`/`-r` flag.
-
-
-
-```bash
-$ nextflow run nf-core/viralrecon 
-$ nextflow run nf-core/viralrecon -r 3.0.0 --outdir viralrecon_test -profile test,conda
-
-
-We can check the pipeline has been pulled using the `nf-core pipelines list` command.
-
-```bash
-$ nf-core pipelines list virus -s pulled
-```
-
-We can see from the output we have the latest release.
-
-```output
-                                          ,--./,-.
-          ___     __   __   __   ___     /,-._.--~\ 
-    |\ | |__  __ /  ` /  \ |__) |__         }  {
-    | \| |       \__, \__/ |  \ |___     \`-._,-`-,
-                                          `._,._,'
-
-    nf-core/tools version 4.0.2 - https://nf-co.re
-
-
-┏━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Pipeline Name    ┃ Stars ┃ Latest Release ┃     Released ┃    Last Pulled ┃ Have latest release? ┃
-┡━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
-│ viralrecon       │   163 │          2.6.0 │ 7 months ago │ 16 seconds ago │ No (v2.6.0)          │
-│ metatdenovo      │    34 │          1.3.0 │ 9 months ago │              - │ -                    │
-│ viralintegration │    18 │          0.1.1 │  3 years ago │              - │ -                    │
-│ viralmetagenome  │    36 │          1.1.1 │ 2 months ago │              - │ -                    │
-└──────────────────┴───────┴────────────────┴──────────────┴────────────────┴──────────────────────┘
-```
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-### Development Releases
-
-If not specified, Nextflow will fetch the default git branch. For pipelines with a stable release this the default branch is `master` - this branch contains code from the latest release. For pipelines in early development that don't have any releases, the default branch is `dev`.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-### Exercise: Fetch the latest viralrecon pipeline
-
-1. Use the `nextflow pull` command to download the latest `nf-core/viralrecon` pipeline
-
-2. Use the `nf-core pipelines list` command to see if you have the latest version of the pipeline
-
-:::::::::::::::  solution
-
-### Solution
-
-Use the `nextflow pull` command to download the latest `nf-core/viralrecon` pipeline
-
-```bash
-$ nextflow pull nf-core/viralrecon
-```
-
-Use the `nf-core list` command to see if you have the latest version of the pipeline
-
-```bash
-$ nf-core pipelines list virus --sort pulled
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Usage instructions and documentation
 
@@ -375,8 +295,10 @@ Each pipeline has its own webpage at [https://nf-co.re/](https://nf-co.re/)\<pip
 In addition to this documentation, each pipeline comes with basic command line reference. This can be seen by running the pipeline with the parameter `--help` , for example:
 
 ```bash
-nextflow run -r 3.0.0 nf-core/viralrecon --help
+nextflow run -r 3.0.0 nf-core/viralrecon --help -profile test
 ```
+
+**Note:** For some pipelines the `--help` option is sufficient, but viralrecon requires its required parameters be fulfilled in order for the `--help` option to work. This is why we used a special profile called `test`. We will talk about test profiles in the next episode.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
