@@ -3,7 +3,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/Sample*_R{1,2}.fastq.gz"
+params.reads = "data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz"
 params.outdir = "results"
 
 /*
@@ -34,6 +34,7 @@ process ASSEMBLE {
 
     tag "Assemble on $sample_id"
     cpus 2
+    memory 7.GB
 
     input:
     tuple val(sample_id), path(reads)
@@ -42,11 +43,13 @@ process ASSEMBLE {
     tuple val(sample_id), path("${sample_id}.contigs.fa") 
 
     script:
+    def memory = task.memory.toGiga()
     """
     shovill \
       --R1 ${reads[0]} \
       --R2 ${reads[1]} \
       --cpus $task.cpus \
+      --ram $memory \
       --outdir ./${sample_id}_shovill_output \
       --force
     mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.contigs.fa
@@ -107,5 +110,7 @@ workflow {
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  ASSEMBLE(trimmed_reads_ch)
+  //Add the FASTQC process here, using the read_pairs_ch as input
+  //Add the FASTQC_TRIMMED process here, using the trimmed_reads_ch as input
 }
