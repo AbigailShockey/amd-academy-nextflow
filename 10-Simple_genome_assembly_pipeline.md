@@ -78,7 +78,7 @@ The script `script1.nf` already defines the pipeline input parameters with `para
  * pipeline input parameters
  */
 
-params.reads = "data/bacteria/reads/Sample*_R{1,2}.fastq.gz"
+params.reads = "data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz"
 
 workflow {
   println "reads: $params.reads"
@@ -97,22 +97,21 @@ $ nextflow run script1.nf
 
 Launching `script1.nf` [tender_rosalind] revision: fe3ff5bff6
 
-reads: data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads: data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz
 ```
 
 We can specify a different input parameter using the `--<params>` option, for example :
 
 ```groovy 
-$ nextflow run script1.nf --reads "data/bacteria/reads/Sampl01_R{1,2}.fastq.gz"
+$ nextflow run script1.nf --reads "data/bacteria/subampled_reads/Sampl01_sub_{R1,R2}.fastq.gz"
 ```
 
 ```output 
-                                                                                    
- N E X T F L O W   ~  version 26.04.4                                               
+ N E X T F L O W   ~  version 26.04.4
 
-Launching `script1.nf` [elated_yalow] revision: 706a4fc6f8                          
+Launching `script1.nf` [drunk_cuvier] revision: f8f5df4391
 
-reads: data/bacteria/reads/Sampl01_R{1,2}.fastq.gz
+reads: data/bacteria/subampled_reads/Sampl01_sub_{R1,R2}.fastq.gz
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -185,7 +184,7 @@ nextflow.enable.dsl = 2
 /*
  * pipeline input parameters
  */
-params.reads = "data/bacteria/reads/Sample*_R{1,2}.fastq.gz"
+params.reads = "data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz"
 params.outdir = "results"
 
 workflow {
@@ -213,19 +212,21 @@ Now if we execute it with the following command:
 $ nextflow run script2.nf
 ```
 
-It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/reads/Sample*_R{1,2}.fastq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
+It will print an output similar to the one shown below that shows how the `read_pairs_ch` channel emits a tuple. The tuple is composed of two elements, where the first is the pattern matched by the glob pattern `data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz`, defined by the variable `params.reads`, and the second is a list representing the actual files.
 
 ```output 
-Launching `script2.nf` [prickly_cray] revision: 50c9628d41
+ N E X T F L O W   ~  version 26.04.4
+
+Launching `script2.nf` [agitated_mestorf] revision: 8cd8c7d7a7
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/*_{R1,R2}.fastq.gz
 outdir       : results
 
-[Sample01, [/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R2.fastq.gz]]
-[Sample02, [/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R2.fastq.gz]]
-[Sample03, [/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R2.fastq.gz]]
+[Sample01_sub, [/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R2.fastq.gz]]
+[Sample02_sub, [/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R2.fastq.gz]]
+[Sample03_sub, [/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R2.fastq.gz]]
 ```
 
 To read in other read pairs  we can specify a different glob pattern in the `params.reads` variable by using `--reads` options on the command line.
@@ -239,30 +240,30 @@ We can also add a argument, `checkIfExists: true` , to the `fromFilePairs` chann
 read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists: true )
 ```
 
-If we now run the script with the `--reads` parameter `data/bacteria/reads/*_1,2}.fastq.gz`
+If we run the script with the `--reads` parameter `data/bacteria/subampled_reads/*_1,2}.fastq.gz`
 
 ```bash 
-$ nextflow run script2.nf --reads 'data/bacteria/reads/*_R1,2}.fastq.gz'
+$ nextflow run script2.nf --reads 'data/bacteria/subampled_reads/*_R1,R2}.fastq.gz'
 ```
 
 it will return the message:
 
 ```output 
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script2.nf` [extravagant_gates] revision: 50c9628d41
+Launching `script2.nf` [extravagant_waddington] revision: 1522b9b246
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/*_R1,2}.fastq.gz
+reads        : data/bacteria/subampled_reads/*_R1,R2}.fastq.gz
 outdir       : results
 
-ERROR ~ Unmatched closing ')' near index 8
-(.*)_R1|2)\.fastq\.gz
-        ^
+ERROR ~ Unmatched closing ')' near index 9
+(.*)_R1|R2)\.fastq\.gz
+         ^
 
  -- Check '.nextflow.log' file for details
+(base) user@d8581c13d94a:~/amd-academy-nextflow
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
@@ -270,7 +271,7 @@ ERROR ~ Unmatched closing ')' near index 8
 ## Read in all read pairs
 
 1. Add  the `checkIfExists: true` argument to the `fromFilePairs` channel factory in `script2.nf`.
-2. Using the command line parameter `--reads`, add a glob pattern to read in `Sample01` from the `data/bacteria/reads` directory.
+2. Using the command line parameter `--reads`, add a glob pattern to read in `Sample01` from the `data/bacteria/subampled_reads` directory.
 
 :::::::::::::::  solution
 
@@ -281,20 +282,20 @@ read_pairs_ch = channel.fromFilePairs(params.reads, checkIfExists: true)
 ```
 
 ```bash 
-$ nextflow run script2.nf --reads 'data/bacteria/reads/Sample01_R{1,2}.fastq.gz'
+$ nextflow run script2.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz'
 ```
 
 ```output 
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script2.nf` [elated_majorana] revision: 50c9628d41
+Launching `script2.nf` [nasty_bhabha] revision: 1c058f215f
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample01_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-[Sample01, [/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R2.fastq.gz]]
+[Sample01_sub, [/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R1.fastq.gz, /home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R2.fastq.gz]]
 ```
 
 :::::::::::::::::::::::::
@@ -357,14 +358,13 @@ workflow {
 Try to run it by using the command:
 
 ```bash 
-$ nextflow run script3.nf
+$ nextflow run script3.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz'
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script3.nf` [cranky_nobel] revision: 731bf50c59
+Launching `script3.nf` [spontaneous_poitras] revision: 8770ef9a69
 
 Error script3.nf:39:3: Incorrect number of call arguments, expected 1 but received 0
 │  39 |   TRIM()
@@ -381,8 +381,9 @@ The execution will fail because the program the process, `TRIM` , has not been p
 Add the channel `read_pairs_ch` to the `TRIM` process call.
 
 ```groovy
-[..truncated..]
 workflow {
+[..truncated..]
+
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   TRIM(read_pairs_ch)
@@ -392,7 +393,7 @@ workflow {
 Now try to run it again by using the command:
 
 ```bash 
-$ nextflow run script3.nf
+$ nextflow run script3.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz'
 ```
 
 Now the workflow will run successfully.
@@ -400,15 +401,15 @@ Now the workflow will run successfully.
 ```output
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script3.nf` [focused_payne] revision: 6415911000
+Launching `script3.nf` [nasty_einstein] revision: 33a73d660d
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-executor >  local (3)
-[b1/f57389] TRIM (3) | 3 of 3 ✔
+executor >  local (1)
+[1a/475545] process > TRIM (1) [100%] 1 of 1 ✔
 ```
 
 The `TRIM` process also defines one `output` channel. 
@@ -427,8 +428,9 @@ To view the contents of the channel we can use the `view` operator.
 ## Solution
 
 ```groovy 
-[..truncated..]
 workflow {
+[..truncated..]
+
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
@@ -441,23 +443,21 @@ As a reminder, the `-resume` option causes the execution of any step that has be
 Try to execute it as shown below:
 
 ```bash
-$ nextflow run script3.nf -resume
+$ nextflow run script3.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz' -resume
 ```
 
 ```output
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script3.nf` [festering_venter] revision: 2e7ae5cbe8
+Launching `script3.nf` [pensive_faraday] revision: 7646f5feb5
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-[7e/1f09e2] TRIM (1) | 3 of 3, cached: 3 ✔
-[Sample01, [/home/workspace/amd-academy-nextflow/work/5b/fd7b1d9173e5da667de3527e341321/Sample01_trimmed_R1.fastq.gz, /home/workspace/amd-academy-nextflow/work/5b/fd7b1d9173e5da667de3527e341321/Sample01_trimmed_R2.fastq.gz]]
-[Sample03, [/home/workspace/amd-academy-nextflow/work/7e/1f09e229c9ca77e25f616236248f09/Sample03_trimmed_R1.fastq.gz, /home/workspace/amd-academy-nextflow/work/7e/1f09e229c9ca77e25f616236248f09/Sample03_trimmed_R2.fastq.gz]]
-[Sample02, [/home/workspace/amd-academy-nextflow/work/fd/d058f190686e54abb7ad74824dbfa9/Sample02_trimmed_R1.fastq.gz, /home/workspace/amd-academy-nextflow/work/fd/d058f190686e54abb7ad74824dbfa9/Sample02_trimmed_R2.fastq.gz]]
+[1a/475545] process > TRIM (1) [100%] 1 of 1, cached: 1 ✔
+[Sample01_sub, [/home/workspace/amd-academy-nextflow/work/1a/475545e601cb5c743d95d9ff0c5f99/Sample01_sub_trimmed_R1.fastq.gz, /home/workspace/amd-academy-nextflow/work/1a/475545e601cb5c743d95d9ff0c5f99/Sample01_sub_trimmed_R2.fastq.gz]]
 ```
 
 In addition to the contents of the `trimmed_reads_ch` channel , you will notice that the `TRIM` step has been cached.
@@ -468,7 +468,9 @@ In addition to the contents of the `trimmed_reads_ch` channel , you will notice 
 
 ## Assemble genomes
 
-Note the new process in `script4.nf`, `ASSEMBLE`, which assembles genomes from paired reads using Shovill. In `script4.nf` do the following:
+Note the new process in `script4.nf`, `ASSEMBLE`, which assembles genomes from paired reads using Shovill. This process include two directives, `cpus 2` and `memory 7.GB`. This means shovill will run with 2 CPU cores and 7 GB of memory. Also note that a variable named `memory` is declared in the script block. This line uses `toGiga()` which gets the memory value in gigabytes (rounded down), so that it can be used when calling the `shovill` command.
+
+In `script4.nf` do the following:
 
 1. Add the genome assembly process, `ASSEMBLE` to the workflow block.
 2. Add the channel `trimmed_reads_ch` as input to the `ASSEMBLE` process. The `trimmed_reads_ch` channel, declared as output in the `TRIM` process, is a tuple composed of two elements: the `sample_id` and the `reads`.
@@ -481,6 +483,7 @@ Note the new process in `script4.nf`, `ASSEMBLE`, which assembles genomes from p
 process ASSEMBLE {
 
     cpus 2
+    memory 7.GB
 
     input:
     tuple val(sample_id), path(reads)
@@ -489,11 +492,13 @@ process ASSEMBLE {
     tuple val(sample_id), path("${sample_id}.contigs.fa") 
 
     script:
+    def memory = task.memory.toGiga()
     """
     shovill \
       --R1 ${reads[0]} \
       --R2 ${reads[1]} \
       --cpus $task.cpus \
+      --ram $memory \
       --outdir ./${sample_id}_shovill_output \
       --force
     mv ${sample_id}_shovill_output/contigs.fa ${sample_id}.contigs.fa
@@ -501,6 +506,8 @@ process ASSEMBLE {
 }
 
 workflow {
+[..truncated..]
+
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
@@ -508,32 +515,30 @@ workflow {
 }
 ```
 
-Execute it by using the following command:
+Then execute it using the following command:
 
 ```bash
-$ nextflow run script4.nf -resume
+$ nextflow run script4.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz' -resume
 ```
 
 You will see the cached trimming process and the executation of the assembly processes.
 
 ```output
- N E X T F L O W   ~  version 26.04.4
-
-Launching `script4.nf` [magical_fermi] revision: 4acd70db82
+Launching `script4.nf` [distracted_monod] revision: 091cd1138a
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-executor >  local (3)
-[fd/d058f1] TRIM (3)     | 3 of 3, cached: 3 ✔
-[51/071866] ASSEMBLE (1) | 3 of 3 ✔
-Completed at: 20-Jul-2026 20:36:18
-Duration    : 4m 10s
-CPU hours   : 0.4 (9% cached)
-Succeeded   : 3
-Cached      : 3
+executor >  local (1)
+[1a/475545] process > TRIM (1)     [100%] 1 of 1, cached: 1 ✔
+[c4/43d333] process > ASSEMBLE (1) [100%] 1 of 1 ✔
+Completed at: 23-Jul-2026 22:20:13
+Duration    : 4m 49s
+CPU hours   : 0.2 (6.1% cached)
+Succeeded   : 1
+Cached      : 1
 ```
 
 Note: When your input channel contains multiple data items Nextflow, where possible, parallelises the execution of your pipeline.
@@ -608,33 +613,35 @@ process FASTQC_TRIMMED {
 }
 
 workflow {
+[..truncated..]
+
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  ASSEMBLE(trimmed_reads_ch)
+  //Add the FASTQC process here, using the read_pairs_ch as input
+  //Add the FASTQC_TRIMMED process here, using the trimmed_reads_ch as input
 }
 ```
 
 Run the script `script5.nf` by using the following command:
 
 ```bash
-$ nextflow run script5.nf -resume
+$ nextflow run script5.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz' -resume
 ```
 
 ```output
-
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script5.nf` [curious_meitner] revision: 9961e2bd99
+Launching `script5.nf` [reverent_wing] revision: 4e591a6870
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-[5b/fd7b1d] TRIM (Trim on Sample01)         [100%] 3 of 3, cached: 3 ✔
-[7a/0fe932] ASSEMBLE (Assemble on Sample01) [100%] 3 of 3, cached: 3 ✔
-
+[1a/475545] process > TRIM (Trim on Sample01_sub)         [100%] 1 of 1, cached: 1 ✔
+[c4/43d333] process > ASSEMBLE (Assemble on Sample01_sub) [100%] 1 of 1, cached: 1 ✔
 ```
 
 The `FASTQC` process will not run as the process has not been declared in the workflow scope.
@@ -650,10 +657,12 @@ Add the `FASTQC` and `FASTQC_TRIMMED` processes to the `workflow` block of `scri
 
 ```groovy
 workflow {
+[..truncated..]
+
   read_pairs_ch = channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  ASSEMBLE(trimmed_reads_ch)
   fastqc_ch=FASTQC(read_pairs_ch)
   fastqc_trimmed_ch=FASTQC_TRIMMED(trimmed_reads_ch)
 }
@@ -662,18 +671,18 @@ workflow {
 ```output
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script5.nf` [reverent_rubens] revision: f02c398692
+Launching `script5.nf` [clever_legentil] revision: b790c1b01a
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
-executor >  local (6)
-[7e/1f09e2] TRIM (Trim on Sample03)                     [100%] 3 of 3, cached: 3 ✔
-[51/071866] ASSEMBLE (Assemble on Sample02)             [100%] 3 of 3, cached: 3 ✔
-[7b/38be58] FASTQC (FastQC on Sample02)                 [100%] 3 of 3 ✔
-[f4/816a85] FASTQC_TRIMMED (FastQC on trimmed Sample02) [100%] 3 of 3 ✔
+executor >  local (2)
+[1a/475545] process > TRIM (Trim on Sample01_sub)                     [100%] 1 of 1, cached: 1 ✔
+[c4/43d333] process > ASSEMBLE (Assemble on Sample01_sub)             [100%] 1 of 1, cached: 1 ✔
+[a5/e95fc4] process > FASTQC (FastQC on Sample01_sub)                 [100%] 1 of 1 ✔
+[77/bc01f4] process > FASTQC_TRIMMED (FastQC on trimmed Sample01_sub) [100%] 1 of 1 ✔
 ```
 
 :::::::::::::::::::::::::
@@ -743,10 +752,12 @@ process MULTIQC {
 }
 
 workflow {
+[..truncated..]
+
   read_pairs_ch = Channel.fromFilePairs( params.reads, checkIfExists:true )
 
   trimmed_reads_ch=TRIM(read_pairs_ch)
-  assemblies_ch=ASSEMBLE(trimmed_reads_ch)
+  ASSEMBLE(trimmed_reads_ch)
   fastqc_ch=FASTQC(read_pairs_ch)
   fastqc_trimmed_ch=FASTQC_TRIMMED(trimmed_reads_ch)
   multiqc_input_ch=fastqc_ch.mix(fastqc_trimmed_ch).collect()
@@ -757,25 +768,25 @@ workflow {
 Execute the script with the following command:
 
 ```bash
-$ nextflow run script6.nf -resume
+$ nextflow run script6.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz' -resume
 ```
 
 ```output
  N E X T F L O W   ~  version 26.04.4
 
-Launching `script6.nf` [berserk_albattani] revision: c18935ab68
+Launching `script6.nf` [exotic_bohr] revision: faca0761ee
 
 G E N O M E A S S E M B L Y - N F
 ===================================
-reads        : data/bacteria/reads/Sample*_R{1,2}.fastq.gz
+reads        : data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz
 outdir       : results
 
 executor >  local (1)
-[fd/d058f1] TRIM (Trim on Sample02)                     [100%] 3 of 3, cached: 3 ✔
-[56/c9b69a] ASSEMBLE (Assemble on Sample03)             [100%] 3 of 3, cached: 3 ✔
-[ec/e4d512] FASTQC (FastQC on Sample03)                 [100%] 3 of 3, cached: 3 ✔
-[f0/8403d2] FASTQC_TRIMMED (FastQC on trimmed Sample01) [100%] 3 of 3, cached: 3 ✔
-[3a/b8ec1f] MULTIQC (MultiQC)                           [100%] 1 of 1 ✔
+[1a/475545] process > TRIM (Trim on Sample01_sub)                     [100%] 1 of 1, cached: 1 ✔
+[c4/43d333] process > ASSEMBLE (Assemble on Sample01_sub)             [100%] 1 of 1, cached: 1 ✔
+[a5/e95fc4] process > FASTQC (FastQC on Sample01_sub)                 [100%] 1 of 1, cached: 1 ✔
+[77/bc01f4] process > FASTQC_TRIMMED (FastQC on trimmed Sample01_sub) [100%] 1 of 1, cached: 1 ✔
+[35/af48ae] process > MULTIQC (MultiQC)                               [100%] 1 of 1 ✔
 ```
 
 It creates the final report in the results folder in the `${params.outdir}/multiqc` directory.
@@ -829,7 +840,7 @@ More information can be found [here](https://www.nextflow.io/docs/latest/tracing
 Run the script7.nf with the reporting options as shown below:
 
 ```bash
-$ nextflow run script7.nf --reads 'data/bacteria/reads/Sample*_R{1,2}.fastq.gz' -resume -with-report -with-trace -with-timeline -with-dag dag.png
+$ nextflow run script7.nf --reads 'data/bacteria/subsampled_reads/Sample01_sub_{R1,R2}.fastq.gz' -resume -with-report -with-trace -with-timeline -with-dag dag.png
 ```
 
 1. Download the file `report.html` and open in a browser to see the report created with the above command.
