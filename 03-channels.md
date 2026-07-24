@@ -55,7 +55,7 @@ The second type of Nextflow channel is a `value` channel. A **value** channel is
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Queue vs Value Channel.
+## Queue vs Value Channel
 
 What type of channel would you use to store the following?
 
@@ -92,11 +92,11 @@ Channel factories are used to explicitly create channels. In programming,
 factory methods (functions) are a programming design pattern used
 to create different types of objects (in this case, different types
 of channels). They are implemented for things that represent more
-generalised concepts, such as a `Channel`.
+generalised concepts, such as a `channel`.
 
 Channel factories are
-called using the `Channel.<method>` syntax, and return a specific instance
-of a `Channel`.
+called using the `channel.<method>` syntax, and return a specific instance
+of a `channel`.
 
 ### The value Channel factory
 
@@ -372,7 +372,7 @@ ERROR ~ No files match pattern `*.fq.gz` at path: data/virus/reads/
 ## Using channel.fromPath
 
 1. Create a Nextflow script `channel_fromPath.nf`
-2. Use the `channel.fromPath` method to create a channel containing all files in the `data/yeast/` directory, including the subdirectories.
+2. Use the `channel.fromPath` method to create a channel containing all files in the `data/bacteria/` directory, including the subdirectories.
 3. Add the parameter to include any hidden files.
 4. Then print all file names using the `view` operator.
 
@@ -383,7 +383,7 @@ ERROR ~ No files match pattern `*.fq.gz` at path: data/virus/reads/
 ## Solution
 
 ```groovy 
-all_files_ch = channel.fromPath('data/yeast/**', hidden: true)
+all_files_ch = channel.fromPath('data/bacteria/**', hidden: true)
 all_files_ch.view()
 ```
 
@@ -391,39 +391,25 @@ all_files_ch.view()
 
  N E X T F L O W   ~  version 26.04.4
 
-Launching `channel.nf` [small_galileo] revision: e7478b2ac9
+Launching `channel_fromPath.nf` [small_galileo] revision: e7478b2ac9
 
-/home/workspace/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/samples.csv
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/.hidden_file.txt
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample01.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample02.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample03.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/.hidden_file.txt
+/home/workspace/amd-academy-nextflow/data/bacteria/samplesheets/demo.csv
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R2.fastq.gz
 ```
 
 :::::::::::::::::::::::::
