@@ -38,6 +38,8 @@ Channels are how Nextflow handles file management, allowing complex tasks to be 
 Channels are asynchronous, which means that outputs from a set of processes will not necessarily be produced in the same order as the corresponding inputs went in.
 However, the first element into a channel queue is the first out of the queue (First in - First out). This allows processes to run as soon as they receive input from a channel. Channels only send data in one direction, from a producer (a process/operator), to a consumer (another process/operator).
 
+**Note:** Operators filter, transform, split, combine and carry out mathematical operations on channels. We will use several operators during this training, most notably `.mix()` and `.collect()`, but we will not go over every operator available in Nextflow. More information on operators can be found [here](https://docs.seqera.io/nextflow/reference/operator-typed) and [here](https://docs.seqera.io/nextflow/reference/operator).
+
 ## Channel types
 
 Nextflow distinguishes between two different kinds of channels: **queue** channels and **value** channels.
