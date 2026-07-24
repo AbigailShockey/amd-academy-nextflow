@@ -484,6 +484,12 @@ queue is the first out of the queue (First in - First out). This allows
 processes to run as soon as they receive input from a channel. Channels
 only send data in one direction, from a producer (a process/operator),
 to a consumer (another process/operator).</p>
+<p><strong>Note:</strong> Operators filter, transform, split, combine
+and carry out mathematical operations on channels. We will use several
+operators during this training, most notably <code>.mix()</code> and
+<code>.collect()</code>, but we will not go over every operator
+available in Nextflow. More information on operators can be found <a href="https://docs.seqera.io/nextflow/reference/operator-typed" class="external-link">here</a>
+and <a href="https://docs.seqera.io/nextflow/reference/operator" class="external-link">here</a>.</p>
 </section><section><h2 class="section-heading" id="channel-types">Channel types<a class="anchor" aria-label="anchor" href="#channel-types"></a></h2>
 <hr class="half-width"><p>Nextflow distinguishes between two different kinds of channels:
 <strong>queue</strong> channels and <strong>value</strong> channels.</p>
