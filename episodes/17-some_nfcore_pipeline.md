@@ -327,7 +327,7 @@ Next we will add inputs to the processes we previously added to the `RUN MAIN WO
 **Note:**
 - The input of SHOVILL will be the `reads` output from Seqtk
 - The input of FASTQC will be the input reads, already stored in `ch_samplesheet`
-- The input of FASTQC_TRIMMED will be the `contigs` output from Shovill
+- The input of FASTQC_TRIMMED will be the `reads` output from Seqtk
 
 ```groovy 
 [..truncated..] 
