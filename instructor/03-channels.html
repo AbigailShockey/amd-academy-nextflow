@@ -422,7 +422,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Channels</h1>
-        <p>Last updated on 2026-07-17 |
+        <p>Last updated on 2026-07-24 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/03-channels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -505,13 +505,13 @@ content is not consumed. This is also useful for processes that need to
 reuse input from a channel, for example, a reference genome sequence
 file that is required by multiple steps within a process, or by more
 than one process.</p>
-<div id="queue-vs-value-channel." class="callout challenge">
+<div id="queue-vs-value-channel" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="queue-vs-value-channel." class="callout-inner">
-<h3 class="callout-title">Queue vs Value Channel.</h3>
+<div id="queue-vs-value-channel" class="callout-inner">
+<h3 class="callout-title">Queue vs Value Channel</h3>
 <div class="callout-content">
 <p>What type of channel would you use to store the following?</p>
 <ol style="list-style-type: decimal"><li>Multiple values.</li>
@@ -555,10 +555,10 @@ do not need to add any processes or a workflow block.</p>
 programming, factory methods (functions) are a programming design
 pattern used to create different types of objects (in this case,
 different types of channels). They are implemented for things that
-represent more generalised concepts, such as a <code>Channel</code>.</p>
+represent more generalised concepts, such as a <code>channel</code>.</p>
 <p>Channel factories are called using the
-<code>Channel.&lt;method&gt;</code> syntax, and return a specific
-instance of a <code>Channel</code>.</p>
+<code>channel.&lt;method&gt;</code> syntax, and return a specific
+instance of a <code>channel</code>.</p>
 <div class="section level3">
 <h3 id="the-value-channel-factory">The value Channel factory<a class="anchor" aria-label="anchor" href="#the-value-channel-factory"></a></h3>
 <p>The <code>value</code> factory method is used to create a value
@@ -905,7 +905,7 @@ ERROR ~ No files match pattern `*.fq.gz` at path: data/virus/reads/
 <ol style="list-style-type: decimal"><li>Create a Nextflow script <code>channel_fromPath.nf</code>
 </li>
 <li>Use the <code>channel.fromPath</code> method to create a channel
-containing all files in the <code>data/yeast/</code> directory,
+containing all files in the <code>data/bacteria/</code> directory,
 including the subdirectories.</li>
 <li>Add the parameter to include any hidden files.</li>
 <li>Then print all file names using the <code>view</code> operator.</li>
@@ -924,7 +924,7 @@ to search subdirectories.</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">GROOVY<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a>all_files_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/yeast/**'</span><span class="op">,</span> hidden<span class="op">:</span> <span class="kw">true</span><span class="op">)</span></span>
+<pre class="sourceCode groovy" tabindex="0"><code class="sourceCode groovy"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a>all_files_ch <span class="op">=</span> channel<span class="op">.</span><span class="fu">fromPath</span><span class="op">(</span><span class="st">'data/bacteria/**'</span><span class="op">,</span> hidden<span class="op">:</span> <span class="kw">true</span><span class="op">)</span></span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a>all_files_ch<span class="op">.</span><span class="fu">view</span><span class="op">()</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -933,39 +933,25 @@ to search subdirectories.</p>
 <pre class="output" tabindex="0"><code>
  N E X T F L O W   ~  version 26.04.4
 
-Launching `channel.nf` [small_galileo] revision: e7478b2ac9
+Launching `channel_fromPath.nf` [small_galileo] revision: e7478b2ac9
 
-/home/workspace/amd-academy-nextflow/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_1.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/temp33_3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref1.bam.bai
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/ref3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_2.bam
-/home/workspace/amd-academy-nextflow/data/yeast/bams/etoh60_3.bam
-/home/workspace/amd-academy-nextflow/data/yeast/samples.csv
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_1_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_2_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/temp33_3_1.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/ref1_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/reads/etoh60_3_2.fq.gz
-/home/workspace/amd-academy-nextflow/data/yeast/.hidden_file.txt</code></pre>
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample01.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample02.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/assemblies/Sample03.contigs.fa.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample01_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample02_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/Sample03_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/reads/.hidden_file.txt
+/home/workspace/amd-academy-nextflow/data/bacteria/samplesheets/demo.csv
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample01_sub_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample02_sub_R2.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R1.fastq.gz
+/home/workspace/amd-academy-nextflow/data/bacteria/subsampled_reads/Sample03_sub_R2.fastq.gz</code></pre>
 </div>
 </div>
 </div>
@@ -1235,8 +1221,8 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/03-channels.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/03-channels.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-17",
-  "datePublished": "2026-07-23"
+  "dateModified": "2026-07-24",
+  "datePublished": "2026-07-24"
 }
 
   </script><script>
