@@ -5,15 +5,13 @@ permalink: /setup/
 
 # Setup
 
-THESE INSTRUCTIONS ARE PLACEHOLDERS AND WILL BE CHANGED
-
 ## Training directory
 
-Each learner should setup a training folder e.g. `nf-training`
+Each learner should setup a training folder e.g. `amd-academy-nextflow`
 
 ```bash
-mkdir nf-training
-cd nf-training
+mkdir amd-academy-nextflow
+cd amd-academy-nextflow
 ```
 
 There are three items that you need to download:
@@ -28,7 +26,7 @@ A list of software with version required for this training is listed below:
 
 |Software|Version|
 |--------|-------|
-|Nextflow|25.10.0|
+|Nextflow|26.04.4|
 |nf-core/tools|4.0.2|
 |seqtk|1.4|
 |shovill|1.1.0|
@@ -56,59 +54,22 @@ curl -L -o environment.yml https://raw.githubusercontent.com/AbigailShockey/amd-
 To create the training environment run:
 
 ```bash
-conda env create -n nf-training -f environment.yml
+conda env create -n amd-academy-nextflow -f environment.yml
 ```
 
 Then activate the environment by running
 
 ```bash
-conda activate nf-training
+conda activate amd-academy-nextflow
 ```
 
 ## Training scripts
 
-To aid in the delivery of the lesson, the scripts mentioned in each episode, can be found in the respective episode folders in the [lesson GitHub repository](https://github.com/AbigailShockey/amd-academy-nextflow/tree/main/episodes/files/scripts) or the [supplemental files GitHub repository](https://github.com/AbigailShockey/amd-academy-nf-files).
-
-To get the scripts associated with each episode you will need to download the scripts folder from the github repository.
-
-Below is a series of commands to download and unpack scripts folder.
-
-```bash
-# get the gitrepo as a zip file
-wget https://github.com//carpentries-incubator/workflows-nextflow/archive/main.zip
-
-#or
-curl -L -o main.zip https://github.com//carpentries-incubator/workflows-nextflow/archive/main.zip
-
-# unzip the script file
-unzip main.zip 'workflows-nextflow-main/episodes/files/scripts*' -d  .
-
-# mv the scripts folder to the nf-training folder
-mv workflows-nextflow-main/episodes/files/scripts .
-
-# remove the zip file and the git repo
-rm -r workflows-nextflow-main main.zip
-```
-
-The nextflow scripts for each episode, can be found in the respective episode folders inside this the scripts folder.
+To aid in the delivery of the lesson, the scripts mentioned in each episode, can be found in the respective episode folders in the [lesson GitHub repository](https://github.com/AbigailShockey/amd-academy-nextflow/tree/main/episodes/files/scripts) or the [supplemental files GitHub repository](https://github.com/AbigailShockey/amd-academy-nf-files/tree/main/scripts).
 
 ### Data
 
-Inside the `nf-training` folder download the workshop dataset from Figshare, [https://figshare.com/articles/dataset/RNA-seq\_training\_dataset/14822481](https://figshare.com/articles/dataset/RNA-seq_training_dataset/14822481)
-
-```bash
-wget --content-disposition https://ndownloader.figshare.com/files/28531743
-
-# or curl
-curl -L -o  data.tar.gz https://ndownloader.figshare.com/files/28531743
-```
-
-Unpack gzipped tar file:
-
-```bash
-tar -xvf  data.tar.gz
-rm data.tar.gz
-```
+The data for the workshop can be retrieved from the `data` folder of the [supplemental files GitHub repository](https://github.com/AbigailShockey/amd-academy-nf-files/tree/main/data).
 
 ## Visual Studio Code editor setup
 
