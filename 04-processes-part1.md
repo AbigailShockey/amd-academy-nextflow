@@ -28,7 +28,7 @@ A `process` is the way Nextflow executes commands you would run on the command l
 
 A process can be thought of as a particular step in a workflow, e.g. an alignment step in RNA-seq analysis. Processes are independent of each other (don't require any another process to execute) and can not communicate/write to each other. Data is passed between processes via input and output Channels.
 
-For example, below is the command you would run to count the number of sequence records in a FASTA format file such as the yeast transcriptome:
+For example, below is the command you would run to count the number of sequence records in a FASTA format file:
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
