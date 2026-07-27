@@ -281,7 +281,8 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#resume">Resume</a></li>
+        <ul><li><a href="#re-entrancy">Re-entrancy</a></li>
+<li><a href="#resume">Resume</a></li>
 <li><a href="#how-does-resume-work">How does resume work?</a></li>
 <li><a href="#the-work-directory">The Work directory</a></li>
         </ul></div><!--/div.accordion-body-->
@@ -420,7 +421,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Workflow caching and checkpointing</h1>
-        <p>Last updated on 2026-07-21 |
+        <p>Last updated on 2026-07-27 |
 
         <a href="https://github.com/AbigailShockey/amd-academy-nextflow/edit/main/episodes/09-workflow_checkpoint_caching.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -460,7 +461,8 @@ option.</li>
 </div>
 </div>
 </div>
-<p>A key feature of workflow management systems, like Nextflow, is
+<section><h2 class="section-heading" id="re-entrancy">Re-entrancy<a class="anchor" aria-label="anchor" href="#re-entrancy"></a></h2>
+<hr class="half-width"><p>A key feature of workflow management systems, like Nextflow, is
 re-entrancy, which is the ability to restart a pipeline after an error
 from the last successfully executed process. Re-entrancy enables time
 consuming successfully completed steps, such as index creation, to be
@@ -469,7 +471,7 @@ faster prototyping and development of workflows, and faster analyses of
 additional data. Nextflow achieves re-entrancy by automatically keeping
 track of all the processes executed in your pipeline via caching and
 checkpointing.</p>
-<section><h2 class="section-heading" id="resume">Resume<a class="anchor" aria-label="anchor" href="#resume"></a></h2>
+</section><section><h2 class="section-heading" id="resume">Resume<a class="anchor" aria-label="anchor" href="#resume"></a></h2>
 <hr class="half-width"><p>To restart from the last successfully executed process we add the
 command line option <code>-resume</code> to the Nextflow command.</p>
 <p>For example, we can run the <code>word_count.nf</code> script as
@@ -603,8 +605,8 @@ the previously computed outputs are applied. When a task requires
 recomputation, ie. the conditions above are not fulfilled, the
 downstream tasks are automatically invalidated.</p>
 <p>Therefore, if you modify some parts of your script, or alter the
-input data using <code>-resume</code>, will only execute the processes
-that are actually changed.</p>
+input data using <code>-resume</code>, Nextflow will only execute the
+processes that are actually changed.</p>
 <p>The execution of the processes that are not changed will be skipped
 and the cached result used instead.</p>
 <p>This helps a lot when testing or modifying part of your pipeline
@@ -953,7 +955,7 @@ any links that you are not going to use.
   "url": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/09-workflow_checkpoint_caching.html",
   "identifier": "https://AbigailShockey.github.io/amd-academy-nextflow/instructor/09-workflow_checkpoint_caching.html",
   "dateCreated": "2026-05-12",
-  "dateModified": "2026-07-21",
+  "dateModified": "2026-07-27",
   "datePublished": "2026-07-27"
 }
 
