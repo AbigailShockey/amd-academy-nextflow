@@ -19,6 +19,8 @@ exercises: 10
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+## Re-entrancy
+
 A key feature of workflow management systems, like Nextflow, is re-entrancy, which is the ability to restart a pipeline after an error from the last successfully executed process. Re-entrancy enables time consuming successfully completed steps, such as index creation, to be skipped when adding more data to a pipeline. This in turn leads to faster prototyping and development of workflows, and faster analyses of additional data.
 Nextflow achieves re-entrancy by automatically keeping track of all the processes executed in your pipeline via  caching  and checkpointing.
 
@@ -132,7 +134,7 @@ When we resume a workflow Nextflow uses this unique ID to check if:
 
 If these conditions are satisfied, the task execution is skipped and the previously computed outputs are applied. When a task requires recomputation, ie. the conditions above are not fulfilled, the downstream tasks are automatically invalidated.
 
-Therefore, if you modify some parts of your script, or alter the input data using `-resume`, will only execute the processes that are actually changed.
+Therefore, if you modify some parts of your script, or alter the input data using `-resume`, Nextflow will only execute the processes that are actually changed.
 
 The execution of the processes that are not changed will be skipped and the cached result used instead.
 
