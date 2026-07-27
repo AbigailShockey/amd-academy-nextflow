@@ -1,21 +1,21 @@
-params.chr = "A"
-params.transcriptome = "${projectDir}/data/yeast/transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz"> >
+params.cov = 10
+params.fasta = "${projectDir}/data/bacteria/assemblies/Sample01.contigs.fa.gz"
 
-process CHR_COUNT {
- input:
- path transcriptome
+process CONTIG_COV {
+  input:
+  path fasta
 
- script:
- """
- printf  'Number of sequences for chromosome '${params.chr}':'
- zgrep  -c '^>Y'${params.chr} ${transcriptome}
- """
+  script:
+  """
+  printf 'Number of contigs with coverage '${params.cov}':'
+  zgrep -c 'cov=${params.cov}.' ${fasta}
+  """
 }
 
 workflow {
     
-    transcriptome_ch = channel.fromPath(params.transcriptome)
+  fasta_ch = channel.fromPath(params.fasta)
 
-    CHR_COUNT(transcriptome_ch)
+  CONTIG_COV(fasta_ch)
 
 }
