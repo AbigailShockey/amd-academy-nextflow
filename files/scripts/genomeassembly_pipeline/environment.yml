@@ -1,12 +1,10 @@
-name: nf-training
+# CONDA ENVIRONMENT FILE
+name: basic_rnaseq_pipeline
 channels:
   - conda-forge
   - bioconda
+  - defaults
 dependencies:
-  - nextflow=26.04.4
-  - shovill=1.1.0
-  - seqtk=1.4
-  - fastqc=0.12.1
-  - multiqc=1.34
-  - nf-core=4.0.2
-  - graphviz
+  - salmon=1.5
+  - fastqc=0.11.5
+  - multiqc=1.10
