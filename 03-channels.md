@@ -93,8 +93,7 @@ or a workflow block.
 Channel factories are used to explicitly create channels. In programming,
 factory methods (functions) are a programming design pattern used
 to create different types of objects (in this case, different types
-of channels). They are implemented for things that represent more
-generalised concepts, such as a `channel`.
+of channels).
 
 Channel factories are
 called using the `channel.<method>` syntax, and return a specific instance
@@ -177,6 +176,12 @@ When you want to create a channel containing multiple values you can use the cha
 ```groovy 
 chromosome_ch = channel.of( 'chr1', 'chr3', 'chr5', 'chr7' )
 chromosome_ch.view()
+```
+
+Run using:
+
+```bash
+$ nextflow run channel.nf
 ```
 
 ```output
@@ -264,6 +269,12 @@ read_ch = channel.fromPath( 'data/yeast/reads/ref1_2.fq.gz' )
 read_ch.view()
 ```
 
+Run using:
+
+```bash
+$ nextflow run channel.nf
+```
+
 ```output
 
  N E X T F L O W   ~  version 26.04.4
@@ -288,6 +299,12 @@ For example the script below uses the `*.fq.gz` pattern to create a queue channe
 ```groovy 
 read_ch = channel.fromPath( 'data/yeast/reads/*.fq.gz' )
 read_ch.view()
+```
+
+Run using:
+
+```bash
+$ nextflow run channel.nf
 ```
 
 ```output
@@ -448,6 +465,12 @@ read_pair_ch = channel.fromFilePairs('data/yeast/reads/*_{1,2}.fq.gz')
 read_pair_ch.view()
 ```
 
+Run using:
+
+```bash
+$ nextflow run channel.nf
+```
+
 ```output
 
  N E X T F L O W   ~  version 26.04.4
@@ -503,7 +526,7 @@ See more information about the channel factory `fromFilePairs` [here](https://do
 
 ## More complex patterns
 
-If you need to match more complex patterns you should create a sample sheet specifying the files and create a channel from that. This will be covered in the operator episode.
+If you need to match more complex patterns you should create a sample sheet specifying the files and create a channel from that. Samplesheets will be covered in our nf-core discussion.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
