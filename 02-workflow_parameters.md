@@ -249,7 +249,7 @@ objects and structures, such as the `params` object in a file.
 The `-params-file` option is used to pass the parameters file to the
 script.
 
-For example, from the scripts directory, copy the `wc-params.json` script to the current directory and open it using the VS Code Explorer panel on the left.
+For example, From the `scripts/parameters` directory, copy the `wc-params.json` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp scripts/parameters/wc-params.json .
