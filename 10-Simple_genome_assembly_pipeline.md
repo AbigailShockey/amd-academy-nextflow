@@ -468,7 +468,7 @@ In addition to the contents of the `trimmed_reads_ch` channel , you will notice 
 
 ## Assemble genomes
 
-Note the new process in `script4.nf`, `ASSEMBLE`, which assembles genomes from paired reads using Shovill. This process include two directives, `cpus 2` and `memory 7.GB`. This means shovill will run with 2 CPU cores and 7 GB of memory. Also note that a variable named `memory` is declared in the script block. This line uses `toGiga()` which gets the memory value in gigabytes (rounded down), so that it can be used when calling the `shovill` command.
+Note the new process in `script4.nf`, `ASSEMBLE`, which assembles genomes from paired reads using Shovill. This process include two directives, `cpus 2` and `memory 7.GB`. This means Shovill will run with 2 CPU cores and 7 GB of memory. Also note that a variable named `memory` is declared in the script block. This line uses `toGiga()` which gets the memory value in gigabytes (rounded down), so that it can be used when calling the `shovill` command.
 
 In `script4.nf` do the following:
 
