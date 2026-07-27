@@ -158,7 +158,7 @@ Kubernetes; a full list can be found [here](https://www.nextflow.io/docs/latest/
 
 ## Your first script
 
-We are now going to look at a sample Nextflow script that counts the number of lines in a file. From the scripts directory, copy the `word_count.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+We are now going to look at a sample Nextflow script that counts the number of lines in a file. From the `scripts/introduction` directory, copy the `word_count.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp scripts/introduction/word_count.nf .
