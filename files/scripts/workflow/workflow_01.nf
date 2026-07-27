@@ -13,7 +13,7 @@ process FASTQC {
 process MULTIQC {
     publishDir "results/mqc"
     input:
-      path transcriptome
+      path fastqs
     output:
       path "*"
     script:

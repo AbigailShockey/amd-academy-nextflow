@@ -20,7 +20,7 @@ exercises: 20
 
 ## Workflow
 
-Our previous episodes have shown us how to parameterise workflows using `params`, move data around a workflow using `channels` and define individual tasks using `processes`. In this episode we will cover how connect multiple processes to create a workflow.
+Our previous episodes have shown us how to parameterize workflows using `params`, move data around a workflow using `channels` and define individual tasks using `processes`. In this episode we will cover how connect multiple processes to create a workflow.
 
 ## Workflow definition
 
@@ -45,9 +45,9 @@ As seen previously, a `process` is invoked as a function in the `workflow` scope
  <process_name>(<input_ch1>,<input_ch2>,...)
 ```
 
-To combined multiple processes invoke them in the order they would appear in a workflow. When invoking a process with multiple inputs, provide them in the same order in which they are declared in the `input` block of the process.
+To combine multiple processes invoke them in the order they would appear in a workflow. When invoking a process with multiple inputs, provide them in the same order in which they are declared in the `input` block of the process.
 
-From the scripts directory, copy the `workflow_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/workflow` directory, copy the `workflow_01.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp scripts/workflow/workflow_01.nf .
@@ -69,7 +69,7 @@ process FASTQC {
 process MULTIQC {
     publishDir "results/mqc"
     input:
-      path transcriptome
+      path fastqc_results
     output:
       path "*"
     script:
@@ -135,10 +135,10 @@ It can be useful to name the output of a process, especially if there are multip
 
 The process `output` definition allows the use of the `emit:` option to define a named identifier that can be used to reference the channel in the external scope.
 
-For example in the script below we name the output from the `TRIM` process as `trimmed_reads` using the `emit:` option. We can then reference the output as
+For example in the `workflow_02.nf `script we name the output from the `TRIM` process as `trimmed_reads` using the `emit:` option. We can then reference the output as
 `TRIM.out.trimmed_reads` in the workflow scope.
 
-From the scripts directory, copy the `workflow_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
+From the `scripts/workflow` directory, copy the `workflow_02.nf` script to the current directory and open it using the VS Code Explorer panel on the left. Then run the pipeline.
 
 ```bash
 $ cp scripts/workflow/workflow_02.nf .
@@ -203,7 +203,7 @@ executor >  local (2)
 
 A workflow component can access any variable and parameter defined in the outer scope.
 
-From the scripts directory, copy the `workflow_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
+From the `scripts/workflow` directory, copy the `workflow_03.nf` script to the current directory and open it using the VS Code Explorer panel on the left.
 
 ```bash
 $ cp scripts/workflow/workflow_03.nf .
@@ -362,7 +362,7 @@ If you only have two lines it might mean that you did not use `collect()` operat
 - A Nextflow workflow is defined by invoking `processes` inside the `workflow` scope.
 - A process is invoked like a function inside the `workflow` scope passing any required input parameters as arguments. e.g. `FASTQC(reads_ch)`.
 - Process outputs can be accessed using the `out` attribute for the respective `process` object or assigning the output to a Nextflow variable. 
-- Multiple outputs from a single process can be accessed using the list syntax `[]` and it's index or by referencing the a named process output .
+- Multiple outputs from a single process can be accessed using the list syntax `[]` and it's index or by referencing a named process output .
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
